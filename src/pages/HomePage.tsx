@@ -74,17 +74,22 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Center Layered Composition: Back Wordmark + Parallax Portrait + Front Outline Wordmark */}
+        {/* Center Layered Composition: Full Name Editorial Lockup + Parallax Portrait */}
         <div className="relative z-10 max-w-[1440px] w-full mx-auto my-auto py-6 sm:py-10 lg:py-12 flex flex-col items-center justify-center">
           <motion.div
             style={{ y: wordmarkY }}
             initial={disableParallax ? false : { opacity: 0, y: 36 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.05, ease: EASE_LUXURY }}
-            className="w-full text-center select-none pointer-events-none -mb-6 sm:-mb-12 md:-mb-16 lg:-mb-24 z-0"
+            className="relative z-20 w-full text-center select-none pointer-events-none mb-5 sm:mb-7 md:mb-8 lg:-mb-10"
           >
-            <h1 className="font-serif font-light uppercase tracking-[0.14em] leading-[0.82] text-[clamp(3.25rem,14.5vw,5.25rem)] md:text-[clamp(6.25rem,16vw,9.5rem)] lg:text-[clamp(4.4rem,18vw,15.5rem)] text-ivory/95">
-              AFLAN
+            <h1 className="flex flex-col items-center">
+              <span className="font-serif font-light uppercase tracking-[0.14em] leading-[0.86] text-[clamp(3.35rem,15vw,5.4rem)] md:text-[clamp(5.8rem,15vw,8.8rem)] lg:text-[clamp(4.4rem,16.5vw,14.2rem)] text-ivory/95 drop-shadow-[0_12px_32px_rgba(23,22,21,0.85)]">
+                AFLAN
+              </span>{' '}
+              <span className="mt-2 sm:mt-2.5 lg:hidden font-serif italic font-light uppercase tracking-[0.22em] text-[clamp(0.95rem,3.6vw,1.35rem)] text-champagne">
+                MU&apos;AFA DZULFIQAR
+              </span>
             </h1>
           </motion.div>
 
@@ -141,7 +146,7 @@ export const HomePage: React.FC = () => {
               </div>
             </motion.aside>
 
-            {/* Centerpiece Studio Portrait with Smooth Parallax & Front Outlined Surname */}
+            {/* Centerpiece Studio Portrait with Smooth Parallax & Full Name Lower Lockup */}
             <div className="order-1 md:col-span-2 lg:order-2 lg:col-span-4 flex flex-col items-center relative">
               <motion.div
                 style={{ y: portraitY }}
@@ -152,7 +157,7 @@ export const HomePage: React.FC = () => {
                 }
                 animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }}
                 transition={{ duration: 1.15, delay: 0.14, ease: EASE_LUXURY }}
-                className="relative w-full max-w-[280px] sm:max-w-[330px] lg:max-w-[345px] xl:max-w-[385px] aspect-4/5 overflow-hidden border border-champagne/30 bg-obsidian shadow-[0_32px_90px_rgba(0,0,0,0.75)]"
+                className="relative z-10 w-full max-w-[280px] sm:max-w-[330px] lg:max-w-[345px] xl:max-w-[385px] aspect-4/5 overflow-hidden border border-champagne/30 bg-obsidian shadow-[0_32px_90px_rgba(0,0,0,0.75)]"
               >
                 <motion.img
                   style={{ scale: portraitScale }}
@@ -174,10 +179,11 @@ export const HomePage: React.FC = () => {
                 initial={disableParallax ? false : { opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.0, delay: 0.32, ease: EASE_LUXURY }}
-                aria-hidden="true"
-                className="pointer-events-none select-none -mt-6 sm:-mt-8 md:-mt-10 z-20 font-serif italic font-light uppercase tracking-[0.11em] leading-none text-[clamp(1.55rem,6.5vw,2.45rem)] md:text-[clamp(2.35rem,4.6vw,3.1rem)] lg:text-[clamp(1.85rem,4.3vw,3.95rem)] editorial-outline-strong whitespace-nowrap"
+                aria-label="Mu'afa Dzulfiqar"
+                className="pointer-events-none select-none -mt-4 sm:-mt-6 md:-mt-7 lg:-mt-9 z-20 flex flex-wrap items-baseline justify-center gap-x-2.5 sm:gap-x-3.5 text-center font-serif italic font-light uppercase tracking-[0.1em] leading-none text-[clamp(1.35rem,5.2vw,2.15rem)] md:text-[clamp(2rem,4vw,2.75rem)] lg:text-[clamp(1.75rem,3.4vw,3.35rem)] lg:whitespace-nowrap drop-shadow-[0_8px_24px_rgba(23,22,21,0.9)]"
               >
-                DZULFIQAR
+                <span className="text-champagne">MU&apos;AFA</span>{' '}
+                <span className="editorial-outline-strong">DZULFIQAR</span>
               </motion.p>
             </div>
 

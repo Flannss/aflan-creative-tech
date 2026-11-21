@@ -1,6 +1,15 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Pause, Play, RotateCcw, Sliders, Sparkles } from 'lucide-react';
+import {
+  Compass,
+  Eye,
+  Magnet,
+  Pause,
+  Play,
+  RotateCcw,
+  Sliders,
+  Sparkles,
+} from 'lucide-react';
 import { Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { MonogramMark } from '@/components/brand/Monogram';
@@ -45,6 +54,33 @@ const EASING_PRESETS = [
   },
 ] as const;
 
+const MAGNETIC_NODES = [
+  {
+    id: 'ui-arch',
+    code: '01',
+    label: 'UI Architecture',
+    sub: 'Component Precision',
+  },
+  {
+    id: 'motion-craft',
+    code: '02',
+    label: 'Motion Physics',
+    sub: 'Spring Kinematics',
+  },
+  {
+    id: 'optical-grid',
+    code: '03',
+    label: 'Editorial Grid',
+    sub: 'Asymmetric Balance',
+  },
+  {
+    id: 'qa-discipline',
+    code: '04',
+    label: 'Quality Assurance',
+    sub: 'Zero-Defect Flow',
+  },
+] as const;
+
 function hexToLuminance(hex: string): number {
   const clean = hex.replace('#', '');
   const r = parseInt(clean.slice(0, 2), 16) / 255;
@@ -63,6 +99,387 @@ function getContrastRatio(hexA: string, hexB: string): number {
   return (lighter + 0.05) / (darker + 0.05);
 }
 
+/* ============================================================================
+   MODULE A — DYNAMIC SPOTLIGHT MASKING STAGE
+============================================================================ */
+type SpotlightLensMode = 'amber' | 'blueprint' | 'halo';
+
+const DynamicSpotlightStage: React.FC = () => {
+  const stageRef = useRef<HTMLDivElement | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const isCoarsePointer = useIsCoarsePointer();
+
+  const [radius, setRadius] = useState<number>(175);
+  const [lensMode, setLensMode] = useState<SpotlightLensMode>('amber');
+  const [autoSweep, setAutoSweep] = useState<boolean>(false);
+  const [coords, setCoords] = useState<{ x: number; y: number }>({ x: 50, y: 50 });
+
+  useEffect(() => {
+    if (!autoSweep || prefersReducedMotion) return;
+    let rafId = 0;
+    const start = performance.now();
+
+    const step = (now: number) => {
+      const elapsed = (now - start) * 0.0014;
+      const x = 50 + Math.sin(elapsed) * 34;
+      const y = 50 + Math.sin(elapsed * 2) * 24;
+      setCoords({ x, y });
+      rafId = window.requestAnimationFrame(step);
+    };
+
+    rafId = window.requestAnimationFrame(step);
+    return () => window.cancelAnimationFrame(rafId);
+  }, [autoSweep, prefersReducedMotion]);
+
+  const updatePointerCoords = (clientX: number, clientY: number) => {
+    const el = stageRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
+    const y = Math.max(0, Math.min(100, ((clientY - rect.top) / rect.height) * 100));
+    setCoords({ x, y });
+  };
+
+  const maskGradient = `radial-gradient(circle ${radius}px at ${coords.x.toFixed(1)}% ${coords.y.toFixed(1)}%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.86) 52%, rgba(0,0,0,0) 100%)`;
+
+  const lensAccentStyle = {
+    amber:
+      'radial-gradient(circle at center, rgba(216,195,165,0.25) 0%, rgba(118,86,65,0.12) 55%, transparent 100%)',
+    blueprint:
+      'radial-gradient(circle at center, rgba(245,240,232,0.22) 0%, rgba(216,195,165,0.15) 55%, transparent 100%)',
+    halo:
+      'radial-gradient(circle at center, transparent 35%, rgba(216,195,165,0.32) 62%, transparent 100%)',
+  }[lensMode];
+
+  return (
+    <div className="space-y-5">
+      <div
+        ref={stageRef}
+        onPointerMove={(e) => {
+          if (autoSweep) setAutoSweep(false);
+          updatePointerCoords(e.clientX, e.clientY);
+        }}
+        onClick={(e) => updatePointerCoords(e.clientX, e.clientY)}
+        data-cursor="SENTER"
+        role="region"
+        aria-label="Kanvas Dynamic Spotlight. Arahkan kursor atau sentuh area untuk menyinari lapisan arsitektur tipografi yang tersembunyi."
+        className="relative min-h-[340px] sm:min-h-[410px] border border-champagne/30 bg-obsidian overflow-hidden select-none cursor-crosshair"
+      >
+        {/* Base Dimmed Architectural Layer (Always faintly visible) */}
+        <div className="absolute inset-0 p-6 sm:p-10 lg:p-12 flex flex-col justify-between opacity-20 pointer-events-none">
+          <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.24em] uppercase text-taupe">
+            <span>LAYER 00 · DORMANT SUBSTRATE</span>
+            <span>7.4244° S · 109.2302° E</span>
+          </div>
+          <div className="my-auto space-y-3">
+            <p className="font-serif text-3xl sm:text-5xl lg:text-6xl font-light uppercase tracking-[0.08em] text-taupe/60">
+              AFLAN MU&apos;AFA DZULFIQAR
+            </p>
+            <p className="font-mono text-xs tracking-[0.22em] uppercase text-taupe/50">
+              ARAHKAN SENTER UNTUK MENGUNGKAP ARSITEKTUR EDITORIAL
+            </p>
+          </div>
+          <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
+            <span>MASKING ENGINE · CSS RADIAL COMPOSITE</span>
+            <span>AMDZ · LIVE</span>
+          </div>
+        </div>
+
+        {/* Illuminated Hidden Layer (Revealed by Cursor Spotlight Mask) */}
+        <div
+          className="absolute inset-0 p-6 sm:p-10 lg:p-12 flex flex-col justify-between bg-espresso text-ivory pointer-events-none"
+          style={{
+            WebkitMaskImage: maskGradient,
+            maskImage: maskGradient,
+          }}
+        >
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 opacity-25"
+            style={{
+              backgroundImage:
+                'linear-gradient(to right, rgba(216,195,165,0.35) 1px, transparent 1px), linear-gradient(to bottom, rgba(216,195,165,0.35) 1px, transparent 1px)',
+              backgroundSize: '36px 36px',
+            }}
+          />
+
+          <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
+            <span>LAYER 01 · ILLUMINATED DOSSIER</span>
+            <span>
+              BEAM X:{coords.x.toFixed(0)}% · Y:{coords.y.toFixed(0)}% · R:{radius}PX
+            </span>
+          </div>
+
+          <div className="relative z-10 my-auto space-y-4">
+            <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-champagne">
+              HIDDEN EDITORIAL MANIFESTO · REVEALED
+            </p>
+            <p className="font-serif text-3xl sm:text-5xl lg:text-6xl font-light leading-[1.04] text-ivory">
+              Di balik permukaan gelap terdapat{' '}
+              <span className="italic text-champagne">struktur kode, presisi QA,</span>{' '}
+              dan komposisi tipografi yang terukur.
+            </p>
+            <div className="flex flex-wrap gap-2.5 pt-2 font-mono text-[10px] tracking-[0.2em] uppercase">
+              <span className="px-3 py-1 bg-obsidian/80 border border-champagne/40 text-champagne">
+                AFLAN MU&apos;AFA DZULFIQAR
+              </span>
+              <span className="px-3 py-1 bg-obsidian/80 border border-champagne/40 text-ivory">
+                CREATIVE TECHNOLOGIST
+              </span>
+              <span className="px-3 py-1 bg-obsidian/80 border border-champagne/40 text-champagne">
+                PURWOKERTO · INDONESIA
+              </span>
+            </div>
+          </div>
+
+          <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/90">
+            <span>DYNAMIC MASKING · ZERO-LATENCY POINTER TRACKING</span>
+            <span>MODE: {lensMode.toUpperCase()}</span>
+          </div>
+        </div>
+
+        {/* Optical Halo Ring Following Spotlight Center */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 rounded-full border border-champagne/35 transition-[width,height] duration-150"
+          style={{
+            left: `${coords.x}%`,
+            top: `${coords.y}%`,
+            width: `${radius * 1.85}px`,
+            height: `${radius * 1.85}px`,
+            background: lensAccentStyle,
+          }}
+        />
+      </div>
+
+      {/* Spotlight Control Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-4 bg-obsidian/70 border border-champagne/20 p-4 sm:p-5">
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setAutoSweep((prev) => !prev)}
+            aria-pressed={autoSweep}
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border transition-colors ${
+              autoSweep
+                ? 'bg-champagne text-obsidian border-champagne font-medium'
+                : 'bg-espresso text-ivory border-champagne/35 hover:border-champagne'
+            }`}
+          >
+            <Eye className="size-3.5" aria-hidden="true" />
+            {autoSweep
+              ? 'Sapuan Otomatis: Aktif'
+              : isCoarsePointer
+                ? 'Jalankan Sapuan Senter'
+                : 'Sapuan Otomatis'}
+          </button>
+
+          {(['amber', 'blueprint', 'halo'] as SpotlightLensMode[]).map((mode) => (
+            <button
+              key={mode}
+              type="button"
+              onClick={() => setLensMode(mode)}
+              aria-pressed={lensMode === mode}
+              className={`px-3.5 py-2 rounded-full font-mono text-[10px] tracking-[0.16em] uppercase border transition-colors ${
+                lensMode === mode
+                  ? 'bg-ivory text-obsidian border-ivory font-medium'
+                  : 'bg-transparent text-taupe border-champagne/20 hover:text-ivory'
+              }`}
+            >
+              Lensa: {mode}
+            </button>
+          ))}
+        </div>
+
+        <label className="flex items-center gap-3 font-mono text-[11px] tracking-[0.18em] uppercase text-champagne">
+          <span>Radius Senter: {radius}px</span>
+          <input
+            type="range"
+            min={95}
+            max={290}
+            step={5}
+            value={radius}
+            onChange={(e) => setRadius(Number(e.target.value))}
+            className="accent-champagne w-28 sm:w-36"
+          />
+        </label>
+      </div>
+    </div>
+  );
+};
+
+/* ============================================================================
+   MODULE B — MULTI-NODE MAGNETIC CURSOR UI PLAYGROUND
+============================================================================ */
+const MagneticCursorPlayground: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
+  const isCoarsePointer = useIsCoarsePointer();
+
+  const [pullStrength, setPullStrength] = useState<number>(0.38);
+  const [activeNodeId, setActiveNodeId] = useState<string>('NONE');
+  const [offsets, setOffsets] = useState<Record<string, { x: number; y: number }>>({});
+  const pulseTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (pulseTimerRef.current !== null) {
+        window.clearTimeout(pulseTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleNodeMove = (
+    id: string,
+    e: React.PointerEvent<HTMLButtonElement | HTMLDivElement>,
+  ) => {
+    if (prefersReducedMotion || isCoarsePointer) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const dx = (e.clientX - centerX) * pullStrength;
+    const dy = (e.clientY - centerY) * pullStrength;
+
+    setActiveNodeId(id.toUpperCase());
+    setOffsets((prev) => ({
+      ...prev,
+      [id]: {
+        x: Math.max(-36, Math.min(36, dx)),
+        y: Math.max(-36, Math.min(36, dy)),
+      },
+    }));
+  };
+
+  const resetNode = (id: string) => {
+    setActiveNodeId('IDLE');
+    setOffsets((prev) => ({
+      ...prev,
+      [id]: { x: 0, y: 0 },
+    }));
+  };
+
+  const triggerTouchPulse = (id: string) => {
+    setActiveNodeId(id.toUpperCase());
+    setOffsets((prev) => ({
+      ...prev,
+      [id]: { x: 0, y: -12 },
+    }));
+    if (pulseTimerRef.current !== null) {
+      window.clearTimeout(pulseTimerRef.current);
+    }
+    pulseTimerRef.current = window.setTimeout(() => {
+      setOffsets((prev) => ({
+        ...prev,
+        [id]: { x: 0, y: 0 },
+      }));
+    }, 260);
+  };
+
+  const currentVector = offsets[activeNodeId.toLowerCase()] ?? { x: 0, y: 0 };
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+        {/* Left 4 Magnetic Interactive Nodes */}
+        <div className="md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {MAGNETIC_NODES.map((node) => {
+            const pos = offsets[node.id] ?? { x: 0, y: 0 };
+            return (
+              <div
+                key={node.id}
+                className="relative bg-offwhite border border-espresso/15 p-5 flex items-center justify-center min-h-[145px]"
+              >
+                <motion.button
+                  type="button"
+                  onPointerMove={(e) => handleNodeMove(node.id, e)}
+                  onPointerLeave={() => resetNode(node.id)}
+                  onClick={() => triggerTouchPulse(node.id)}
+                  animate={{ x: pos.x, y: pos.y }}
+                  transition={{ type: 'spring', stiffness: 240, damping: 16, mass: 0.7 }}
+                  data-cursor="MAGNET"
+                  className="w-full p-4 bg-espresso text-ivory border border-champagne/30 hover:border-champagne shadow-lg text-left transition-colors"
+                >
+                  <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne mb-2">
+                    <span>NODE {node.code}</span>
+                    <Magnet className="size-3.5" aria-hidden="true" />
+                  </div>
+                  <p className="font-serif text-2xl font-light text-ivory leading-tight">
+                    {node.label}
+                  </p>
+                  <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-taupe mt-1">
+                    {node.sub}
+                  </p>
+                </motion.button>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Right Centerpiece Magnetic Core Seal */}
+        <div
+          onPointerMove={(e) => handleNodeMove('amdz-core', e)}
+          onPointerLeave={() => resetNode('amdz-core')}
+          onClick={() => triggerTouchPulse('amdz-core')}
+          className="md:col-span-5 min-h-[300px] bg-espresso text-ivory border border-espresso p-7 sm:p-8 flex flex-col items-center justify-between text-center cursor-pointer"
+        >
+          <div className="w-full flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne">
+            <span>MAGNETIC CORE · AMDZ</span>
+            <span>NODE: {activeNodeId}</span>
+          </div>
+
+          <motion.div
+            animate={{
+              x: offsets['amdz-core']?.x ?? 0,
+              y: offsets['amdz-core']?.y ?? 0,
+            }}
+            transition={{ type: 'spring', stiffness: 210, damping: 15 }}
+            data-cursor="TARIK"
+            className="size-32 rounded-full border border-champagne/50 bg-obsidian/80 flex flex-col items-center justify-center gap-1 shadow-[0_24px_60px_rgba(0,0,0,0.65)]"
+          >
+            <MonogramMark size={46} className="text-champagne" />
+            <span className="font-mono text-[9px] tracking-[0.24em] uppercase text-taupe">
+              PULL ME
+            </span>
+          </motion.div>
+
+          <div className="w-full pt-3 border-t border-champagne/15 flex items-center justify-between font-mono text-[10px] tracking-[0.18em] uppercase text-taupe">
+            <span>
+              ΔX: { (offsets['amdz-core']?.x ?? currentVector.x).toFixed(1) }PX
+            </span>
+            <span>
+              ΔY: { (offsets['amdz-core']?.y ?? currentVector.y).toFixed(1) }PX
+            </span>
+            <span className="text-champagne">
+              GAIN: {Math.round(pullStrength * 100)}%
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Magnetic Physics Controls */}
+      <div className="flex flex-wrap items-center justify-between gap-4 bg-offwhite border border-espresso/15 p-4 sm:p-5">
+        <p className="font-sans text-[15px] sm:text-sm text-charcoal/85">
+          Gerakkan kursor mendekati tombol untuk merasakan gaya tarik pegas (*magnetic pull*), atau ketuk elemen pada layar sentuh.
+        </p>
+
+        <label className="flex items-center gap-3 font-mono text-[11px] tracking-[0.18em] uppercase text-mocha">
+          <span>Gaya Tarik: {Math.round(pullStrength * 100)}%</span>
+          <input
+            type="range"
+            min={0.18}
+            max={0.65}
+            step={0.03}
+            value={pullStrength}
+            onChange={(e) => setPullStrength(Number(e.target.value))}
+            className="accent-espresso w-28 sm:w-36"
+          />
+        </label>
+      </div>
+    </div>
+  );
+};
+
+/* ============================================================================
+   MODULE C — WARM CHIAROSCURO PARTICLE CANVAS
+============================================================================ */
 const ChiaroscuroCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
@@ -298,11 +715,10 @@ const ChiaroscuroCanvas: React.FC = () => {
 
 export const CreativeLabPage: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
-  const isCoarsePointer = useIsCoarsePointer();
 
-  const [specimenText, setSpecimenText] = useState('AFLAN · CREATIVE CRAFT');
-  const [tracking, setTracking] = useState(0.1);
-  const [fontSize, setFontSize] = useState(56);
+  const [specimenText, setSpecimenText] = useState("AFLAN MU'AFA DZULFIQAR");
+  const [tracking, setTracking] = useState(0.08);
+  const [fontSize, setFontSize] = useState(54);
   const [italicMode, setItalicMode] = useState(true);
   const [outlineMode, setOutlineMode] = useState(false);
 
@@ -310,7 +726,6 @@ export const CreativeLabPage: React.FC = () => {
     EASING_PRESETS[0],
   );
   const [runCount, setRunCount] = useState(0);
-  const [magnetOffset, setMagnetOffset] = useState({ x: 0, y: 0 });
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [trackTravel, setTrackTravel] = useState(260);
 
@@ -350,13 +765,16 @@ export const CreativeLabPage: React.FC = () => {
           className="pointer-events-none absolute inset-0 studio-warm-halo opacity-60"
         />
         <div className="relative z-10 max-w-[1440px] mx-auto">
-          <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-champagne/15">
+          <Reveal
+            variant="up"
+            className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-champagne/15"
+          >
             <span className="inline-flex items-center gap-2 font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
               <Sparkles className="size-3.5" aria-hidden="true" />
               BAB 06 — CREATIVE LAB
             </span>
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.22em] uppercase text-taupe">
-              04 STUDI INTERAKTIF LANGSUNG
+              06 MODUL INTERAKTIF CREATIVE-TECH
             </span>
           </Reveal>
 
@@ -376,22 +794,98 @@ export const CreativeLabPage: React.FC = () => {
             </div>
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
               <p className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed">
-                Etalase interaktif Interactive UI Implementation—menampilkan kompositor
-                tipografi editorial, pencahayaan kanvas chiaroscuro, koreografi kurva motion,
-                dan analisis rasio kontras aksesibilitas secara langsung.
+                Etalase interaktif Creative-Tech &amp; Interactive UI Implementation—menampilkan{' '}
+                <span className="text-champagne">Dynamic Spotlight Masking</span>,{' '}
+                <span className="text-champagne">Magnetic Cursor UI</span>, kompositor tipografi
+                editorial, kanvas cahaya chiaroscuro, koreografi motion, dan matriks kontras WCAG.
               </p>
             </Reveal>
+          </div>
+
+          {/* Quick-Jump Module Index Bar */}
+          <div className="mt-10 pt-6 border-t border-champagne/15 flex flex-wrap gap-2">
+            {[
+              { href: '#lab-spotlight', label: '01 · Dynamic Spotlight' },
+              { href: '#lab-magnetic', label: '02 · Magnetic Cursor UI' },
+              { href: '#lab-typography', label: '03 · Tipografi Live' },
+              { href: '#lab-chiaroscuro', label: '04 · Chiaroscuro Canvas' },
+              { href: '#lab-easing', label: '05 · Koreografi Motion' },
+              { href: '#lab-contrast', label: '06 · Matriks Kontras' },
+            ].map((mod) => (
+              <a
+                key={mod.href}
+                href={mod.href}
+                className="px-3.5 py-2 rounded-full bg-espresso/60 border border-champagne/20 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne hover:bg-champagne hover:text-obsidian transition-colors"
+              >
+                {mod.label}
+              </a>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* LAB 01 — TYPOGRAPHY COMPOSITOR */}
-      <section className="bg-espresso text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-champagne/15">
+      {/* LAB 01 — DYNAMIC SPOTLIGHT MASKING */}
+      <section
+        id="lab-spotlight"
+        className="bg-espresso text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-champagne/15"
+      >
+        <div className="max-w-[1440px] mx-auto space-y-8">
+          <Reveal variant="up" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
+            <div className="lg:col-span-7">
+              <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
+                <Compass className="size-3.5" aria-hidden="true" />
+                LAB 01 · DYNAMIC SPOTLIGHT · CSS MASK COMPOSITING
+              </span>
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
+                Senter Masking Editorial Interaktif
+              </h2>
+            </div>
+            <p className="lg:col-span-5 font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 leading-relaxed">
+              Kursor berfungsi sebagai senter optik yang menembus lapisan gelap untuk mengungkap
+              manifesto tipografi dan cetak biru koordinat di baliknya secara real-time.
+            </p>
+          </Reveal>
+
+          <DynamicSpotlightStage />
+        </div>
+      </section>
+
+      {/* LAB 02 — MAGNETIC CURSOR UI PLAYGROUND */}
+      <section
+        id="lab-magnetic"
+        className="bg-ivory text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-espresso/15"
+      >
+        <div className="max-w-[1440px] mx-auto space-y-8">
+          <Reveal variant="up" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
+            <div className="lg:col-span-7">
+              <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.26em] uppercase text-mocha">
+                <Magnet className="size-3.5" aria-hidden="true" />
+                LAB 02 · MAGNETIC CURSOR UI · SPRING KINEMATICS
+              </span>
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
+                Medan Interaksi Magnetik Multi-Elemen
+              </h2>
+            </div>
+            <p className="lg:col-span-5 font-sans text-[15px] sm:text-base lg:text-sm text-charcoal/80 leading-relaxed">
+              Setiap kartu dan segel merespons jarak vektor kursor dengan tarikan fisik berbasis
+              pegas (*spring physics*), kembali presisi ke titik kesetimbangan saat kursor menjauh.
+            </p>
+          </Reveal>
+
+          <MagneticCursorPlayground />
+        </div>
+      </section>
+
+      {/* LAB 03 — TYPOGRAPHY COMPOSITOR */}
+      <section
+        id="lab-typography"
+        className="bg-espresso text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-champagne/15"
+      >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up" className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <span className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
-                LAB 01 · SPESIMEN TIPOGRAFI
+                LAB 03 · SPESIMEN TIPOGRAFI
               </span>
               <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
                 Kompositor Display Editorial
@@ -515,13 +1009,16 @@ export const CreativeLabPage: React.FC = () => {
         </div>
       </section>
 
-      {/* LAB 02 — CHIAROSCURO CANVAS */}
-      <section className="bg-obsidian text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-champagne/15">
+      {/* LAB 04 — CHIAROSCURO CANVAS */}
+      <section
+        id="lab-chiaroscuro"
+        className="bg-obsidian text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-champagne/15"
+      >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
             <div className="lg:col-span-7">
               <span className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
-                LAB 02 · CREATIVE CODING · HTML5 CANVAS
+                LAB 04 · CREATIVE CODING · HTML5 CANVAS
               </span>
               <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
                 Medan Cahaya Warm Chiaroscuro
@@ -537,123 +1034,93 @@ export const CreativeLabPage: React.FC = () => {
         </div>
       </section>
 
-      {/* LAB 03 — EASING & MAGNETIC SEAL */}
-      <section className="bg-ivory text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-espresso/15">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 items-start">
-          <div className="md:col-span-7 space-y-6">
-            <div>
-              <span className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha">
-                LAB 03 · KOREOGRAFI MOTION
-              </span>
-              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
-                Koreografi Kurva Easing
-              </h2>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              {EASING_PRESETS.map((preset) => {
-                const active = selectedPreset.id === preset.id;
-                return (
-                  <button
-                    key={preset.id}
-                    type="button"
-                    onClick={() => {
-                      setSelectedPreset(preset);
-                      setRunCount((c) => c + 1);
-                    }}
-                    className={`px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border transition-colors ${
-                      active
-                        ? 'bg-espresso text-ivory border-espresso'
-                        : 'bg-offwhite text-espresso border-espresso/20 hover:border-mocha'
-                    }`}
-                  >
-                    {preset.label}
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="bg-offwhite border border-espresso/15 p-5 sm:p-6 space-y-5">
-              <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-mocha">
-                <span>{selectedPreset.css}</span>
-                <span>DURASI: {selectedPreset.duration}s</span>
-              </div>
-
-              <div
-                ref={trackRef}
-                className="relative h-14 bg-ivory border border-espresso/15 overflow-hidden flex items-center px-3"
-              >
-                <motion.div
-                  key={`${selectedPreset.id}-${runCount}`}
-                  initial={{ x: 0 }}
-                  animate={{ x: prefersReducedMotion ? 0 : trackTravel }}
-                  transition={{
-                    duration: prefersReducedMotion ? 0 : selectedPreset.duration,
-                    ease: selectedPreset.bezier,
-                  }}
-                  className="px-4 py-2 bg-espresso text-champagne font-mono text-[10px] tracking-[0.22em] uppercase shrink-0"
-                >
-                  AMDZ
-                </motion.div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <p className="font-sans text-[15px] sm:text-base lg:text-sm text-charcoal/80">
-                  {selectedPreset.note}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setRunCount((c) => c + 1)}
-                  className="self-start sm:self-auto shrink-0 px-4 py-2.5 lg:py-2 rounded-full bg-mocha text-ivory font-mono text-[10px] tracking-[0.18em] uppercase hover:bg-espresso transition-colors"
-                >
-                  Putar Ulang
-                </button>
-              </div>
-            </div>
+      {/* LAB 05 — EASING CHOREOGRAPHY */}
+      <section
+        id="lab-easing"
+        className="bg-ivory text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-espresso/15"
+      >
+        <div className="max-w-[1440px] mx-auto space-y-6">
+          <div>
+            <span className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha">
+              LAB 05 · KOREOGRAFI MOTION
+            </span>
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
+              Koreografi Kurva Easing
+            </h2>
           </div>
 
-          <div className="md:col-span-5">
+          <div className="flex flex-wrap gap-2">
+            {EASING_PRESETS.map((preset) => {
+              const active = selectedPreset.id === preset.id;
+              return (
+                <button
+                  key={preset.id}
+                  type="button"
+                  onClick={() => {
+                    setSelectedPreset(preset);
+                    setRunCount((c) => c + 1);
+                  }}
+                  className={`px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border transition-colors ${
+                    active
+                      ? 'bg-espresso text-ivory border-espresso'
+                      : 'bg-offwhite text-espresso border-espresso/20 hover:border-mocha'
+                  }`}
+                >
+                  {preset.label}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="bg-offwhite border border-espresso/15 p-5 sm:p-6 space-y-5">
+            <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-mocha">
+              <span>{selectedPreset.css}</span>
+              <span>DURASI: {selectedPreset.duration}s</span>
+            </div>
+
             <div
-              onPointerMove={(e) => {
-                if (prefersReducedMotion || isCoarsePointer) return;
-                const rect = e.currentTarget.getBoundingClientRect();
-                const relX = (e.clientX - rect.left - rect.width / 2) * 0.24;
-                const relY = (e.clientY - rect.top - rect.height / 2) * 0.24;
-                setMagnetOffset({
-                  x: Math.max(-28, Math.min(28, relX)),
-                  y: Math.max(-28, Math.min(28, relY)),
-                });
-              }}
-              onPointerLeave={() => setMagnetOffset({ x: 0, y: 0 })}
-              className="h-full min-h-[280px] lg:min-h-[290px] bg-espresso text-ivory border border-espresso p-7 sm:p-8 flex flex-col items-center justify-between text-center"
+              ref={trackRef}
+              className="relative h-14 bg-ivory border border-espresso/15 overflow-hidden flex items-center px-3"
             >
-              <span className="font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
-                STUDI MAGNETIK · ARAHKAN KURSOR
-              </span>
-
               <motion.div
-                animate={{ x: magnetOffset.x, y: magnetOffset.y }}
-                transition={{ type: 'spring', stiffness: 220, damping: 18 }}
-                data-cursor="MAGNET"
-                className="size-28 rounded-full border border-champagne/45 bg-obsidian/70 flex items-center justify-center shadow-2xl"
+                key={`${selectedPreset.id}-${runCount}`}
+                initial={{ x: 0 }}
+                animate={{ x: prefersReducedMotion ? 0 : trackTravel }}
+                transition={{
+                  duration: prefersReducedMotion ? 0 : selectedPreset.duration,
+                  ease: selectedPreset.bezier,
+                }}
+                className="px-4 py-2 bg-espresso text-champagne font-mono text-[10px] tracking-[0.22em] uppercase shrink-0"
               >
-                <MonogramMark size={48} className="text-champagne" />
+                AMDZ
               </motion.div>
+            </div>
 
-              <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-taupe">
-                OFFSET X: {magnetOffset.x.toFixed(0)}PX · Y: {magnetOffset.y.toFixed(0)}PX
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <p className="font-sans text-[15px] sm:text-base lg:text-sm text-charcoal/80">
+                {selectedPreset.note}
               </p>
+              <button
+                type="button"
+                onClick={() => setRunCount((c) => c + 1)}
+                className="self-start sm:self-auto shrink-0 px-4 py-2.5 lg:py-2 rounded-full bg-mocha text-ivory font-mono text-[10px] tracking-[0.18em] uppercase hover:bg-espresso transition-colors"
+              >
+                Putar Ulang
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* LAB 04 — CONTRAST MATRIX */}
-      <section className="bg-chocolate text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
+      {/* LAB 06 — CONTRAST MATRIX */}
+      <section
+        id="lab-contrast"
+        className="bg-chocolate text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12"
+      >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up">
             <span className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
-              LAB 04 · AKSESIBILITAS DESIGN SYSTEM
+              LAB 06 · AKSESIBILITAS DESIGN SYSTEM
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
               Matriks Kontras Palet AFLAN
