@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Check, Copy, Download, Github, Linkedin } from 'lucide-react';
+import { ArrowUpRight, Check, Copy, Download, Github } from 'lucide-react';
 import { BrandSignature } from '@/components/brand/Monogram';
 import { navigationRoutes, personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
@@ -65,10 +65,11 @@ export const Footer: React.FC = () => {
             </Link>
             <a
               href={contactData.cvHref}
-              onClick={(e) => e.preventDefault()}
-              data-cursor="CV"
+              download={contactData.cvFilename}
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Unduh CV Aflan Mu'afa Dzulfiqar"
-              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full border border-champagne/40 bg-obsidian/60 text-champagne font-mono text-xs tracking-[0.16em] uppercase hover:bg-champagne hover:text-obsidian transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full border border-champagne/40 bg-obsidian/60 text-champagne font-mono text-xs tracking-[0.16em] uppercase hover:bg-champagne hover:text-obsidian active:scale-[0.97] transition-all"
             >
               <Download className="size-3.5" aria-hidden="true" />
               Unduh CV
@@ -76,8 +77,7 @@ export const Footer: React.FC = () => {
             <button
               type="button"
               onClick={handleCopyEmail}
-              data-cursor="SALIN"
-              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full border border-champagne/35 bg-espresso/60 text-ivory font-mono text-xs tracking-[0.16em] uppercase hover:border-champagne hover:bg-espresso transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full border border-champagne/35 bg-espresso/60 text-ivory font-mono text-xs tracking-[0.16em] uppercase hover:border-champagne hover:bg-espresso active:scale-[0.97] transition-all"
             >
               {copied ? (
                 <>
@@ -98,36 +98,22 @@ export const Footer: React.FC = () => {
           <div className="md:col-span-2 lg:col-span-4 space-y-5">
             <BrandSignature tone="light" />
             <p className="font-sans text-[15px] md:text-sm leading-relaxed text-ivory/75 max-w-md lg:max-w-sm">
-              <span className="text-ivory font-medium">{personalData.fullName}</span> —{' '}
-              {personalData.positioning}. Mahasiswa {personalData.studyProgram} di{' '}
-              {personalData.university}.
+              <span className="text-ivory font-medium">{personalData.fullName}</span>
+              {` — ${personalData.positioning}. Mahasiswa ${personalData.studyProgram} di ${personalData.university}.`}
             </p>
             <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-taupe">
-              {personalData.currentLocation} · {personalData.coordinates}
+              {`${personalData.currentLocation} · ${personalData.coordinates}`}
             </p>
             <div className="flex flex-wrap items-center gap-2.5 pt-1">
               <a
                 href={contactData.githubHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                data-cursor="GITHUB"
                 aria-label="GitHub Flannss"
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/25 bg-espresso/50 font-mono text-[11px] tracking-[0.16em] uppercase text-ivory/90 hover:border-champagne hover:text-champagne transition-colors"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/25 bg-espresso/50 font-mono text-[11px] tracking-[0.16em] uppercase text-ivory/90 hover:border-champagne hover:text-champagne active:scale-[0.97] transition-all"
               >
                 <Github className="size-3.5" aria-hidden="true" />
                 <span>GitHub</span>
-                <ArrowUpRight className="size-3" aria-hidden="true" />
-              </a>
-              <a
-                href={contactData.linkedinHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="LINKEDIN"
-                aria-label="LinkedIn Aflan Mu'afa Dzulfiqar"
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/25 bg-espresso/50 font-mono text-[11px] tracking-[0.16em] uppercase text-ivory/90 hover:border-champagne hover:text-champagne transition-colors"
-              >
-                <Linkedin className="size-3.5" aria-hidden="true" />
-                <span>LinkedIn</span>
                 <ArrowUpRight className="size-3" aria-hidden="true" />
               </a>
             </div>
@@ -191,9 +177,12 @@ export const Footer: React.FC = () => {
             to="/contact"
             data-cursor="HUBUNGI"
             className="group block text-center"
-            aria-label="Hubungi Aflan"
+            aria-label="AFLAN CONNECT — Hubungi Aflan"
           >
-            <div className="flex flex-wrap items-baseline justify-center gap-x-3 sm:gap-x-6 lg:gap-x-8 leading-[0.88] lg:leading-[0.86]">
+            <div
+              aria-hidden="true"
+              className="flex flex-wrap items-baseline justify-center gap-x-3 sm:gap-x-6 lg:gap-x-8 leading-[0.88] lg:leading-[0.86]"
+            >
               <span className="font-serif font-light tracking-[0.06em] text-[clamp(2.65rem,12.5vw,4.8rem)] md:text-[clamp(4.8rem,12.5vw,7.4rem)] lg:text-[clamp(3.6rem,13vw,11.5rem)] text-ivory group-hover:text-champagne transition-colors duration-500">
                 AFLAN
               </span>{' '}
@@ -206,7 +195,7 @@ export const Footer: React.FC = () => {
 
         <div className="pt-6 border-t border-champagne/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono text-[11px] tracking-[0.16em] uppercase text-taupe">
           <p>
-            © {currentYear} {personalData.fullName} ({personalData.monogram}). Dirancang dengan presisi.
+            {`© ${currentYear} ${personalData.fullName} (${personalData.monogram}). Dirancang dengan presisi.`}
           </p>
           <p className="text-champagne/75">
             Tangerang → Purwokerto · Identitas Digital

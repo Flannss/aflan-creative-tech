@@ -10,7 +10,6 @@ import {
   ExternalLink,
   Github,
   GraduationCap,
-  Linkedin,
   MapPin,
 } from 'lucide-react';
 import { personalData } from '@/data/personal';
@@ -320,10 +319,10 @@ export const AboutPage: React.FC = () => {
                     href={satuRuangUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 pt-1 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne hover:text-ivory transition-colors"
+                    className="inline-flex items-center gap-1.5 max-w-full min-w-0 pt-1 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne hover:text-ivory transition-colors"
                   >
-                    saturuangcreative.framer.website
-                    <ExternalLink className="size-3" aria-hidden="true" />
+                    <span className="truncate">saturuangcreative.framer.website</span>
+                    <ExternalLink className="size-3 shrink-0" aria-hidden="true" />
                   </a>
                 </div>
               </div>
@@ -332,26 +331,25 @@ export const AboutPage: React.FC = () => {
             <div className="flex flex-wrap gap-3 pt-2">
               <a
                 href={contactData.cvHref}
-                onClick={(e) => e.preventDefault()}
-                data-cursor="CV"
+                download={contactData.cvFilename}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Unduh CV Aflan Mu'afa Dzulfiqar"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-espresso text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:bg-mocha transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-espresso text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:bg-mocha active:scale-[0.97] transition-all"
               >
                 <Download className="size-3.5" aria-hidden="true" />
                 Unduh CV
               </a>
               <Link
                 to="/journey"
-                data-cursor="LINIMASA"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-espresso/30 text-espresso font-mono text-xs tracking-[0.18em] uppercase hover:border-espresso hover:bg-ivory transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-espresso/30 text-espresso font-mono text-xs tracking-[0.18em] uppercase hover:border-espresso hover:bg-ivory active:scale-[0.97] transition-all"
               >
                 Jelajahi Perjalanan
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
               <Link
                 to="/achievements"
-                data-cursor="PENCAPAIAN"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-espresso/30 text-espresso font-mono text-xs tracking-[0.18em] uppercase hover:border-espresso hover:bg-ivory transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-espresso/30 text-espresso font-mono text-xs tracking-[0.18em] uppercase hover:border-espresso hover:bg-ivory active:scale-[0.97] transition-all"
               >
                 Pencapaian &amp; Sertifikasi
                 <ArrowUpRight className="size-4" aria-hidden="true" />
@@ -363,23 +361,10 @@ export const AboutPage: React.FC = () => {
                 href={contactData.githubHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                data-cursor="GITHUB"
                 className="inline-flex items-center gap-1.5 hover:text-mocha transition-colors"
               >
                 <Github className="size-3.5" aria-hidden="true" />
                 GitHub (Flannss)
-                <ArrowUpRight className="size-3.5" aria-hidden="true" />
-              </a>
-              <span className="text-espresso/30" aria-hidden="true">·</span>
-              <a
-                href={contactData.linkedinHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="LINKEDIN"
-                className="inline-flex items-center gap-1.5 hover:text-mocha transition-colors"
-              >
-                <Linkedin className="size-3.5" aria-hidden="true" />
-                LinkedIn
                 <ArrowUpRight className="size-3.5" aria-hidden="true" />
               </a>
             </div>

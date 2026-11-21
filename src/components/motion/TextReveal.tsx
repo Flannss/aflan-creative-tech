@@ -12,9 +12,22 @@ interface TextRevealProps {
   immediate?: boolean;
 }
 
+function extractNodeText(node: React.ReactNode): string {
+  if (typeof node === 'string' || typeof node === 'number') {
+    return String(node);
+  }
+  if (Array.isArray(node)) {
+    return node.map(extractNodeText).join('');
+  }
+  if (React.isValidElement<{ children?: React.ReactNode }>(node)) {
+    return extractNodeText(node.props.children);
+  }
+  return '';
+}
+
 /**
  * Print-editorial masked line-by-line typography reveal.
- * Runs cleanly across mobile, tablet, and desktop; respects OS reduced-motion.
+ * Preserves intact accessible spacing for screen readers and copy-paste DOM extraction.
  */
 export const TextReveal: React.FC<TextRevealProps> = ({
   lines,
@@ -27,12 +40,17 @@ export const TextReveal: React.FC<TextRevealProps> = ({
 }) => {
   const prefersReducedMotion = useReducedMotion();
 
+  const fullAccessibleText = lines
+    .map((line) => extractNodeText(line).replace(/\s+/g, ' ').trim())
+    .filter(Boolean)
+    .join(' ');
+
   if (prefersReducedMotion) {
     return (
-      <Tag className={className}>
+      <Tag className={className} aria-label={fullAccessibleText || undefined}>
         {lines.map((line, index) => (
           <React.Fragment key={index}>
-            <span className={`block ${lineClassName}`}>
+            <span aria-hidden="true" className={`block ${lineClassName}`}>
               {line}
             </span>
             {index < lines.length - 1 ? ' ' : null}
@@ -43,10 +61,13 @@ export const TextReveal: React.FC<TextRevealProps> = ({
   }
 
   return (
-    <Tag className={className}>
+    <Tag className={className} aria-label={fullAccessibleText || undefined}>
       {lines.map((line, index) => (
         <React.Fragment key={index}>
-          <span className={`block overflow-hidden pb-[0.08em] -mb-[0.08em] ${lineClassName}`}>
+          <span
+            aria-hidden="true"
+            className={`block overflow-hidden pb-[0.08em] -mb-[0.08em] ${lineClassName}`}
+          >
             <motion.span
               className="block will-change-transform"
               initial={{ y: '108%', opacity: 0.15 }}
@@ -54,10 +75,10 @@ export const TextReveal: React.FC<TextRevealProps> = ({
                 ? { animate: { y: '0%', opacity: 1 } }
                 : {
                     whileInView: { y: '0%', opacity: 1 },
-                    viewport: { once: true, amount: 0.25 },
+                    viewport: { once: true, amount: 0.2 },
                   })}
               transition={{
-                duration: 0.96,
+                duration: 0.9,
                 delay: delay + index * stagger,
                 ease: EASE_LUXURY,
               }}

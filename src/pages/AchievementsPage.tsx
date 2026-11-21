@@ -112,7 +112,6 @@ export const AchievementsPage: React.FC = () => {
                   key={entry.id}
                   type="button"
                   onClick={() => setActiveId(entry.id)}
-                  data-cursor="LIHAT"
                   className={`w-full text-left py-6 px-4 sm:px-6 md:border md:border-espresso/15 lg:border-0 active:scale-[0.99] transition-all duration-300 ${
                     isOrphanOnTablet ? 'md:col-span-2' : ''
                   } ${

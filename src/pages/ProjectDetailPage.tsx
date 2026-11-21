@@ -20,7 +20,10 @@ export const ProjectDetailPage: React.FC = () => {
 
   useEffect(() => {
     if (project) {
-      document.title = `${project.title} — AFLAN (AMDZ)`;
+      document.title =
+        project.slug === 'aflan-digital-identity'
+          ? 'Studi Kasus: Identitas Digital Personal — AFLAN (AMDZ)'
+          : `${project.title} — AFLAN (AMDZ)`;
     }
   }, [project]);
 
@@ -82,22 +85,23 @@ export const ProjectDetailPage: React.FC = () => {
               </p>
             </div>
 
-            <Reveal variant="up" delay={0.1} className="lg:col-span-4 lg:text-right space-y-3">
+            <Reveal variant="up" delay={0.1} className="lg:col-span-4 min-w-0 lg:text-right space-y-3">
               <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-taupe">
                 LINIMASA / STATUS
               </p>
               <p className="font-serif text-2xl text-champagne">{project.yearLabel}</p>
 
               {project.liveUrl && (
-                <div className="pt-2">
+                <div className="pt-2 flex lg:justify-end">
                   <a
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    data-cursor="KUNJUNGI"
-                    className="inline-flex items-center gap-2 max-w-full px-5 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.14em] sm:tracking-[0.16em] uppercase font-medium hover:bg-ivory transition-colors wrap-break-word sm:whitespace-nowrap"
+                    className="inline-flex items-center justify-center gap-2 max-w-full min-w-0 overflow-hidden px-4 xl:px-5 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-[11px] xl:text-xs tracking-[0.12em] xl:tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
                   >
-                    <span>{project.liveUrlLabel ?? 'Kunjungi Live Site'}</span>
+                    <span className="truncate text-ellipsis">
+                      {project.liveUrlLabel ?? 'Kunjungi Situs Live'}
+                    </span>
                     <ExternalLink className="size-3.5 shrink-0" aria-hidden="true" />
                   </a>
                 </div>

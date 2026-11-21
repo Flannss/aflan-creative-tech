@@ -85,7 +85,7 @@ export const projectsData: ProjectEntry[] = [
     previewCaption: 'Satu Ruang Creative — Emblem visual resmi studio digital mahasiswa.',
     featuredOnHome: true,
     liveUrl: 'https://saturuangcreative.framer.website/',
-    liveUrlLabel: 'Kunjungi saturuangcreative.framer.website',
+    liveUrlLabel: 'Kunjungi Situs Live',
   },
   {
     slug: 'somasii-lost-and-found',

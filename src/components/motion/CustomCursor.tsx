@@ -3,9 +3,9 @@ import { useLocation } from 'react-router-dom';
 import { useReducedMotion } from 'framer-motion';
 import { useCanHoverFine } from '@/hooks/useMediaQuery';
 
-const TOOLTIP_OFFSET_X = 24;
-const TOOLTIP_OFFSET_Y = 24;
-const VIEWPORT_MARGIN = 12;
+const TOOLTIP_OFFSET_X = 28;
+const TOOLTIP_OFFSET_Y = 28;
+const VIEWPORT_MARGIN = 14;
 
 /**
  * Refined editorial trailing cursor aura + offset pill tooltip for pointer-fine desktop devices.

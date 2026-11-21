@@ -5,7 +5,6 @@ import {
   Clock,
   Copy,
   Github,
-  Linkedin,
   Mail,
   MessageCircle,
   Send,
@@ -229,8 +228,7 @@ export const ContactPage: React.FC = () => {
                         target={channel.external ? '_blank' : undefined}
                         rel={channel.external ? 'noopener noreferrer' : undefined}
                         aria-label={`Buka ${channel.label}`}
-                        data-cursor="BUKA"
-                        className="shrink-0 size-10 rounded-full border border-champagne/30 flex items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian transition-colors"
+                        className="shrink-0 size-10 rounded-full border border-champagne/30 flex items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-all"
                       >
                         <ArrowUpRight className="size-4" aria-hidden="true" />
                       </a>
@@ -243,7 +241,6 @@ export const ContactPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => copyValue(channel.id, channel.value)}
-                        data-cursor="SALIN"
                         className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.2em] uppercase text-champagne hover:text-ivory transition-colors"
                       >
                         {isCopied ? (
@@ -268,7 +265,7 @@ export const ContactPage: React.FC = () => {
                   <p className="text-champagne">BASIS &amp; INSTITUSI</p>
                   <p>{contactData.location}</p>
                   <p>
-                    {personalData.university} · {personalData.studyProgram}
+                    {`${personalData.university} · ${personalData.studyProgram}`}
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-champagne/15">
@@ -276,23 +273,10 @@ export const ContactPage: React.FC = () => {
                     href={contactData.githubHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    data-cursor="GITHUB"
                     className="inline-flex items-center gap-1.5 text-ivory hover:text-champagne transition-colors"
                   >
                     <Github className="size-3.5" aria-hidden="true" />
-                    GitHub
-                    <ArrowUpRight className="size-3" aria-hidden="true" />
-                  </a>
-                  <span className="text-champagne/30" aria-hidden="true">·</span>
-                  <a
-                    href={contactData.linkedinHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-cursor="LINKEDIN"
-                    className="inline-flex items-center gap-1.5 text-ivory hover:text-champagne transition-colors"
-                  >
-                    <Linkedin className="size-3.5" aria-hidden="true" />
-                    LinkedIn
+                    GitHub (Flannss)
                     <ArrowUpRight className="size-3" aria-hidden="true" />
                   </a>
                 </div>
@@ -447,8 +431,7 @@ export const ContactPage: React.FC = () => {
                 <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
                   <button
                     type="submit"
-                    data-cursor="KIRIM"
-                    className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-espresso text-ivory font-mono text-xs tracking-[0.2em] uppercase hover:bg-mocha transition-colors"
+                    className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-espresso text-ivory font-mono text-xs tracking-[0.2em] uppercase hover:bg-mocha active:scale-[0.97] transition-all"
                   >
                     <Send className="size-4" aria-hidden="true" />
                     Siapkan &amp; Buka Draf Email

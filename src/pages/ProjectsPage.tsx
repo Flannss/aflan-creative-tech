@@ -149,7 +149,6 @@ export const ProjectsPage: React.FC = () => {
                   >
                     <Link
                       to={`/projects/${project.slug}`}
-                      data-cursor="BUKA"
                       className="group flex flex-col h-full bg-obsidian border border-champagne/20 hover:border-champagne/60 active:border-champagne active:scale-[0.985] transition-all overflow-hidden"
                     >
                       <div className="relative aspect-video overflow-hidden border-b border-champagne/15">

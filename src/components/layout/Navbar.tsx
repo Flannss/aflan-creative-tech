@@ -256,10 +256,10 @@ export const Navbar: React.FC = () => {
                 </button>
               </div>
 
-              <div className="max-w-[1440px] w-full mx-auto py-6 sm:py-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center my-auto">
+              <div className="max-w-[1440px] w-full mx-auto py-6 sm:py-10 grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-center my-auto">
                 <nav
                   aria-label="Daftar 9 bab portofolio"
-                  className="lg:col-span-7 divide-y divide-champagne/10"
+                  className="lg:col-span-7 min-w-0 divide-y divide-champagne/10"
                 >
                   {navigationRoutes.map((route, i) => {
                     const isCurrent =
@@ -273,8 +273,8 @@ export const Navbar: React.FC = () => {
                         initial={prefersReducedMotion ? false : { opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{
-                          delay: prefersReducedMotion ? 0 : 0.1 + i * 0.04,
-                          duration: 0.56,
+                          delay: prefersReducedMotion ? 0 : 0.08 + i * 0.035,
+                          duration: 0.48,
                           ease: EASE_LUXURY,
                         }}
                       >
@@ -283,39 +283,38 @@ export const Navbar: React.FC = () => {
                           onMouseEnter={() => setHoveredPath(route.path)}
                           onFocus={() => setHoveredPath(route.path)}
                           onClick={closeMenu}
-                          className="group flex items-center sm:items-baseline justify-between gap-3 sm:gap-4 py-3.5 min-h-[52px] lg:min-h-0 transition-colors"
+                          className="group grid grid-cols-[minmax(0,1fr)_auto] sm:grid-cols-[minmax(195px,max-content)_minmax(0,1fr)_auto] lg:grid-cols-[minmax(185px,max-content)_minmax(0,1fr)_auto] xl:grid-cols-[minmax(240px,max-content)_minmax(0,1fr)_auto] items-center gap-x-4 xl:gap-x-6 py-3.5 min-h-[52px] lg:min-h-0 transition-colors"
                         >
-                          <div className="flex items-baseline gap-3.5 sm:gap-6 min-w-0">
+                          <div className="flex items-baseline gap-3 sm:gap-5 min-w-0">
                             <span className="font-mono text-xs tracking-[0.22em] text-champagne/70 shrink-0">
                               {route.index}
                             </span>{' '}
                             <span
-                              className={`font-serif text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] leading-tight lg:leading-none transition-all duration-300 ${
+                              className={`font-serif text-2xl sm:text-3xl md:text-4xl lg:text-[2rem] xl:text-[2.6rem] leading-tight lg:leading-none whitespace-nowrap transition-all duration-300 ${
                                 isCurrent
                                   ? 'text-champagne italic translate-x-1'
-                                  : 'text-ivory group-hover:text-champagne group-hover:italic group-hover:translate-x-2'
+                                  : 'text-ivory group-hover:text-champagne group-hover:italic group-hover:translate-x-1.5'
                               }`}
                             >
                               {route.label}
                             </span>
                           </div>
 
-                          <div className="flex items-center gap-3 text-right shrink-0">
-                            <span className="hidden sm:inline font-sans text-sm lg:text-xs text-taupe group-hover:text-ivory/90 transition-colors">
-                              {route.subtitle}
-                            </span>
-                            <ArrowUpRight
-                              className="size-4 text-champagne/60 group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
-                              aria-hidden="true"
-                            />
-                          </div>
+                          <span className="hidden sm:block min-w-0 text-right font-sans text-xs leading-snug text-taupe group-hover:text-ivory/90 transition-colors">
+                            {route.subtitle}
+                          </span>
+
+                          <ArrowUpRight
+                            className="size-4 shrink-0 text-champagne/60 group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                            aria-hidden="true"
+                          />
                         </Link>
                       </motion.div>
                     );
                   })}
                 </nav>
 
-                <aside className="hidden lg:flex lg:col-span-5 flex-col gap-6 pl-6 border-l border-champagne/15">
+                <aside className="hidden lg:flex lg:col-span-5 min-w-0 flex-col gap-6 pl-6 border-l border-champagne/15">
                   <div className="relative overflow-hidden border border-champagne/20 bg-espresso/60 p-6">
                     <div className="flex items-center justify-between mb-4">
                       <span className="font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
@@ -383,14 +382,6 @@ export const Navbar: React.FC = () => {
                     className="py-1 lg:py-0 hover:text-champagne transition-colors"
                   >
                     GitHub
-                  </a>
-                  <a
-                    href={contactData.linkedinHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="py-1 lg:py-0 hover:text-champagne transition-colors"
-                  >
-                    LinkedIn
                   </a>
                   <a
                     href={contactData.whatsappHref}

@@ -39,10 +39,12 @@ export const JourneyPage: React.FC = () => {
     }
   };
 
+  const isFirst = activeIndex <= 0;
+  const isLast = activeIndex >= filteredMilestones.length - 1;
+
   const stepMilestone = (delta: number) => {
-    if (filteredMilestones.length === 0) return;
-    const nextIdx =
-      (activeIndex + delta + filteredMilestones.length) % filteredMilestones.length;
+    const nextIdx = activeIndex + delta;
+    if (nextIdx < 0 || nextIdx >= filteredMilestones.length) return;
     setActiveId(filteredMilestones[nextIdx].id);
   };
 
@@ -145,7 +147,6 @@ export const JourneyPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setActiveId(item.id)}
-                      data-cursor="PILIH"
                       className={`w-full h-full text-left p-5 sm:p-6 border active:scale-[0.985] transition-all duration-300 ${
                         isSelected
                           ? 'bg-espresso text-ivory border-espresso shadow-xl'
@@ -257,8 +258,10 @@ export const JourneyPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => stepMilestone(-1)}
+                        disabled={isFirst}
+                        aria-disabled={isFirst}
                         aria-label="Milestone sebelumnya"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-champagne/30 text-ivory font-mono text-[11px] tracking-[0.16em] uppercase hover:bg-champagne hover:text-obsidian transition-colors"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-champagne/30 text-ivory font-mono text-[11px] tracking-[0.16em] uppercase hover:bg-champagne hover:text-obsidian transition-colors disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-ivory"
                       >
                         <ArrowLeft className="size-3.5" aria-hidden="true" />
                         Sebelumnya
@@ -266,8 +269,10 @@ export const JourneyPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => stepMilestone(1)}
+                        disabled={isLast}
+                        aria-disabled={isLast}
                         aria-label="Milestone berikutnya"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-champagne text-obsidian font-mono text-[11px] tracking-[0.16em] uppercase font-medium hover:bg-ivory transition-colors"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-champagne text-obsidian font-mono text-[11px] tracking-[0.16em] uppercase font-medium hover:bg-ivory transition-colors disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-champagne"
                       >
                         Berikutnya
                         <ArrowRight className="size-3.5" aria-hidden="true" />

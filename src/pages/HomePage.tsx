@@ -7,7 +7,6 @@ import {
   Compass,
   Download,
   Github,
-  Linkedin,
   Sparkles,
 } from 'lucide-react';
 import { personalData } from '@/data/personal';
@@ -95,8 +94,11 @@ export const HomePage: React.FC = () => {
             transition={{ duration: 0.95, ease: EASE_LUXURY }}
             className="relative z-20 w-full text-center select-none pointer-events-none mb-5 sm:mb-7 md:mb-8 lg:-mb-10"
           >
-            <h1 className="font-serif font-light uppercase tracking-[0.14em] leading-[0.86] text-[clamp(3.35rem,15vw,5.4rem)] md:text-[clamp(5.8rem,15vw,8.8rem)] lg:text-[clamp(4.4rem,16.5vw,14.2rem)] text-ivory/95 drop-shadow-[0_12px_32px_rgba(23,22,21,0.85)]">
-              AFLAN<span className="sr-only"> Mu&apos;afa Dzulfiqar</span>
+            <h1
+              aria-label="Aflan Mu'afa Dzulfiqar"
+              className="font-serif font-light uppercase tracking-[0.14em] leading-[0.86] text-[clamp(3.35rem,15vw,5.4rem)] md:text-[clamp(5.8rem,15vw,8.8rem)] lg:text-[clamp(4.4rem,16.5vw,14.2rem)] text-ivory/95 drop-shadow-[0_12px_32px_rgba(23,22,21,0.85)]"
+            >
+              <span aria-hidden="true">AFLAN</span>
             </h1>
           </motion.div>
 
@@ -201,10 +203,15 @@ export const HomePage: React.FC = () => {
               transition={{ duration: 0.85, delay: 0.34, ease: EASE_LUXURY }}
               className="order-3 md:col-span-1 lg:col-span-4 lg:pb-8 flex flex-col lg:items-end lg:text-right gap-5 lg:gap-6"
             >
-              <p className="font-serif text-xl sm:text-2xl lg:text-[1.75rem] leading-[1.3] font-light text-ivory/95 max-w-md md:max-w-none lg:max-w-md">
-                Membangun{' '}
-                <span className="italic text-champagne">pengalaman web yang jernih</span>{' '}
-                dengan ketelitian kode dan kepekaan editorial.
+              <p
+                aria-label="Membangun pengalaman web yang jernih dengan ketelitian kode dan kepekaan editorial."
+                className="font-serif text-xl sm:text-2xl lg:text-[1.75rem] leading-[1.3] font-light text-ivory/95 max-w-md md:max-w-none lg:max-w-md"
+              >
+                <span aria-hidden="true">
+                  {'Membangun '}
+                  <span className="italic text-champagne">pengalaman web yang jernih</span>
+                  {' dengan ketelitian kode dan kepekaan editorial.'}
+                </span>
               </p>
               <p className="font-sans text-[15px] sm:text-base lg:text-sm leading-relaxed text-ivory/75 max-w-md md:max-w-none lg:max-w-md">
                 {personalData.headlineDescriptor}
@@ -212,7 +219,6 @@ export const HomePage: React.FC = () => {
               <div className="flex flex-wrap lg:justify-end gap-3 pt-1">
                 <Link
                   to="/projects"
-                  data-cursor="PROYEK"
                   className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all duration-300"
                 >
                   Karya Terpilih
@@ -220,7 +226,6 @@ export const HomePage: React.FC = () => {
                 </Link>
                 <Link
                   to="/about"
-                  data-cursor="TENTANG"
                   className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full border border-champagne/40 bg-obsidian/50 text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:border-champagne hover:bg-espresso active:scale-[0.97] active:bg-espresso transition-all duration-300"
                 >
                   Tentang Aflan
@@ -231,8 +236,9 @@ export const HomePage: React.FC = () => {
               <div className="flex flex-wrap items-center lg:justify-end gap-x-5 gap-y-2.5 pt-3 border-t border-champagne/15 w-full max-w-md md:max-w-none lg:max-w-md">
                 <a
                   href={contactData.cvHref}
-                  onClick={(e) => e.preventDefault()}
-                  data-cursor="CV"
+                  download={contactData.cvFilename}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="Unduh CV Aflan Mu'afa Dzulfiqar"
                   className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase text-champagne hover:text-ivory transition-colors"
                 >
@@ -244,24 +250,11 @@ export const HomePage: React.FC = () => {
                   href={contactData.githubHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  data-cursor="GITHUB"
                   aria-label="Profil GitHub Flannss"
                   className="inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.18em] uppercase text-ivory/80 hover:text-champagne transition-colors"
                 >
                   <Github className="size-3.5" aria-hidden="true" />
                   <span>GitHub</span>
-                </a>
-                <span className="text-champagne/30" aria-hidden="true">·</span>
-                <a
-                  href={contactData.linkedinHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-cursor="LINKEDIN"
-                  aria-label="Profil LinkedIn Aflan Mu'afa Dzulfiqar"
-                  className="inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.18em] uppercase text-ivory/80 hover:text-champagne transition-colors"
-                >
-                  <Linkedin className="size-3.5" aria-hidden="true" />
-                  <span>LinkedIn</span>
                 </a>
               </div>
             </motion.div>
@@ -508,8 +501,9 @@ export const HomePage: React.FC = () => {
                   </Link>
                   <a
                     href={contactData.cvHref}
-                    onClick={(e) => e.preventDefault()}
-                    data-cursor="CV"
+                    download={contactData.cvFilename}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     aria-label="Unduh CV Aflan Mu'afa Dzulfiqar"
                     className="group inline-flex items-center gap-2 font-mono text-xs tracking-[0.2em] uppercase text-mocha border-b border-mocha/40 pb-1.5 hover:text-espresso hover:border-espresso transition-colors"
                   >
@@ -652,9 +646,14 @@ export const HomePage: React.FC = () => {
                 </div>
 
                 <div className="relative z-10 mt-auto pt-12 sm:pt-14 space-y-4">
-                  <p className="font-serif italic text-[2.25rem] sm:text-5xl lg:text-6xl leading-[0.98] lg:leading-[0.96] font-light text-champagne">
-                    Sistem Visual{' '}
-                    <span className="block not-italic text-ivory">Interaktif</span>
+                  <p
+                    aria-label="Sistem Visual Interaktif"
+                    className="font-serif italic text-[2.25rem] sm:text-5xl lg:text-6xl leading-[0.98] lg:leading-[0.96] font-light text-champagne"
+                  >
+                    <span aria-hidden="true">
+                      {'Sistem Visual '}
+                      <span className="block not-italic text-ivory">Interaktif</span>
+                    </span>
                   </p>
                   <p className="font-sans text-[15px] sm:text-base text-ivory/75 max-w-lg leading-relaxed">
                     Jelajahi kompositor tipografi editorial, kanvas chiaroscuro interaktif,

@@ -42,13 +42,22 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
       const tilt = Math.max(-4.5, Math.min(4.5, dx * 0.075));
 
       if (previewRef.current) {
-        const clampedX = Math.min(
-          Math.max(pointerCurrent.current.x + 28, 24),
-          window.innerWidth - 368,
-        );
+        const cardWidth = previewRef.current.offsetWidth || 300;
+        const cardHeight = previewRef.current.offsetHeight || 220;
+        const viewportW = window.innerWidth;
+        const viewportH = window.innerHeight;
+
+        // Place preview strictly outside the center title/subtitle zone:
+        // Anchor to far-right rail when hovering left/center text, or far-left rail when hovering the right column.
+        const isPointerOnRightSide = pointerCurrent.current.x > viewportW * 0.62;
+        const targetPosX = isPointerOnRightSide
+          ? 24
+          : Math.max(viewportW - cardWidth - 24, pointerCurrent.current.x + 180);
+
+        const clampedX = Math.min(Math.max(targetPosX, 24), viewportW - cardWidth - 24);
         const clampedY = Math.min(
-          Math.max(pointerCurrent.current.y - 125, 90),
-          window.innerHeight - 280,
+          Math.max(pointerCurrent.current.y - cardHeight / 2, 92),
+          viewportH - cardHeight - 24,
         );
 
         previewRef.current.style.transform = `translate3d(${clampedX}px, ${clampedY}px, 0) rotate(${tilt.toFixed(2)}deg)`;
@@ -94,7 +103,6 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
             onMouseEnter={() => canHover && setActiveProject(project)}
             onFocus={() => canHover && setActiveProject(project)}
             onBlur={() => canHover && setActiveProject(null)}
-            data-cursor="LIHAT"
             className={`group block md:flex md:flex-col md:h-full lg:block lg:h-auto py-8 sm:py-10 md:p-6 lg:py-10 lg:px-5 px-2 sm:px-5 -mx-2 sm:-mx-5 md:mx-0 lg:-mx-5 md:border md:border-champagne/20 md:bg-obsidian/45 md:hover:border-champagne/55 md:active:border-champagne lg:border-0 lg:bg-transparent transition-all duration-300 hover:bg-espresso/45 active:bg-espresso/60 active:scale-[0.99] lg:active:scale-100 ${
               isOrphanOnTablet ? 'md:col-span-2' : ''
             }`}
@@ -180,7 +188,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
         <div
           ref={previewRef}
           aria-hidden="true"
-          className={`pointer-events-none fixed top-0 left-0 z-40 w-[340px] overflow-hidden border border-champagne/25 bg-obsidian shadow-[0_24px_60px_rgba(0,0,0,0.55)] transition-opacity duration-300 ${
+          className={`hidden xl:block pointer-events-none fixed top-0 left-0 z-40 w-[300px] overflow-hidden border border-champagne/25 bg-obsidian shadow-[0_24px_60px_rgba(0,0,0,0.55)] transition-opacity duration-300 ${
             activeProject ? 'opacity-100' : 'opacity-0'
           }`}
         >
