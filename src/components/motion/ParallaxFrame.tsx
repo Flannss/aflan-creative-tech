@@ -10,8 +10,8 @@ interface ParallaxFrameProps {
 
 /**
  * Subtle editorial image parallax frame.
- * Gently shifts and settles inner photography on scroll on desktop pointer devices;
- * automatically remains static on coarse touch pointers and reduced-motion setups.
+ * Gently shifts and settles inner photography on scroll across desktop, tablet, and mobile;
+ * automatically remains static when OS reduced-motion is enabled.
  */
 export const ParallaxFrame: React.FC<ParallaxFrameProps> = ({
   children,

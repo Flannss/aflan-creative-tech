@@ -9,8 +9,8 @@ const VIEWPORT_MARGIN = 14;
 
 /**
  * Refined editorial trailing cursor aura + offset pill tooltip for pointer-fine desktop devices.
- * - Subtle ring stays centered on the pointer while pill tooltips ("LIHAT", "BUKA", etc.)
- *   are strictly offset by at least +24px on X and Y so they never cover hovered text.
+ * - Subtle ring stays centered on the pointer while pill tooltips ("HUBUNGI", "SENTER", etc.)
+ *   are strictly offset by at least +28px on X and Y so they never cover hovered text.
  * - Resets tooltip state on SPA route transitions and window blur so pills never linger.
  * - Demand-driven requestAnimationFrame loop: sleeps at 0% CPU when pointer settles or leaves.
  */

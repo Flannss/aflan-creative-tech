@@ -4,7 +4,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { useReducedMotion } from 'framer-motion';
 import type { ProjectEntry } from '@/data/projects';
 import { TypographicDossierPlate } from '@/components/projects/TypographicDossierPlate';
-import { useCanHoverFine } from '@/hooks/useMediaQuery';
+import { useCanHoverFine, useMediaQuery } from '@/hooks/useMediaQuery';
 
 interface ProjectPreviewListProps {
   projects: ProjectEntry[];
@@ -12,14 +12,15 @@ interface ProjectPreviewListProps {
 
 /**
  * Editorial project index rows featuring:
- * - Desktop fine pointer: smooth RAF-interpolated floating visual preview with subtle velocity tilt.
- * - Mobile / touch: crisp inline responsive visual card inside each row.
+ * - Wide desktop (>= 1280px, fine pointer): smooth RAF-interpolated floating visual preview positioned outside text columns.
+ * - Mobile / tablet: crisp inline responsive visual card inside each row.
  */
 export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects }) => {
   const [activeProject, setActiveProject] = useState<ProjectEntry | null>(null);
   const canHoverFine = useCanHoverFine();
+  const isWideDesktop = useMediaQuery('(min-width: 1280px)');
   const prefersReducedMotion = useReducedMotion();
-  const canHover = canHoverFine && !prefersReducedMotion;
+  const canHover = canHoverFine && isWideDesktop && !prefersReducedMotion;
 
   const previewRef = useRef<HTMLDivElement | null>(null);
   const pointerTarget = useRef({ x: 0, y: 0 });
