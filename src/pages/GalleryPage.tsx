@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
+  Aperture,
   Camera,
   ChevronLeft,
   ChevronRight,
@@ -20,7 +21,6 @@ import {
 } from '@/data/gallery';
 import { Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
-import { ParallaxFrame } from '@/components/motion/ParallaxFrame';
 import { EASE_LUXURY } from '@/utils/motion';
 
 type TonalTreatment = 'original' | 'sepia' | 'monochrome';
@@ -63,8 +63,9 @@ interface OpticalPresetOverlayProps {
 }
 
 /**
- * Renders distinct optical and lighting treatment overlays for each gallery study:
- * Soft Direct Flash, 0.5x Ultra-Wide Perspective, GCam HDR+ Color Grading, and Gradient Studio Backdrop.
+ * Renders subtle aesthetic frame treatments for each gallery visual preset:
+ * Korean Photobooth, Retro Digicam (Sony Cyber-shot), Studio Gradient Backdrop,
+ * 0.5x Ultra-Wide Perspective, and GCam HDR+ Color Grading.
  */
 const OpticalPresetOverlay: React.FC<OpticalPresetOverlayProps> = ({
   item,
@@ -72,28 +73,47 @@ const OpticalPresetOverlay: React.FC<OpticalPresetOverlayProps> = ({
 }) => {
   return (
     <>
-      {item.visualPreset === 'soft-direct-flash' && (
+      {item.visualPreset === 'korean-photobooth' && (
+        <>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-2.5 sm:inset-3.5 border-2 border-ivory/65 flex flex-col justify-between p-2.5"
+          >
+            <div className="flex items-center justify-between font-mono text-[8px] tracking-[0.24em] uppercase text-ivory/85 bg-obsidian/60 px-2 py-0.5">
+              <span>LIFE4CUT · SEOUL EDITION</span>
+              <span>FRAME 01 / 04</span>
+            </div>
+            <div className="grid grid-cols-4 gap-1 pt-1">
+              <span className="h-0.5 bg-ivory/75" />
+              <span className="h-0.5 bg-ivory/45" />
+              <span className="h-0.5 bg-ivory/45" />
+              <span className="h-0.5 bg-ivory/45" />
+            </div>
+          </div>
+        </>
+      )}
+
+      {item.visualPreset === 'retro-digicam' && (
         <>
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                'radial-gradient(circle at 52% 28%, rgba(250,248,244,0.26) 0%, rgba(216,195,165,0.12) 28%, rgba(23,22,21,0.82) 78%)',
+                'radial-gradient(circle at 55% 40%, rgba(255,235,200,0.16) 0%, transparent 55%, rgba(23,22,21,0.58) 100%)',
             }}
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-3 sm:inset-4 border border-ivory/20 flex flex-col justify-between p-3"
+            className="pointer-events-none absolute bottom-3 right-3.5 font-mono text-xs tracking-[0.22em] text-[#FFB347] drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]"
           >
-            <div className="flex items-center justify-between font-mono text-[9px] tracking-[0.22em] uppercase text-ivory/80">
-              <span>FLASH SYNC · 1/160S</span>
-              <span>DIFFUSED DIRECT KEY</span>
-            </div>
-            <div className="flex items-center justify-between font-mono text-[9px] tracking-[0.2em] uppercase text-champagne/85">
-              <span>SPECULAR HIGHLIGHT +0.7 EV</span>
-              <span>SHADOW FALLOFF</span>
-            </div>
+            &apos;26 11 21
+          </div>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-3 left-3.5 font-mono text-[9px] tracking-[0.2em] uppercase text-ivory/85 bg-obsidian/65 px-2 py-0.5 border border-champagne/25"
+          >
+            CYBER-SHOT · CCD 12.1MP
           </div>
         </>
       )}
@@ -105,29 +125,21 @@ const OpticalPresetOverlay: React.FC<OpticalPresetOverlayProps> = ({
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                'radial-gradient(ellipse at center, transparent 42%, rgba(23,22,21,0.75) 100%)',
+                'radial-gradient(ellipse at center, transparent 42%, rgba(23,22,21,0.72) 100%)',
             }}
           />
           <svg
             aria-hidden="true"
             viewBox="0 0 400 260"
-            className="pointer-events-none absolute inset-0 w-full h-full opacity-45"
+            className="pointer-events-none absolute inset-0 w-full h-full opacity-40"
             preserveAspectRatio="none"
           >
             <line x1="0" y1="0" x2="200" y2="130" stroke="#D8C3A5" strokeWidth="0.6" strokeDasharray="3 3" />
             <line x1="400" y1="0" x2="200" y2="130" stroke="#D8C3A5" strokeWidth="0.6" strokeDasharray="3 3" />
             <line x1="0" y1="260" x2="200" y2="130" stroke="#D8C3A5" strokeWidth="0.6" strokeDasharray="3 3" />
             <line x1="400" y1="260" x2="200" y2="130" stroke="#D8C3A5" strokeWidth="0.6" strokeDasharray="3 3" />
-            <rect x="44" y="28" width="312" height="204" fill="none" stroke="#D8C3A5" strokeWidth="0.75" strokeOpacity="0.6" />
-            <circle cx="200" cy="130" r="36" fill="none" stroke="#F5F0E8" strokeWidth="0.75" strokeOpacity="0.65" />
+            <rect x="40" y="26" width="320" height="208" fill="none" stroke="#D8C3A5" strokeWidth="0.75" strokeOpacity="0.55" />
           </svg>
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute bottom-3 left-3 right-3 flex items-center justify-between font-mono text-[9px] tracking-[0.22em] uppercase text-champagne/90 bg-obsidian/70 px-2.5 py-1 border border-champagne/20"
-          >
-            <span>0.5X ULTRA-WIDE · 13MM EQUIV</span>
-            <span>FOV 120° · SPATIAL GRID</span>
-          </div>
         </>
       )}
 
@@ -138,50 +150,36 @@ const OpticalPresetOverlay: React.FC<OpticalPresetOverlayProps> = ({
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                'linear-gradient(135deg, rgba(216,195,165,0.18) 0%, rgba(118,86,65,0.14) 48%, rgba(23,22,21,0.72) 100%)',
+                'linear-gradient(135deg, rgba(216,195,165,0.16) 0%, rgba(118,86,65,0.12) 48%, rgba(23,22,21,0.68) 100%)',
             }}
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute bottom-3 left-3 right-3 bg-obsidian/80 backdrop-blur-xs border border-champagne/25 p-2.5 space-y-1.5"
+            className="pointer-events-none absolute bottom-3 left-3 right-3 bg-obsidian/75 backdrop-blur-xs border border-champagne/25 p-2 flex items-center justify-between gap-2"
           >
-            <div className="flex items-center justify-between font-mono text-[9px] tracking-[0.2em] uppercase text-champagne">
-              <span>GCAM HDR+ · MULTI-FRAME MERGE</span>
-              <span>14-BIT TONE MAP</span>
-            </div>
-            <div className="grid grid-cols-5 gap-1 h-1.5">
-              <span className="bg-[#171615] border border-champagne/20" />
-              <span className="bg-[#2B1D17]" />
-              <span className="bg-[#765641]" />
-              <span className="bg-[#D8C3A5]" />
-              <span className="bg-[#F5F0E8]" />
+            <span className="font-mono text-[8px] tracking-[0.2em] uppercase text-champagne">
+              HDR+ SPLIT-TONE LUT
+            </span>
+            <div className="flex items-center gap-1">
+              <span className="size-2.5 bg-[#171615] border border-champagne/30" />
+              <span className="size-2.5 bg-[#2B1D17]" />
+              <span className="size-2.5 bg-[#765641]" />
+              <span className="size-2.5 bg-[#D8C3A5]" />
+              <span className="size-2.5 bg-[#F5F0E8]" />
             </div>
           </div>
         </>
       )}
 
       {item.visualPreset === 'gradient-studio-backdrop' && (
-        <>
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                'radial-gradient(circle at 50% 34%, rgba(216,195,165,0.28) 0%, rgba(118,86,65,0.34) 36%, rgba(43,29,23,0.76) 68%, rgba(23,22,21,0.95) 100%)',
-            }}
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute top-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 font-mono text-[9px] tracking-[0.22em] uppercase text-champagne/90"
-          >
-            <span className="bg-obsidian/75 px-2.5 py-1 border border-champagne/25">
-              RADIAL BACKDROP · MOCHA → OBSIDIAN
-            </span>
-            <span className="bg-obsidian/75 px-2.5 py-1 border border-champagne/25">
-              LUMINANCE FALLOFF STUDY
-            </span>
-          </div>
-        </>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(circle at 50% 36%, rgba(216,195,165,0.24) 0%, rgba(118,86,65,0.32) 38%, rgba(43,29,23,0.72) 70%, rgba(23,22,21,0.92) 100%)',
+          }}
+        />
       )}
 
       {filmGrain && (
@@ -200,17 +198,16 @@ const OpticalPresetOverlay: React.FC<OpticalPresetOverlayProps> = ({
 
 export const GalleryPage: React.FC = () => {
   const [tonalMode, setTonalMode] = useState<TonalTreatment>('original');
-  const [selectedCategory, setSelectedCategory] = useState<'Semua' | GalleryCategory>(
-    'Semua',
-  );
+  const [selectedCategory, setSelectedCategory] = useState<'All' | GalleryCategory>('All');
   const [layoutMode, setLayoutMode] = useState<'masonry' | 'monograph'>('masonry');
   const [filmGrainEnabled, setFilmGrainEnabled] = useState<boolean>(true);
   const [lightboxId, setLightboxId] = useState<string | null>(null);
   const [showCaptions, setShowCaptions] = useState(true);
+  const [fallbackIds, setFallbackIds] = useState<Record<string, boolean>>({});
   const prefersReducedMotion = useReducedMotion();
 
   const filteredItems = useMemo(() => {
-    if (selectedCategory === 'Semua') return galleryItems;
+    if (selectedCategory === 'All') return galleryItems;
     return galleryItems.filter((item) => item.category === selectedCategory);
   }, [selectedCategory]);
 
@@ -262,6 +259,14 @@ export const GalleryPage: React.FC = () => {
     return [custom, tonal].filter(Boolean).join(' ') || 'none';
   };
 
+  const resolveImageSrc = (item: GalleryItem): string => {
+    return fallbackIds[item.id] ? item.fallbackSrc : item.src;
+  };
+
+  const handleImageError = (id: string) => {
+    setFallbackIds((prev) => (prev[id] ? prev : { ...prev, [id]: true }));
+  };
+
   return (
     <div className="relative w-full overflow-x-clip">
       {/* Page-Wide Interactive Film Grain Overlay when toggled ON */}
@@ -286,7 +291,7 @@ export const GalleryPage: React.FC = () => {
               BAB 07 — GALERI MONOGRAF · {String(filteredItems.length).padStart(2, '0')} PELAT VISUAL
             </span>
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-espresso/65">
-              EKSPLORASI OPTIK, PENCAHAYAAN &amp; COLOR GRADING
+              MASONRY ARCHIVE · HOVER UNTUK TELEMETRI EXIF
             </span>
           </Reveal>
 
@@ -299,7 +304,7 @@ export const GalleryPage: React.FC = () => {
                 lines={[
                   <>Edisi Monograf</>,
                   <>
-                    <span className="italic text-mocha">Optik &amp; Studi Cahaya</span>
+                    <span className="italic text-mocha">Estetika &amp; Optik</span>
                   </>,
                 ]}
               />
@@ -307,25 +312,31 @@ export const GalleryPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5 space-y-4">
               <p className="font-sans text-[15px] sm:text-base text-charcoal/85 leading-relaxed">
-                Kurasi studi visual dan fotografi personal yang mengeksplorasi karakter{' '}
+                Kurasi eksplorasi visual mulai dari{' '}
                 <span className="font-medium text-espresso">Soft Direct Flash</span>,{' '}
-                <span className="font-medium text-espresso">0.5x Ultra-wide perspective</span>,{' '}
-                <span className="font-medium text-espresso">GCam HDR+ Color Grading</span>, serta{' '}
-                <span className="font-medium text-espresso">Gradient Studio Backdrop</span>.
+                <span className="font-medium text-espresso">Korean Photobooth Aesthetic</span>,{' '}
+                <span className="font-medium text-espresso">Retro Digicam (Sony Cyber-shot)</span>,{' '}
+                <span className="font-medium text-espresso">Studio Gradient Backdrop</span>, hingga{' '}
+                <span className="font-medium text-espresso">0.5x Ultra-wide Perspective</span>.
               </p>
             </Reveal>
           </div>
 
-          {/* Interactive Controls Deck: Category Filter + Film Grain Toggle + Layout Mode + Tonal Filter */}
+          {/* Interactive Controls Deck: Dynamic Category Filter + Film Grain Toggle + Layout Mode + Tonal Filter */}
           <div className="mt-10 lg:mt-12 pt-6 border-t border-espresso/15 space-y-5">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div
                 role="tablist"
-                aria-label="Filter kategori studi visual"
+                aria-label="Filter kategori galeri"
                 className="flex flex-wrap gap-2"
               >
                 {galleryCategories.map((cat) => {
                   const active = selectedCategory === cat;
+                  const count =
+                    cat === 'All'
+                      ? galleryItems.length
+                      : galleryItems.filter((item) => item.category === cat).length;
+
                   return (
                     <button
                       key={cat}
@@ -333,13 +344,20 @@ export const GalleryPage: React.FC = () => {
                       role="tab"
                       aria-selected={active}
                       onClick={() => setSelectedCategory(cat)}
-                      className={`px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border transition-colors ${
+                      className={`inline-flex items-center gap-2 px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border transition-colors ${
                         active
                           ? 'bg-espresso text-ivory border-espresso font-medium'
                           : 'bg-ivory text-espresso border-espresso/20 hover:border-mocha'
                       }`}
                     >
-                      {cat}
+                      <span>{cat}</span>
+                      <span
+                        className={`text-[10px] ${
+                          active ? 'text-champagne' : 'text-mocha'
+                        }`}
+                      >
+                        ({count})
+                      </span>
                     </button>
                   );
                 })}
@@ -375,7 +393,7 @@ export const GalleryPage: React.FC = () => {
                     }`}
                   >
                     <LayoutGrid className="size-3.5" aria-hidden="true" />
-                    Masonry Parallax
+                    Masonry Grid
                   </button>
                   <button
                     type="button"
@@ -435,97 +453,144 @@ export const GalleryPage: React.FC = () => {
       <section className="bg-obsidian text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           {layoutMode === 'masonry' ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-              {filteredItems.map((item, idx) => {
-                const staggerClass =
-                  idx % 2 === 1 && item.gridSpanClass !== 'md:col-span-2 lg:col-span-12'
-                    ? 'lg:mt-14'
-                    : '';
+            /* Editorial Masonry Grid Layout (Multi-Column Interlocking Portrait, Square & Landscape Cards) */
+            <div className="columns-1 md:columns-2 lg:columns-3 gap-7 space-y-7">
+              {filteredItems.map((item, idx) => (
+                <Reveal
+                  key={item.id}
+                  variant="up"
+                  delay={idx * 0.05}
+                  className="break-inside-avoid"
+                >
+                  <article className="group bg-espresso/55 border border-champagne/20 hover:border-champagne/65 transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-[0_24px_70px_rgba(0,0,0,0.6)]">
+                    <button
+                      type="button"
+                      onClick={() => setLightboxId(item.id)}
+                      data-cursor="EXIF / ZOOM"
+                      aria-label={`Buka ${item.title} pada lightbox layar penuh`}
+                      className="relative block w-full text-left overflow-hidden bg-obsidian focus-visible:outline-2 focus-visible:outline-champagne"
+                    >
+                      <div className={`relative ${item.aspectClass} w-full overflow-hidden`}>
+                        <img
+                          src={resolveImageSrc(item)}
+                          onError={() => handleImageError(item.id)}
+                          alt={item.title}
+                          loading="lazy"
+                          style={{
+                            objectPosition: item.objectPosition ?? 'center',
+                            filter: getCombinedFilter(item),
+                          }}
+                          className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06] ${
+                            item.imageScaleClass ?? ''
+                          }`}
+                        />
+                        <OpticalPresetOverlay
+                          item={item}
+                          filmGrain={filmGrainEnabled}
+                        />
 
-                return (
-                  <Reveal
-                    key={item.id}
-                    variant="up"
-                    delay={idx * 0.06}
-                    className={`${item.gridSpanClass} ${staggerClass}`}
-                  >
-                    <article className="group bg-espresso/55 border border-champagne/20 hover:border-champagne/60 transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-[0_28px_80px_rgba(0,0,0,0.6)]">
-                      <button
-                        type="button"
-                        onClick={() => setLightboxId(item.id)}
-                        data-cursor="LIGHTBOX"
-                        aria-label={`Buka ${item.title} pada lightbox layar penuh`}
-                        className="relative block w-full text-left overflow-hidden bg-obsidian focus-visible:outline-2 focus-visible:outline-champagne"
-                      >
-                        <ParallaxFrame
-                          className={`${item.aspectClass} w-full`}
-                          offset={item.parallaxOffset}
-                        >
-                          <img
-                            src={item.src}
-                            alt={item.title}
-                            style={{
-                              objectPosition: item.objectPosition ?? 'center',
-                              filter: getCombinedFilter(item),
-                            }}
-                            className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05] ${
-                              item.imageScaleClass ?? ''
-                            }`}
-                          />
-                          <OpticalPresetOverlay
-                            item={item}
-                            filmGrain={filmGrainEnabled}
-                          />
-                        </ParallaxFrame>
-
-                        <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 pointer-events-none">
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-obsidian/85 backdrop-blur-xs border border-champagne/35 font-mono text-[10px] tracking-[0.2em] uppercase text-champagne">
+                        {/* Top Always-Visible Pill Badge */}
+                        <div className="absolute top-3.5 left-3.5 right-3.5 z-10 flex items-center justify-between gap-2 pointer-events-none">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-obsidian/85 backdrop-blur-xs border border-champagne/35 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne">
                             <Camera className="size-3" aria-hidden="true" />
                             {item.techniqueBadge}
                           </span>
-                          <span className="size-9 rounded-full bg-obsidian/80 border border-champagne/35 flex items-center justify-center text-champagne group-hover:bg-champagne group-hover:text-obsidian transition-colors">
-                            <Maximize2 className="size-4" aria-hidden="true" />
+                          <span className="size-8 rounded-full bg-obsidian/80 border border-champagne/35 flex items-center justify-center text-champagne group-hover:bg-champagne group-hover:text-obsidian transition-colors">
+                            <Maximize2 className="size-3.5" aria-hidden="true" />
                           </span>
                         </div>
-                      </button>
 
-                      <div className="p-6 sm:p-8 space-y-4">
-                        <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] tracking-[0.22em] uppercase">
-                          <span className="text-champagne">
-                            {item.plateNumber} · {item.category}
-                          </span>
-                          <span className="text-taupe">{item.exifSpec}</span>
-                        </div>
+                        {/* Interactive Hover Reveal: Transparent EXIF & Aesthetic Telemetry Overlay */}
+                        <div className="absolute inset-0 z-20 bg-obsidian/84 backdrop-blur-[4px] p-5 sm:p-6 flex flex-col justify-end opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-visible:opacity-100 group-focus-visible:translate-y-0 transition-all duration-300">
+                          <div className="space-y-3 border-t border-champagne/30 pt-3.5">
+                            <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne">
+                              <span className="inline-flex items-center gap-1.5">
+                                <Aperture className="size-3.5" aria-hidden="true" />
+                                EXIF &amp; AESTHETIC DATA
+                              </span>
+                              <span>{item.plateNumber}</span>
+                            </div>
 
-                        <div>
-                          <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-light text-ivory group-hover:text-champagne transition-colors">
-                            {item.title}
-                          </h2>
-                          <p className="font-serif italic text-lg text-champagne/85 mt-1">
-                            {item.subtitle}
-                          </p>
-                        </div>
+                            <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
+                              <div>
+                                <dt className="font-mono text-[9px] tracking-[0.18em] uppercase text-taupe">
+                                  Estetika / Teknik
+                                </dt>
+                                <dd className="text-ivory font-medium mt-0.5">
+                                  {item.exifTelemetry.technique}
+                                </dd>
+                              </div>
+                              <div>
+                                <dt className="font-mono text-[9px] tracking-[0.18em] uppercase text-taupe">
+                                  Perangkat / Sensor
+                                </dt>
+                                <dd className="text-champagne mt-0.5">
+                                  {item.exifTelemetry.camera}
+                                </dd>
+                              </div>
+                              <div>
+                                <dt className="font-mono text-[9px] tracking-[0.18em] uppercase text-taupe">
+                                  Optik &amp; Bukaan
+                                </dt>
+                                <dd className="text-ivory/90 mt-0.5">
+                                  {item.exifTelemetry.lens}
+                                </dd>
+                              </div>
+                              <div>
+                                <dt className="font-mono text-[9px] tracking-[0.18em] uppercase text-taupe">
+                                  Eksposur &amp; Profil
+                                </dt>
+                                <dd className="text-ivory/90 mt-0.5">
+                                  {item.exifTelemetry.exposure}
+                                </dd>
+                              </div>
+                            </dl>
 
-                        <p className="font-sans text-[15px] sm:text-base lg:text-sm leading-relaxed text-ivory/80">
-                          {item.caption}
-                        </p>
-
-                        <div className="pt-4 border-t border-champagne/15 flex flex-wrap items-center justify-between gap-3 font-mono text-[10px] tracking-[0.18em] uppercase text-taupe">
-                          <span>{item.technicalNote}</span>
-                          <button
-                            type="button"
-                            onClick={() => setLightboxId(item.id)}
-                            className="inline-flex items-center gap-1.5 text-champagne hover:text-ivory transition-colors"
-                          >
-                            Inspeksi Pelat
-                            <Maximize2 className="size-3" aria-hidden="true" />
-                          </button>
+                            <div className="pt-2 border-t border-champagne/15 flex items-center justify-between font-mono text-[10px] tracking-[0.18em] uppercase text-champagne">
+                              <span className="truncate">{item.exifTelemetry.colorProfile}</span>
+                              <span className="shrink-0 ml-2 underline">Perbesar ↗</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </article>
-                  </Reveal>
-                );
-              })}
+                    </button>
+
+                    <div className="p-5 sm:p-6 space-y-3.5">
+                      <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] tracking-[0.2em] uppercase">
+                        <span className="text-champagne">
+                          {item.plateNumber} · {item.category}
+                        </span>
+                        <span className="text-taupe">{item.techniqueBadge}</span>
+                      </div>
+
+                      <div>
+                        <h2 className="font-serif text-2xl sm:text-[1.75rem] leading-snug font-light text-ivory group-hover:text-champagne transition-colors">
+                          {item.title}
+                        </h2>
+                        <p className="font-serif italic text-base text-champagne/85 mt-0.5">
+                          {item.subtitle}
+                        </p>
+                      </div>
+
+                      <p className="font-sans text-sm leading-relaxed text-ivory/75">
+                        {item.caption}
+                      </p>
+
+                      <div className="pt-3 border-t border-champagne/15 flex items-center justify-between gap-2 font-mono text-[10px] tracking-[0.16em] uppercase text-taupe">
+                        <span className="truncate">{item.exifSpec}</span>
+                        <button
+                          type="button"
+                          onClick={() => setLightboxId(item.id)}
+                          className="shrink-0 inline-flex items-center gap-1 text-champagne hover:text-ivory transition-colors"
+                        >
+                          Lightbox
+                          <Maximize2 className="size-3" aria-hidden="true" />
+                        </button>
+                      </div>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
             </div>
           ) : (
             <div className="space-y-20 sm:space-y-28">
@@ -548,27 +613,24 @@ export const GalleryPage: React.FC = () => {
                           aria-label={`Buka ${item.title} pada lightbox layar penuh`}
                           className="group relative block w-full text-left border border-champagne/25 bg-espresso p-3 sm:p-5 shadow-[0_32px_90px_rgba(0,0,0,0.65)] focus-visible:outline-2 focus-visible:outline-champagne"
                         >
-                          <div className="relative">
-                            <ParallaxFrame
-                              className={item.aspectClass}
-                              offset={item.parallaxOffset}
-                            >
-                              <img
-                                src={item.src}
-                                alt={item.title}
-                                style={{
-                                  objectPosition: item.objectPosition ?? 'center',
-                                  filter: getCombinedFilter(item),
-                                }}
-                                className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-[1.04] ${
-                                  item.imageScaleClass ?? ''
-                                }`}
-                              />
-                              <OpticalPresetOverlay
-                                item={item}
-                                filmGrain={filmGrainEnabled}
-                              />
-                            </ParallaxFrame>
+                          <div className={`relative ${item.aspectClass} overflow-hidden`}>
+                            <img
+                              src={resolveImageSrc(item)}
+                              onError={() => handleImageError(item.id)}
+                              alt={item.title}
+                              loading="lazy"
+                              style={{
+                                objectPosition: item.objectPosition ?? 'center',
+                                filter: getCombinedFilter(item),
+                              }}
+                              className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-[1.04] ${
+                                item.imageScaleClass ?? ''
+                              }`}
+                            />
+                            <OpticalPresetOverlay
+                              item={item}
+                              filmGrain={filmGrainEnabled}
+                            />
                             <span className="absolute top-4 right-4 size-10 rounded-full bg-obsidian/80 border border-champagne/35 flex items-center justify-center text-champagne group-hover:bg-champagne group-hover:text-obsidian transition-colors">
                               <Maximize2 className="size-4" aria-hidden="true" />
                             </span>
@@ -591,7 +653,7 @@ export const GalleryPage: React.FC = () => {
                           isEven
                             ? 'md:col-span-6 md:order-2 lg:pl-6'
                             : 'md:col-span-6 md:order-1 lg:pr-6'
-                        } space-y-7`}
+                        } space-y-6`}
                       >
                         <div className="space-y-3">
                           <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] tracking-[0.24em] uppercase text-champagne">
@@ -613,20 +675,27 @@ export const GalleryPage: React.FC = () => {
                           {item.caption}
                         </p>
 
-                        <div className="pt-6 border-t border-champagne/15 space-y-3">
-                          <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-champagne">
-                            SPESIFIKASI OPTIK &amp; KONTEKS
-                          </p>
-                          <p className="font-sans text-[15px] sm:text-base lg:text-sm text-taupe leading-relaxed">
-                            {item.contextNote}
-                          </p>
-                          <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-champagne/75 pt-1">
-                            {item.exifSpec} · {item.technicalNote}
-                          </p>
-                        </div>
+                        <dl className="grid grid-cols-2 gap-4 pt-5 border-t border-champagne/15 text-sm">
+                          <div>
+                            <dt className="font-mono text-[10px] tracking-[0.2em] uppercase text-champagne">
+                              Perangkat &amp; Lensa
+                            </dt>
+                            <dd className="text-ivory/85 mt-1">
+                              {item.exifTelemetry.camera} · {item.exifTelemetry.lens}
+                            </dd>
+                          </div>
+                          <div>
+                            <dt className="font-mono text-[10px] tracking-[0.2em] uppercase text-champagne">
+                              Eksposur &amp; Profil
+                            </dt>
+                            <dd className="text-ivory/85 mt-1">
+                              {item.exifTelemetry.exposure} · {item.exifTelemetry.colorProfile}
+                            </dd>
+                          </div>
+                        </dl>
 
                         {idx === 0 && (
-                          <div className="pt-6 border-t border-champagne/15 space-y-3">
+                          <div className="pt-5 border-t border-champagne/15 space-y-3">
                             <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-champagne">
                               EKSTRAKSI PALET WARNA DARI POTRET
                             </p>
@@ -742,7 +811,8 @@ export const GalleryPage: React.FC = () => {
               >
                 <div className="relative w-full max-w-[780px] max-h-[66vh] border border-champagne/25 bg-espresso overflow-hidden flex items-center justify-center">
                   <img
-                    src={activeItem.src}
+                    src={resolveImageSrc(activeItem)}
+                    onError={() => handleImageError(activeItem.id)}
                     alt={activeItem.title}
                     style={{ filter: getCombinedFilter(activeItem) }}
                     className={`max-h-[65vh] w-auto max-w-full object-contain ${
@@ -781,10 +851,8 @@ export const GalleryPage: React.FC = () => {
                     {activeItem.caption}
                   </p>
                   <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-taupe pt-1">
-                    {activeItem.exifSpec} · {activeItem.technicalNote}
-                    {hasMultiplePlates
-                      ? ' · GUNAKAN TOMBOL ← / → UNTUK NAVIGASI'
-                      : ' · TEKAN ESC UNTUK MENUTUP'}
+                    {activeItem.exifTelemetry.camera} · {activeItem.exifTelemetry.lens} ·{' '}
+                    {activeItem.exifTelemetry.exposure}
                   </p>
                 </div>
               )}

@@ -286,9 +286,163 @@ export const HomePage: React.FC = () => {
       <EditorialMarquee variant="espresso" />
 
       {/* =====================================================================
+          BAND 02B — THE IDENTITY & MONOGRAM PHILOSOPHY (SPATIAL BRIDGE)
+      ====================================================================== */}
+      <section
+        aria-labelledby="monogram-philosophy-heading"
+        className="relative bg-obsidian text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-champagne/15 overflow-hidden"
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 studio-warm-halo opacity-55"
+        />
+
+        <div className="relative z-10 max-w-[1440px] mx-auto">
+          <Reveal
+            variant="up"
+            className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-12 lg:mb-16 border-b border-champagne/15"
+          >
+            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
+              THE IDENTITY — MONOGRAM PHILOSOPHY
+            </span>
+            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.22em] uppercase text-taupe">
+              ANATOMI LAMBANG · AFLAN / AMDZ
+            </span>
+          </Reveal>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            {/* Left Split: Architectural Monogram Emblem Blueprint */}
+            <Reveal variant="up" className="lg:col-span-5">
+              <div className="relative bg-espresso/65 border border-champagne/25 p-7 sm:p-10 shadow-[0_28px_80px_rgba(0,0,0,0.65)] overflow-hidden">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 opacity-15"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(to right, rgba(216,195,165,0.28) 1px, transparent 1px), linear-gradient(to bottom, rgba(216,195,165,0.28) 1px, transparent 1px)',
+                    backgroundSize: '36px 36px',
+                  }}
+                />
+
+                <div className="relative z-10 flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/80 pb-5 border-b border-champagne/15">
+                  <span>SCALE 1:1 · VECTOR GEOMETRY</span>
+                  <span>EST. 2005 · AMDZ</span>
+                </div>
+
+                <div className="relative z-10 py-10 sm:py-12 flex flex-col items-center justify-center text-center">
+                  <div className="relative flex items-center justify-center size-44 sm:size-52 rounded-full border border-dashed border-champagne/35 bg-obsidian/75 shadow-inner">
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-3 rounded-full border border-champagne/20"
+                    />
+                    <MonogramMark size={112} className="text-champagne" />
+                  </div>
+
+                  <div className="mt-7 space-y-1.5">
+                    <p className="font-serif text-3xl sm:text-4xl tracking-[0.24em] uppercase font-light text-ivory">
+                      AFLAN
+                    </p>
+                    <p className="font-mono text-[10px] tracking-[0.28em] uppercase text-champagne">
+                      A · M · D · Z — ARCHITECTURAL CREST
+                    </p>
+                  </div>
+                </div>
+
+                <div className="relative z-10 grid grid-cols-3 gap-2 pt-5 border-t border-champagne/15 font-mono text-[9px] tracking-[0.18em] uppercase text-taupe text-center">
+                  <div className="p-2 bg-obsidian/60 border border-champagne/15">
+                    <span className="block text-champagne">APEX (A)</span>
+                    <span>Code Logic</span>
+                  </div>
+                  <div className="p-2 bg-obsidian/60 border border-champagne/15">
+                    <span className="block text-champagne">SPAN (M)</span>
+                    <span>Editorial Space</span>
+                  </div>
+                  <div className="p-2 bg-obsidian/60 border border-champagne/15">
+                    <span className="block text-champagne">ANCHOR (DZ)</span>
+                    <span>QA Precision</span>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Right Split: Deconstructed Brand Narrative & Pillars */}
+            <div className="lg:col-span-7 space-y-8">
+              <div className="space-y-4">
+                <TextReveal
+                  as="h2"
+                  className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] leading-[1.06] font-light text-ivory"
+                  lines={[
+                    <>Titik temu antara</>,
+                    <>
+                      <span className="italic text-champagne">presisi logika pemrograman</span>{' '}
+                      &amp;
+                    </>,
+                    <>estetika ruang editorial.</>,
+                  ]}
+                />
+                <Reveal variant="up" delay={0.1}>
+                  <p
+                    id="monogram-philosophy-heading"
+                    className="font-sans text-[15px] sm:text-base leading-[1.8] text-ivory/75 max-w-2xl"
+                  >
+                    Monogram <span className="text-champagne font-medium">AMDZ</span> (Aflan
+                    Mu&apos;afa Dzulfiqar) dirancang bukan sekadar sebagai inisial visual,
+                    melainkan cetak biru cara berpikir: menggabungkan ketegasan struktur
+                    pengembangan perangkat lunak dengan ketenangan komposisi tipografi editorial.
+                  </p>
+                </Reveal>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 pt-2">
+                {[
+                  {
+                    code: '01 · APEX GEOMETRY',
+                    title: 'Presisi Logika & Struktur',
+                    desc: 'Garis segitiga luar yang mengerucut tegas ke puncak melambangkan arsitektur komponen web yang modular, terukur, dan bersih.',
+                  },
+                  {
+                    code: '02 · INNER SANCTUARY',
+                    title: 'Estetika Ruang Kreatif',
+                    desc: 'Siluet ganda di ruang dalam mewakili filosofi "Satu Ruang, Banyak Ide, Satu Cerita"—harmoni antara negative space dan narasi visual.',
+                  },
+                  {
+                    code: '03 · HORIZONTAL AXIS',
+                    title: 'Keseimbangan UI & UX',
+                    desc: 'Palang horizontal menjaga proporsi antara keindahan tipografi serif dan kenyamanan interaksi pengguna lintas perangkat.',
+                  },
+                  {
+                    code: '04 · GROUNDED POINT',
+                    title: 'Titik Verifikasi QA',
+                    desc: 'Titik tumpu bulat di dasar lambang menjadi simbol pengujian fungsional (Software QA): setiap karya harus teruji di kondisi nyata.',
+                  },
+                ].map((item, idx) => (
+                  <Reveal
+                    key={item.code}
+                    variant="up"
+                    delay={0.12 + idx * 0.06}
+                    className="p-5 sm:p-6 bg-espresso/45 border border-champagne/20 hover:border-champagne/55 transition-colors space-y-2.5"
+                  >
+                    <span className="block font-mono text-[10px] tracking-[0.22em] uppercase text-champagne">
+                      {item.code}
+                    </span>
+                    <h3 className="font-serif text-2xl font-light text-ivory">
+                      {item.title}
+                    </h3>
+                    <p className="font-sans text-sm leading-relaxed text-ivory/75">
+                      {item.desc}
+                    </p>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
           BAND 03 — LIGHT IVORY EDITORIAL MANIFESTO (LUAS & BREATHING ROOM)
       ====================================================================== */}
-      <section className="relative bg-ivory text-espresso py-20 sm:py-28 lg:py-40 px-6 sm:px-8 lg:px-12 border-b border-espresso/10">
+      <section className="relative bg-ivory text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-espresso/10">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-start">
           <Reveal variant="up" className="lg:col-span-3 space-y-5">
             <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
@@ -406,7 +560,7 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 04 — DARK ESPRESSO SELECTED WORK & EVALUATION ARCHIVE
       ====================================================================== */}
-      <section className="relative bg-espresso text-ivory py-20 sm:py-28 lg:py-40 px-6 sm:px-8 lg:px-12">
+      <section className="relative bg-espresso text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 sm:mb-16 lg:mb-20">
             <div className="space-y-4">
@@ -448,7 +602,7 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 05 — OFF-WHITE ASYMMETRIC EXPLORATION DOORS
       ====================================================================== */}
-      <section className="relative bg-offwhite text-espresso py-20 sm:py-28 lg:py-40 px-6 sm:px-8 lg:px-12">
+      <section className="relative bg-offwhite text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 lg:mb-14">
             <div>
