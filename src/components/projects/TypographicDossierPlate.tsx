@@ -9,8 +9,8 @@ interface TypographicDossierPlateProps {
 }
 
 /**
- * Intentional pure-typographic architectural presentation for NDA-protected internal systems
- * (such as ASIS Builder). Contains zero placeholder labels or empty image states.
+ * Pure-typographic architectural presentation for NDA-protected enterprise systems
+ * such as ASIS Builder.
  */
 export const TypographicDossierPlate: React.FC<TypographicDossierPlateProps> = ({
   project,

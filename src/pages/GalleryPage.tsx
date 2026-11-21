@@ -84,23 +84,23 @@ export const GalleryPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="bg-offwhite text-espresso pt-32 sm:pt-40 pb-20 sm:pb-24 px-5 sm:px-8 lg:px-12 border-b border-espresso/15">
+      <section className="bg-offwhite text-espresso pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-espresso/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-espresso/15">
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
               BAB 07 — GALERI MONOGRAF · {String(galleryItems.length).padStart(2, '0')} PELAT
             </span>
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-espresso/65">
-              KUALITAS KOMPOSISI DI ATAS KUANTITAS · FOTOGRAFI ASLI
+              FOTOGRAFI EDITORIAL · KOLEKSI PERSONAL
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-14 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 lg:pt-14 items-end">
             <div className="lg:col-span-7">
               <TextReveal
                 as="h1"
                 immediate
-                className="font-serif text-5xl sm:text-6xl lg:text-[4.85rem] leading-[0.98] font-light"
+                className="font-serif text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.85rem] leading-[1.04] lg:leading-[0.98] font-light"
                 lines={[
                   <>Edisi Monograf</>,
                   <>
@@ -111,14 +111,14 @@ export const GalleryPage: React.FC = () => {
             </div>
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
-              <p className="font-sans text-sm sm:text-base text-charcoal/80 leading-relaxed">
-                Menampilkan fotografi personal autentik dalam ruang pamer yang lapang—tanpa
-                foto stok, tanpa gambar AI, dan tanpa pengisi galeri kosong.
+              <p className="font-sans text-[15px] sm:text-base text-charcoal/80 leading-relaxed">
+                Menampilkan fotografi personal autentik dalam kurasi ruang pamer yang lapang,
+                menonjolkan pencahayaan studio hangat dan keseimbangan komposisi.
               </p>
             </Reveal>
           </div>
 
-          <div className="mt-12 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-espresso/15">
+          <div className="mt-10 lg:mt-12 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-espresso/15">
             <div
               className="flex flex-wrap items-center gap-2"
               role="group"
@@ -135,7 +135,7 @@ export const GalleryPage: React.FC = () => {
                     type="button"
                     aria-pressed={active}
                     onClick={() => setTonalMode(key)}
-                    className={`px-4 py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border transition-colors ${
+                    className={`px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border transition-colors ${
                       active
                         ? 'bg-espresso text-ivory border-espresso'
                         : 'bg-ivory text-espresso border-espresso/20 hover:border-mocha'
@@ -154,18 +154,18 @@ export const GalleryPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-obsidian text-ivory py-20 sm:py-28 px-5 sm:px-8 lg:px-12">
-        <div className="max-w-[1440px] mx-auto space-y-24 sm:space-y-32">
+      <section className="bg-obsidian text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
+        <div className="max-w-[1440px] mx-auto space-y-20 sm:space-y-32">
           {galleryItems.map((item, idx) => {
             const isPortrait = idx === 0;
             return (
               <Reveal key={item.id} variant="up">
-                <article className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center border-b border-champagne/15 pb-20 sm:pb-28 last:border-b-0 last:pb-0">
+                <article className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center border-b border-champagne/15 pb-16 sm:pb-28 last:border-b-0 last:pb-0">
                   <div
                     className={
                       isPortrait
-                        ? 'lg:col-span-6 lg:order-1'
-                        : 'lg:col-span-7 lg:order-2'
+                        ? 'md:col-span-6 md:order-1'
+                        : 'md:col-span-7 md:order-2'
                     }
                   >
                     <button
@@ -208,9 +208,9 @@ export const GalleryPage: React.FC = () => {
                   <div
                     className={`${
                       isPortrait
-                        ? 'lg:col-span-6 lg:order-2 lg:pl-6'
-                        : 'lg:col-span-5 lg:order-1 lg:pr-6'
-                    } space-y-8`}
+                        ? 'md:col-span-6 md:order-2 lg:pl-6'
+                        : 'md:col-span-5 md:order-1 lg:pr-6'
+                    } space-y-7 sm:space-y-8`}
                   >
                     <div className="space-y-3">
                       <div className="flex items-center gap-3 font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
@@ -219,7 +219,7 @@ export const GalleryPage: React.FC = () => {
                         <span className="text-taupe">{item.category}</span>
                       </div>
 
-                      <h2 className="font-serif text-4xl sm:text-5xl font-light leading-[1.05] text-ivory">
+                      <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-[1.06] md:leading-[1.05] text-ivory">
                         {item.title}
                       </h2>
 
@@ -228,7 +228,7 @@ export const GalleryPage: React.FC = () => {
                       </p>
                     </div>
 
-                    <p className="font-sans text-sm sm:text-base leading-[1.85] text-ivory/80">
+                    <p className="font-sans text-[15px] sm:text-base leading-[1.85] text-ivory/80">
                       {item.caption}
                     </p>
 
@@ -236,7 +236,7 @@ export const GalleryPage: React.FC = () => {
                       <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-champagne">
                         PENEMPATAN &amp; KONTEKS EDITORIAL
                       </p>
-                      <p className="font-sans text-sm text-taupe leading-relaxed">
+                      <p className="font-sans text-[15px] sm:text-base lg:text-sm text-taupe leading-relaxed">
                         {item.contextNote}
                       </p>
                       <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-champagne/70 pt-1">
@@ -249,7 +249,7 @@ export const GalleryPage: React.FC = () => {
                         <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-champagne">
                           EKSTRAKSI PALET WARNA DARI POTRET
                         </p>
-                        <div className="grid grid-cols-5 gap-2">
+                        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5 sm:gap-2">
                           {PORTRAIT_PALETTE.map((swatch) => (
                             <div key={swatch.hex} className="space-y-1.5">
                               <span
@@ -283,32 +283,34 @@ export const GalleryPage: React.FC = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: prefersReducedMotion ? 0.15 : 0.35, ease: EASE_LUXURY }}
             onClick={() => setLightboxIndex(null)}
-            className="fixed inset-0 z-80 bg-obsidian/95 backdrop-blur-lg flex flex-col justify-between p-4 sm:p-8 overflow-y-auto"
+            className="fixed inset-0 z-80 bg-obsidian/95 backdrop-blur-lg flex flex-col justify-between p-5 sm:p-8 overflow-y-auto"
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className="max-w-[1360px] w-full mx-auto flex items-center justify-between gap-4 pb-4 border-b border-champagne/15"
+              className="max-w-[1360px] w-full mx-auto flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-champagne/15"
             >
-              <span className="font-mono text-xs tracking-[0.24em] uppercase text-champagne">
+              <span className="font-mono text-xs tracking-[0.22em] uppercase text-champagne">
                 {String(lightboxIndex + 1).padStart(2, '0')} /{' '}
                 {String(galleryItems.length).padStart(2, '0')} · {activeItem.plateNumber}
               </span>
 
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2 sm:gap-2.5">
                 <button
                   type="button"
                   onClick={() => setShowCaptions((prev) => !prev)}
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/30 text-ivory font-mono text-[10px] tracking-[0.18em] uppercase hover:border-champagne transition-colors"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/30 text-ivory font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne transition-colors"
                 >
                   {showCaptions ? (
                     <>
                       <EyeOff className="size-3.5" aria-hidden="true" />
-                      Sembunyikan Teks
+                      <span className="hidden sm:inline">Sembunyikan Teks</span>
+                      <span className="sm:hidden">Teks</span>
                     </>
                   ) : (
                     <>
                       <Eye className="size-3.5" aria-hidden="true" />
-                      Tampilkan Teks
+                      <span className="hidden sm:inline">Tampilkan Teks</span>
+                      <span className="sm:hidden">Teks</span>
                     </>
                   )}
                 </button>
@@ -377,7 +379,7 @@ export const GalleryPage: React.FC = () => {
                   <h3 className="font-serif text-2xl sm:text-3xl font-light text-ivory">
                     {activeItem.title}
                   </h3>
-                  <p className="font-sans text-sm text-ivory/75 max-w-2xl mx-auto">
+                  <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 max-w-2xl mx-auto">
                     {activeItem.caption}
                   </p>
                   <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-taupe pt-1">

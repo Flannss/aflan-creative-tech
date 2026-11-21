@@ -13,6 +13,9 @@ export const contactData = {
   whatsappHref: 'https://wa.me/6283146134546',
   instagramHandle: '@flanssly',
   instagramHref: 'https://www.instagram.com/flanssly/',
+  githubHref: 'https://github.com/Flannss',
+  linkedinHref: 'https://www.linkedin.com/',
+  cvHref: '#',
   location: 'Purwokerto, Jawa Tengah, Indonesia',
   availabilityNote:
     'Terbuka untuk kolaborasi Web Development, diskusi pengembangan produk digital, inisiatif akademik, maupun pertukaran ide kreatif.',

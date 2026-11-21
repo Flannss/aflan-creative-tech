@@ -1,51 +1,51 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import {
   BrowserRouter,
   Route,
   Routes,
   useLocation,
 } from 'react-router-dom';
-import { AnimatePresence, MotionConfig } from 'framer-motion';
+import { MotionConfig } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
 import { PageTransition } from '@/components/motion/PageTransition';
 import { HomePage } from '@/pages/HomePage';
 
-const AboutPage = lazy(() =>
-  import('@/pages/AboutPage').then((m) => ({ default: m.AboutPage })),
-);
-const JourneyPage = lazy(() =>
-  import('@/pages/JourneyPage').then((m) => ({ default: m.JourneyPage })),
-);
-const SkillsPage = lazy(() =>
-  import('@/pages/SkillsPage').then((m) => ({ default: m.SkillsPage })),
-);
-const ProjectsPage = lazy(() =>
-  import('@/pages/ProjectsPage').then((m) => ({ default: m.ProjectsPage })),
-);
+const loadAboutPage = () => import('@/pages/AboutPage');
+const loadJourneyPage = () => import('@/pages/JourneyPage');
+const loadSkillsPage = () => import('@/pages/SkillsPage');
+const loadProjectsPage = () => import('@/pages/ProjectsPage');
+const loadProjectDetailPage = () => import('@/pages/ProjectDetailPage');
+const loadCreativeLabPage = () => import('@/pages/CreativeLabPage');
+const loadGalleryPage = () => import('@/pages/GalleryPage');
+const loadAchievementsPage = () => import('@/pages/AchievementsPage');
+const loadContactPage = () => import('@/pages/ContactPage');
+const loadNotFoundPage = () => import('@/pages/NotFoundPage');
+
+const AboutPage = lazy(() => loadAboutPage().then((m) => ({ default: m.AboutPage })));
+const JourneyPage = lazy(() => loadJourneyPage().then((m) => ({ default: m.JourneyPage })));
+const SkillsPage = lazy(() => loadSkillsPage().then((m) => ({ default: m.SkillsPage })));
+const ProjectsPage = lazy(() => loadProjectsPage().then((m) => ({ default: m.ProjectsPage })));
 const ProjectDetailPage = lazy(() =>
-  import('@/pages/ProjectDetailPage').then((m) => ({ default: m.ProjectDetailPage })),
+  loadProjectDetailPage().then((m) => ({ default: m.ProjectDetailPage })),
 );
 const CreativeLabPage = lazy(() =>
-  import('@/pages/CreativeLabPage').then((m) => ({ default: m.CreativeLabPage })),
+  loadCreativeLabPage().then((m) => ({ default: m.CreativeLabPage })),
 );
-const GalleryPage = lazy(() =>
-  import('@/pages/GalleryPage').then((m) => ({ default: m.GalleryPage })),
-);
+const GalleryPage = lazy(() => loadGalleryPage().then((m) => ({ default: m.GalleryPage })));
 const AchievementsPage = lazy(() =>
-  import('@/pages/AchievementsPage').then((m) => ({ default: m.AchievementsPage })),
+  loadAchievementsPage().then((m) => ({ default: m.AchievementsPage })),
 );
-const ContactPage = lazy(() =>
-  import('@/pages/ContactPage').then((m) => ({ default: m.ContactPage })),
-);
-const NotFoundPage = lazy(() =>
-  import('@/pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage })),
-);
+const ContactPage = lazy(() => loadContactPage().then((m) => ({ default: m.ContactPage })));
+const NotFoundPage = lazy(() => loadNotFoundPage().then((m) => ({ default: m.NotFoundPage })));
 
 const RouteFallback: React.FC = () => (
-  <div className="min-h-[75vh] bg-obsidian text-champagne flex flex-col items-center justify-center gap-3">
-    <span className="font-serif italic text-3xl">AFLAN</span>
-    <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-taupe">
+  <div
+    aria-busy="true"
+    className="min-h-[60vh] bg-obsidian text-champagne flex flex-col items-center justify-center gap-2"
+  >
+    <span className="font-serif italic text-2xl tracking-[0.12em]">AFLAN</span>
+    <span className="font-mono text-[10px] tracking-[0.28em] uppercase text-taupe">
       MEMUAT BAB
     </span>
   </div>
@@ -54,26 +54,54 @@ const RouteFallback: React.FC = () => (
 const AnimatedRoutes: React.FC = () => {
   const location = useLocation();
 
+  // Pre-warm lazy route modules in the background on idle so SPA navigation switches instantly
+  useEffect(() => {
+    const preloadAll = () => {
+      void Promise.allSettled([
+        loadAboutPage(),
+        loadProjectsPage(),
+        loadJourneyPage(),
+        loadSkillsPage(),
+        loadProjectDetailPage(),
+        loadCreativeLabPage(),
+        loadGalleryPage(),
+        loadAchievementsPage(),
+        loadContactPage(),
+      ]);
+    };
+
+    const win = window as Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+
+    if (typeof win.requestIdleCallback === 'function') {
+      const id = win.requestIdleCallback(preloadAll, { timeout: 1200 });
+      return () => win.cancelIdleCallback?.(id);
+    }
+
+    const timer = window.setTimeout(preloadAll, 350);
+    return () => window.clearTimeout(timer);
+  }, []);
+
   return (
-    <AnimatePresence mode="wait">
+    <Suspense fallback={<RouteFallback />}>
       <PageTransition key={location.pathname}>
-        <Suspense fallback={<RouteFallback />}>
-          <Routes location={location}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/journey" element={<JourneyPage />} />
-            <Route path="/skills" element={<SkillsPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/projects/:slug" element={<ProjectDetailPage />} />
-            <Route path="/lab" element={<CreativeLabPage />} />
-            <Route path="/gallery" element={<GalleryPage />} />
-            <Route path="/achievements" element={<AchievementsPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
+        <Routes location={location}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/journey" element={<JourneyPage />} />
+          <Route path="/skills" element={<SkillsPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/projects/:slug" element={<ProjectDetailPage />} />
+          <Route path="/lab" element={<CreativeLabPage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/achievements" element={<AchievementsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
       </PageTransition>
-    </AnimatePresence>
+    </Suspense>
   );
 };
 

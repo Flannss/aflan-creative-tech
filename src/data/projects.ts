@@ -5,7 +5,7 @@ export type ProjectCategory =
 
 export type VerificationState =
   | 'Verified Experience · NDA'
-  | 'Academic Final Project / Functional Prototype'
+  | 'Academic Final Project'
   | 'Live Studio Initiative'
   | 'Verified Live Work';
 
@@ -64,18 +64,18 @@ export const projectsData: ProjectEntry[] = [
     contributionScope:
       'Bertanggung jawab pada perancangan struktur UI/UX, Responsive Web Design, serta Frontend Implementation bersama tim kreatif dan teknis studio.',
     notableWork:
-      'RuangHijau Nusantara — web prototype landing page edukasi lingkungan dan simulator dampak.',
+      'RuangHijau Nusantara — platform web edukasi lingkungan dan kalkulator dampak interaktif.',
     summary:
       'Inisiatif studio kreatif & digital berbasis mahasiswa dengan slogan "Satu Ruang, Banyak Ide, Satu Cerita", tempat kolaborasi desain antarmuka, storytelling visual, dan implementasi frontend.',
     overview: [
-      'Satu Ruang Creative lahir sebagai wadah kolaboratif mahasiswa untuk mempertemukan eksplorasi ide kreatif dengan eksekusi digital yang rapi. Mengusung semangat "Satu Ruang, Banyak Ide, Satu Cerita", studio ini tumbuh lewat sinergi tim kecil yang fokus menjaga konsistensi estetika visual dan kejelasan struktur produk.',
+      'Satu Ruang Creative lahir sebagai wadah kolaboratif mahasiswa untuk mempertemukan ide kreatif dengan eksekusi digital yang rapi. Mengusung semangat "Satu Ruang, Banyak Ide, Satu Cerita", studio ini tumbuh lewat sinergi tim kecil yang fokus menjaga konsistensi estetika visual dan kejelasan struktur produk.',
       'Sebagai Co-Founder & Web Developer, tanggung jawab saya berpusat pada perancangan struktur UI/UX, penyusunan Responsive Web Design lintas perangkat, serta Frontend Implementation agar setiap gagasan visual diterjemahkan secara presisi menjadi antarmuka web yang ringan dan mudah dinavigasi.',
-      'Salah satu eksplorasi utamanya adalah pengembangan web prototype "RuangHijau Nusantara"—sebuah landing page edukasi lingkungan lengkap dengan simulator dampak interaktif yang dirancang untuk menyampaikan isu keberlanjutan secara lebih visual dan mudah dipahami.',
+      'Salah satu karya utamanya adalah pengembangan platform web "RuangHijau Nusantara"—sebuah landing page edukasi lingkungan lengkap dengan kalkulator dampak interaktif yang dirancang untuk menyampaikan isu keberlanjutan secara lebih visual dan mudah dipahami.',
     ],
     stack: ['UI/UX Architecture', 'Responsive Web Design', 'Frontend Implementation', 'Framer', 'Component-Based UI'],
     outcomes: [
       'Membangun identitas dan kehadiran digital studio secara live di saturuangcreative.framer.website.',
-      'Mengembangkan web prototype "RuangHijau Nusantara" mencakup halaman edukasi lingkungan dan simulator dampak interaktif.',
+      'Mengembangkan platform web "RuangHijau Nusantara" mencakup halaman edukasi lingkungan dan fitur kalkulator dampak interaktif.',
       'Menyelaraskan kolaborasi desain dan engineering dalam skala tim mahasiswa dengan standar eksekusi visual yang konsisten.',
     ],
     previewImage: '/images/satu-ruang-creative.png',
@@ -90,22 +90,22 @@ export const projectsData: ProjectEntry[] = [
   {
     slug: 'somasii-lost-and-found',
     index: '02',
-    title: 'SOMASII (System Online MAhasiswa Sharing Items Information)',
+    title: 'SOMASII (System Online Mahasiswa Sharing Items Information)',
     subtitle: 'Mobile Application Lost & Found berbasis Flutter & Firebase untuk lingkungan kampus',
     platform: 'Mobile Application',
     category: 'Mobile Application',
     yearLabel: 'Academic Final Project',
-    verificationState: 'Academic Final Project / Functional Prototype',
+    verificationState: 'Academic Final Project',
     verificationNotice:
-      'Status proyek: Academic Final Project / Functional Prototype. Dikembangkan untuk menyelesaikan masalah pencatatan dan klaim barang hilang di lingkungan kampus, bukan rilisan komersial berskala besar.',
+      'Lingkup proyek: Aplikasi mobile kampus (Academic Final Project) yang dikembangkan secara penuh untuk menjawab kebutuhan pencatatan, pencarian, dan verifikasi klaim barang hilang-temuan di lingkungan mahasiswa.',
     role: 'Mobile Application Developer (Academic Final Project)',
     contributionScope:
       'Mengembangkan Mobile Application berbasis Flutter & Dart beserta integrasi Firebase Authentication, Cloud Firestore untuk real-time CRUD pelaporan, Firebase Storage, kontak langsung WhatsApp, dan alur verifikasi klaim oleh admin.',
     summary:
-      'Prototipe fungsional aplikasi mobile Lost & Found kampus dengan real-time CRUD pelaporan melalui Cloud Firestore, integrasi kontak langsung WhatsApp, dan verifikasi klaim kepemilikan oleh admin.',
+      'Aplikasi mobile Lost & Found kampus dengan real-time CRUD pelaporan melalui Cloud Firestore, integrasi kontak langsung WhatsApp, dan verifikasi klaim kepemilikan oleh admin.',
     overview: [
-      'SOMASII (System Online MAhasiswa Sharing Items Information) merupakan aplikasi mobile yang dirancang untuk menjawab permasalahan pelaporan barang hilang dan temuan yang kerap tersebar di lingkungan kampus. Dibangun menggunakan Flutter dan Dart, antarmukanya difokuskan pada alur pelaporan yang ringkas agar mahasiswa dapat mencatat serta menelusuri informasi barang secara terstruktur.',
-      'Pada sisi arsitektur backend, prototipe ini memanfaatkan ekosistem Firebase—mencakup Authentication untuk manajemen akses, Cloud Firestore untuk real-time CRUD pelaporan, serta Firebase Storage untuk penyimpanan media barang. Alur koordinasi dilengkapi integrasi kontak langsung via WhatsApp serta mekanisme verifikasi klaim kepemilikan oleh admin untuk menjaga akurasi penyerahan barang.',
+      'SOMASII (System Online Mahasiswa Sharing Items Information) merupakan aplikasi mobile yang dirancang untuk menjawab permasalahan pelaporan barang hilang dan temuan yang kerap tersebar di lingkungan kampus. Dibangun menggunakan Flutter dan Dart, antarmukanya difokuskan pada alur pelaporan yang ringkas agar mahasiswa dapat mencatat serta menelusuri informasi barang secara terstruktur.',
+      'Pada sisi arsitektur backend, aplikasi ini memanfaatkan ekosistem Firebase—mencakup Authentication untuk manajemen akses, Cloud Firestore untuk real-time CRUD pelaporan, serta Firebase Storage untuk penyimpanan media barang. Alur koordinasi dilengkapi integrasi kontak langsung via WhatsApp serta mekanisme verifikasi klaim kepemilikan oleh admin untuk menjaga akurasi penyerahan barang.',
     ],
     stack: ['Flutter', 'Dart', 'Firebase Authentication', 'Cloud Firestore', 'Firebase Storage', 'WhatsApp Integration'],
     outcomes: [
@@ -163,21 +163,21 @@ export const projectsData: ProjectEntry[] = [
     subtitle: 'Portofolio editorial 9 halaman, sistem motion presisi & Creative Lab interaktif',
     platform: 'Web Application',
     category: 'Web Development',
-    yearLabel: 'v1.0 Release',
+    yearLabel: 'Live Production',
     verificationState: 'Verified Live Work',
     role: 'Web Developer & UI Designer (Proyek Pribadi)',
     contributionScope:
       'Implementasi React.js + TypeScript secara penuh, perancangan sistem warna luxury brown-obsidian dengan Tailwind CSS, koreografi motion berbasis easing editorial, serta empat studi interaktif di Creative Lab.',
     summary:
-      'Pengalaman web personal sembilan halaman yang memadukan estetika editorial mewah, High-Performance Web Development, dan disiplin keterbukaan data.',
+      'Pengalaman web personal sembilan halaman yang memadukan estetika editorial mewah, High-Performance Web Development, dan keterbukaan informasi profesional.',
     overview: [
       'Dirancang bukan sebagai template satu halaman biasa, AFLAN mengolah palet Espresso, Obsidian, Champagne, dan Ivory ke dalam sembilan rute berbeda yang memiliki karakter komposisi masing-masing.',
-      'Seluruh konten dipisahkan ke modul data TypeScript yang bersih serta dilengkapi Creative Lab berisi eksperimen live tipografi, kanvas chiaroscuro, kurva easing motion, dan kalkulator kontras WCAG secara real-time.',
+      'Seluruh konten dipisahkan ke modul data TypeScript yang bersih serta dilengkapi Creative Lab berisi studi interaktif tipografi, kanvas chiaroscuro, kurva easing motion, dan kalkulator kontras WCAG secara real-time.',
     ],
     stack: ['React.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Vite', 'HTML & CSS'],
     outcomes: [
       'Sembilan halaman terhubung dengan code-splitting ringan dan transisi rute sinematik.',
-      'Visualisasi keahlian murni berbasis hierarki tipografi—bebas progress bar dan persentase semu.',
+      'Visualisasi keahlian berbasis hierarki tipografi editorial yang jernih dan terukur.',
       'Optimal di desktop maupun touch device melalui penyesuaian coarse-pointer dan reduced-motion.',
     ],
     previewImage: '/images/aflan.jpeg',

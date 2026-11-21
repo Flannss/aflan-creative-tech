@@ -33,9 +33,12 @@ export const TextReveal: React.FC<TextRevealProps> = ({
     return (
       <Tag className={className}>
         {lines.map((line, index) => (
-          <span key={index} className={`block ${lineClassName}`}>
-            {line}
-          </span>
+          <React.Fragment key={index}>
+            <span className={`block ${lineClassName}`}>
+              {line}
+            </span>
+            {index < lines.length - 1 ? ' ' : null}
+          </React.Fragment>
         ))}
       </Tag>
     );
@@ -44,25 +47,28 @@ export const TextReveal: React.FC<TextRevealProps> = ({
   return (
     <Tag className={className}>
       {lines.map((line, index) => (
-        <span key={index} className={`block overflow-hidden pb-[0.08em] -mb-[0.08em] ${lineClassName}`}>
-          <motion.span
-            className="block will-change-transform"
-            initial={{ y: '108%', opacity: 0.15 }}
-            {...(immediate
-              ? { animate: { y: '0%', opacity: 1 } }
-              : {
-                  whileInView: { y: '0%', opacity: 1 },
-                  viewport: { once: true, amount: 0.25 },
-                })}
-            transition={{
-              duration: 0.96,
-              delay: delay + index * stagger,
-              ease: EASE_LUXURY,
-            }}
-          >
-            {line}
-          </motion.span>
-        </span>
+        <React.Fragment key={index}>
+          <span className={`block overflow-hidden pb-[0.08em] -mb-[0.08em] ${lineClassName}`}>
+            <motion.span
+              className="block will-change-transform"
+              initial={{ y: '108%', opacity: 0.15 }}
+              {...(immediate
+                ? { animate: { y: '0%', opacity: 1 } }
+                : {
+                    whileInView: { y: '0%', opacity: 1 },
+                    viewport: { once: true, amount: 0.25 },
+                  })}
+              transition={{
+                duration: 0.96,
+                delay: delay + index * stagger,
+                ease: EASE_LUXURY,
+              }}
+            >
+              {line}
+            </motion.span>
+          </span>
+          {index < lines.length - 1 ? ' ' : null}
+        </React.Fragment>
       ))}
     </Tag>
   );

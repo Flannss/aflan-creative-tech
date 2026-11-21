@@ -1,6 +1,5 @@
 export interface AgeDetails {
   age: number;
-  birthDateFormatted: string;
   birthYear: number;
   daysUntilNextBirthday: number;
   isBirthdayToday: boolean;
@@ -46,15 +45,8 @@ export function calculateExactAge(
     (nextBirthday.getTime() - todayMidnight.getTime()) / msPerDay,
   );
 
-  const formatted = new Intl.DateTimeFormat('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  }).format(new Date(birthYear, birthMonthIndex, birthDay));
-
   return {
     age,
-    birthDateFormatted: formatted,
     birthYear,
     daysUntilNextBirthday,
     isBirthdayToday,

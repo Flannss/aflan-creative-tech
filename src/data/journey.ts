@@ -50,21 +50,21 @@ export const journeyMilestones: JourneyMilestone[] = [
       'Membangun wadah studio kreatif & digital mahasiswa ("Satu Ruang, Banyak Ide, Satu Cerita") dengan tanggung jawab pada perancangan struktur UI/UX, Responsive Web Design, dan Frontend Implementation.',
     highlights: [
       'Peran: Co-Founder & Web Developer untuk kolaborasi desain dan implementasi web',
-      'Karya utama: Web prototype "RuangHijau Nusantara" (edukasi lingkungan & simulator dampak)',
+      'Karya utama: Platform web "RuangHijau Nusantara" (edukasi lingkungan & kalkulator dampak interaktif)',
       'Live showcase studio tersedia di saturuangcreative.framer.website',
     ],
   },
   {
-    id: 'somasii-prototype',
+    id: 'somasii-mobile-app',
     chapter: '03',
     periodLabel: 'Academic Final Project',
     category: 'Proyek & Studio',
-    title: 'SOMASII — System Online MAhasiswa Sharing Items Information',
+    title: 'SOMASII — System Online Mahasiswa Sharing Items Information',
     location: 'Mobile Application · Flutter & Firebase',
     summary:
-      'Merancang dan mengembangkan prototipe fungsional aplikasi mobile Lost & Found kampus menggunakan Flutter, Dart, dan Firebase (Authentication, Cloud Firestore, Storage) dengan integrasi kontak WhatsApp serta verifikasi klaim admin.',
+      'Merancang dan mengembangkan aplikasi mobile Lost & Found kampus menggunakan Flutter, Dart, dan Firebase (Authentication, Cloud Firestore, Storage) dengan integrasi kontak WhatsApp serta verifikasi klaim admin.',
     highlights: [
-      'Status: Academic Final Project / Functional Prototype untuk lingkungan kampus',
+      'Peran & Lingkup: Pengembang Aplikasi Mobile (Academic Final Project) untuk lingkungan kampus',
       'Real-time CRUD pelaporan melalui Cloud Firestore & media barang di Firebase Storage',
       'Integrasi kontak langsung via WhatsApp dan sistem verifikasi klaim kepemilikan oleh admin',
     ],

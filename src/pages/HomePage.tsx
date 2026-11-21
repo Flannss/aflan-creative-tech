@@ -1,8 +1,17 @@
 import React, { useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, ArrowUpRight, Compass, Sparkles } from 'lucide-react';
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Compass,
+  Download,
+  Github,
+  Linkedin,
+  Sparkles,
+} from 'lucide-react';
 import { personalData } from '@/data/personal';
+import { contactData } from '@/data/contact';
 import { projectsData } from '@/data/projects';
 import { calculateExactAge } from '@/utils/age';
 import { EASE_LUXURY } from '@/utils/motion';
@@ -41,7 +50,7 @@ export const HomePage: React.FC = () => {
       ====================================================================== */}
       <section
         ref={heroRef}
-        className="relative min-h-svh bg-obsidian text-ivory flex flex-col justify-between pt-28 sm:pt-32 pb-12 px-5 sm:px-8 lg:px-12 overflow-hidden"
+        className="relative min-h-svh bg-obsidian text-ivory flex flex-col justify-between pt-28 sm:pt-32 pb-12 px-6 sm:px-8 lg:px-12 overflow-hidden"
       >
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 studio-vignette" />
         <div
@@ -66,28 +75,28 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* Center Layered Composition: Back Wordmark + Parallax Portrait + Front Outline Wordmark */}
-        <div className="relative z-10 max-w-[1440px] w-full mx-auto my-auto py-8 sm:py-12 flex flex-col items-center justify-center">
+        <div className="relative z-10 max-w-[1440px] w-full mx-auto my-auto py-6 sm:py-10 lg:py-12 flex flex-col items-center justify-center">
           <motion.div
             style={{ y: wordmarkY }}
             initial={disableParallax ? false : { opacity: 0, y: 36 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.05, ease: EASE_LUXURY }}
-            className="w-full text-center select-none pointer-events-none -mb-10 sm:-mb-16 md:-mb-20 lg:-mb-24 z-0"
+            className="w-full text-center select-none pointer-events-none -mb-6 sm:-mb-12 md:-mb-16 lg:-mb-24 z-0"
           >
-            <h1 className="font-serif font-light uppercase tracking-[0.14em] leading-[0.82] text-[clamp(4.4rem,18vw,15.5rem)] text-ivory/95">
+            <h1 className="font-serif font-light uppercase tracking-[0.14em] leading-[0.82] text-[clamp(3.25rem,14.5vw,5.25rem)] md:text-[clamp(6.25rem,16vw,9.5rem)] lg:text-[clamp(4.4rem,18vw,15.5rem)] text-ivory/95">
               AFLAN
             </h1>
           </motion.div>
 
-          <div className="relative w-full grid grid-cols-1 lg:grid-cols-12 items-end gap-8 lg:gap-6 z-10">
+          <div className="relative w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 items-end gap-8 lg:gap-6 z-10">
             {/* Left Floating Identity Dossier */}
             <motion.aside
               initial={disableParallax ? false : { opacity: 0, x: -24 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.95, delay: 0.34, ease: EASE_LUXURY }}
-              className="order-2 lg:order-1 lg:col-span-4 lg:pb-8"
+              className="order-2 md:col-span-1 lg:order-1 lg:col-span-4 lg:pb-8"
             >
-              <div className="border border-champagne/20 bg-espresso/70 backdrop-blur-md p-5 sm:p-6 max-w-md">
+              <div className="border border-champagne/20 bg-espresso/70 backdrop-blur-md p-5 sm:p-6 max-w-md md:max-w-none lg:max-w-md">
                 <div className="flex items-center justify-between gap-2 pb-3 mb-4 border-b border-champagne/15">
                   <span className="font-mono text-[10px] tracking-[0.26em] uppercase text-champagne">
                     DOSSIER · 01
@@ -97,7 +106,7 @@ export const HomePage: React.FC = () => {
                   </span>
                 </div>
 
-                <dl className="grid grid-cols-2 gap-x-4 gap-y-3.5 text-xs">
+                <dl className="grid grid-cols-2 gap-x-4 gap-y-3.5 text-sm lg:text-xs">
                   <div>
                     <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-taupe">
                       Nama Lengkap
@@ -133,7 +142,7 @@ export const HomePage: React.FC = () => {
             </motion.aside>
 
             {/* Centerpiece Studio Portrait with Smooth Parallax & Front Outlined Surname */}
-            <div className="order-1 lg:order-2 lg:col-span-4 flex flex-col items-center relative">
+            <div className="order-1 md:col-span-2 lg:order-2 lg:col-span-4 flex flex-col items-center relative">
               <motion.div
                 style={{ y: portraitY }}
                 initial={
@@ -143,7 +152,7 @@ export const HomePage: React.FC = () => {
                 }
                 animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }}
                 transition={{ duration: 1.15, delay: 0.14, ease: EASE_LUXURY }}
-                className="relative w-full max-w-[300px] sm:max-w-[340px] lg:max-w-[345px] xl:max-w-[385px] aspect-4/5 overflow-hidden border border-champagne/30 bg-obsidian shadow-[0_32px_90px_rgba(0,0,0,0.75)]"
+                className="relative w-full max-w-[280px] sm:max-w-[330px] lg:max-w-[345px] xl:max-w-[385px] aspect-4/5 overflow-hidden border border-champagne/30 bg-obsidian shadow-[0_32px_90px_rgba(0,0,0,0.75)]"
               >
                 <motion.img
                   style={{ scale: portraitScale }}
@@ -166,7 +175,7 @@ export const HomePage: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.0, delay: 0.32, ease: EASE_LUXURY }}
                 aria-hidden="true"
-                className="pointer-events-none select-none -mt-7 sm:-mt-9 md:-mt-10 z-20 font-serif italic font-light uppercase tracking-[0.11em] leading-none text-[clamp(1.85rem,4.3vw,3.95rem)] editorial-outline-strong whitespace-nowrap"
+                className="pointer-events-none select-none -mt-6 sm:-mt-8 md:-mt-10 z-20 font-serif italic font-light uppercase tracking-[0.11em] leading-none text-[clamp(1.55rem,6.5vw,2.45rem)] md:text-[clamp(2.35rem,4.6vw,3.1rem)] lg:text-[clamp(1.85rem,4.3vw,3.95rem)] editorial-outline-strong whitespace-nowrap"
               >
                 DZULFIQAR
               </motion.p>
@@ -177,14 +186,14 @@ export const HomePage: React.FC = () => {
               initial={disableParallax ? false : { opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.95, delay: 0.4, ease: EASE_LUXURY }}
-              className="order-3 lg:col-span-4 lg:pb-8 flex flex-col lg:items-end lg:text-right gap-6"
+              className="order-3 md:col-span-1 lg:col-span-4 lg:pb-8 flex flex-col lg:items-end lg:text-right gap-5 lg:gap-6"
             >
-              <p className="font-serif text-2xl sm:text-[1.75rem] leading-[1.3] font-light text-ivory/95 max-w-md">
+              <p className="font-serif text-xl sm:text-2xl lg:text-[1.75rem] leading-[1.3] font-light text-ivory/95 max-w-md md:max-w-none lg:max-w-md">
                 Membangun{' '}
                 <span className="italic text-champagne">Seamless Digital Experience</span>{' '}
                 dengan presisi teknis dan rasa editorial.
               </p>
-              <p className="font-sans text-sm leading-relaxed text-ivory/75 max-w-md">
+              <p className="font-sans text-[15px] sm:text-base lg:text-sm leading-relaxed text-ivory/75 max-w-md md:max-w-none lg:max-w-md">
                 {personalData.headlineDescriptor}
               </p>
               <div className="flex flex-wrap lg:justify-end gap-3 pt-1">
@@ -204,6 +213,43 @@ export const HomePage: React.FC = () => {
                   Tentang Aflan
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
+              </div>
+
+              <div className="flex flex-wrap items-center lg:justify-end gap-x-5 gap-y-2.5 pt-3 border-t border-champagne/15 w-full max-w-md md:max-w-none lg:max-w-md">
+                <a
+                  href={contactData.cvHref}
+                  onClick={(e) => e.preventDefault()}
+                  data-cursor="CV"
+                  aria-label="Unduh CV Aflan Mu'afa Dzulfiqar"
+                  className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase text-champagne hover:text-ivory transition-colors"
+                >
+                  <Download className="size-3.5" aria-hidden="true" />
+                  <span>Unduh CV</span>
+                </a>
+                <span className="text-champagne/30" aria-hidden="true">·</span>
+                <a
+                  href={contactData.githubHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="GITHUB"
+                  aria-label="Profil GitHub Flannss"
+                  className="inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.18em] uppercase text-ivory/80 hover:text-champagne transition-colors"
+                >
+                  <Github className="size-3.5" aria-hidden="true" />
+                  <span>GitHub</span>
+                </a>
+                <span className="text-champagne/30" aria-hidden="true">·</span>
+                <a
+                  href={contactData.linkedinHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="LINKEDIN"
+                  aria-label="Profil LinkedIn Aflan Mu'afa Dzulfiqar"
+                  className="inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.18em] uppercase text-ivory/80 hover:text-champagne transition-colors"
+                >
+                  <Linkedin className="size-3.5" aria-hidden="true" />
+                  <span>LinkedIn</span>
+                </a>
               </div>
             </motion.div>
           </div>
@@ -236,14 +282,14 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 03 — LIGHT IVORY EDITORIAL MANIFESTO (LUAS & BREATHING ROOM)
       ====================================================================== */}
-      <section className="relative bg-ivory text-espresso py-24 sm:py-32 lg:py-40 px-5 sm:px-8 lg:px-12 border-b border-espresso/10">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-12 items-start">
+      <section className="relative bg-ivory text-espresso py-20 sm:py-28 lg:py-40 px-6 sm:px-8 lg:px-12 border-b border-espresso/10">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-start">
           <Reveal variant="up" className="lg:col-span-3 space-y-5">
             <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
               BAB 01 — IDENTITAS
             </p>
             <div className="flex items-center gap-4">
-              <span className="font-serif italic text-6xl sm:text-7xl leading-none text-espresso/20 select-none">
+              <span className="font-serif italic text-5xl sm:text-6xl lg:text-7xl leading-none text-espresso/20 select-none">
                 01
               </span>
               <MonogramMark size={40} className="text-mocha" />
@@ -253,10 +299,10 @@ export const HomePage: React.FC = () => {
             </p>
           </Reveal>
 
-          <div className="lg:col-span-9 space-y-12">
+          <div className="lg:col-span-9 space-y-10 lg:space-y-12">
             <TextReveal
               as="h2"
-              className="font-serif text-4xl sm:text-5xl lg:text-[4.1rem] leading-[1.06] font-light text-espresso max-w-4xl"
+              className="font-serif text-[2rem] sm:text-4xl md:text-5xl lg:text-[4.1rem] leading-[1.1] lg:leading-[1.06] font-light text-espresso max-w-4xl"
               lines={[
                 <>Elegan bukan berarti kosong—melainkan</>,
                 <>
@@ -282,7 +328,7 @@ export const HomePage: React.FC = () => {
                     </span>
                   ))}
                 </div>
-                <div className="pt-3">
+                <div className="pt-3 flex flex-wrap items-center gap-6">
                   <Link
                     to="/about"
                     data-cursor="PROFIL"
@@ -294,6 +340,16 @@ export const HomePage: React.FC = () => {
                       aria-hidden="true"
                     />
                   </Link>
+                  <a
+                    href={contactData.cvHref}
+                    onClick={(e) => e.preventDefault()}
+                    data-cursor="CV"
+                    aria-label="Unduh CV Aflan Mu'afa Dzulfiqar"
+                    className="group inline-flex items-center gap-2 font-mono text-xs tracking-[0.2em] uppercase text-mocha border-b border-mocha/40 pb-1.5 hover:text-espresso hover:border-espresso transition-colors"
+                  >
+                    <Download className="size-3.5" aria-hidden="true" />
+                    Unduh CV
+                  </a>
                 </div>
               </Reveal>
 
@@ -302,7 +358,7 @@ export const HomePage: React.FC = () => {
                   <p className="font-mono text-[10px] tracking-[0.26em] uppercase text-mocha">
                     RINGKASAN TERVERIFIKASI
                   </p>
-                  <dl className="divide-y divide-espresso/10 text-sm">
+                  <dl className="divide-y divide-espresso/10 text-[15px] md:text-sm">
                     <div className="py-3 flex justify-between gap-4">
                       <dt className="text-espresso/65">Tempat Lahir</dt>
                       <dd className="font-medium text-espresso text-right">
@@ -344,16 +400,16 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 04 — DARK ESPRESSO SELECTED WORK & EVALUATION ARCHIVE
       ====================================================================== */}
-      <section className="relative bg-espresso text-ivory py-24 sm:py-32 lg:py-40 px-5 sm:px-8 lg:px-12">
+      <section className="relative bg-espresso text-ivory py-20 sm:py-28 lg:py-40 px-6 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-14 sm:mb-20">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 sm:mb-16 lg:mb-20">
             <div className="space-y-4">
               <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
                 BAB 02 — KARYA TERPILIH &amp; SOFTWARE QA
               </p>
               <TextReveal
                 as="h2"
-                className="font-serif text-4xl sm:text-5xl lg:text-[4rem] font-light leading-[1.04]"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[4rem] font-light leading-[1.06] lg:leading-[1.04]"
                 lines={[
                   <>
                     Indeks <span className="italic text-champagne">Terkurasi</span>
@@ -363,10 +419,10 @@ export const HomePage: React.FC = () => {
             </div>
 
             <Reveal variant="up" delay={0.1} className="max-w-md space-y-4">
-              <p className="font-sans text-sm text-ivory/75 leading-relaxed">
-                Arahkan kursor pada tiap baris di desktop untuk melihat pratinjau visual.
-                Setiap proyek disusun jujur—membedakan peran QA, prototipe, dan pengembangan
-                mandiri secara transparan.
+              <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 leading-relaxed">
+                Kumpulan karya pengembangan web, aplikasi mobile kampus, serta evaluasi
+                kualitas perangkat lunak—disajikan transparan sesuai peran dan kontribusi
+                aktual.
               </p>
               <Link
                 to="/projects"
@@ -386,16 +442,16 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 05 — OFF-WHITE ASYMMETRIC EXPLORATION DOORS
       ====================================================================== */}
-      <section className="relative bg-offwhite text-espresso py-24 sm:py-32 lg:py-40 px-5 sm:px-8 lg:px-12">
+      <section className="relative bg-offwhite text-espresso py-20 sm:py-28 lg:py-40 px-6 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 lg:mb-14">
             <div>
               <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha mb-3">
                 BAB 03 — EKSPLORASI LANJUTAN
               </p>
               <TextReveal
                 as="h2"
-                className="font-serif text-4xl sm:text-5xl font-light leading-tight text-espresso"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight text-espresso"
                 lines={[
                   <>
                     Masuk ke Dalam <span className="italic text-mocha">Arsip</span>
@@ -408,12 +464,12 @@ export const HomePage: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-7">
-            <Reveal variant="up" className="lg:col-span-7">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-7">
+            <Reveal variant="up" className="md:col-span-2 lg:col-span-7">
               <Link
                 to="/lab"
                 data-cursor="BUKA LAB"
-                className="group relative flex flex-col justify-between min-h-[380px] sm:min-h-[450px] p-8 sm:p-11 bg-obsidian text-ivory border border-espresso/20 overflow-hidden"
+                className="group relative flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[450px] p-7 sm:p-9 lg:p-11 bg-obsidian text-ivory border border-espresso/20 overflow-hidden"
               >
                 <div
                   aria-hidden="true"
@@ -429,20 +485,20 @@ export const HomePage: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="relative z-10 mt-auto pt-14 space-y-4">
-                  <p className="font-serif italic text-5xl sm:text-6xl leading-[0.96] font-light text-champagne">
-                    Ruang Eksperimen
+                <div className="relative z-10 mt-auto pt-12 sm:pt-14 space-y-4">
+                  <p className="font-serif italic text-[2.25rem] sm:text-5xl lg:text-6xl leading-[0.98] lg:leading-[0.96] font-light text-champagne">
+                    Sistem Visual{' '}
                     <span className="block not-italic text-ivory">Interaktif</span>
                   </p>
-                  <p className="font-sans text-sm sm:text-base text-ivory/75 max-w-lg leading-relaxed">
-                    Uji langsung kompositor tipografi editorial, kanvas chiaroscuro interaktif,
-                    kurva easing motion, serta kalkulator kontras warna WCAG.
+                  <p className="font-sans text-[15px] sm:text-base text-ivory/75 max-w-lg leading-relaxed">
+                    Jelajahi kompositor tipografi editorial, kanvas chiaroscuro interaktif,
+                    koreografi kurva motion, serta matriks kontras warna WCAG secara langsung.
                   </p>
                 </div>
               </Link>
             </Reveal>
 
-            <div className="lg:col-span-5 flex flex-col gap-7">
+            <div className="md:col-span-2 md:grid md:grid-cols-2 lg:col-span-5 lg:flex lg:flex-col gap-6 lg:gap-7">
               <Reveal variant="up" delay={0.08} className="flex-1">
                 <Link
                   to="/journey"
@@ -460,10 +516,10 @@ export const HomePage: React.FC = () => {
                     />
                   </div>
                   <div className="pt-8">
-                    <h3 className="font-serif text-3xl sm:text-4xl font-light text-espresso group-hover:text-mocha transition-colors">
+                    <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-espresso group-hover:text-mocha transition-colors">
                       Linimasa &amp; <span className="italic">Pengalaman</span>
                     </h3>
-                    <p className="mt-2.5 font-sans text-sm text-charcoal/80 leading-relaxed">
+                    <p className="mt-2.5 font-sans text-[15px] sm:text-base lg:text-sm text-charcoal/80 leading-relaxed">
                       Dari studi Teknologi Informasi di Universitas Amikom Purwokerto hingga
                       magang Programmer Intern di PT Puskomedia Indonesia Kreatif.
                     </p>
@@ -471,7 +527,7 @@ export const HomePage: React.FC = () => {
                 </Link>
               </Reveal>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-7">
                 <Reveal variant="up" delay={0.14}>
                   <Link
                     to="/gallery"
@@ -488,7 +544,7 @@ export const HomePage: React.FC = () => {
                       <h3 className="font-serif text-2xl font-light text-ivory">
                         Edisi Monograf
                       </h3>
-                      <p className="mt-1.5 text-xs text-ivory/70">
+                      <p className="mt-1.5 text-sm lg:text-xs text-ivory/70">
                         Potret studio, studi tonal &amp; lightbox.
                       </p>
                     </div>
@@ -511,8 +567,8 @@ export const HomePage: React.FC = () => {
                       <h3 className="font-serif text-2xl font-light text-espresso">
                         Hierarki Stack
                       </h3>
-                      <p className="mt-1.5 text-xs text-charcoal/75">
-                        Web, Mobile, UI/UX &amp; QA tanpa progress bar.
+                      <p className="mt-1.5 text-sm lg:text-xs text-charcoal/75">
+                        Web, Mobile, UI/UX &amp; Software QA terkurasi.
                       </p>
                     </div>
                   </Link>

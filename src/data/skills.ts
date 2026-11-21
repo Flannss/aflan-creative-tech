@@ -26,8 +26,7 @@ export const skillTiers: Array<'All' | SkillTier> = [
 ];
 
 /**
- * Hierarki kapabilitas teknis berbasis tipografi editorial.
- * Tanpa progress bar, tanpa angka persentase, dan tanpa klaim berlebih.
+ * Pemetaan kapabilitas teknis berbasis hierarki tipografi editorial.
  */
 export const skillDomains: SkillDomain[] = [
   {
@@ -84,9 +83,9 @@ export const skillDomains: SkillDomain[] = [
     id: 'mobile-development',
     index: '02',
     title: 'Mobile Development',
-    subtitle: 'Antarmuka lintas platform & prototipe terintegrasi cloud',
+    subtitle: 'Antarmuka lintas platform & aplikasi mobile terintegrasi cloud',
     description:
-      'Mengembangkan prototipe aplikasi mobile lintas platform menggunakan Flutter, Dart, dan layanan Firebase—diterapkan langsung pada prototipe SOMASII.',
+      'Mengembangkan aplikasi mobile lintas platform menggunakan Flutter, Dart, dan layanan Firebase—diterapkan langsung pada aplikasi kampus SOMASII.',
     items: [
       {
         name: 'Flutter',
@@ -96,12 +95,12 @@ export const skillDomains: SkillDomain[] = [
       {
         name: 'Dart',
         tier: 'Working Knowledge',
-        context: 'Pengelolaan model data, logika layar, dan alur state pada prototipe Flutter.',
+        context: 'Pengelolaan model data, logika layar, dan alur state pada aplikasi Flutter.',
       },
       {
         name: 'Firebase Auth',
         tier: 'Working Knowledge',
-        context: 'Implementasi autentikasi pengguna dan manajemen sesi pada prototipe aplikasi.',
+        context: 'Implementasi autentikasi pengguna dan manajemen sesi pada aplikasi mobile.',
       },
       {
         name: 'Cloud Firestore',
@@ -139,9 +138,9 @@ export const skillDomains: SkillDomain[] = [
         context: 'Memecah tampilan kompleks menjadi komponen reusable yang rapi dan konsisten.',
       },
       {
-        name: 'Prototyping',
+        name: 'Interaction Design',
         tier: 'Working Knowledge',
-        context: 'Menerjemahkan ide menjadi alur interaktif untuk memvalidasi kenyamanan pengguna.',
+        context: 'Menerjemahkan ide menjadi alur antarmuka interaktif untuk memastikan kenyamanan pengguna.',
       },
     ],
   },
@@ -176,7 +175,7 @@ export const skillDomains: SkillDomain[] = [
       {
         name: 'Documentation',
         tier: 'Hands-on Experience',
-        context: 'Menyusun catatan uji, laporan evaluasi, dan masukan teknis yang mudah ditindaklanjuti.',
+        context: 'Menyusun catatan pengujian QA, laporan evaluasi, dan dokumentasi teknis yang mudah ditindaklanjuti.',
       },
     ],
   },

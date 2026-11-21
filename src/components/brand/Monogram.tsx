@@ -69,20 +69,23 @@ export const BrandSignature: React.FC<BrandSignatureProps> = ({
   const accentColor = tone === 'light' ? 'text-champagne' : 'text-mocha';
 
   return (
-    <span className="inline-flex items-center gap-3 select-none">
-      <MonogramMark size={compact ? 30 : 34} className={accentColor} />
+    <span className="inline-flex items-center gap-2.5 sm:gap-3 select-none">
+      <MonogramMark size={compact ? 28 : 34} className={`${accentColor} shrink-0`} />
       <span className="flex flex-col leading-none">
         <span
-          className={`font-serif text-lg sm:text-xl tracking-[0.26em] font-medium uppercase ${textColor}`}
+          className={`font-serif text-base sm:text-lg md:text-xl tracking-[0.22em] sm:tracking-[0.26em] font-medium uppercase ${textColor}`}
         >
           AFLAN
         </span>
         {!compact && (
-          <span
-            className={`font-mono text-[9px] tracking-[0.3em] uppercase mt-0.5 ${accentColor} opacity-80`}
-          >
-            AMDZ · IDENTITY
-          </span>
+          <>
+            {' '}
+            <span
+              className={`font-mono text-[9px] tracking-[0.24em] sm:tracking-[0.3em] uppercase mt-0.5 ${accentColor} opacity-80`}
+            >
+              AMDZ · IDENTITY
+            </span>
+          </>
         )}
       </span>
     </span>

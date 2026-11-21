@@ -81,7 +81,7 @@ export const Navbar: React.FC = () => {
               : 'bg-obsidian/65 backdrop-blur-sm border-b border-champagne/10 py-4 sm:py-5'
         }`}
       >
-        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 flex items-center justify-between gap-4">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 flex items-center justify-between gap-3 sm:gap-4">
           <Link
             to="/"
             aria-label="Beranda AFLAN"
@@ -154,7 +154,7 @@ export const Navbar: React.FC = () => {
           </nav>
 
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex xl:hidden items-center gap-4 mr-1">
+            <div className="hidden md:flex xl:hidden items-center gap-2 mr-1">
               {['/about', '/projects', '/lab', '/contact'].map((path) => {
                 const route = navigationRoutes.find((r) => r.path === path);
                 if (!route) return null;
@@ -163,7 +163,7 @@ export const Navbar: React.FC = () => {
                     key={route.path}
                     to={route.path}
                     className={({ isActive }) =>
-                      `font-mono text-[11px] tracking-[0.18em] uppercase transition-colors ${
+                      `px-2.5 py-2 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors ${
                         isLightHeaderRoute
                           ? isActive
                             ? 'text-mocha font-medium'
@@ -188,7 +188,7 @@ export const Navbar: React.FC = () => {
               aria-controls="aflan-editorial-menu"
               aria-label={menuOpen ? 'Tutup indeks navigasi' : 'Buka indeks navigasi penuh'}
               data-cursor={menuOpen ? 'TUTUP' : 'INDEKS'}
-              className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-full border transition-all duration-300 ${
+              className={`inline-flex items-center gap-2 sm:gap-2.5 min-h-[44px] lg:min-h-0 px-4 py-2.5 lg:py-2 rounded-full border shrink-0 transition-all duration-300 ${
                 isLightHeaderRoute
                   ? 'border-espresso/30 bg-espresso text-ivory hover:bg-mocha hover:border-mocha'
                   : 'border-champagne/35 bg-espresso/75 text-ivory hover:bg-champagne hover:text-obsidian'
@@ -235,9 +235,9 @@ export const Navbar: React.FC = () => {
             transition={{ duration: prefersReducedMotion ? 0.2 : 0.72, ease: EASE_LUXURY }}
             className="fixed inset-0 z-65 bg-obsidian text-ivory overflow-y-auto"
           >
-            <div className="studio-vignette min-h-screen flex flex-col justify-between px-5 sm:px-8 lg:px-12 py-6">
-              <div className="max-w-[1440px] w-full mx-auto flex items-center justify-between pb-6 border-b border-champagne/15">
-                <Link to="/" onClick={closeMenu} aria-label="Beranda AFLAN">
+            <div className="studio-vignette min-h-dvh flex flex-col justify-between px-6 sm:px-8 lg:px-12 py-6">
+              <div className="max-w-[1440px] w-full mx-auto flex items-center justify-between gap-3 pb-5 sm:pb-6 border-b border-champagne/15">
+                <Link to="/" onClick={closeMenu} aria-label="Beranda AFLAN" className="shrink-0">
                   <BrandSignature tone="light" />
                 </Link>
                 <button
@@ -247,7 +247,7 @@ export const Navbar: React.FC = () => {
                     triggerRef.current?.focus();
                   }}
                   aria-label="Tutup menu navigasi"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-champagne/40 text-champagne hover:bg-champagne hover:text-obsidian transition-colors"
+                  className="inline-flex items-center gap-2 min-h-[44px] lg:min-h-0 px-4 py-2.5 lg:py-2 rounded-full border border-champagne/40 text-champagne hover:bg-champagne hover:text-obsidian transition-colors shrink-0"
                 >
                   <span className="font-mono text-[11px] tracking-[0.2em] uppercase">
                     Tutup
@@ -256,7 +256,7 @@ export const Navbar: React.FC = () => {
                 </button>
               </div>
 
-              <div className="max-w-[1440px] w-full mx-auto py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center my-auto">
+              <div className="max-w-[1440px] w-full mx-auto py-6 sm:py-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center my-auto">
                 <nav
                   aria-label="Daftar 9 bab portofolio"
                   className="lg:col-span-7 divide-y divide-champagne/10"
@@ -283,14 +283,14 @@ export const Navbar: React.FC = () => {
                           onMouseEnter={() => setHoveredPath(route.path)}
                           onFocus={() => setHoveredPath(route.path)}
                           onClick={closeMenu}
-                          className="group flex items-baseline justify-between gap-4 py-3 sm:py-3.5 transition-colors"
+                          className="group flex items-center sm:items-baseline justify-between gap-3 sm:gap-4 py-3.5 min-h-[52px] lg:min-h-0 transition-colors"
                         >
-                          <div className="flex items-baseline gap-4 sm:gap-6">
-                            <span className="font-mono text-xs tracking-[0.22em] text-champagne/70">
+                          <div className="flex items-baseline gap-3.5 sm:gap-6 min-w-0">
+                            <span className="font-mono text-xs tracking-[0.22em] text-champagne/70 shrink-0">
                               {route.index}
-                            </span>
+                            </span>{' '}
                             <span
-                              className={`font-serif text-3xl sm:text-4xl lg:text-[2.75rem] leading-none transition-all duration-300 ${
+                              className={`font-serif text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] leading-tight lg:leading-none transition-all duration-300 ${
                                 isCurrent
                                   ? 'text-champagne italic translate-x-1'
                                   : 'text-ivory group-hover:text-champagne group-hover:italic group-hover:translate-x-2'
@@ -300,8 +300,8 @@ export const Navbar: React.FC = () => {
                             </span>
                           </div>
 
-                          <div className="flex items-center gap-3 text-right">
-                            <span className="hidden sm:inline font-sans text-xs text-taupe group-hover:text-ivory/90 transition-colors">
+                          <div className="flex items-center gap-3 text-right shrink-0">
+                            <span className="hidden sm:inline font-sans text-sm lg:text-xs text-taupe group-hover:text-ivory/90 transition-colors">
                               {route.subtitle}
                             </span>
                             <ArrowUpRight
@@ -365,22 +365,38 @@ export const Navbar: React.FC = () => {
                 </aside>
               </div>
 
-              <div className="max-w-[1440px] w-full mx-auto pt-5 border-t border-champagne/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-taupe">
+              <div className="max-w-[1440px] w-full mx-auto pt-5 border-t border-champagne/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-sm lg:text-xs text-taupe">
                 <p className="font-mono tracking-[0.16em] uppercase text-[11px]">
                   {personalData.university} · {personalData.studyProgram}
                 </p>
-                <div className="flex flex-wrap items-center gap-5">
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
                   <a
                     href={`mailto:${contactData.email}`}
-                    className="hover:text-champagne transition-colors"
+                    className="py-1 lg:py-0 wrap-break-word hover:text-champagne transition-colors"
                   >
                     {contactData.email}
+                  </a>
+                  <a
+                    href={contactData.githubHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-1 lg:py-0 hover:text-champagne transition-colors"
+                  >
+                    GitHub
+                  </a>
+                  <a
+                    href={contactData.linkedinHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-1 lg:py-0 hover:text-champagne transition-colors"
+                  >
+                    LinkedIn
                   </a>
                   <a
                     href={contactData.whatsappHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-champagne transition-colors"
+                    className="py-1 lg:py-0 hover:text-champagne transition-colors"
                   >
                     WhatsApp
                   </a>
@@ -388,7 +404,7 @@ export const Navbar: React.FC = () => {
                     href={contactData.instagramHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-champagne transition-colors"
+                    className="py-1 lg:py-0 hover:text-champagne transition-colors"
                   >
                     {contactData.instagramHandle}
                   </a>

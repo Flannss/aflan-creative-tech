@@ -344,7 +344,7 @@ export const CreativeLabPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-32 sm:pt-40 pb-20 sm:pb-24 px-5 sm:px-8 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-obsidian text-ivory pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-champagne/15">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 studio-warm-halo opacity-60"
@@ -360,14 +360,14 @@ export const CreativeLabPage: React.FC = () => {
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-14 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 lg:pt-14 items-end">
             <div className="lg:col-span-7">
               <TextReveal
                 as="h1"
                 immediate
-                className="font-serif text-5xl sm:text-6xl lg:text-[4.9rem] leading-[0.98] font-light"
+                className="font-serif text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.9rem] leading-[1.04] lg:leading-[0.98] font-light"
                 lines={[
-                  <>Ruang Eksperimen</>,
+                  <>Sistem Visual</>,
                   <>
                     <span className="italic editorial-outline-strong">Interaktif</span>
                   </>,
@@ -375,10 +375,10 @@ export const CreativeLabPage: React.FC = () => {
               />
             </div>
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
-              <p className="font-sans text-sm sm:text-base text-ivory/75 leading-relaxed">
-                Laboratorium eksplorasi Interactive UI Implementation—tempat menguji tipografi
-                kinetik, pencahayaan kanvas chiaroscuro, kurva easing motion, dan rasio kontras
-                aksesibilitas secara langsung.
+              <p className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed">
+                Etalase interaktif Interactive UI Implementation—menampilkan kompositor
+                tipografi editorial, pencahayaan kanvas chiaroscuro, koreografi kurva motion,
+                dan analisis rasio kontras aksesibilitas secara langsung.
               </p>
             </Reveal>
           </div>
@@ -386,14 +386,14 @@ export const CreativeLabPage: React.FC = () => {
       </section>
 
       {/* LAB 01 — TYPOGRAPHY COMPOSITOR */}
-      <section className="bg-espresso text-ivory py-20 sm:py-28 px-5 sm:px-8 lg:px-12 border-b border-champagne/15">
+      <section className="bg-espresso text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-champagne/15">
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up" className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <span className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
                 LAB 01 · SPESIMEN TIPOGRAFI
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-light mt-2">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
                 Kompositor Display Editorial
               </h2>
             </div>
@@ -403,8 +403,8 @@ export const CreativeLabPage: React.FC = () => {
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            <div className="lg:col-span-8 min-h-[260px] sm:min-h-[320px] bg-obsidian border border-champagne/25 p-8 flex items-center justify-center text-center overflow-hidden relative">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+            <div className="md:col-span-7 lg:col-span-8 min-h-[240px] sm:min-h-[320px] bg-obsidian border border-champagne/25 p-6 sm:p-8 flex items-center justify-center text-center overflow-hidden relative">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 opacity-15"
@@ -427,13 +427,13 @@ export const CreativeLabPage: React.FC = () => {
               </p>
             </div>
 
-            <div className="lg:col-span-4 bg-obsidian/70 border border-champagne/20 p-6 space-y-5">
+            <div className="md:col-span-5 lg:col-span-4 bg-obsidian/70 border border-champagne/20 p-6 space-y-5">
               <div>
                 <label
                   htmlFor="lab-specimen-input"
                   className="block font-mono text-[10px] tracking-[0.22em] uppercase text-champagne mb-2"
                 >
-                  Frasa Uji
+                  Teks Display
                 </label>
                 <input
                   id="lab-specimen-input"
@@ -441,7 +441,7 @@ export const CreativeLabPage: React.FC = () => {
                   maxLength={36}
                   value={specimenText}
                   onChange={(e) => setSpecimenText(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-espresso border border-champagne/30 text-ivory text-sm focus:border-champagne focus:outline-hidden"
+                  className="w-full px-3.5 py-2.5 bg-espresso border border-champagne/30 text-ivory text-base sm:text-sm focus:border-champagne focus:outline-hidden"
                 />
               </div>
 
@@ -516,18 +516,18 @@ export const CreativeLabPage: React.FC = () => {
       </section>
 
       {/* LAB 02 — CHIAROSCURO CANVAS */}
-      <section className="bg-obsidian text-ivory py-20 sm:py-28 px-5 sm:px-8 lg:px-12 border-b border-champagne/15">
+      <section className="bg-obsidian text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-champagne/15">
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
             <div className="lg:col-span-7">
               <span className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
                 LAB 02 · CREATIVE CODING · HTML5 CANVAS
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-light mt-2">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
                 Medan Cahaya Warm Chiaroscuro
               </h2>
             </div>
-            <p className="lg:col-span-5 font-sans text-sm text-ivory/75 leading-relaxed">
+            <p className="lg:col-span-5 font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 leading-relaxed">
               Terinspirasi dari pencahayaan amber studio pada Potret Utama. Partikel bergerak
               lembut mengikuti arah pointer dan memancarkan gelombang konsentris saat diklik.
             </p>
@@ -538,15 +538,15 @@ export const CreativeLabPage: React.FC = () => {
       </section>
 
       {/* LAB 03 — EASING & MAGNETIC SEAL */}
-      <section className="bg-ivory text-espresso py-20 sm:py-28 px-5 sm:px-8 lg:px-12 border-b border-espresso/15">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          <div className="lg:col-span-7 space-y-6">
+      <section className="bg-ivory text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-espresso/15">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 items-start">
+          <div className="md:col-span-7 space-y-6">
             <div>
               <span className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha">
                 LAB 03 · KOREOGRAFI MOTION
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-light mt-2">
-                Workbench Kurva Easing
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
+                Koreografi Kurva Easing
               </h2>
             </div>
 
@@ -561,7 +561,7 @@ export const CreativeLabPage: React.FC = () => {
                       setSelectedPreset(preset);
                       setRunCount((c) => c + 1);
                     }}
-                    className={`px-4 py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border transition-colors ${
+                    className={`px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border transition-colors ${
                       active
                         ? 'bg-espresso text-ivory border-espresso'
                         : 'bg-offwhite text-espresso border-espresso/20 hover:border-mocha'
@@ -573,7 +573,7 @@ export const CreativeLabPage: React.FC = () => {
               })}
             </div>
 
-            <div className="bg-offwhite border border-espresso/15 p-6 space-y-5">
+            <div className="bg-offwhite border border-espresso/15 p-5 sm:p-6 space-y-5">
               <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-mocha">
                 <span>{selectedPreset.css}</span>
                 <span>DURASI: {selectedPreset.duration}s</span>
@@ -597,12 +597,14 @@ export const CreativeLabPage: React.FC = () => {
                 </motion.div>
               </div>
 
-              <div className="flex items-center justify-between gap-4">
-                <p className="font-sans text-sm text-charcoal/80">{selectedPreset.note}</p>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <p className="font-sans text-[15px] sm:text-base lg:text-sm text-charcoal/80">
+                  {selectedPreset.note}
+                </p>
                 <button
                   type="button"
                   onClick={() => setRunCount((c) => c + 1)}
-                  className="shrink-0 px-4 py-2 rounded-full bg-mocha text-ivory font-mono text-[10px] tracking-[0.18em] uppercase hover:bg-espresso transition-colors"
+                  className="self-start sm:self-auto shrink-0 px-4 py-2.5 lg:py-2 rounded-full bg-mocha text-ivory font-mono text-[10px] tracking-[0.18em] uppercase hover:bg-espresso transition-colors"
                 >
                   Putar Ulang
                 </button>
@@ -610,7 +612,7 @@ export const CreativeLabPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-5">
+          <div className="md:col-span-5">
             <div
               onPointerMove={(e) => {
                 if (prefersReducedMotion || isCoarsePointer) return;
@@ -623,7 +625,7 @@ export const CreativeLabPage: React.FC = () => {
                 });
               }}
               onPointerLeave={() => setMagnetOffset({ x: 0, y: 0 })}
-              className="h-full min-h-[290px] bg-espresso text-ivory border border-espresso p-8 flex flex-col items-center justify-between text-center"
+              className="h-full min-h-[280px] lg:min-h-[290px] bg-espresso text-ivory border border-espresso p-7 sm:p-8 flex flex-col items-center justify-between text-center"
             >
               <span className="font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
                 STUDI MAGNETIK · ARAHKAN KURSOR
@@ -647,19 +649,19 @@ export const CreativeLabPage: React.FC = () => {
       </section>
 
       {/* LAB 04 — CONTRAST MATRIX */}
-      <section className="bg-chocolate text-ivory py-20 sm:py-28 px-5 sm:px-8 lg:px-12">
+      <section className="bg-chocolate text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up">
             <span className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
               LAB 04 · AKSESIBILITAS DESIGN SYSTEM
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-light mt-2">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
               Matriks Kontras Palet AFLAN
             </h2>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            <div className="lg:col-span-5 space-y-6 bg-obsidian/70 border border-champagne/20 p-6">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+            <div className="md:col-span-5 space-y-6 bg-obsidian/70 border border-champagne/20 p-5 sm:p-6">
               <div>
                 <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-champagne mb-3">
                   WARNA LATAR ({bgHex})
@@ -718,7 +720,7 @@ export const CreativeLabPage: React.FC = () => {
             </div>
 
             <div
-              className="lg:col-span-7 p-8 sm:p-12 border border-champagne/25 flex flex-col justify-between transition-colors duration-300 min-h-[320px]"
+              className="md:col-span-7 p-6 sm:p-10 lg:p-12 border border-champagne/25 flex flex-col justify-between transition-colors duration-300 min-h-[300px] lg:min-h-[320px]"
               style={{ backgroundColor: bgHex, color: fgHex }}
             >
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-current/20 pb-4 font-mono text-[11px] tracking-[0.2em] uppercase">
@@ -727,12 +729,12 @@ export const CreativeLabPage: React.FC = () => {
               </div>
 
               <div className="py-8 space-y-4">
-                <p className="font-serif text-4xl sm:text-5xl font-light leading-tight">
+                <p className="font-serif text-2xl sm:text-4xl md:text-5xl font-light leading-tight">
                   Nuansa espresso &amp; obsidian dengan{' '}
                   <span className="italic">keterbacaan presisi</span>.
                 </p>
-                <p className="font-sans text-sm sm:text-base opacity-90 max-w-xl leading-relaxed">
-                  Menguji rasio luminansi secara langsung memastikan karakter editorial tetap
+                <p className="font-sans text-[15px] sm:text-base opacity-90 max-w-xl leading-relaxed">
+                  Menjaga rasio luminansi secara presisi memastikan karakter editorial tetap
                   nyaman dibaca pada permukaan gelap maupun terang.
                 </p>
               </div>

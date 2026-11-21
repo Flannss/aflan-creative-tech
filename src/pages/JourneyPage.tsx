@@ -48,7 +48,7 @@ export const JourneyPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-32 sm:pt-40 pb-20 sm:pb-24 px-5 sm:px-8 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-obsidian text-ivory pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-champagne/15">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 studio-vignette opacity-80"
@@ -59,29 +59,29 @@ export const JourneyPage: React.FC = () => {
               BAB 03 — PERJALANAN &amp; LINIMASA
             </span>
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-taupe">
-              REKAM JEJAK TERVERIFIKASI · TANPA TANGGAL FIKTIF
+              REKAM JEJAK AKADEMIK &amp; PROFESIONAL
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-14 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 lg:pt-14 items-end">
             <div className="lg:col-span-7">
               <TextReveal
                 as="h1"
                 immediate
-                className="font-serif text-5xl sm:text-6xl lg:text-[4.9rem] leading-[0.98] font-light"
+                className="font-serif text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.9rem] leading-[1.04] lg:leading-[0.98] font-light"
                 lines={[
                   <>Rekam Jejak Belajar,</>,
                   <>
-                    <span className="italic text-champagne">Magang &amp; Eksplorasi</span>
+                    <span className="italic text-champagne">Magang &amp; Karya</span>
                   </>,
                 ]}
               />
             </div>
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
-              <p className="font-sans text-sm sm:text-base text-ivory/75 leading-relaxed">
+              <p className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed">
                 Linimasa interaktif yang mendokumentasikan pengalaman Programmer Intern di PT
                 Puskomedia Indonesia Kreatif, studi Teknologi Informasi di Universitas Amikom
-                Purwokerto, serta pengembangan prototipe nyata.
+                Purwokerto, serta pengembangan karya web dan aplikasi mobile.
               </p>
             </Reveal>
           </div>
@@ -89,7 +89,7 @@ export const JourneyPage: React.FC = () => {
           <div
             role="tablist"
             aria-label="Filter linimasa berdasarkan kategori"
-            className="flex flex-wrap gap-2.5 mt-12"
+            className="flex flex-wrap gap-2.5 mt-10 lg:mt-12"
           >
             {journeyCategories.map((category) => {
               const active = selectedCategory === category;
@@ -100,7 +100,7 @@ export const JourneyPage: React.FC = () => {
                   role="tab"
                   aria-selected={active}
                   onClick={() => handleSelectCategory(category)}
-                  className={`px-4 py-2 rounded-full font-mono text-[11px] tracking-[0.18em] uppercase transition-all duration-300 border ${
+                  className={`px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.18em] uppercase transition-all duration-300 border ${
                     active
                       ? 'bg-champagne text-obsidian border-champagne font-medium'
                       : 'bg-espresso/50 text-ivory/80 border-champagne/20 hover:border-champagne/60 hover:text-ivory'
@@ -114,21 +114,29 @@ export const JourneyPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-ivory text-espresso py-20 sm:py-28 px-5 sm:px-8 lg:px-12">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start">
+      <section className="relative bg-ivory text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <div className="lg:col-span-5 relative">
             <div
               aria-hidden="true"
-              className="absolute left-[19px] top-4 bottom-4 w-px bg-espresso/15"
+              className="md:hidden lg:block absolute left-[19px] top-4 bottom-4 w-px bg-espresso/15"
             />
-            <ol className="space-y-4">
-              {filteredMilestones.map((item) => {
+            <ol className="grid grid-cols-1 md:grid-cols-2 lg:block gap-4 lg:gap-0 lg:space-y-4">
+              {filteredMilestones.map((item, idx) => {
                 const isSelected = activeMilestone?.id === item.id;
+                const isOrphanOnTablet =
+                  filteredMilestones.length % 2 === 1 &&
+                  idx === filteredMilestones.length - 1;
                 return (
-                  <li key={item.id} className="relative pl-12">
+                  <li
+                    key={item.id}
+                    className={`relative pl-11 sm:pl-12 md:pl-0 lg:pl-12 ${
+                      isOrphanOnTablet ? 'md:col-span-2' : ''
+                    }`}
+                  >
                     <span
                       aria-hidden="true"
-                      className={`absolute left-3 top-6 size-3.5 rounded-full border-2 transition-all duration-300 ${
+                      className={`md:hidden lg:block absolute left-3 top-6 size-3.5 rounded-full border-2 transition-all duration-300 ${
                         isSelected
                           ? 'bg-mocha border-espresso scale-125'
                           : 'bg-ivory border-espresso/35'
@@ -138,13 +146,13 @@ export const JourneyPage: React.FC = () => {
                       type="button"
                       onClick={() => setActiveId(item.id)}
                       data-cursor="PILIH"
-                      className={`w-full text-left p-5 sm:p-6 border transition-all duration-300 ${
+                      className={`w-full h-full text-left p-5 sm:p-6 border transition-all duration-300 ${
                         isSelected
                           ? 'bg-espresso text-ivory border-espresso shadow-xl'
                           : 'bg-offwhite text-espresso border-espresso/15 hover:border-mocha hover:bg-ivory'
                       }`}
                     >
-                      <div className="flex items-center justify-between gap-2 mb-2">
+                      <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                         <span
                           className={`font-mono text-[10px] tracking-[0.24em] uppercase ${
                             isSelected ? 'text-champagne' : 'text-mocha'
@@ -161,7 +169,7 @@ export const JourneyPage: React.FC = () => {
                         </span>
                       </div>
                       <h2
-                        className={`font-serif text-2xl sm:text-[1.65rem] leading-snug font-light ${
+                        className={`font-serif text-xl sm:text-2xl md:text-[1.5rem] lg:text-[1.65rem] leading-snug font-light ${
                           isSelected ? 'text-ivory' : 'text-espresso'
                         }`}
                       >
@@ -190,7 +198,7 @@ export const JourneyPage: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -14 }}
                   transition={{ duration: 0.56, ease: EASE_LUXURY }}
-                  className="bg-obsidian text-ivory border border-champagne/25 p-7 sm:p-10 lg:p-12 shadow-2xl"
+                  className="bg-obsidian text-ivory border border-champagne/25 p-6 sm:p-10 lg:p-12 shadow-2xl"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15">
                     <div className="flex items-center gap-3">
@@ -213,8 +221,8 @@ export const JourneyPage: React.FC = () => {
                     </span>
                   </div>
 
-                  <div className="py-8 space-y-6">
-                    <h3 className="font-serif text-3xl sm:text-4xl lg:text-[2.85rem] leading-[1.08] font-light text-ivory">
+                  <div className="py-7 sm:py-8 space-y-6">
+                    <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-[2.85rem] leading-[1.12] lg:leading-[1.08] font-light text-ivory">
                       {activeMilestone.title}
                     </h3>
 
@@ -228,9 +236,9 @@ export const JourneyPage: React.FC = () => {
                       </p>
                       <ul className="space-y-3">
                         {activeMilestone.highlights.map((hl) => (
-                          <li key={hl} className="flex items-start gap-3 text-sm text-ivory/85">
+                          <li key={hl} className="flex items-start gap-3 text-[15px] sm:text-base lg:text-sm text-ivory/85">
                             <CheckCircle2
-                              className="size-4 text-champagne shrink-0 mt-0.5"
+                              className="size-4 text-champagne shrink-0 mt-1 lg:mt-0.5"
                               aria-hidden="true"
                             />
                             <span>{hl}</span>

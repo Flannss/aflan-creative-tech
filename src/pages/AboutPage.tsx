@@ -6,11 +6,15 @@ import {
   Award,
   Briefcase,
   Calendar,
+  Download,
   ExternalLink,
+  Github,
   GraduationCap,
+  Linkedin,
   MapPin,
 } from 'lucide-react';
 import { personalData } from '@/data/personal';
+import { contactData } from '@/data/contact';
 import { getProjectBySlug } from '@/data/projects';
 import { calculateExactAge } from '@/utils/age';
 import { Reveal } from '@/components/motion/Reveal';
@@ -51,7 +55,7 @@ export const AboutPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-ivory text-espresso pt-32 sm:pt-40 pb-24 sm:pb-32 px-5 sm:px-8 lg:px-12 border-b border-espresso/15">
+      <section className="relative bg-ivory text-espresso pt-28 sm:pt-36 lg:pt-40 pb-20 sm:pb-28 lg:pb-32 px-6 sm:px-8 lg:px-12 border-b border-espresso/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-espresso/15">
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
@@ -62,12 +66,12 @@ export const AboutPage: React.FC = () => {
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 pt-14 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-10 pt-12 lg:pt-14 items-start">
             <div className="lg:col-span-8">
               <TextReveal
                 as="h1"
                 immediate
-                className="font-serif text-5xl sm:text-6xl lg:text-[4.85rem] leading-[0.98] font-light text-espresso"
+                className="font-serif text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.85rem] leading-[1.04] lg:leading-[0.98] font-light text-espresso"
                 lines={[
                   <>Merancang Web Software dengan</>,
                   <>
@@ -79,9 +83,9 @@ export const AboutPage: React.FC = () => {
             </div>
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-4 lg:pt-4 space-y-5">
-              <p className="font-sans text-sm sm:text-base leading-relaxed text-charcoal/85">
-                Berfokus pada High-Performance Web Development, prototyping lintas platform,
-                dan evaluasi perangkat lunak yang terstruktur—tanpa klaim yang berlebihan.
+              <p className="font-sans text-[15px] sm:text-base leading-relaxed text-charcoal/85">
+                Berfokus pada High-Performance Web Development, pengembangan aplikasi lintas
+                platform, dan evaluasi kualitas perangkat lunak yang terstruktur.
               </p>
               <div className="flex flex-wrap gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-mocha">
                 <span className="inline-flex items-center gap-1.5">
@@ -100,8 +104,8 @@ export const AboutPage: React.FC = () => {
             </Reveal>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 mt-16 sm:mt-24 items-start">
-            <Reveal variant="clip" className="lg:col-span-5">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14 mt-14 sm:mt-20 lg:mt-24 items-start">
+            <Reveal variant="clip" className="md:col-span-5">
               <figure className="group relative bg-obsidian p-4 sm:p-5 border border-espresso/20 shadow-2xl">
                 <ParallaxFrame className="aspect-3/4 bg-obsidian" offset={18}>
                   <img
@@ -117,7 +121,7 @@ export const AboutPage: React.FC = () => {
                     aria-hidden="true"
                     className="pointer-events-none absolute top-4 left-4 font-mono text-[9px] tracking-[0.24em] uppercase px-2.5 py-1 bg-obsidian/75 text-champagne border border-champagne/25"
                   >
-                    CROP EDITORIAL · HOVER UNTUK WARNA ASLI
+                    POTRET EDITORIAL · AMDZ
                   </span>
                 </ParallaxFrame>
                 <figcaption className="pt-4 pb-1 px-1 flex items-center justify-between gap-4 text-ivory">
@@ -134,7 +138,7 @@ export const AboutPage: React.FC = () => {
               </figure>
             </Reveal>
 
-            <div className="lg:col-span-7 lg:pl-6 space-y-10">
+            <div className="md:col-span-7 md:pl-2 lg:pl-6 space-y-10">
               <Reveal variant="up" delay={0.1}>
                 <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha mb-4">
                   NARASI PERSONAL &amp; TEKNIS
@@ -147,7 +151,7 @@ export const AboutPage: React.FC = () => {
               </Reveal>
 
               <Reveal variant="up" delay={0.15}>
-                <div className="bg-espresso text-ivory p-7 sm:p-8 border border-espresso space-y-3.5">
+                <div className="bg-espresso text-ivory p-6 sm:p-8 border border-espresso space-y-3.5">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
                       <Briefcase className="size-3.5" aria-hidden="true" />
@@ -157,13 +161,13 @@ export const AboutPage: React.FC = () => {
                       {personalData.internship.period}
                     </span>
                   </div>
-                  <h2 className="font-serif text-2xl sm:text-3xl font-light text-ivory">
+                  <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-light text-ivory">
                     {personalData.internship.role} —{' '}
                     <span className="italic text-champagne">
                       {personalData.internship.company}
                     </span>
                   </h2>
-                  <p className="font-sans text-sm text-ivory/80 leading-relaxed">
+                  <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/80 leading-relaxed">
                     {personalData.internship.focus}
                   </p>
                 </div>
@@ -179,7 +183,7 @@ export const AboutPage: React.FC = () => {
                       key={trait}
                       className="flex items-center justify-between px-4 py-3.5 bg-offwhite border border-espresso/15"
                     >
-                      <span className="font-serif text-xl text-espresso">{trait}</span>
+                      <span className="font-serif text-lg sm:text-xl text-espresso">{trait}</span>
                       <span className="font-mono text-[10px] tracking-[0.2em] text-mocha">
                         0{index + 1}
                       </span>
@@ -192,16 +196,16 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-espresso text-ivory py-24 sm:py-32 px-5 sm:px-8 lg:px-12">
+      <section className="relative bg-espresso text-ivory py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-16 border-b border-champagne/15 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-14 lg:pb-16 border-b border-champagne/15 items-end">
             <div className="lg:col-span-7">
               <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-champagne mb-4">
                 PRINSIP PENGEMBANGAN
               </p>
               <TextReveal
                 as="h2"
-                className="font-serif text-4xl sm:text-5xl lg:text-6xl font-light leading-[1.04]"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-[1.06] lg:leading-[1.04]"
                 lines={[
                   <>Kebiasaan di balik setiap</>,
                   <>
@@ -211,33 +215,37 @@ export const AboutPage: React.FC = () => {
               />
             </div>
             <Reveal variant="up" delay={0.1} className="lg:col-span-5">
-              <p className="font-sans text-sm sm:text-base text-ivory/75 leading-relaxed">
+              <p className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed">
                 Memadukan ketelitian Software QA dengan kepekaan antarmuka menjaga setiap
                 implementasi tetap bersih, teruji, dan transparan terhadap ruang lingkupnya.
               </p>
             </Reveal>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-champagne/15 border-b border-champagne/15">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-0 divide-y md:divide-y-0 lg:divide-x divide-champagne/15 border-b border-champagne/15 md:py-10 lg:py-0">
             {personalData.philosophyPillars.map((pillar, idx) => (
               <Reveal
                 key={pillar.number}
                 variant="up"
                 delay={idx * 0.1}
-                className="py-12 lg:py-14 lg:px-9 first:lg:pl-0 last:lg:pr-0 flex flex-col justify-between gap-6"
+                className={`py-10 md:p-7 md:border md:border-champagne/15 lg:border-0 lg:py-14 lg:px-9 first:lg:pl-0 last:lg:pr-0 flex flex-col justify-between gap-6 ${
+                  idx === personalData.philosophyPillars.length - 1
+                    ? 'md:col-span-2 lg:col-span-1'
+                    : ''
+                }`}
               >
                 <div className="space-y-4">
-                  <span className="font-serif italic text-5xl text-champagne/65 block leading-none">
+                  <span className="font-serif italic text-4xl sm:text-5xl text-champagne/65 block leading-none">
                     {pillar.number}
                   </span>
-                  <h3 className="font-serif text-3xl font-light text-ivory">
+                  <h3 className="font-serif text-2xl sm:text-3xl font-light text-ivory">
                     {pillar.title}
                   </h3>
-                  <p className="font-sans text-sm font-medium text-champagne/90 leading-relaxed">
+                  <p className="font-sans text-[15px] sm:text-base lg:text-sm font-medium text-champagne/90 leading-relaxed">
                     {pillar.summary}
                   </p>
                 </div>
-                <p className="font-sans text-sm text-ivory/75 leading-relaxed">
+                <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 leading-relaxed">
                   {pillar.detail}
                 </p>
               </Reveal>
@@ -246,13 +254,13 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-offwhite text-espresso py-24 sm:py-32 px-5 sm:px-8 lg:px-12">
+      <section className="relative bg-offwhite text-espresso py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 items-start">
           <Reveal variant="up" className="lg:col-span-7">
             <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-mocha mb-3">
               DOSSIER TERVERIFIKASI
             </p>
-            <h2 className="font-serif text-4xl sm:text-5xl font-light text-espresso mb-10">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-espresso mb-8 sm:mb-10">
               Spesifikasi <span className="italic text-mocha">Identitas</span>
             </h2>
 
@@ -260,12 +268,12 @@ export const AboutPage: React.FC = () => {
               {dossierRows.map((row) => (
                 <div
                   key={row.label}
-                  className="py-4.5 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4"
+                  className="py-4.5 grid grid-cols-1 sm:grid-cols-12 gap-1.5 sm:gap-4"
                 >
                   <dt className="sm:col-span-4 font-mono text-[11px] uppercase tracking-[0.18em] text-mocha">
                     {row.label}
                   </dt>
-                  <dd className="sm:col-span-8 font-sans text-sm sm:text-base text-espresso">
+                  <dd className="sm:col-span-8 font-sans text-[15px] sm:text-base text-espresso">
                     {row.value}
                   </dd>
                 </div>
@@ -274,74 +282,68 @@ export const AboutPage: React.FC = () => {
           </Reveal>
 
           <Reveal variant="up" delay={0.12} className="lg:col-span-5 space-y-6">
-            {personalData.roomPhotoPath ? (
-              <figure className="border border-espresso/20 bg-ivory p-3 shadow-lg">
-                <ParallaxFrame className="aspect-4/3 bg-obsidian" offset={14}>
-                  <img
-                    src={personalData.roomPhotoPath}
-                    alt="Suasana ruang interior personal untuk konteks editorial"
-                    className="w-full h-full object-cover"
-                  />
-                </ParallaxFrame>
-                <figcaption className="pt-3 px-1 flex items-center justify-between font-mono text-[10px] tracking-[0.18em] uppercase text-mocha">
-                  <span>ATMOSFER INTERIOR</span>
-                  <span>KONTEKS EDITORIAL</span>
-                </figcaption>
-              </figure>
-            ) : (
-              <aside className="bg-obsidian text-ivory border border-espresso/20 p-8 sm:p-10 space-y-8 shadow-xl">
-                <div className="flex items-center justify-between border-b border-champagne/15 pb-5">
-                  <span className="font-mono text-[10px] tracking-[0.26em] uppercase text-champagne">
-                    SOROTAN TERVERIFIKASI · 2026
+            <aside className="bg-obsidian text-ivory border border-espresso/20 p-7 sm:p-10 space-y-8 shadow-xl">
+              <div className="flex items-center justify-between border-b border-champagne/15 pb-5">
+                <span className="font-mono text-[10px] tracking-[0.26em] uppercase text-champagne">
+                  SOROTAN TERVERIFIKASI · 2026
+                </span>
+                <MonogramMark size={28} className="text-champagne/80" />
+              </div>
+
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <span className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
+                    <Award className="size-3.5 text-champagne" aria-hidden="true" />
+                    KREDENSIAL &amp; PUBLIKASI
                   </span>
-                  <MonogramMark size={28} className="text-champagne/80" />
+                  <p className="font-serif text-2xl text-ivory leading-snug">
+                    CCNA: Introduction to Networks &amp; Publikasi Jurnal Garuda
+                  </p>
+                  <p className="font-sans text-sm lg:text-xs text-ivory/70 leading-relaxed">
+                    Cisco Networking Academy (2026) serta Jurnal Pengabdian Masyarakat
+                    Bangsa (Terindeks Garuda, 2026).
+                  </p>
                 </div>
 
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <span className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
-                      <Award className="size-3.5 text-champagne" aria-hidden="true" />
-                      KREDENSIAL &amp; PUBLIKASI
-                    </span>
-                    <p className="font-serif text-2xl text-ivory leading-snug">
-                      CCNA: Introduction to Networks &amp; Publikasi Jurnal Garuda
-                    </p>
-                    <p className="font-sans text-xs text-ivory/70 leading-relaxed">
-                      Cisco Networking Academy (2026) serta Jurnal Pengabdian Masyarakat
-                      Bangsa (Terindeks Garuda, 2026).
-                    </p>
-                  </div>
-
-                  <div className="pt-5 border-t border-champagne/15 space-y-2.5">
-                    <span className="block font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
-                      INISIATIF STUDIO MAHASISWA
-                    </span>
-                    <p className="font-serif text-2xl text-champagne italic leading-snug">
-                      Satu Ruang Creative
-                    </p>
-                    <p className="font-sans text-xs text-ivory/75 leading-relaxed">
-                      Co-Founder &amp; Web Developer — &ldquo;Satu Ruang, Banyak Ide, Satu
-                      Cerita&rdquo;.
-                    </p>
-                    <a
-                      href={satuRuangUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 pt-1 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne hover:text-ivory transition-colors"
-                    >
-                      saturuangcreative.framer.website
-                      <ExternalLink className="size-3" aria-hidden="true" />
-                    </a>
-                  </div>
+                <div className="pt-5 border-t border-champagne/15 space-y-2.5">
+                  <span className="block font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
+                    INISIATIF STUDIO MAHASISWA
+                  </span>
+                  <p className="font-serif text-2xl text-champagne italic leading-snug">
+                    Satu Ruang Creative
+                  </p>
+                  <p className="font-sans text-sm lg:text-xs text-ivory/75 leading-relaxed">
+                    Co-Founder &amp; Web Developer — &ldquo;Satu Ruang, Banyak Ide, Satu
+                    Cerita&rdquo;.
+                  </p>
+                  <a
+                    href={satuRuangUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 pt-1 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne hover:text-ivory transition-colors"
+                  >
+                    saturuangcreative.framer.website
+                    <ExternalLink className="size-3" aria-hidden="true" />
+                  </a>
                 </div>
-              </aside>
-            )}
+              </div>
+            </aside>
 
             <div className="flex flex-wrap gap-3 pt-2">
+              <a
+                href={contactData.cvHref}
+                onClick={(e) => e.preventDefault()}
+                data-cursor="CV"
+                aria-label="Unduh CV Aflan Mu'afa Dzulfiqar"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-espresso text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:bg-mocha transition-colors"
+              >
+                <Download className="size-3.5" aria-hidden="true" />
+                Unduh CV
+              </a>
               <Link
                 to="/journey"
                 data-cursor="LINIMASA"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-espresso text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:bg-mocha transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-espresso/30 text-espresso font-mono text-xs tracking-[0.18em] uppercase hover:border-espresso hover:bg-ivory transition-colors"
               >
                 Jelajahi Perjalanan
                 <ArrowRight className="size-4" aria-hidden="true" />
@@ -354,6 +356,32 @@ export const AboutPage: React.FC = () => {
                 Pencapaian &amp; Sertifikasi
                 <ArrowUpRight className="size-4" aria-hidden="true" />
               </Link>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-4 pt-3 border-t border-espresso/15 font-mono text-[11px] tracking-[0.18em] uppercase text-espresso/80">
+              <a
+                href={contactData.githubHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="GITHUB"
+                className="inline-flex items-center gap-1.5 hover:text-mocha transition-colors"
+              >
+                <Github className="size-3.5" aria-hidden="true" />
+                GitHub (Flannss)
+                <ArrowUpRight className="size-3.5" aria-hidden="true" />
+              </a>
+              <span className="text-espresso/30" aria-hidden="true">·</span>
+              <a
+                href={contactData.linkedinHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="LINKEDIN"
+                className="inline-flex items-center gap-1.5 hover:text-mocha transition-colors"
+              >
+                <Linkedin className="size-3.5" aria-hidden="true" />
+                LinkedIn
+                <ArrowUpRight className="size-3.5" aria-hidden="true" />
+              </a>
             </div>
           </Reveal>
         </div>

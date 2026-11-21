@@ -83,8 +83,11 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
       onPointerMove={handlePointerMove}
       onPointerLeave={handleLeaveList}
     >
-      <div className="divide-y divide-champagne/15 border-y border-champagne/15">
-        {projects.map((project) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:block gap-0 md:gap-6 lg:gap-0 divide-y md:divide-y-0 lg:divide-y divide-champagne/15 border-y md:border-y-0 lg:border-y border-champagne/15">
+        {projects.map((project, idx) => {
+          const isOrphanOnTablet =
+            projects.length % 2 === 1 && idx === projects.length - 1;
+          return (
           <Link
             key={project.slug}
             to={`/projects/${project.slug}`}
@@ -92,9 +95,11 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
             onFocus={() => canHover && setActiveProject(project)}
             onBlur={() => canHover && setActiveProject(null)}
             data-cursor="LIHAT"
-            className="group block py-8 sm:py-10 transition-colors duration-300 hover:bg-espresso/45 px-2 sm:px-5 -mx-2 sm:-mx-5"
+            className={`group block md:flex md:flex-col md:h-full lg:block lg:h-auto py-8 sm:py-10 md:p-6 lg:py-10 lg:px-5 px-2 sm:px-5 -mx-2 sm:-mx-5 md:mx-0 lg:-mx-5 md:border md:border-champagne/20 md:bg-obsidian/45 md:hover:border-champagne/55 lg:border-0 lg:bg-transparent transition-colors duration-300 hover:bg-espresso/45 ${
+              isOrphanOnTablet ? 'md:col-span-2' : ''
+            }`}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center">
+            <div className="grid grid-cols-1 md:flex md:flex-col md:flex-1 lg:grid lg:grid-cols-12 gap-5 lg:gap-8 items-center md:items-stretch lg:items-center">
               <div className="lg:col-span-2 flex items-center lg:flex-col lg:items-start justify-between gap-2">
                 <span className="font-mono text-xs tracking-[0.26em] text-champagne">
                   {project.index}
@@ -113,20 +118,20 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                     {project.verificationState}
                   </span>
                 </div>
-                <h3 className="font-serif text-3xl sm:text-4xl lg:text-[2.65rem] leading-[1.06] font-light text-ivory group-hover:text-champagne group-hover:translate-x-1.5 transition-all duration-500">
+                <h3 className="font-serif text-2xl sm:text-3xl md:text-[1.9rem] lg:text-[2.65rem] leading-[1.08] lg:leading-[1.06] font-light text-ivory group-hover:text-champagne group-hover:translate-x-1.5 transition-all duration-500">
                   {project.title}
                 </h3>
-                <p className="font-sans text-sm text-ivory/75 max-w-2xl leading-relaxed">
+                <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 max-w-2xl leading-relaxed">
                   {project.subtitle}
                 </p>
               </div>
 
-              <div className="lg:col-span-4 flex items-center justify-between lg:justify-end gap-5">
+              <div className="lg:col-span-4 md:mt-auto md:pt-4 md:border-t md:border-champagne/15 lg:mt-0 lg:pt-0 lg:border-t-0 flex items-center justify-between lg:justify-end gap-5">
                 <div className="lg:text-right">
                   <span className="block font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
                     Ruang Lingkup
                   </span>
-                  <span className="block font-sans text-xs sm:text-sm text-ivory/85 mt-1 max-w-[26ch]">
+                  <span className="block font-sans text-sm text-ivory/85 mt-1 max-w-[26ch]">
                     {project.role}
                   </span>
                 </div>
@@ -138,8 +143,8 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                 </span>
               </div>
 
-              {/* Mobile / Touch Inline Visual Preview */}
-              <div className="lg:hidden mt-2">
+              {/* Mobile / Tablet Inline Visual Preview */}
+              <div className="md:order-first lg:hidden mt-2 md:mt-0">
                 {project.previewImage ? (
                   <div
                     className="relative aspect-video overflow-hidden border border-champagne/20"
@@ -167,7 +172,8 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
               </div>
             </div>
           </Link>
-        ))}
+          );
+        })}
       </div>
 
       {canHover && (

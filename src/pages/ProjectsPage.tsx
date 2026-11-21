@@ -22,7 +22,7 @@ export const ProjectsPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-32 sm:pt-40 pb-20 sm:pb-24 px-5 sm:px-8 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-obsidian text-ivory pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-champagne/15">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 studio-vignette opacity-75"
@@ -37,12 +37,12 @@ export const ProjectsPage: React.FC = () => {
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-14 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 lg:pt-14 items-end">
             <div className="lg:col-span-7">
               <TextReveal
                 as="h1"
                 immediate
-                className="font-serif text-5xl sm:text-6xl lg:text-[4.9rem] leading-[0.98] font-light"
+                className="font-serif text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.9rem] leading-[1.04] lg:leading-[0.98] font-light"
                 lines={[
                   <>Karya Terpilih &amp;</>,
                   <>
@@ -53,23 +53,23 @@ export const ProjectsPage: React.FC = () => {
             </div>
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5 space-y-4">
-              <p className="font-sans text-sm sm:text-base text-ivory/75 leading-relaxed">
+              <p className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed">
                 Mencakup inisiatif studio mahasiswa Satu Ruang Creative, aplikasi mobile
                 SOMASII, evaluasi QA pada ASIS Builder (NDA), serta identitas digital AFLAN—
                 disajikan jujur dengan ruang lingkup yang terukur.
               </p>
-              <div className="flex items-start gap-2.5 p-4 bg-espresso/75 border border-champagne/20 text-xs text-champagne/90">
+              <div className="flex items-start gap-2.5 p-4 bg-espresso/75 border border-champagne/20 text-sm lg:text-xs text-champagne/90 leading-relaxed">
                 <ShieldCheck className="size-4 shrink-0 mt-0.5" aria-hidden="true" />
                 <span>
-                  Atribusi transparan: ASIS Builder disajikan murni secara tipografis sesuai
-                  NDA internal perusahaan; SOMASII tercatat sebagai Academic Final Project /
-                  Functional Prototype.
+                  Atribusi transparan: ASIS Builder disajikan dalam format dossier tipografis
+                  sesuai NDA perusahaan; SOMASII merupakan aplikasi mobile kampus (Academic
+                  Final Project).
                 </span>
               </div>
             </Reveal>
           </div>
 
-          <div className="mt-12 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="mt-10 lg:mt-12 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div
               role="tablist"
               aria-label="Filter proyek berdasarkan kategori"
@@ -84,7 +84,7 @@ export const ProjectsPage: React.FC = () => {
                     role="tab"
                     aria-selected={active}
                     onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2 rounded-full font-mono text-[11px] tracking-[0.18em] uppercase border transition-colors ${
+                    className={`px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.18em] uppercase border transition-colors ${
                       active
                         ? 'bg-champagne text-obsidian border-champagne font-medium'
                         : 'bg-espresso/50 text-ivory/80 border-champagne/20 hover:border-champagne/60'
@@ -101,7 +101,7 @@ export const ProjectsPage: React.FC = () => {
                 type="button"
                 onClick={() => setViewMode('index')}
                 aria-pressed={viewMode === 'index'}
-                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-[0.18em] uppercase transition-colors ${
+                className={`inline-flex items-center gap-2 px-3.5 py-2 lg:py-1.5 rounded-full font-mono text-[10px] tracking-[0.18em] uppercase transition-colors ${
                   viewMode === 'index'
                     ? 'bg-champagne text-obsidian font-medium'
                     : 'text-ivory/75 hover:text-champagne'
@@ -114,7 +114,7 @@ export const ProjectsPage: React.FC = () => {
                 type="button"
                 onClick={() => setViewMode('spread')}
                 aria-pressed={viewMode === 'spread'}
-                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-[0.18em] uppercase transition-colors ${
+                className={`inline-flex items-center gap-2 px-3.5 py-2 lg:py-1.5 rounded-full font-mono text-[10px] tracking-[0.18em] uppercase transition-colors ${
                   viewMode === 'spread'
                     ? 'bg-champagne text-obsidian font-medium'
                     : 'text-ivory/75 hover:text-champagne'
@@ -128,20 +128,24 @@ export const ProjectsPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-espresso text-ivory py-20 sm:py-28 px-5 sm:px-8 lg:px-12 min-h-[55vh]">
+      <section className="bg-espresso text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 min-h-[55vh]">
         <div className="max-w-[1440px] mx-auto">
           {viewMode === 'index' ? (
             <ProjectPreviewList projects={filteredProjects} />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8">
               {filteredProjects.map((project, idx) => {
                 const isWide = idx % 3 === 0;
+                const isOrphanOnTablet =
+                  filteredProjects.length % 2 === 1 && idx === filteredProjects.length - 1;
                 return (
                   <Reveal
                     key={project.slug}
                     variant="up"
                     delay={idx * 0.07}
-                    className={isWide ? 'md:col-span-7' : 'md:col-span-5'}
+                    className={`${isOrphanOnTablet ? 'md:col-span-2 ' : ''}${
+                      isWide ? 'lg:col-span-7' : 'lg:col-span-5'
+                    }`}
                   >
                     <Link
                       to={`/projects/${project.slug}`}
@@ -183,10 +187,10 @@ export const ProjectsPage: React.FC = () => {
                             </span>
                             <span className="text-taupe">{project.verificationState}</span>
                           </div>
-                          <h2 className="font-serif text-3xl font-light text-ivory group-hover:text-champagne transition-colors">
+                          <h2 className="font-serif text-2xl sm:text-3xl font-light text-ivory group-hover:text-champagne transition-colors">
                             {project.title}
                           </h2>
-                          <p className="font-sans text-sm text-ivory/75 leading-relaxed">
+                          <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 leading-relaxed">
                             {project.summary}
                           </p>
                         </div>

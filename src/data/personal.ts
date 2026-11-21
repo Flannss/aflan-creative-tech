@@ -41,17 +41,12 @@ export const personalData = {
     focus: 'Fokus pada Software Evaluation, Functional Testing, dan System Requirement Analysis.',
   },
   portraitPath: '/images/aflan.jpeg',
-  /**
-   * Simpan foto ruangan/interior pribadi di public/images/room.jpg
-   * lalu isi roomPhotoPath menjadi '/images/room.jpg' agar tampil otomatis.
-   */
-  roomPhotoPath: '' as string,
   headlineDescriptor:
     'Mahasiswa Teknologi Informasi di Universitas Amikom Purwokerto yang berfokus pada Interactive UI Implementation, Web Development, serta evaluasi kualitas perangkat lunak berbasis pengujian.',
   shortBio:
-    'Lahir di Tangerang dan kini berbasis di Purwokerto, saya menempuh studi Teknologi Informasi di Universitas Amikom Purwokerto sebagai Web Developer dan Software Development Enthusiast. Selain membangun Component-Based Interface di web dan prototipe Flutter, pengalaman magang saya di PT Puskomedia Indonesia Kreatif membentuk ketelitian dalam Software Evaluation, Functional Testing, dan System Requirement Analysis.',
+    'Lahir di Tangerang dan kini berbasis di Purwokerto, saya menempuh studi Teknologi Informasi di Universitas Amikom Purwokerto sebagai Web Developer dan Software Development Enthusiast. Selain membangun Component-Based Interface di web dan aplikasi mobile Flutter, pengalaman magang saya di PT Puskomedia Indonesia Kreatif membentuk ketelitian dalam Software Evaluation, Functional Testing, dan System Requirement Analysis.',
   extendedStory: [
-    'Perjalanan saya di dunia teknologi bertumpu pada dua kebiasaan yang saling melengkapi: membangun Interactive UI yang bersih sekaligus menguji bagaimana sebuah perangkat lunak bekerja di kondisi nyata. Studi Teknologi Informasi di Universitas Amikom Purwokerto memberi fondasi rekayasa yang kuat untuk menjalani keduanya secara terukur.',
+    'Perjalanan saya di dunia teknologi bertumpu pada dua kebiasaan yang saling melengkapi: membangun Interactive UI yang bersih sekaligus menguji bagaimana sebuah perangkat lunak bekerja di kondisi nyata. Studi Teknologi Informasi di Universitas Amikom Purwokerto memberi fondasi teknis pengembangan perangkat lunak yang kuat untuk menjalani keduanya secara terukur.',
     'Melalui praktik langsung di Web Development—mulai dari HTML & CSS, JavaScript, React.js, hingga Tailwind CSS—didukung Working Knowledge pada TypeScript, PHP, Laravel, serta Flutter dan Firebase, saya terbiasa menerjemahkan konsep menjadi antarmuka yang responsif, terstruktur, dan nyaman digunakan.',
     'Selama menjalani peran Programmer Intern di PT Puskomedia Indonesia Kreatif (Sep 2026 – Jan 2027), fokus utama saya mencakup Software Evaluation, Functional Testing, Bug Identification, dan System Requirement Analysis, termasuk mengevaluasi alur kerja ASIS Builder. Perspektif pengujian ini membuat setiap proses development saya lebih kritis dan terarah.',
   ],
@@ -76,7 +71,7 @@ export const personalData = {
       title: 'Komposisi yang Disengaja',
       summary: 'Tipografi tajam dan Negative Space berbicara lebih kuat daripada halaman yang penuh sesak.',
       detail:
-        'Meski bekerja dengan koleksi foto pribadi yang terbatas, perpaduan cropping, kontras warna, tekstur halus, dan motion yang presisi mampu menghadirkan Digital Experience yang berkelas.',
+        'Perpaduan framing yang terukur, kontras warna hangat, tekstur halus, dan motion yang presisi mampu menghadirkan Digital Experience yang berkelas serta berkarakter.',
     },
     {
       number: 'III',
@@ -137,7 +132,7 @@ export const navigationRoutes: NavRoute[] = [
     label: 'Creative Lab',
     shortLabel: 'Lab',
     path: '/lab',
-    subtitle: 'Eksperimen Interaktif & Studi Motion',
+    subtitle: 'Sistem Visual Interaktif & Studi Motion',
   },
   {
     index: '07',

@@ -75,6 +75,6 @@ export const achievementsData: AchievementEntry[] = [
     summary:
       'Menempuh pendidikan sarjana pada Program Studi Teknologi Informasi di Universitas Amikom Purwokerto.',
     details:
-      'Membangun fondasi formal di bidang Web Development, Mobile Prototyping, UI/UX Design, jaringan komputer, serta Software Quality Assurance.',
+      'Membangun fondasi formal di bidang Web Development, Mobile Application Development, UI/UX Design, jaringan komputer, serta Software Quality Assurance.',
   },
 ];

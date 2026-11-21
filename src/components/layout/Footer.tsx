@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Check, Copy } from 'lucide-react';
+import { ArrowUpRight, Check, Copy, Download, Github, Linkedin } from 'lucide-react';
 import { BrandSignature } from '@/components/brand/Monogram';
 import { navigationRoutes, personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
@@ -42,13 +42,13 @@ export const Footer: React.FC = () => {
         }}
       />
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-20 sm:pt-28 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-16 border-b border-champagne/15 items-end">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 pt-16 sm:pt-24 lg:pt-28 pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-14 sm:pb-16 border-b border-champagne/15 items-end">
           <div className="lg:col-span-7">
             <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-champagne mb-4">
               KORESPONDENSI &amp; KOLABORASI
             </p>
-            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.03] font-light text-ivory">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.06] lg:leading-[1.03] font-light text-ivory">
               Punya ide menarik untuk{' '}
               <span className="italic text-champagne">dieksplorasi bersama?</span>
             </h2>
@@ -63,6 +63,16 @@ export const Footer: React.FC = () => {
               Mulai Percakapan
               <ArrowUpRight className="size-4" aria-hidden="true" />
             </Link>
+            <a
+              href={contactData.cvHref}
+              onClick={(e) => e.preventDefault()}
+              data-cursor="CV"
+              aria-label="Unduh CV Aflan Mu'afa Dzulfiqar"
+              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full border border-champagne/40 bg-obsidian/60 text-champagne font-mono text-xs tracking-[0.16em] uppercase hover:bg-champagne hover:text-obsidian transition-colors"
+            >
+              <Download className="size-3.5" aria-hidden="true" />
+              Unduh CV
+            </a>
             <button
               type="button"
               onClick={handleCopyEmail}
@@ -84,10 +94,10 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 py-16 border-b border-champagne/15">
-          <div className="md:col-span-4 space-y-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 py-14 sm:py-16 border-b border-champagne/15">
+          <div className="md:col-span-2 lg:col-span-4 space-y-5">
             <BrandSignature tone="light" />
-            <p className="font-sans text-sm leading-relaxed text-ivory/75 max-w-sm">
+            <p className="font-sans text-[15px] md:text-sm leading-relaxed text-ivory/75 max-w-md lg:max-w-sm">
               <span className="text-ivory font-medium">{personalData.fullName}</span> —{' '}
               {personalData.positioning}. Mahasiswa {personalData.studyProgram} di{' '}
               {personalData.university}.
@@ -95,22 +105,48 @@ export const Footer: React.FC = () => {
             <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-taupe">
               {personalData.currentLocation} · {personalData.coordinates}
             </p>
+            <div className="flex flex-wrap items-center gap-2.5 pt-1">
+              <a
+                href={contactData.githubHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="GITHUB"
+                aria-label="GitHub Flannss"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/25 bg-espresso/50 font-mono text-[11px] tracking-[0.16em] uppercase text-ivory/90 hover:border-champagne hover:text-champagne transition-colors"
+              >
+                <Github className="size-3.5" aria-hidden="true" />
+                <span>GitHub</span>
+                <ArrowUpRight className="size-3" aria-hidden="true" />
+              </a>
+              <a
+                href={contactData.linkedinHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="LINKEDIN"
+                aria-label="LinkedIn Aflan Mu'afa Dzulfiqar"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/25 bg-espresso/50 font-mono text-[11px] tracking-[0.16em] uppercase text-ivory/90 hover:border-champagne hover:text-champagne transition-colors"
+              >
+                <Linkedin className="size-3.5" aria-hidden="true" />
+                <span>LinkedIn</span>
+                <ArrowUpRight className="size-3" aria-hidden="true" />
+              </a>
+            </div>
           </div>
 
-          <div className="md:col-span-4">
+          <div className="md:col-span-1 lg:col-span-4">
             <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne mb-5">
               INDEKS HALAMAN (01 — 09)
             </p>
-            <ul className="grid grid-cols-2 gap-x-6 gap-y-2.5">
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-3 md:gap-y-2.5">
               {navigationRoutes.map((route) => (
                 <li key={route.path}>
                   <Link
                     to={route.path}
-                    className="group inline-flex items-baseline gap-2.5 text-sm text-ivory/75 hover:text-champagne transition-colors"
+                    className="group inline-flex items-baseline gap-2.5 py-0.5 text-[15px] md:text-sm text-ivory/75 hover:text-champagne transition-colors"
                   >
                     <span className="font-mono text-[10px] text-taupe group-hover:text-champagne">
                       {route.index}
-                    </span>
+                    </span>{' '}
                     <span>{route.label}</span>
                   </Link>
                 </li>
@@ -118,7 +154,7 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          <div className="md:col-span-4">
+          <div className="md:col-span-1 lg:col-span-4">
             <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne mb-5">
               KANAL RESMI
             </p>
@@ -129,13 +165,13 @@ export const Footer: React.FC = () => {
                     href={ch.href}
                     target={ch.external ? '_blank' : undefined}
                     rel={ch.external ? 'noopener noreferrer' : undefined}
-                    className="group flex items-center justify-between gap-3 py-1.5 border-b border-champagne/10 hover:border-champagne/40 transition-colors"
+                    className="group flex items-center justify-between gap-3 py-2 md:py-1.5 border-b border-champagne/10 hover:border-champagne/40 transition-colors"
                   >
-                    <div>
+                    <div className="min-w-0">
                       <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-taupe">
                         {ch.label}
-                      </span>
-                      <span className="block text-sm text-ivory group-hover:text-champagne transition-colors break-all">
+                      </span>{' '}
+                      <span className="block text-[15px] md:text-sm text-ivory group-hover:text-champagne transition-colors wrap-break-word">
                         {ch.value}
                       </span>
                     </div>
@@ -150,18 +186,18 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="py-12 sm:py-16 select-none overflow-hidden">
+        <div className="py-10 sm:py-14 lg:py-16 select-none overflow-hidden">
           <Link
             to="/contact"
             data-cursor="HUBUNGI"
             className="group block text-center"
             aria-label="Hubungi Aflan"
           >
-            <div className="flex flex-wrap items-baseline justify-center gap-x-4 sm:gap-x-8 leading-[0.86]">
-              <span className="font-serif font-light tracking-[0.06em] text-[clamp(3.6rem,13vw,11.5rem)] text-ivory group-hover:text-champagne transition-colors duration-500">
+            <div className="flex flex-wrap items-baseline justify-center gap-x-3 sm:gap-x-6 lg:gap-x-8 leading-[0.88] lg:leading-[0.86]">
+              <span className="font-serif font-light tracking-[0.06em] text-[clamp(2.65rem,12.5vw,4.8rem)] md:text-[clamp(4.8rem,12.5vw,7.4rem)] lg:text-[clamp(3.6rem,13vw,11.5rem)] text-ivory group-hover:text-champagne transition-colors duration-500">
                 AFLAN
-              </span>
-              <span className="font-serif italic font-light tracking-[0.04em] text-[clamp(3.2rem,11.5vw,10.2rem)] editorial-outline group-hover:text-champagne/25 transition-all duration-500">
+              </span>{' '}
+              <span className="font-serif italic font-light tracking-[0.04em] text-[clamp(2.35rem,11vw,4.3rem)] md:text-[clamp(4.2rem,11vw,6.6rem)] lg:text-[clamp(3.2rem,11.5vw,10.2rem)] editorial-outline group-hover:text-champagne/25 transition-all duration-500">
                 CONNECT
               </span>
             </div>

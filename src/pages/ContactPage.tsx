@@ -4,6 +4,8 @@ import {
   Check,
   Clock,
   Copy,
+  Github,
+  Linkedin,
   Mail,
   MessageCircle,
   Send,
@@ -149,7 +151,7 @@ export const ContactPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="bg-ivory text-espresso pt-32 sm:pt-40 pb-20 sm:pb-24 px-5 sm:px-8 lg:px-12 border-b border-espresso/15">
+      <section className="bg-ivory text-espresso pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-espresso/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-espresso/15">
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
@@ -161,12 +163,12 @@ export const ContactPage: React.FC = () => {
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-14 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 lg:pt-14 items-end">
             <div className="lg:col-span-7">
               <TextReveal
                 as="h1"
                 immediate
-                className="font-serif text-5xl sm:text-6xl lg:text-[5rem] leading-[0.96] font-light"
+                className="font-serif text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[5rem] leading-[1.04] lg:leading-[0.96] font-light"
                 lines={[
                   <>Mari mulai</>,
                   <>
@@ -177,7 +179,7 @@ export const ContactPage: React.FC = () => {
             </div>
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
-              <p className="font-sans text-sm sm:text-base text-charcoal/80 leading-relaxed">
+              <p className="font-sans text-[15px] sm:text-base text-charcoal/80 leading-relaxed">
                 {contactData.availabilityNote} Hubungi langsung lewat email, WhatsApp,
                 Instagram, atau susun draf pesan terstruktur melalui formulir di bawah.
               </p>
@@ -186,31 +188,38 @@ export const ContactPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-obsidian text-ivory py-20 sm:py-28 px-5 sm:px-8 lg:px-12">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 items-start">
+      <section className="bg-obsidian text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start">
           <Reveal variant="up" className="lg:col-span-5 space-y-6">
             <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
               KANAL KOMUNIKASI RESMI
             </p>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
               {contactData.channels.map((channel) => {
                 const isCopied = copiedId === channel.id;
+                const isEmail = channel.id === 'email';
                 return (
                   <div
                     key={channel.id}
-                    className="p-6 bg-espresso/65 border border-champagne/20 hover:border-champagne/55 transition-colors space-y-4"
+                    className={`p-6 bg-espresso/65 border border-champagne/20 hover:border-champagne/55 transition-colors flex flex-col justify-between space-y-4 ${
+                      isEmail ? 'md:col-span-2 lg:col-span-1' : ''
+                    }`}
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
+                    <div className="flex items-start justify-between gap-3 sm:gap-4">
+                      <div className="min-w-0 flex-1">
                         <span className="block font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
                           {channel.label}
-                        </span>
+                        </span>{' '}
                         <a
                           href={channel.href}
                           target={channel.external ? '_blank' : undefined}
                           rel={channel.external ? 'noopener noreferrer' : undefined}
-                          className="block font-serif text-2xl sm:text-[1.7rem] text-ivory hover:text-champagne transition-colors break-all mt-1"
+                          className={`block font-serif text-ivory hover:text-champagne transition-colors mt-1 ${
+                            isEmail
+                              ? 'text-[clamp(0.98rem,4.1vw,1.35rem)] md:text-[1.45rem] lg:text-[clamp(1.02rem,1.45vw,1.48rem)] sm:whitespace-nowrap wrap-break-word'
+                              : 'text-xl sm:text-2xl lg:text-[1.6rem] wrap-break-word'
+                          }`}
                         >
                           {channel.value}
                         </a>
@@ -228,7 +237,7 @@ export const ContactPage: React.FC = () => {
                     </div>
 
                     <div className="pt-3 border-t border-champagne/15 flex flex-wrap items-center justify-between gap-3">
-                      <span className="font-sans text-xs text-taupe">
+                      <span className="font-sans text-sm lg:text-xs text-taupe">
                         {channel.displayHint}
                       </span>
                       <button
@@ -253,27 +262,54 @@ export const ContactPage: React.FC = () => {
                   </div>
                 );
               })}
-            </div>
 
-            <div className="p-5 bg-chocolate/50 border border-champagne/15 font-mono text-[11px] tracking-[0.16em] uppercase text-taupe space-y-1.5">
-              <p className="text-champagne">BASIS &amp; INSTITUSI</p>
-              <p>{contactData.location}</p>
-              <p>
-                {personalData.university} · {personalData.studyProgram}
-              </p>
+              <div className="md:col-span-2 lg:col-span-1 p-6 bg-chocolate/50 border border-champagne/15 font-mono text-[11px] tracking-[0.16em] uppercase text-taupe flex flex-col justify-between gap-4 lg:mt-2">
+                <div className="space-y-1.5">
+                  <p className="text-champagne">BASIS &amp; INSTITUSI</p>
+                  <p>{contactData.location}</p>
+                  <p>
+                    {personalData.university} · {personalData.studyProgram}
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-champagne/15">
+                  <a
+                    href={contactData.githubHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor="GITHUB"
+                    className="inline-flex items-center gap-1.5 text-ivory hover:text-champagne transition-colors"
+                  >
+                    <Github className="size-3.5" aria-hidden="true" />
+                    GitHub
+                    <ArrowUpRight className="size-3" aria-hidden="true" />
+                  </a>
+                  <span className="text-champagne/30" aria-hidden="true">·</span>
+                  <a
+                    href={contactData.linkedinHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor="LINKEDIN"
+                    className="inline-flex items-center gap-1.5 text-ivory hover:text-champagne transition-colors"
+                  >
+                    <Linkedin className="size-3.5" aria-hidden="true" />
+                    LinkedIn
+                    <ArrowUpRight className="size-3" aria-hidden="true" />
+                  </a>
+                </div>
+              </div>
             </div>
           </Reveal>
 
           <Reveal variant="up" delay={0.1} className="lg:col-span-7">
-            <div className="bg-ivory text-espresso border border-champagne/25 p-7 sm:p-10 lg:p-12 shadow-2xl">
+            <div className="bg-ivory text-espresso border border-champagne/25 p-6 sm:p-10 lg:p-12 shadow-2xl">
               <div className="pb-6 mb-8 border-b border-espresso/15">
                 <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha">
                   PENYUSUN PESAN
                 </p>
-                <h2 className="font-serif text-3xl sm:text-4xl font-light mt-2">
+                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
                   Siapkan catatan langsung untuk Aflan
                 </h2>
-                <p className="font-sans text-xs sm:text-sm text-charcoal/75 mt-2">
+                <p className="font-sans text-sm sm:text-[15px] lg:text-sm text-charcoal/75 mt-2 leading-relaxed">
                   Portofolio ini tidak menyimpan data di server pihak ketiga. Pengiriman akan
                   memvalidasi pesan Anda lalu membuka draf siap kirim lewat Email atau
                   WhatsApp resmi Aflan.
@@ -300,14 +336,14 @@ export const ContactPage: React.FC = () => {
                       }}
                       aria-invalid={Boolean(errors.name)}
                       aria-describedby={errors.name ? 'contact-name-error' : undefined}
-                      placeholder="Contoh: Nadia Pratama"
-                      className="w-full px-4 py-3 bg-offwhite border border-espresso/25 text-espresso text-sm placeholder:text-espresso/40 focus:border-mocha focus:outline-hidden"
+                      placeholder="Nama lengkap Anda"
+                      className="w-full px-4 py-3 bg-offwhite border border-espresso/25 text-espresso text-base sm:text-sm placeholder:text-espresso/40 focus:border-mocha focus:outline-hidden"
                     />
                     {errors.name && (
                       <p
                         id="contact-name-error"
                         role="alert"
-                        className="mt-1.5 font-sans text-xs font-medium text-mocha border-l-2 border-mocha pl-2.5"
+                        className="mt-1.5 font-sans text-sm lg:text-xs font-medium text-mocha border-l-2 border-mocha pl-2.5"
                       >
                         {errors.name}
                       </p>
@@ -333,13 +369,13 @@ export const ContactPage: React.FC = () => {
                       aria-invalid={Boolean(errors.email)}
                       aria-describedby={errors.email ? 'contact-email-error' : undefined}
                       placeholder="nama@domain.com"
-                      className="w-full px-4 py-3 bg-offwhite border border-espresso/25 text-espresso text-sm placeholder:text-espresso/40 focus:border-mocha focus:outline-hidden"
+                      className="w-full px-4 py-3 bg-offwhite border border-espresso/25 text-espresso text-base sm:text-sm placeholder:text-espresso/40 focus:border-mocha focus:outline-hidden"
                     />
                     {errors.email && (
                       <p
                         id="contact-email-error"
                         role="alert"
-                        className="mt-1.5 font-sans text-xs font-medium text-mocha border-l-2 border-mocha pl-2.5"
+                        className="mt-1.5 font-sans text-sm lg:text-xs font-medium text-mocha border-l-2 border-mocha pl-2.5"
                       >
                         {errors.email}
                       </p>
@@ -360,7 +396,7 @@ export const ContactPage: React.FC = () => {
                           type="button"
                           onClick={() => setValues((v) => ({ ...v, topic }))}
                           aria-pressed={active}
-                          className={`px-3.5 py-2 rounded-full font-mono text-[10px] tracking-[0.16em] uppercase border transition-colors ${
+                          className={`px-3.5 py-2.5 lg:py-2 rounded-full font-mono text-[10px] tracking-[0.16em] uppercase border transition-colors ${
                             active
                               ? 'bg-espresso text-ivory border-espresso'
                               : 'bg-offwhite text-espresso border-espresso/20 hover:border-mocha'
@@ -395,13 +431,13 @@ export const ContactPage: React.FC = () => {
                       errors.message ? 'contact-message-error' : undefined
                     }
                     placeholder="Ceritakan ide, kebutuhan proyek, atau pertanyaan Anda..."
-                    className="w-full px-4 py-3 bg-offwhite border border-espresso/25 text-espresso text-sm placeholder:text-espresso/40 focus:border-mocha focus:outline-hidden resize-y"
+                    className="w-full px-4 py-3 bg-offwhite border border-espresso/25 text-espresso text-base sm:text-sm placeholder:text-espresso/40 focus:border-mocha focus:outline-hidden resize-y"
                   />
                   {errors.message && (
                     <p
                       id="contact-message-error"
                       role="alert"
-                      className="mt-1.5 font-sans text-xs font-medium text-mocha border-l-2 border-mocha pl-2.5"
+                      className="mt-1.5 font-sans text-sm lg:text-xs font-medium text-mocha border-l-2 border-mocha pl-2.5"
                     >
                       {errors.message}
                     </p>
@@ -418,7 +454,7 @@ export const ContactPage: React.FC = () => {
                     Siapkan &amp; Buka Draf Email
                   </button>
                   <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-espresso/60">
-                    HANDOFF EMAIL CLIENT-SIDE
+                    TERINTEGRASI EMAIL &amp; WHATSAPP
                   </span>
                 </div>
               </form>
@@ -432,7 +468,7 @@ export const ContactPage: React.FC = () => {
                   <p className="font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
                     DRAF SIAP — PILIH KANAL PENGIRIMAN
                   </p>
-                  <p className="font-sans text-sm text-ivory/85 leading-relaxed">
+                  <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/85 leading-relaxed">
                     Pesan Anda lolos validasi dan diarahkan ke aplikasi email menuju{' '}
                     <span className="text-champagne">{contactData.email}</span>. Anda juga
                     dapat mengirim draf yang sama via WhatsApp atau menyalin teksnya:

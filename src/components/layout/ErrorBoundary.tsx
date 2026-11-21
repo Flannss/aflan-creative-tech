@@ -24,12 +24,12 @@ export class ErrorBoundary extends React.Component<
   render(): React.ReactNode {
     if (this.state.hasError) {
       return (
-        <section className="min-h-[80vh] bg-obsidian text-ivory flex flex-col items-center justify-center px-5 pt-28 pb-20 text-center">
+        <section className="min-h-[80vh] bg-obsidian text-ivory flex flex-col items-center justify-center px-6 sm:px-8 pt-28 pb-20 text-center">
           <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-champagne mb-4">
             PEMULIHAN HALAMAN
           </p>
-          <h1 className="font-serif text-4xl sm:text-5xl font-light max-w-xl mb-6">
-            Terjadi gangguan saat memuat modul halaman.
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light max-w-xl mb-6">
+            Terjadi gangguan saat memuat halaman.
           </h1>
           <button
             type="button"
