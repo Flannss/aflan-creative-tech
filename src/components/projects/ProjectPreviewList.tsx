@@ -95,7 +95,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
             onFocus={() => canHover && setActiveProject(project)}
             onBlur={() => canHover && setActiveProject(null)}
             data-cursor="LIHAT"
-            className={`group block md:flex md:flex-col md:h-full lg:block lg:h-auto py-8 sm:py-10 md:p-6 lg:py-10 lg:px-5 px-2 sm:px-5 -mx-2 sm:-mx-5 md:mx-0 lg:-mx-5 md:border md:border-champagne/20 md:bg-obsidian/45 md:hover:border-champagne/55 lg:border-0 lg:bg-transparent transition-colors duration-300 hover:bg-espresso/45 ${
+            className={`group block md:flex md:flex-col md:h-full lg:block lg:h-auto py-8 sm:py-10 md:p-6 lg:py-10 lg:px-5 px-2 sm:px-5 -mx-2 sm:-mx-5 md:mx-0 lg:-mx-5 md:border md:border-champagne/20 md:bg-obsidian/45 md:hover:border-champagne/55 md:active:border-champagne lg:border-0 lg:bg-transparent transition-all duration-300 hover:bg-espresso/45 active:bg-espresso/60 active:scale-[0.99] lg:active:scale-100 ${
               isOrphanOnTablet ? 'md:col-span-2' : ''
             }`}
           >

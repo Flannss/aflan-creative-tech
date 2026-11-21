@@ -113,11 +113,13 @@
   display: flex;
   width: max-content;
   will-change: transform;
-  animation: aflan-marquee 34s linear infinite;
+  animation: aflan-marquee 30s linear infinite;
 }
 
-.aflan-marquee-wrapper:hover .aflan-marquee-track {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .aflan-marquee-wrapper:hover .aflan-marquee-track {
+    animation-play-state: paused;
+  }
 }
 
 /* Architectural Vertical Hairline Indicator */
@@ -148,8 +150,8 @@
   animation: aflan-scroll-pulse 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
-/* Performance & Accessibility: Disable heavy continuous motion on coarse touch pointers and reduced-motion */
-@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+/* Accessibility: Honor explicit OS reduced-motion preference only (keep motion active on mobile/tablet touchscreens) */
+@media (prefers-reduced-motion: reduce) {
   .aflan-grain-overlay {
     display: none;
   }

@@ -137,7 +137,7 @@ export const projectsData: ProjectEntry[] = [
     summary:
       'Evaluasi kualitas dan analisis workflow secara sistematis pada generator template halaman berbasis Laravel—disajikan secara tipografis untuk menjaga kerahasiaan sistem internal perusahaan.',
     overview: [
-      'ASIS Builder adalah sistem Website Template Page Generator internal berbasis Laravel, PHP, Tailwind CSS, dan Alpine.js. Dengan menjaga atribusi secara objektif, kontribusi saya tidak mengklaim kepemilikan atas keseluruhan aplikasi, melainkan berfokus penuh pada Software Quality Assurance dan evaluasi sistem.',
+      'ASIS Builder adalah sistem Website Template Page Generator internal berbasis Laravel, PHP, Tailwind CSS, dan Alpine.js. Peran saya di sini berfokus penuh pada Software Quality Assurance, pengujian fungsional, dan evaluasi alur kerja sistem.',
       'Saya menguji alur pembuatan template secara menyeluruh, memetakan defect serta skenario edge-case, mengevaluasi kesesuaian fitur terhadap System Requirements, lalu mendokumentasikan rekomendasi perbaikan yang terukur bagi tim developer inti.',
     ],
     stack: ['Laravel', 'PHP', 'Tailwind CSS', 'Alpine.js', 'Functional Testing', 'Workflow Analysis'],

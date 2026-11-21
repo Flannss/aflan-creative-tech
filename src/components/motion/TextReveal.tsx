@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { EASE_LUXURY } from '@/utils/motion';
-import { useIsCoarsePointer } from '@/hooks/useMediaQuery';
 
 interface TextRevealProps {
   lines: React.ReactNode[];
@@ -15,7 +14,7 @@ interface TextRevealProps {
 
 /**
  * Print-editorial masked line-by-line typography reveal.
- * Each line glides smoothly out of an overflow-hidden baseline using power4-style easing.
+ * Runs cleanly across mobile, tablet, and desktop; respects OS reduced-motion.
  */
 export const TextReveal: React.FC<TextRevealProps> = ({
   lines,
@@ -23,13 +22,12 @@ export const TextReveal: React.FC<TextRevealProps> = ({
   className = '',
   lineClassName = '',
   delay = 0,
-  stagger = 0.09,
+  stagger = 0.08,
   immediate = false,
 }) => {
   const prefersReducedMotion = useReducedMotion();
-  const isCoarsePointer = useIsCoarsePointer();
 
-  if (prefersReducedMotion || isCoarsePointer) {
+  if (prefersReducedMotion) {
     return (
       <Tag className={className}>
         {lines.map((line, index) => (

@@ -25,7 +25,7 @@ import { MonogramMark } from '@/components/brand/Monogram';
 export const HomePage: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
   const isCoarsePointer = useIsCoarsePointer();
-  const disableParallax = Boolean(prefersReducedMotion || isCoarsePointer);
+  const disableMotion = Boolean(prefersReducedMotion);
 
   const heroRef = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll({
@@ -33,9 +33,21 @@ export const HomePage: React.FC = () => {
     offset: ['start start', 'end start'],
   });
 
-  const portraitY = useTransform(scrollYProgress, [0, 1], [0, disableParallax ? 0 : 54]);
-  const portraitScale = useTransform(scrollYProgress, [0, 1], [1, disableParallax ? 1 : 1.07]);
-  const wordmarkY = useTransform(scrollYProgress, [0, 1], [0, disableParallax ? 0 : -44]);
+  const portraitY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, disableMotion ? 0 : isCoarsePointer ? 24 : 54],
+  );
+  const portraitScale = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [1, disableMotion ? 1 : isCoarsePointer ? 1.04 : 1.07],
+  );
+  const wordmarkY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, disableMotion ? 0 : isCoarsePointer ? -20 : -44],
+  );
 
   const ageInfo = useMemo(() => calculateExactAge(personalData.birthDateISO), []);
   const featuredProjects = useMemo(
@@ -78,27 +90,22 @@ export const HomePage: React.FC = () => {
         <div className="relative z-10 max-w-[1440px] w-full mx-auto my-auto py-6 sm:py-10 lg:py-12 flex flex-col items-center justify-center">
           <motion.div
             style={{ y: wordmarkY }}
-            initial={disableParallax ? false : { opacity: 0, y: 36 }}
+            initial={disableMotion ? false : { opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.05, ease: EASE_LUXURY }}
+            transition={{ duration: 0.95, ease: EASE_LUXURY }}
             className="relative z-20 w-full text-center select-none pointer-events-none mb-5 sm:mb-7 md:mb-8 lg:-mb-10"
           >
-            <h1 className="flex flex-col items-center">
-              <span className="font-serif font-light uppercase tracking-[0.14em] leading-[0.86] text-[clamp(3.35rem,15vw,5.4rem)] md:text-[clamp(5.8rem,15vw,8.8rem)] lg:text-[clamp(4.4rem,16.5vw,14.2rem)] text-ivory/95 drop-shadow-[0_12px_32px_rgba(23,22,21,0.85)]">
-                AFLAN
-              </span>{' '}
-              <span className="mt-2 sm:mt-2.5 lg:hidden font-serif italic font-light uppercase tracking-[0.22em] text-[clamp(0.95rem,3.6vw,1.35rem)] text-champagne">
-                MU&apos;AFA DZULFIQAR
-              </span>
+            <h1 className="font-serif font-light uppercase tracking-[0.14em] leading-[0.86] text-[clamp(3.35rem,15vw,5.4rem)] md:text-[clamp(5.8rem,15vw,8.8rem)] lg:text-[clamp(4.4rem,16.5vw,14.2rem)] text-ivory/95 drop-shadow-[0_12px_32px_rgba(23,22,21,0.85)]">
+              AFLAN<span className="sr-only"> Mu&apos;afa Dzulfiqar</span>
             </h1>
           </motion.div>
 
           <div className="relative w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 items-end gap-8 lg:gap-6 z-10">
             {/* Left Floating Identity Dossier */}
             <motion.aside
-              initial={disableParallax ? false : { opacity: 0, x: -24 }}
+              initial={disableMotion ? false : { opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.95, delay: 0.34, ease: EASE_LUXURY }}
+              transition={{ duration: 0.85, delay: 0.28, ease: EASE_LUXURY }}
               className="order-2 md:col-span-1 lg:order-1 lg:col-span-4 lg:pb-8"
             >
               <div className="border border-champagne/20 bg-espresso/70 backdrop-blur-md p-5 sm:p-6 max-w-md md:max-w-none lg:max-w-md">
@@ -146,18 +153,18 @@ export const HomePage: React.FC = () => {
               </div>
             </motion.aside>
 
-            {/* Centerpiece Studio Portrait with Smooth Parallax & Full Name Lower Lockup */}
+            {/* Centerpiece Studio Portrait with Integrated Editorial Dossier Plate */}
             <div className="order-1 md:col-span-2 lg:order-2 lg:col-span-4 flex flex-col items-center relative">
               <motion.div
                 style={{ y: portraitY }}
                 initial={
-                  disableParallax
+                  disableMotion
                     ? false
-                    : { opacity: 0, clipPath: 'inset(14% 0% 0% 0%)' }
+                    : { opacity: 0, clipPath: 'inset(12% 0% 0% 0%)' }
                 }
                 animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }}
-                transition={{ duration: 1.15, delay: 0.14, ease: EASE_LUXURY }}
-                className="relative z-10 w-full max-w-[280px] sm:max-w-[330px] lg:max-w-[345px] xl:max-w-[385px] aspect-4/5 overflow-hidden border border-champagne/30 bg-obsidian shadow-[0_32px_90px_rgba(0,0,0,0.75)]"
+                transition={{ duration: 1.05, delay: 0.12, ease: EASE_LUXURY }}
+                className="relative z-10 w-full max-w-[300px] sm:max-w-[340px] lg:max-w-[350px] xl:max-w-[390px] aspect-4/5 overflow-hidden border border-champagne/30 bg-obsidian shadow-[0_32px_90px_rgba(0,0,0,0.75)]"
               >
                 <motion.img
                   style={{ scale: portraitScale }}
@@ -167,37 +174,37 @@ export const HomePage: React.FC = () => {
                 />
                 <div
                   aria-hidden="true"
-                  className="absolute inset-0 bg-linear-to-t from-obsidian/85 via-transparent to-obsidian/15"
+                  className="absolute inset-0 bg-linear-to-t from-obsidian via-obsidian/25 to-obsidian/10"
                 />
-                <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-[10px] font-mono tracking-[0.22em] uppercase text-champagne/85">
-                  <span>POTRET · I</span>
-                  <span>AMDZ</span>
+
+                {/* Integrated Editorial Dossier Plate inside Portrait Frame */}
+                <div className="absolute inset-x-0 bottom-0 z-20 px-4 sm:px-5 pb-4 sm:pb-5 pt-10 flex flex-col items-center text-center">
+                  <div className="w-full flex items-center justify-between text-[10px] font-mono tracking-[0.22em] uppercase text-champagne/80 pb-2.5 mb-2.5 border-b border-champagne/20">
+                    <span>POTRET · I</span>
+                    <span>AMDZ</span>
+                  </div>
+                  <p
+                    aria-hidden="true"
+                    className="select-none flex flex-wrap items-baseline justify-center gap-x-2 sm:gap-x-2.5 font-serif italic font-light uppercase tracking-[0.09em] leading-none text-[clamp(1.25rem,4.6vw,1.85rem)] sm:text-[1.75rem] lg:text-[clamp(1.45rem,2.1vw,2.05rem)]"
+                  >
+                    <span className="text-champagne">MU&apos;AFA</span>{' '}
+                    <span className="editorial-outline-strong">DZULFIQAR</span>
+                  </p>
                 </div>
               </motion.div>
-
-              <motion.p
-                initial={disableParallax ? false : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.0, delay: 0.32, ease: EASE_LUXURY }}
-                aria-label="Mu'afa Dzulfiqar"
-                className="pointer-events-none select-none -mt-4 sm:-mt-6 md:-mt-7 lg:-mt-9 z-20 flex flex-wrap items-baseline justify-center gap-x-2.5 sm:gap-x-3.5 text-center font-serif italic font-light uppercase tracking-[0.1em] leading-none text-[clamp(1.35rem,5.2vw,2.15rem)] md:text-[clamp(2rem,4vw,2.75rem)] lg:text-[clamp(1.75rem,3.4vw,3.35rem)] lg:whitespace-nowrap drop-shadow-[0_8px_24px_rgba(23,22,21,0.9)]"
-              >
-                <span className="text-champagne">MU&apos;AFA</span>{' '}
-                <span className="editorial-outline-strong">DZULFIQAR</span>
-              </motion.p>
             </div>
 
             {/* Right Asymmetric Editorial Intro & Primary CTAs */}
             <motion.div
-              initial={disableParallax ? false : { opacity: 0, x: 24 }}
+              initial={disableMotion ? false : { opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.95, delay: 0.4, ease: EASE_LUXURY }}
+              transition={{ duration: 0.85, delay: 0.34, ease: EASE_LUXURY }}
               className="order-3 md:col-span-1 lg:col-span-4 lg:pb-8 flex flex-col lg:items-end lg:text-right gap-5 lg:gap-6"
             >
               <p className="font-serif text-xl sm:text-2xl lg:text-[1.75rem] leading-[1.3] font-light text-ivory/95 max-w-md md:max-w-none lg:max-w-md">
                 Membangun{' '}
-                <span className="italic text-champagne">Seamless Digital Experience</span>{' '}
-                dengan presisi teknis dan rasa editorial.
+                <span className="italic text-champagne">pengalaman web yang jernih</span>{' '}
+                dengan ketelitian kode dan kepekaan editorial.
               </p>
               <p className="font-sans text-[15px] sm:text-base lg:text-sm leading-relaxed text-ivory/75 max-w-md md:max-w-none lg:max-w-md">
                 {personalData.headlineDescriptor}
@@ -206,7 +213,7 @@ export const HomePage: React.FC = () => {
                 <Link
                   to="/projects"
                   data-cursor="PROYEK"
-                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory transition-colors duration-300"
+                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all duration-300"
                 >
                   Karya Terpilih
                   <ArrowUpRight className="size-4" aria-hidden="true" />
@@ -214,7 +221,7 @@ export const HomePage: React.FC = () => {
                 <Link
                   to="/about"
                   data-cursor="TENTANG"
-                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full border border-champagne/40 bg-obsidian/50 text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:border-champagne hover:bg-espresso transition-colors duration-300"
+                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full border border-champagne/40 bg-obsidian/50 text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:border-champagne hover:bg-espresso active:scale-[0.97] active:bg-espresso transition-all duration-300"
                 >
                   Tentang Aflan
                   <ArrowRight className="size-4" aria-hidden="true" />
@@ -325,8 +332,8 @@ export const HomePage: React.FC = () => {
                 />
 
                 <div className="relative z-10 flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/80 pb-5 border-b border-champagne/15">
-                  <span>SCALE 1:1 · VECTOR GEOMETRY</span>
-                  <span>EST. 2005 · AMDZ</span>
+                  <span>MONOGRAM · AMDZ</span>
+                  <span>EST. 2005</span>
                 </div>
 
                 <div className="relative z-10 py-10 sm:py-12 flex flex-col items-center justify-center text-center">
@@ -343,23 +350,23 @@ export const HomePage: React.FC = () => {
                       AFLAN
                     </p>
                     <p className="font-mono text-[10px] tracking-[0.28em] uppercase text-champagne">
-                      A · M · D · Z — ARCHITECTURAL CREST
+                      A · M · D · Z
                     </p>
                   </div>
                 </div>
 
                 <div className="relative z-10 grid grid-cols-3 gap-2 pt-5 border-t border-champagne/15 font-mono text-[9px] tracking-[0.18em] uppercase text-taupe text-center">
                   <div className="p-2 bg-obsidian/60 border border-champagne/15">
-                    <span className="block text-champagne">APEX (A)</span>
-                    <span>Code Logic</span>
+                    <span className="block text-champagne">PUNCAK (A)</span>
+                    <span>Struktur Kode</span>
                   </div>
                   <div className="p-2 bg-obsidian/60 border border-champagne/15">
-                    <span className="block text-champagne">SPAN (M)</span>
-                    <span>Editorial Space</span>
+                    <span className="block text-champagne">RUANG (M)</span>
+                    <span>Estetika Editorial</span>
                   </div>
                   <div className="p-2 bg-obsidian/60 border border-champagne/15">
-                    <span className="block text-champagne">ANCHOR (DZ)</span>
-                    <span>QA Precision</span>
+                    <span className="block text-champagne">TUMPUAN (DZ)</span>
+                    <span>Pengujian QA</span>
                   </div>
                 </div>
               </div>
@@ -374,7 +381,7 @@ export const HomePage: React.FC = () => {
                   lines={[
                     <>Titik temu antara</>,
                     <>
-                      <span className="italic text-champagne">presisi logika pemrograman</span>{' '}
+                      <span className="italic text-champagne">logika pemrograman</span>{' '}
                       &amp;
                     </>,
                     <>estetika ruang editorial.</>,
@@ -386,9 +393,8 @@ export const HomePage: React.FC = () => {
                     className="font-sans text-[15px] sm:text-base leading-[1.8] text-ivory/75 max-w-2xl"
                   >
                     Monogram <span className="text-champagne font-medium">AMDZ</span> (Aflan
-                    Mu&apos;afa Dzulfiqar) dirancang bukan sekadar sebagai inisial visual,
-                    melainkan cetak biru cara berpikir: menggabungkan ketegasan struktur
-                    pengembangan perangkat lunak dengan ketenangan komposisi tipografi editorial.
+                    Mu&apos;afa Dzulfiqar) merangkum cara kerja saya: memadukan struktur kode
+                    yang rapi dengan ketenangan komposisi tipografi editorial.
                   </p>
                 </Reveal>
               </div>
@@ -396,31 +402,31 @@ export const HomePage: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 pt-2">
                 {[
                   {
-                    code: '01 · APEX GEOMETRY',
-                    title: 'Presisi Logika & Struktur',
-                    desc: 'Garis segitiga luar yang mengerucut tegas ke puncak melambangkan arsitektur komponen web yang modular, terukur, dan bersih.',
+                    code: '01 · PUNCAK A',
+                    title: 'Logika & Struktur',
+                    desc: 'Garis segitiga luar mencerminkan arsitektur komponen web yang bersih, modular, dan mudah dirawat.',
                   },
                   {
-                    code: '02 · INNER SANCTUARY',
-                    title: 'Estetika Ruang Kreatif',
-                    desc: 'Siluet ganda di ruang dalam mewakili filosofi "Satu Ruang, Banyak Ide, Satu Cerita"—harmoni antara negative space dan narasi visual.',
+                    code: '02 · RUANG DALAM',
+                    title: 'Ruang Kreatif',
+                    desc: 'Siluet ganda di bagian dalam terinspirasi dari semangat Satu Ruang Creative: proporsi yang lapang dan terarah.',
                   },
                   {
-                    code: '03 · HORIZONTAL AXIS',
-                    title: 'Keseimbangan UI & UX',
-                    desc: 'Palang horizontal menjaga proporsi antara keindahan tipografi serif dan kenyamanan interaksi pengguna lintas perangkat.',
+                    code: '03 · SUMBU DATAR',
+                    title: 'Keseimbangan UI',
+                    desc: 'Palang horizontal menjaga keselarasan antara karakter visual serif dan kemudahan navigasi di semua layar.',
                   },
                   {
-                    code: '04 · GROUNDED POINT',
-                    title: 'Titik Verifikasi QA',
-                    desc: 'Titik tumpu bulat di dasar lambang menjadi simbol pengujian fungsional (Software QA): setiap karya harus teruji di kondisi nyata.',
+                    code: '04 · TITIK TUMPU',
+                    title: 'Ketelitian QA',
+                    desc: 'Titik bulat di dasar lambang menjadi pengingat bahwa setiap fitur harus diuji dan diverifikasi di kondisi nyata.',
                   },
                 ].map((item, idx) => (
                   <Reveal
                     key={item.code}
                     variant="up"
                     delay={0.12 + idx * 0.06}
-                    className="p-5 sm:p-6 bg-espresso/45 border border-champagne/20 hover:border-champagne/55 transition-colors space-y-2.5"
+                    className="p-5 sm:p-6 bg-espresso/45 border border-champagne/20 hover:border-champagne/55 active:border-champagne transition-colors space-y-2.5"
                   >
                     <span className="block font-mono text-[10px] tracking-[0.22em] uppercase text-champagne">
                       {item.code}
@@ -464,12 +470,12 @@ export const HomePage: React.FC = () => {
               as="h2"
               className="font-serif text-[2rem] sm:text-4xl md:text-5xl lg:text-[4.1rem] leading-[1.1] lg:leading-[1.06] font-light text-espresso max-w-4xl"
               lines={[
-                <>Elegan bukan berarti kosong—melainkan</>,
+                <>Sederhana, jernih, dan terarah—</>,
                 <>
-                  <span className="italic text-mocha">Interactive UI Implementation</span>{' '}
-                  yang terukur,
+                  <span className="italic text-mocha">antarmuka interaktif</span> yang
+                  fungsional,
                 </>,
-                <>teruji, dan punya karakter kuat.</>,
+                <>teruji, dan nyaman digunakan.</>,
               ]}
             />
 
@@ -629,7 +635,7 @@ export const HomePage: React.FC = () => {
               <Link
                 to="/lab"
                 data-cursor="BUKA LAB"
-                className="group relative flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[450px] p-7 sm:p-9 lg:p-11 bg-obsidian text-ivory border border-espresso/20 overflow-hidden"
+                className="group relative flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[450px] p-7 sm:p-9 lg:p-11 bg-obsidian text-ivory border border-espresso/20 active:scale-[0.99] transition-transform overflow-hidden"
               >
                 <div
                   aria-hidden="true"

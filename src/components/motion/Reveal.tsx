@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { EASE_LUXURY } from '@/utils/motion';
-import { useIsCoarsePointer } from '@/hooks/useMediaQuery';
 
 type RevealVariant = 'up' | 'left' | 'right' | 'fade' | 'clip';
 
@@ -18,23 +17,22 @@ export const Reveal: React.FC<RevealProps> = ({
   children,
   variant = 'up',
   delay = 0,
-  duration = 0.88,
+  duration = 0.78,
   className = '',
   once = true,
 }) => {
   const prefersReducedMotion = useReducedMotion();
-  const isCoarsePointer = useIsCoarsePointer();
 
-  if (prefersReducedMotion || isCoarsePointer) {
+  if (prefersReducedMotion) {
     return <div className={className}>{children}</div>;
   }
 
   const initialMap = {
-    up: { opacity: 0, y: 26 },
-    left: { opacity: 0, x: -24 },
-    right: { opacity: 0, x: 24 },
+    up: { opacity: 0, y: 24 },
+    left: { opacity: 0, x: -20 },
+    right: { opacity: 0, x: 20 },
     fade: { opacity: 0 },
-    clip: { opacity: 0, clipPath: 'inset(12% 0% 0% 0%)', scale: 1.04 },
+    clip: { opacity: 0, clipPath: 'inset(10% 0% 0% 0%)', scale: 1.03 },
   };
 
   const visibleMap = {
@@ -49,9 +47,9 @@ export const Reveal: React.FC<RevealProps> = ({
     <motion.div
       initial={initialMap[variant]}
       whileInView={visibleMap[variant]}
-      viewport={{ once, amount: 0.14 }}
+      viewport={{ once, amount: 0.1 }}
       transition={{
-        duration: variant === 'clip' ? Math.max(duration, 0.98) : duration,
+        duration: variant === 'clip' ? Math.max(duration, 0.88) : duration,
         delay,
         ease: EASE_LUXURY,
       }}

@@ -1,24 +1,18 @@
 import { personalData } from '@/data/personal';
 
-export type GalleryCategory =
-  | 'Portraits'
-  | 'Retro Aesthetics'
-  | 'Studio Work';
+export type GalleryCategory = 'Potret' | 'Tipografi' | 'Karya Visual';
 
-export type GalleryVisualPreset =
-  | 'chiaroscuro-portrait'
-  | 'korean-photobooth'
-  | 'retro-digicam'
-  | 'gradient-studio-backdrop'
-  | 'ultra-wide-perspective'
-  | 'gcam-hdr-grading';
+export type GalleryPlateKind =
+  | 'photo'
+  | 'abstract-monogram'
+  | 'abstract-palette'
+  | 'abstract-typography';
 
-export interface GalleryExifTelemetry {
-  technique: string;
-  camera: string;
-  lens: string;
-  exposure: string;
-  colorProfile: string;
+export interface GalleryDetailMeta {
+  medium: string;
+  treatment: string;
+  composition: string;
+  palette: string;
 }
 
 export interface GalleryItem {
@@ -27,201 +21,180 @@ export interface GalleryItem {
   title: string;
   subtitle: string;
   category: GalleryCategory;
-  techniqueBadge: string;
+  badge: string;
+  kind: GalleryPlateKind;
   aspectClass:
     | 'aspect-3/4'
     | 'aspect-4/5'
     | 'aspect-16/10'
     | 'aspect-4/3'
     | 'aspect-square';
-  parallaxOffset: number;
-  visualPreset: GalleryVisualPreset;
-  src: string;
-  fallbackSrc: string;
+  src?: string;
+  imageFit?: 'cover' | 'contain';
+  imageBg?: string;
   objectPosition?: string;
   imageScaleClass?: string;
   customFilter?: string;
-  exifSpec: string;
-  exifTelemetry: GalleryExifTelemetry;
+  meta: GalleryDetailMeta;
   caption: string;
-  contextNote: string;
   technicalNote: string;
 }
 
-export const galleryCategories: Array<'All' | GalleryCategory> = [
-  'All',
-  'Portraits',
-  'Retro Aesthetics',
-  'Studio Work',
+export const galleryCategories: Array<'Semua' | GalleryCategory> = [
+  'Semua',
+  'Potret',
+  'Tipografi',
+  'Karya Visual',
 ];
 
 export const galleryItems: GalleryItem[] = [
   {
-    id: 'plate-01-profile-portrait',
+    id: 'plate-01-portrait-chiaroscuro',
     plateNumber: 'PELAT 01',
-    title: 'Warm Chiaroscuro — Soft Direct Flash',
-    subtitle: 'Potret Identitas Utama & Isolasi Subjek',
-    category: 'Portraits',
-    techniqueBadge: 'Soft Direct Flash',
+    title: 'Potret Studio — Chiaroscuro Hangat',
+    subtitle: 'Foto Identitas Utama',
+    category: 'Potret',
+    badge: 'Potret Asli',
+    kind: 'photo',
     aspectClass: 'aspect-4/5',
-    parallaxOffset: 16,
-    visualPreset: 'chiaroscuro-portrait',
     src: personalData.portraitPath,
-    fallbackSrc: personalData.portraitPath,
+    imageFit: 'cover',
     objectPosition: '50% 18%',
-    exifSpec: '50mm · f/1.8 · 1/160s · ISO 125 · Soft Direct Flash',
-    exifTelemetry: {
-      technique: 'Soft Direct Flash · Chiaroscuro Key',
-      camera: 'Studio Mirrorless System',
-      lens: '50mm Prime · f/1.8',
-      exposure: '1/160s · ISO 125 · +0.3 EV',
-      colorProfile: 'Warm Amber 3200K · Espresso Shadow',
+    meta: {
+      medium: 'Fotografi Studio Personal',
+      treatment: 'Nada Warna Asli · Cahaya Amber',
+      composition: 'Framing 4:5 · Pusat Wajah Atas',
+      palette: 'Obsidian · Espresso · Champagne',
     },
     caption:
-      'Potret studio utama Aflan Mu’afa Dzulfiqar dengan teknik Soft Direct Flash terarah. Pencahayaan amber hangat dan bayangan espresso membentuk kontras chiaroscuro yang menjadi jangkar visual portofolio AFLAN.',
-    contextNote:
-      'Difusi flash lembut pada sumbu optik menjaga detail kontur wajah tetap tajam tanpa kehilangan atmosfer sinematik.',
-    technicalNote: 'Potret Personal Asli · Soft Direct Flash & Espresso Falloff',
+      'Potret studio asli Aflan Mu’afa Dzulfiqar. Kontras pencahayaan amber hangat dan bayangan espresso menjadi sumber palet warna utama situs ini.',
+    technicalNote: 'Potret Personal · Cahaya Hangat',
   },
   {
-    id: 'plate-02-korean-photobooth',
+    id: 'plate-02-monogram-geometry',
     plateNumber: 'PELAT 02',
-    title: 'Korean Photobooth Aesthetic',
-    subtitle: 'Monochrome Contact Strip & High-Key Diffusion',
-    category: 'Retro Aesthetics',
-    techniqueBadge: 'Korean Photobooth Strip',
-    aspectClass: 'aspect-3/4',
-    parallaxOffset: 22,
-    visualPreset: 'korean-photobooth',
-    src: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1000&q=85',
-    fallbackSrc: personalData.portraitPath,
-    objectPosition: '50% 22%',
-    customFilter: 'grayscale(92%) contrast(1.16) brightness(1.04)',
-    exifSpec: 'Booth Beauty Dish · 35mm · f/4.0 · 1/200s · Silver B&W',
-    exifTelemetry: {
-      technique: 'Korean Photobooth 4-Cut Framing',
-      camera: 'Automated Studio Booth Optics',
-      lens: '35mm Flat-Field · f/4.0',
-      exposure: '1/200s · ISO 100 · Dual Strobe',
-      colorProfile: 'High-Key Silver Monochrome',
-    },
-    caption:
-      'Eksplorasi Korean Photobooth Aesthetic yang menonjolkan bingkai strip kontak minimalis, pencahayaan frontal merata (beauty-dish diffusion), serta kurva monokrom perak dengan kontras bersih.',
-    contextNote:
-      'Memadukan nuansa intim photobooth modern Seoul dengan tata letak bingkai arsip editorial.',
-    technicalNote: 'Korean Photobooth Aesthetic · Contact Sheet Framing',
-  },
-  {
-    id: 'plate-03-retro-digicam-cybershot',
-    plateNumber: 'PELAT 03',
-    title: 'Retro Digicam — Sony Cyber-shot CCD',
-    subtitle: 'Nostalgia Sensor CCD, Direct Xenon Flash & Halation',
-    category: 'Retro Aesthetics',
-    techniqueBadge: 'Sony Cyber-shot CCD',
-    aspectClass: 'aspect-4/3',
-    parallaxOffset: 14,
-    visualPreset: 'retro-digicam',
-    src: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1100&q=85',
-    fallbackSrc: personalData.portraitPath,
-    objectPosition: 'center center',
-    customFilter: 'contrast(1.18) saturate(1.14) sepia(18%) brightness(0.98)',
-    exifSpec: 'Sony Cyber-shot · Carl Zeiss 38mm · f/3.5 · ISO 400 · CCD',
-    exifTelemetry: {
-      technique: 'Retro Digicam · Built-in Xenon Flash',
-      camera: 'Sony Cyber-shot DSC-T90 (CCD)',
-      lens: 'Carl Zeiss Vario-Tessar 38mm',
-      exposure: '1/60s · f/3.5 · ISO 400',
-      colorProfile: '2000s CCD Warm Halation · Date Stamp',
-    },
-    caption:
-      'Studi karakter visual Retro Digicam berbasis sensor CCD Sony Cyber-shot—menghadirkan tekstur warna khas era 2000-an, sorot lampu kilat xenon langsung, dan pendaran highlight hangat.',
-    contextNote:
-      'Karakteristik kompresi tonal sensor CCD memberikan keaslian tekstur organik yang kontras dengan kamera modern.',
-    technicalNote: 'Sony Cyber-shot Aesthetic · CCD Color Science & Xenon Flash',
-  },
-  {
-    id: 'plate-04-gradient-studio-backdrop',
-    plateNumber: 'PELAT 04',
-    title: 'Studio Gradient Backdrop',
-    subtitle: 'Arsitektur Luminansi Radial Mocha ke Obsidian',
-    category: 'Studio Work',
-    techniqueBadge: 'Studio Gradient Backdrop',
-    aspectClass: 'aspect-4/5',
-    parallaxOffset: 20,
-    visualPreset: 'gradient-studio-backdrop',
-    src: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1000&q=85',
-    fallbackSrc: personalData.portraitPath,
-    objectPosition: 'center center',
-    customFilter: 'sepia(28%) contrast(1.12) brightness(0.92)',
-    exifSpec: 'Studio Radial Gel · 85mm · f/2.8 · 1/200s · ISO 100',
-    exifTelemetry: {
-      technique: 'Studio Gradient Backdrop · Radial Halo',
-      camera: 'Full-Frame Studio Body',
-      lens: '85mm Telephoto · f/2.8',
-      exposure: '1/200s · ISO 100 · Honeycomb Grid',
-      colorProfile: 'Mocha #765641 → Obsidian #171615',
-    },
-    caption:
-      'Perancangan Studio Gradient Backdrop yang memadukan pendaran cahaya radial di belakang subjek dengan transisi halus dari mocha hangat menuju tepi obsidian pekat.',
-    contextNote:
-      'Menjadi referensi pencahayaan langsung bagi atmosfer studio-vignette di seluruh antarmuka web AFLAN.',
-    technicalNote: 'Studio Gradient Backdrop · Radial Falloff Lighting',
-  },
-  {
-    id: 'plate-05-ultra-wide-perspective',
-    plateNumber: 'PELAT 05',
-    title: '0.5x Ultra-Wide Perspective',
-    subtitle: 'Distorsi Spasial Terukur & Garis Konvergensi',
-    category: 'Studio Work',
-    techniqueBadge: '0.5x Ultra-wide',
-    aspectClass: 'aspect-16/10',
-    parallaxOffset: 18,
-    visualPreset: 'ultra-wide-perspective',
-    src: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=85',
-    fallbackSrc: personalData.portraitPath,
-    objectPosition: 'center center',
-    customFilter: 'contrast(1.1) sepia(16%) brightness(0.94)',
-    exifSpec: '0.5x Ultra-wide (13mm Equiv.) · f/2.2 · 1/125s · FOV 120°',
-    exifTelemetry: {
-      technique: '0.5x Ultra-wide Perspective',
-      camera: 'Computational Ultra-Wide Module',
-      lens: '13mm Equivalent (0.5x) · f/2.2',
-      exposure: '1/125s · ISO 160 · Low-Angle',
-      colorProfile: 'Architectural Warm Neutral',
-    },
-    caption:
-      'Eksplorasi komposisi 0.5x Ultra-wide perspective (13mm equiv.) yang memanfaatkan sudut pandang 120° dan konvergensi garis ruang untuk menciptakan kesan skala dan kedalaman dramatis.',
-    contextNote:
-      'Perspektif ultra-lebar dari sudut rendah mengubah proporsi ruang menjadi elemen grafis utama dalam komposisi.',
-    technicalNote: '0.5x Ultra-wide Optic · 120° Spatial Convergence',
-  },
-  {
-    id: 'plate-06-gcam-hdr-grading',
-    plateNumber: 'PELAT 06',
-    title: 'GCam HDR+ Color Grading — Split-Tone Study',
-    subtitle: 'Pemetaan Kurva Tonal Multi-Frame & Bayangan Dalam',
-    category: 'Portraits',
-    techniqueBadge: 'GCam HDR+ Color Grading',
+    title: 'Monogram AMDZ — Studi Geometri',
+    subtitle: 'Komposisi Abstrak Lambang',
+    category: 'Tipografi',
+    badge: 'Geometri Vektor',
+    kind: 'abstract-monogram',
     aspectClass: 'aspect-square',
-    parallaxOffset: 15,
-    visualPreset: 'gcam-hdr-grading',
-    src: personalData.portraitPath,
-    fallbackSrc: personalData.portraitPath,
-    objectPosition: '50% 15%',
-    imageScaleClass: 'scale-105',
-    customFilter: 'contrast(1.16) sepia(26%) saturate(1.06) brightness(0.96)',
-    exifSpec: 'GCam HDR+ Enhanced · 14-Bit RAW Merge · Split-Tone LUT',
-    exifTelemetry: {
-      technique: 'GCam HDR+ Color Grading',
-      camera: 'Computational RAW Pipeline',
-      lens: '50mm Equivalent · f/1.8',
-      exposure: 'Multi-Frame Bracketing · ZSL HDR+',
-      colorProfile: 'Champagne Highlight / Espresso Shadow LUT',
+    meta: {
+      medium: 'Grafis Vektor & Tipografi',
+      treatment: 'Garis Hairline Champagne · Grid 1:1',
+      composition: 'Simetri Segitiga & Sumbu Tengah',
+      palette: 'Obsidian · Espresso · Champagne',
     },
     caption:
-      'Studi pemrosesan warna GCam HDR+ Color Grading untuk mempertahankan detail mikro pada area bayangan gelap sekaligus menjaga highlight kulit tetap lembut dan berkarakter film.',
-    contextNote:
-      'Menggabungkan ketajaman fotografi komputasional dengan kurva warna split-tone bergaya majalah cetak.',
-    technicalNote: 'GCam HDR+ Pipeline · Split-Tone Editorial LUT',
+      'Eksplorasi proporsi lambang AMDZ dalam bingkai geometris minimalis—memadukan sudut tajam arsitektural dengan keseimbangan ruang kosong.',
+    technicalNote: 'Lambang AMDZ · Komposisi Vektor',
+  },
+  {
+    id: 'plate-03-portrait-monochrome',
+    plateNumber: 'PELAT 03',
+    title: 'Monokrom Perak — Studi Kontras',
+    subtitle: 'Variasi Grayscale & Grain 35mm',
+    category: 'Potret',
+    badge: 'Monokrom 35mm',
+    kind: 'photo',
+    aspectClass: 'aspect-3/4',
+    src: personalData.portraitPath,
+    imageFit: 'cover',
+    objectPosition: '50% 13%',
+    imageScaleClass: 'scale-110',
+    customFilter: 'grayscale(94%) contrast(1.18) brightness(1.02)',
+    meta: {
+      medium: 'Variasi Potret Personal',
+      treatment: 'Grayscale Kontras Tinggi · Grain 35mm',
+      composition: 'Crop Rapat 3:4 · Fokus Siluet',
+      palette: 'Monokrom Perak · Bayangan Pekat',
+    },
+    caption:
+      'Olah ulang potret utama dalam spektrum hitam-putih berkontras tajam untuk menonjolkan arah jatuh cahaya, kontur wajah, dan tekstur butiran halus.',
+    technicalNote: 'Studi Monokrom · Arah Cahaya & Tekstur',
+  },
+  {
+    id: 'plate-04-satu-ruang-creative',
+    plateNumber: 'PELAT 04',
+    title: 'Satu Ruang Creative — Emblem Studio',
+    subtitle: 'Identitas Visual Studio Mahasiswa',
+    category: 'Karya Visual',
+    badge: 'Identitas Studio',
+    kind: 'photo',
+    aspectClass: 'aspect-16/10',
+    src: '/images/satu-ruang-creative.png',
+    imageFit: 'contain',
+    imageBg: '#2B1D17',
+    objectPosition: 'center',
+    meta: {
+      medium: 'Identitas Digital & Grafis',
+      treatment: 'Latar Espresso Pekat · Proporsi Lapang',
+      composition: 'Bingkai Lanskap 16:10 · Sentris',
+      palette: 'Espresso · Ivory · Champagne',
+    },
+    caption:
+      'Emblem resmi Satu Ruang Creative—studio kreatif dan digital mahasiswa tempat kolaborasi perancangan UI/UX, desain responsif, dan implementasi web.',
+    technicalNote: 'Satu Ruang Creative · Aset Studio Resmi',
+  },
+  {
+    id: 'plate-05-chromatic-spectrum',
+    plateNumber: 'PELAT 05',
+    title: 'Spektrum Tonal — Espresso ke Ivory',
+    subtitle: 'Sistem Warna & Tipografi Editorial',
+    category: 'Tipografi',
+    badge: 'Sistem Warna',
+    kind: 'abstract-palette',
+    aspectClass: 'aspect-4/5',
+    meta: {
+      medium: 'Studi Sistem Desain & Warna',
+      treatment: 'Gradasi 5 Nada Utama · Serif Italic',
+      composition: 'Kolom Vertikal Proporsional',
+      palette: '#171615 · #2B1D17 · #765641 · #D8C3A5 · #F5F0E8',
+    },
+    caption:
+      'Pemetaan lima nada inti identitas visual AFLAN yang disusun berdampingan dengan spesimen huruf Cormorant Garamond untuk menguji harmoni gelap-hangat.',
+    technicalNote: 'Palet Identitas · Harmoni Gelap-Hangat',
+  },
+  {
+    id: 'plate-06-somasii-cover',
+    plateNumber: 'PELAT 06',
+    title: 'SOMASII — Identitas Aplikasi Kampus',
+    subtitle: 'Visual Utama Lost & Found Mahasiswa',
+    category: 'Karya Visual',
+    badge: 'Identitas Aplikasi',
+    kind: 'photo',
+    aspectClass: 'aspect-4/3',
+    src: '/images/somasii.jpg',
+    imageFit: 'cover',
+    imageBg: '#171615',
+    objectPosition: 'center',
+    meta: {
+      medium: 'Cover Produk Digital Mobile',
+      treatment: 'Framing 4:3 · Warna Autentik',
+      composition: 'Tampilan Identitas Aplikasi',
+      palette: 'Identitas Visual SOMASII',
+    },
+    caption:
+      'Identitas visual resmi SOMASII (System Online Mahasiswa Sharing Items Information), aplikasi mobile Lost & Found berbasis Flutter dan Firebase untuk lingkungan kampus.',
+    technicalNote: 'SOMASII · Aset Visual Proyek Resmi',
+  },
+  {
+    id: 'plate-07-editorial-specimen',
+    plateNumber: 'PELAT 07',
+    title: 'Tipografi Serif — Komposisi Huruf',
+    subtitle: 'Studi Cormorant Garamond & Outline',
+    category: 'Tipografi',
+    badge: 'Abstrak Tipografi',
+    kind: 'abstract-typography',
+    aspectClass: 'aspect-square',
+    meta: {
+      medium: 'Poster Tipografi Editorial',
+      treatment: 'Kontras Solid Ivory & Garis Outline',
+      composition: 'Hierarki Skala Display',
+      palette: 'Espresso · Champagne · Ivory',
+    },
+    caption:
+      'Komposisi grafis murni berbasis kontras huruf serif italic, garis outline tipis, dan ruang negatif yang menjadi fondasi karakter visual seluruh halaman.',
+    technicalNote: 'Cormorant Garamond · Studi Skala Display',
   },
 ];

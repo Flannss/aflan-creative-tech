@@ -21,15 +21,27 @@ export const ParallaxFrame: React.FC<ParallaxFrameProps> = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
   const isCoarsePointer = useIsCoarsePointer();
-  const disabled = Boolean(prefersReducedMotion || isCoarsePointer);
+  const effectiveOffset = prefersReducedMotion
+    ? 0
+    : isCoarsePointer
+      ? Math.round(offset * 0.55)
+      : offset;
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], disabled ? [0, 0] : [-offset, offset]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], disabled ? [1, 1, 1] : [1.08, 1.03, 1.06]);
+  const y = useTransform(
+    scrollYProgress,
+    [0, 1],
+    effectiveOffset === 0 ? [0, 0] : [-effectiveOffset, effectiveOffset],
+  );
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    prefersReducedMotion ? [1, 1, 1] : [1.06, 1.02, 1.05],
+  );
 
   return (
     <div ref={containerRef} className={`relative overflow-hidden ${className}`}>

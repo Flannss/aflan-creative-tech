@@ -155,20 +155,25 @@ const DynamicSpotlightStage: React.FC = () => {
     <div className="space-y-5">
       <div
         ref={stageRef}
+        onPointerDown={(e) => {
+          if (autoSweep) setAutoSweep(false);
+          updatePointerCoords(e.clientX, e.clientY);
+        }}
         onPointerMove={(e) => {
+          if (e.pointerType === 'touch' && e.buttons === 0) return;
           if (autoSweep) setAutoSweep(false);
           updatePointerCoords(e.clientX, e.clientY);
         }}
         onClick={(e) => updatePointerCoords(e.clientX, e.clientY)}
         data-cursor="SENTER"
         role="region"
-        aria-label="Kanvas Dynamic Spotlight. Arahkan kursor atau sentuh area untuk menyinari lapisan arsitektur tipografi yang tersembunyi."
-        className="relative min-h-[340px] sm:min-h-[410px] border border-champagne/30 bg-obsidian overflow-hidden select-none cursor-crosshair"
+        aria-label="Kanvas Dynamic Spotlight. Arahkan kursor atau geser jari untuk menyinari lapisan tipografi di baliknya."
+        className="relative min-h-[340px] sm:min-h-[410px] border border-champagne/30 bg-obsidian overflow-hidden select-none touch-none cursor-crosshair"
       >
-        {/* Base Dimmed Architectural Layer (Always faintly visible) */}
+        {/* Base Dimmed Layer */}
         <div className="absolute inset-0 p-6 sm:p-10 lg:p-12 flex flex-col justify-between opacity-20 pointer-events-none">
           <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.24em] uppercase text-taupe">
-            <span>LAYER 00 · DORMANT SUBSTRATE</span>
+            <span>SPOTLIGHT · PERMUKAAN GELAP</span>
             <span>7.4244° S · 109.2302° E</span>
           </div>
           <div className="my-auto space-y-3">
@@ -176,16 +181,16 @@ const DynamicSpotlightStage: React.FC = () => {
               AFLAN MU&apos;AFA DZULFIQAR
             </p>
             <p className="font-mono text-xs tracking-[0.22em] uppercase text-taupe/50">
-              ARAHKAN SENTER UNTUK MENGUNGKAP ARSITEKTUR EDITORIAL
+              ARAHKAN KURSOR ATAU GESER JARI UNTUK MENYINARI TEKS
             </p>
           </div>
           <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
-            <span>MASKING ENGINE · CSS RADIAL COMPOSITE</span>
-            <span>AMDZ · LIVE</span>
+            <span>CSS RADIAL MASK</span>
+            <span>AMDZ</span>
           </div>
         </div>
 
-        {/* Illuminated Hidden Layer (Revealed by Cursor Spotlight Mask) */}
+        {/* Illuminated Layer Revealed by Spotlight Mask */}
         <div
           className="absolute inset-0 p-6 sm:p-10 lg:p-12 flex flex-col justify-between bg-espresso text-ivory pointer-events-none"
           style={{
@@ -204,27 +209,27 @@ const DynamicSpotlightStage: React.FC = () => {
           />
 
           <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
-            <span>LAYER 01 · ILLUMINATED DOSSIER</span>
+            <span>IDENTITAS · TERUNGKAP</span>
             <span>
-              BEAM X:{coords.x.toFixed(0)}% · Y:{coords.y.toFixed(0)}% · R:{radius}PX
+              X:{coords.x.toFixed(0)}% · Y:{coords.y.toFixed(0)}% · R:{radius}PX
             </span>
           </div>
 
           <div className="relative z-10 my-auto space-y-4">
             <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-champagne">
-              HIDDEN EDITORIAL MANIFESTO · REVEALED
+              AFLAN MU&apos;AFA DZULFIQAR
             </p>
             <p className="font-serif text-3xl sm:text-5xl lg:text-6xl font-light leading-[1.04] text-ivory">
-              Di balik permukaan gelap terdapat{' '}
-              <span className="italic text-champagne">struktur kode, presisi QA,</span>{' '}
-              dan komposisi tipografi yang terukur.
+              Kejelasan struktur kode,{' '}
+              <span className="italic text-champagne">ketelitian pengujian QA,</span>{' '}
+              dan ruang tipografi yang tenang.
             </p>
             <div className="flex flex-wrap gap-2.5 pt-2 font-mono text-[10px] tracking-[0.2em] uppercase">
               <span className="px-3 py-1 bg-obsidian/80 border border-champagne/40 text-champagne">
-                AFLAN MU&apos;AFA DZULFIQAR
+                WEB DEVELOPER
               </span>
               <span className="px-3 py-1 bg-obsidian/80 border border-champagne/40 text-ivory">
-                CREATIVE TECHNOLOGIST
+                UI ENGINEER
               </span>
               <span className="px-3 py-1 bg-obsidian/80 border border-champagne/40 text-champagne">
                 PURWOKERTO · INDONESIA
@@ -233,7 +238,7 @@ const DynamicSpotlightStage: React.FC = () => {
           </div>
 
           <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/90">
-            <span>DYNAMIC MASKING · ZERO-LATENCY POINTER TRACKING</span>
+            <span>DYNAMIC SPOTLIGHT</span>
             <span>MODE: {lensMode.toUpperCase()}</span>
           </div>
         </div>
@@ -312,10 +317,9 @@ const DynamicSpotlightStage: React.FC = () => {
 ============================================================================ */
 const MagneticCursorPlayground: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
-  const isCoarsePointer = useIsCoarsePointer();
 
   const [pullStrength, setPullStrength] = useState<number>(0.38);
-  const [activeNodeId, setActiveNodeId] = useState<string>('NONE');
+  const [activeNodeId, setActiveNodeId] = useState<string>('SIAP');
   const [offsets, setOffsets] = useState<Record<string, { x: number; y: number }>>({});
   const pulseTimerRef = useRef<number | null>(null);
 
@@ -331,7 +335,7 @@ const MagneticCursorPlayground: React.FC = () => {
     id: string,
     e: React.PointerEvent<HTMLButtonElement | HTMLDivElement>,
   ) => {
-    if (prefersReducedMotion || isCoarsePointer) return;
+    if (prefersReducedMotion) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
@@ -349,7 +353,7 @@ const MagneticCursorPlayground: React.FC = () => {
   };
 
   const resetNode = (id: string) => {
-    setActiveNodeId('IDLE');
+    setActiveNodeId('SIAP');
     setOffsets((prev) => ({
       ...prev,
       [id]: { x: 0, y: 0 },
@@ -389,13 +393,16 @@ const MagneticCursorPlayground: React.FC = () => {
               >
                 <motion.button
                   type="button"
+                  onPointerDown={(e) => handleNodeMove(node.id, e)}
                   onPointerMove={(e) => handleNodeMove(node.id, e)}
                   onPointerLeave={() => resetNode(node.id)}
+                  onPointerUp={() => resetNode(node.id)}
                   onClick={() => triggerTouchPulse(node.id)}
                   animate={{ x: pos.x, y: pos.y }}
+                  whileTap={{ scale: 0.96 }}
                   transition={{ type: 'spring', stiffness: 240, damping: 16, mass: 0.7 }}
                   data-cursor="MAGNET"
-                  className="w-full p-4 bg-espresso text-ivory border border-champagne/30 hover:border-champagne shadow-lg text-left transition-colors"
+                  className="w-full p-4 bg-espresso text-ivory border border-champagne/30 hover:border-champagne active:border-champagne shadow-lg text-left transition-colors"
                 >
                   <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne mb-2">
                     <span>NODE {node.code}</span>
@@ -415,14 +422,16 @@ const MagneticCursorPlayground: React.FC = () => {
 
         {/* Right Centerpiece Magnetic Core Seal */}
         <div
+          onPointerDown={(e) => handleNodeMove('amdz-core', e)}
           onPointerMove={(e) => handleNodeMove('amdz-core', e)}
           onPointerLeave={() => resetNode('amdz-core')}
+          onPointerUp={() => resetNode('amdz-core')}
           onClick={() => triggerTouchPulse('amdz-core')}
-          className="md:col-span-5 min-h-[300px] bg-espresso text-ivory border border-espresso p-7 sm:p-8 flex flex-col items-center justify-between text-center cursor-pointer"
+          className="md:col-span-5 min-h-[300px] bg-espresso text-ivory border border-espresso p-7 sm:p-8 flex flex-col items-center justify-between text-center touch-none cursor-pointer"
         >
           <div className="w-full flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne">
-            <span>MAGNETIC CORE · AMDZ</span>
-            <span>NODE: {activeNodeId}</span>
+            <span>SEGEL MAGNETIK · AMDZ</span>
+            <span>STATUS: {activeNodeId}</span>
           </div>
 
           <motion.div
@@ -430,25 +439,26 @@ const MagneticCursorPlayground: React.FC = () => {
               x: offsets['amdz-core']?.x ?? 0,
               y: offsets['amdz-core']?.y ?? 0,
             }}
+            whileTap={{ scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 210, damping: 15 }}
             data-cursor="TARIK"
             className="size-32 rounded-full border border-champagne/50 bg-obsidian/80 flex flex-col items-center justify-center gap-1 shadow-[0_24px_60px_rgba(0,0,0,0.65)]"
           >
             <MonogramMark size={46} className="text-champagne" />
             <span className="font-mono text-[9px] tracking-[0.24em] uppercase text-taupe">
-              PULL ME
+              TARIK
             </span>
           </motion.div>
 
           <div className="w-full pt-3 border-t border-champagne/15 flex items-center justify-between font-mono text-[10px] tracking-[0.18em] uppercase text-taupe">
             <span>
-              ΔX: { (offsets['amdz-core']?.x ?? currentVector.x).toFixed(1) }PX
+              ΔX: {(offsets['amdz-core']?.x ?? currentVector.x).toFixed(1)}PX
             </span>
             <span>
-              ΔY: { (offsets['amdz-core']?.y ?? currentVector.y).toFixed(1) }PX
+              ΔY: {(offsets['amdz-core']?.y ?? currentVector.y).toFixed(1)}PX
             </span>
             <span className="text-champagne">
-              GAIN: {Math.round(pullStrength * 100)}%
+              DAYA: {Math.round(pullStrength * 100)}%
             </span>
           </div>
         </div>
@@ -457,7 +467,7 @@ const MagneticCursorPlayground: React.FC = () => {
       {/* Magnetic Physics Controls */}
       <div className="flex flex-wrap items-center justify-between gap-4 bg-offwhite border border-espresso/15 p-4 sm:p-5">
         <p className="font-sans text-[15px] sm:text-sm text-charcoal/85">
-          Gerakkan kursor mendekati tombol untuk merasakan gaya tarik pegas (*magnetic pull*), atau ketuk elemen pada layar sentuh.
+          Gerakkan kursor mendekati kartu atau geser jari pada segel untuk merasakan tarikan pegas magnetik secara langsung.
         </p>
 
         <label className="flex items-center gap-3 font-mono text-[11px] tracking-[0.18em] uppercase text-mocha">
@@ -485,9 +495,9 @@ const ChiaroscuroCanvas: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
   const isCoarsePointer = useIsCoarsePointer();
   const [userToggle, setUserToggle] = useState<boolean | null>(null);
-  const running = userToggle ?? (!prefersReducedMotion && !isCoarsePointer);
+  const running = userToggle ?? !prefersReducedMotion;
 
-  const [density, setDensity] = useState<number>(48);
+  const [density, setDensity] = useState<number>(() => (isCoarsePointer ? 30 : 48));
   const ripplesRef = useRef<Array<{ x: number; y: number; r: number; alpha: number }>>([]);
   const redrawRef = useRef<(() => void) | null>(null);
   const pointerRef = useRef<{ x: number; y: number; active: boolean }>({
@@ -659,14 +669,15 @@ const ChiaroscuroCanvas: React.FC = () => {
       <div className="relative border border-champagne/25 bg-obsidian overflow-hidden">
         <canvas
           ref={canvasRef}
+          onPointerDown={handlePointerMove}
           onPointerMove={handlePointerMove}
           onPointerLeave={() => {
             pointerRef.current.active = false;
           }}
           onClick={handleClick}
           data-cursor="RIPPLE"
-          aria-label="Kanvas interaktif chiaroscuro hangat. Gerakkan pointer untuk mengarahkan cahaya dan klik untuk memicu riak."
-          className="block w-full h-[300px] sm:h-[360px] cursor-crosshair"
+          aria-label="Kanvas interaktif chiaroscuro hangat. Gerakkan pointer atau geser jari untuk mengarahkan cahaya dan ketuk untuk memicu riak."
+          className="block w-full h-[300px] sm:h-[360px] touch-none cursor-crosshair"
         />
         <div className="pointer-events-none absolute top-4 left-4 font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/80 bg-obsidian/70 px-2.5 py-1 border border-champagne/20">
           GERAKKAN POINTER · KLIK UNTUK RIAK CAHAYA
@@ -867,8 +878,8 @@ export const CreativeLabPage: React.FC = () => {
               </h2>
             </div>
             <p className="lg:col-span-5 font-sans text-[15px] sm:text-base lg:text-sm text-charcoal/80 leading-relaxed">
-              Setiap kartu dan segel merespons jarak vektor kursor dengan tarikan fisik berbasis
-              pegas (*spring physics*), kembali presisi ke titik kesetimbangan saat kursor menjauh.
+              Setiap kartu dan segel merespons jarak vektor kursor maupun sentuhan dengan tarikan
+              fisik berbasis pegas, lalu kembali tenang ke titik tengah saat dilepas.
             </p>
           </Reveal>
 

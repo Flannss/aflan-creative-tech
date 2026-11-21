@@ -146,7 +146,7 @@ export const JourneyPage: React.FC = () => {
                       type="button"
                       onClick={() => setActiveId(item.id)}
                       data-cursor="PILIH"
-                      className={`w-full h-full text-left p-5 sm:p-6 border transition-all duration-300 ${
+                      className={`w-full h-full text-left p-5 sm:p-6 border active:scale-[0.985] transition-all duration-300 ${
                         isSelected
                           ? 'bg-espresso text-ivory border-espresso shadow-xl'
                           : 'bg-offwhite text-espresso border-espresso/15 hover:border-mocha hover:bg-ivory'
