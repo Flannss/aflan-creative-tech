@@ -16,7 +16,6 @@ import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { EditorialMarquee } from '@/components/ui/EditorialMarquee';
 import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
-import { LineReveal } from '@/components/motion/LineReveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { ProjectPreviewList } from '@/components/projects/ProjectPreviewList';
 import { MonogramMark } from '@/components/brand/Monogram';
@@ -454,14 +453,13 @@ export const HomePage: React.FC = () => {
                     <>estetika ruang editorial.</>,
                   ]}
                 />
-                <LineReveal
-                  delay={0.08}
-                  className="font-sans text-[15px] sm:text-base leading-[1.8] text-ivory/80 max-w-2xl"
-                  lines={[
-                    "Monogram AMDZ (Aflan Mu'afa Dzulfiqar) merangkum cara kerja saya:",
-                    'memadukan struktur kode yang rapi dengan ketenangan komposisi tipografi editorial.',
-                  ]}
-                />
+                <Reveal variant="up" delay={0.08}>
+                  <p className="font-sans text-[15px] sm:text-base leading-[1.8] text-ivory/80 max-w-2xl">
+                    Monogram <span className="text-champagne font-medium">AMDZ</span> (Aflan
+                    Mu&apos;afa Dzulfiqar) merangkum cara kerja saya: memadukan struktur kode
+                    yang rapi dengan ketenangan komposisi tipografi editorial.
+                  </p>
+                </Reveal>
               </div>
 
               <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 pt-4 border-t border-champagne/15">
@@ -511,10 +509,10 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 03 — LIGHT IVORY EDITORIAL MANIFESTO (COHESIVE & BALANCED)
       ====================================================================== */}
-      <section className="relative bg-ivory text-espresso py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12 border-b border-espresso/10">
-        <div className="max-w-[1440px] mx-auto space-y-8 sm:space-y-10">
+      <section className="relative bg-ivory text-espresso py-12 sm:py-20 lg:py-24 px-4 sm:px-8 lg:px-12 border-b border-espresso/10">
+        <div className="max-w-[1440px] mx-auto space-y-6 sm:space-y-8">
           {/* Unified Editorial Chapter Header */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 pb-8 sm:pb-10 border-b border-espresso/15 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 pb-6 sm:pb-8 border-b border-espresso/15 items-end">
             <Reveal variant="up" className="lg:col-span-4 space-y-3">
               <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
                 BAB 01 — IDENTITAS

@@ -16,7 +16,6 @@ import { contactData } from '@/data/contact';
 import { getProjectBySlug } from '@/data/projects';
 import { calculateExactAge } from '@/utils/age';
 import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
-import { LineReveal } from '@/components/motion/LineReveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { ParallaxFrame } from '@/components/motion/ParallaxFrame';
 import { MonogramMark } from '@/components/brand/Monogram';
@@ -138,21 +137,16 @@ export const AboutPage: React.FC = () => {
             </Reveal>
 
             <div className="md:col-span-7 md:pl-2 lg:pl-6 space-y-10">
-              <div>
+              <Reveal variant="up" delay={0.08}>
                 <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha mb-4">
                   NARASI PERSONAL &amp; TEKNIS
                 </p>
                 <div className="space-y-5 font-sans text-base sm:text-[1.06rem] leading-[1.85] text-charcoal">
                   {personalData.extendedStory.map((paragraph, idx) => (
-                    <LineReveal
-                      key={`story-${idx}`}
-                      text={paragraph}
-                      delay={idx * 0.08}
-                      stagger={0.075}
-                    />
+                    <p key={`story-${idx}`}>{paragraph}</p>
                   ))}
                 </div>
-              </div>
+              </Reveal>
 
               <Reveal variant="up" delay={0.15}>
                 <div className="bg-espresso text-ivory p-6 sm:p-8 border border-espresso space-y-3.5">

@@ -110,7 +110,7 @@ export const JourneyPage: React.FC = () => {
             </div>
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
               <p className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed">
-                Linimasa kronologis yang mendokumentasikan pengalaman Programmer Intern di PT
+                Linimasa interaktif yang mendokumentasikan pengalaman Programmer Intern di PT
                 Puskomedia Indonesia Kreatif, studi Teknologi Informasi di Universitas Amikom
                 Purwokerto, serta pengembangan karya web dan aplikasi mobile.
               </p>
