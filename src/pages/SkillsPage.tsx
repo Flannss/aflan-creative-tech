@@ -140,10 +140,10 @@ export const SkillsPage: React.FC = () => {
           >
             <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-obsidian/55 border border-champagne/25">
               <div>
-                <p className="font-serif text-xl sm:text-2xl font-semibold text-ivory leading-none">
+                <p className="font-serif text-lg sm:text-xl font-semibold text-ivory leading-none">
                   Hands-on Experience
                 </p>
-                <p className="font-sans text-sm lg:text-xs text-ivory/70 mt-2">
+                <p className="font-sans text-xs md:text-sm text-ivory/75 mt-2">
                   Tebal solid · Dipakai langsung dalam build &amp; pengujian QA
                 </p>
               </div>
@@ -152,10 +152,10 @@ export const SkillsPage: React.FC = () => {
 
             <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-obsidian/35 border border-champagne/15">
               <div>
-                <p className="font-serif text-xl sm:text-2xl font-normal text-ivory/80 leading-none">
+                <p className="font-serif text-lg sm:text-xl font-normal text-ivory/85 leading-none">
                   Working Knowledge
                 </p>
-                <p className="font-sans text-sm lg:text-xs text-ivory/65 mt-2">
+                <p className="font-sans text-xs md:text-sm text-ivory/70 mt-2">
                   Reguler sedang · Diterapkan aktif pada pengembangan proyek
                 </p>
               </div>
@@ -164,10 +164,10 @@ export const SkillsPage: React.FC = () => {
 
             <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-obsidian/20 border border-dashed border-champagne/25">
               <div>
-                <p className="font-serif italic text-xl sm:text-2xl font-light editorial-outline-strong leading-none">
+                <p className="font-serif italic text-lg sm:text-xl font-light editorial-outline-strong leading-none">
                   Currently Learning
                 </p>
-                <p className="font-sans text-sm lg:text-xs text-ivory/60 mt-2">
+                <p className="font-sans text-xs md:text-sm text-ivory/70 mt-2">
                   Italic outline · Sedang didalami secara aktif dan terarah
                 </p>
               </div>
@@ -204,8 +204,8 @@ export const SkillsPage: React.FC = () => {
 
       <div>
         {visibleDomains.length === 0 ? (
-          <section className="bg-ivory text-espresso py-24 px-6 sm:px-8 text-center">
-            <p className="font-serif text-2xl sm:text-3xl font-light mb-4">
+          <section className="bg-ivory text-espresso py-20 px-4 sm:px-8 text-center">
+            <p className="font-serif text-xl md:text-2xl font-light mb-4">
               Tidak ada item keahlian yang cocok dengan kombinasi filter ini.
             </p>
             <button
@@ -225,26 +225,23 @@ export const SkillsPage: React.FC = () => {
             return (
               <section
                 key={domain.id}
-                className={`py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12 border-b ${
-                  isLight
+                className={`py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12 border-b ${isLight
                     ? 'bg-ivory text-espresso border-espresso/15'
                     : 'bg-obsidian text-ivory border-champagne/15'
-                }`}
+                  }`}
               >
                 <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
                   <Reveal variant="up" className="lg:col-span-4 lg:sticky lg:top-28 space-y-5">
                     <div className="flex items-baseline gap-4">
                       <span
-                        className={`font-serif italic text-5xl sm:text-6xl leading-none ${
-                          isLight ? 'text-mocha/35' : 'text-champagne/30'
-                        }`}
+                        className={`font-serif italic text-5xl sm:text-6xl leading-none ${isLight ? 'text-mocha/35' : 'text-champagne/30'
+                          }`}
                       >
                         {domain.index}
                       </span>
                       <span
-                        className={`font-mono text-[10px] tracking-[0.26em] uppercase ${
-                          isLight ? 'text-mocha' : 'text-champagne'
-                        }`}
+                        className={`font-mono text-[10px] tracking-[0.26em] uppercase ${isLight ? 'text-mocha' : 'text-champagne'
+                          }`}
                       >
                         DOMAIN {domain.index} / 04
                       </span>
@@ -253,24 +250,21 @@ export const SkillsPage: React.FC = () => {
                       {domain.title}
                     </h2>
                     <p
-                      className={`font-mono text-[11px] tracking-[0.18em] uppercase ${
-                        isLight ? 'text-espresso/60' : 'text-taupe'
-                      }`}
+                      className={`font-mono text-[11px] tracking-[0.18em] uppercase ${isLight ? 'text-espresso/60' : 'text-taupe'
+                        }`}
                     >
                       {domain.subtitle}
                     </p>
                     <p
-                      className={`font-sans text-[15px] sm:text-base lg:text-sm leading-relaxed pt-1 ${
-                        isLight ? 'text-charcoal/85' : 'text-ivory/75'
-                      }`}
+                      className={`font-sans text-[15px] sm:text-base lg:text-sm leading-relaxed pt-1 ${isLight ? 'text-charcoal/85' : 'text-ivory/75'
+                        }`}
                     >
                       {domain.description}
                     </p>
 
                     <div
-                      className={`pt-4 border-t flex flex-wrap gap-x-4 gap-y-2 items-baseline ${
-                        isLight ? 'border-espresso/15' : 'border-champagne/15'
-                      }`}
+                      className={`pt-4 border-t flex flex-wrap gap-x-4 gap-y-2 items-baseline ${isLight ? 'border-espresso/15' : 'border-champagne/15'
+                        }`}
                     >
                       {domain.items.map((item) => {
                         const style = getTierTypographyClasses(item.tier, isLight);
@@ -287,11 +281,10 @@ export const SkillsPage: React.FC = () => {
                   </Reveal>
 
                   <div
-                    className={`lg:col-span-8 divide-y border-y ${
-                      isLight
+                    className={`lg:col-span-8 divide-y border-y ${isLight
                         ? 'divide-espresso/15 border-espresso/15'
                         : 'divide-champagne/15 border-champagne/15'
-                    }`}
+                      }`}
                   >
                     {domain.items.map((item, itemIdx) => {
                       const style = getTierTypographyClasses(item.tier, isLight);
@@ -324,9 +317,8 @@ export const SkillsPage: React.FC = () => {
 
                           <div className="md:col-span-4">
                             <p
-                              className={`font-sans text-[15px] sm:text-base lg:text-sm leading-relaxed ${
-                                isLight ? 'text-charcoal/80' : 'text-ivory/75'
-                              }`}
+                              className={`font-sans text-[15px] sm:text-base lg:text-sm leading-relaxed ${isLight ? 'text-charcoal/80' : 'text-ivory/75'
+                                }`}
                             >
                               {item.context}
                             </p>
@@ -349,11 +341,11 @@ export const SkillsPage: React.FC = () => {
               <Layers className="size-4" aria-hidden="true" />
               SINERGI DEVELOPMENT &amp; QUALITY ASSURANCE
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-[1.08] lg:leading-[1.06]">
+            <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-[1.08] text-ivory">
               Membangun antarmuka dengan{' '}
-              <span className="italic text-champagne">ketelitian seorang tester</span>.
+              <span className="italic text-champagne/90">ketelitian seorang tester</span>.
             </h2>
-            <p className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed max-w-xl">
+            <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed max-w-xl">
               Praktik langsung pada Software Testing dan Requirement Analysis di PT Puskomedia
               Indonesia Kreatif ikut meningkatkan cara saya menyusun komponen React, tata letak
               responsif, dan arsitektur aplikasi mobile.
@@ -397,9 +389,8 @@ export const SkillsPage: React.FC = () => {
               ].map((node, nodeIdx) => (
                 <StaggerItem
                   key={node.num}
-                  className={`p-6 bg-obsidian/65 border border-champagne/15 flex flex-col justify-between min-h-[195px] lg:min-h-[215px] ${
-                    nodeIdx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
-                  }`}
+                  className={`p-6 bg-obsidian/65 border border-champagne/15 flex flex-col justify-between min-h-[195px] lg:min-h-[215px] ${nodeIdx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
+                    }`}
                 >
                   <span className="font-serif italic text-3xl text-champagne">
                     {node.num}

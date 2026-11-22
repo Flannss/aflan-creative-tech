@@ -282,15 +282,15 @@ export const HomePage: React.FC = () => {
             >
               <p
                 aria-label="Membangun pengalaman web yang jernih dengan ketelitian kode dan kepekaan editorial."
-                className="font-serif text-xl sm:text-2xl lg:text-[1.75rem] leading-[1.3] font-light text-ivory/95 max-w-md md:max-w-none lg:max-w-md"
+                className="font-serif text-lg md:text-xl leading-snug font-light text-champagne/90 max-w-md md:max-w-none lg:max-w-md"
               >
                 <span aria-hidden="true">
                   {'Membangun '}
-                  <span className="italic text-champagne">pengalaman web yang jernih</span>
+                  <span className="italic text-ivory">pengalaman web yang jernih</span>
                   {' dengan ketelitian kode dan kepekaan editorial.'}
                 </span>
               </p>
-              <p className="font-sans text-[15px] sm:text-base lg:text-sm leading-relaxed text-ivory/75 max-w-md md:max-w-none lg:max-w-md">
+              <p className="font-sans text-sm md:text-base leading-relaxed text-ivory/80 max-w-md md:max-w-none lg:max-w-md">
                 {personalData.headlineDescriptor}
               </p>
               <div className="flex flex-wrap lg:justify-end gap-3 pt-1">
@@ -443,18 +443,18 @@ export const HomePage: React.FC = () => {
                 <TextReveal
                   id="monogram-philosophy-heading"
                   as="h2"
-                  className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] leading-[1.06] font-light text-ivory"
+                  className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-[1.08] text-ivory"
                   lines={[
                     <>Titik temu antara</>,
                     <>
-                      <span className="italic text-champagne">logika pemrograman</span>{' '}
+                      <span className="italic text-champagne/90">logika pemrograman</span>{' '}
                       &amp;
                     </>,
                     <>estetika ruang editorial.</>,
                   ]}
                 />
                 <Reveal variant="up" delay={0.08}>
-                  <p className="font-sans text-[15px] sm:text-base leading-[1.8] text-ivory/80 max-w-2xl">
+                  <p className="font-sans text-sm md:text-base leading-relaxed text-ivory/80 max-w-2xl">
                     Monogram <span className="text-champagne font-medium">AMDZ</span> (Aflan
                     Mu&apos;afa Dzulfiqar) merangkum cara kerja saya: memadukan struktur kode
                     yang rapi dengan ketenangan komposisi tipografi editorial.
@@ -507,64 +507,54 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* =====================================================================
-          BAND 03 — LIGHT IVORY EDITORIAL MANIFESTO (COHESIVE & BALANCED)
+          BAND 03 — LIGHT IVORY EDITORIAL DOSSIER (BAB 01 — IDENTITAS)
       ====================================================================== */}
-      <section className="relative bg-ivory text-espresso py-12 sm:py-20 lg:py-24 px-4 sm:px-8 lg:px-12 border-b border-espresso/10">
-        <div className="max-w-[1440px] mx-auto space-y-6 sm:space-y-8">
-          {/* Unified Editorial Chapter Header */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 pb-6 sm:pb-8 border-b border-espresso/15 items-end">
-            <Reveal variant="up" className="lg:col-span-4 space-y-3">
-              <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
-                BAB 01 — IDENTITAS
+      <section className="relative bg-ivory text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-8 lg:px-12 border-b border-espresso/10">
+        <div className="max-w-[1440px] mx-auto space-y-8">
+          {/* Compact Dossier Chapter Header */}
+          <Reveal
+            variant="up"
+            className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-espresso/15"
+          >
+            <div className="space-y-2">
+              <p className="font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-mocha font-medium">
+                BAB 01 · IDENTITAS
               </p>
-              <div className="flex items-center gap-4">
-                <span className="font-serif italic text-5xl sm:text-6xl leading-none text-espresso/20 select-none">
-                  01
-                </span>
-                <MonogramMark size={38} className="text-mocha" />
+              <div className="flex items-center gap-3.5">
+                <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight text-espresso/90">
+                  Profil &amp; <span className="italic text-mocha">Ringkasan</span>
+                </h2>
+                <MonogramMark size={30} className="text-mocha/85 shrink-0" />
               </div>
-              <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-espresso/65">
-                {personalData.status} · {personalData.studyProgram}
-              </p>
-            </Reveal>
-
-            <div className="lg:col-span-8">
-              <TextReveal
-                as="h2"
-                className="font-serif text-[1.95rem] sm:text-4xl md:text-[2.85rem] lg:text-[3.65rem] leading-[1.1] lg:leading-[1.06] font-light text-espresso max-w-4xl"
-                lines={[
-                  <>Sederhana, jernih, dan terarah—</>,
-                  <>
-                    <span className="italic text-mocha">antarmuka interaktif</span> yang
-                    fungsional,
-                  </>,
-                  <>teruji, dan nyaman digunakan.</>,
-                ]}
-              />
             </div>
-          </div>
+            <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-espresso/60">
+              {personalData.status} · {personalData.studyProgram}
+            </p>
+          </Reveal>
 
-          {/* Balanced Bio & Verified Summary Row */}
+          {/* Balanced 12-Column Dossier Grid: 7 Cols Bio & Traits | 5 Cols Verified Summary */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             <Reveal variant="up" delay={0.08} className="lg:col-span-7 space-y-6">
-              <p className="font-sans text-[15px] sm:text-lg leading-[1.8] text-charcoal/90">
+              <p className="font-sans text-sm md:text-base leading-relaxed text-espresso/80">
                 {personalData.shortBio}
               </p>
+
               <div className="flex flex-wrap gap-2 pt-1">
                 {personalData.traits.map((trait) => (
                   <span
                     key={trait}
-                    className="px-3.5 py-1.5 border border-espresso/20 bg-offwhite font-mono text-[10px] tracking-[0.16em] uppercase text-espresso"
+                    className="px-3.5 py-1.5 border border-espresso/20 bg-offwhite text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-espresso"
                   >
                     {trait}
                   </span>
                 ))}
               </div>
+
               <div className="pt-2">
                 <Link
                   to="/about"
                   data-cursor="PROFIL"
-                  className="group inline-flex items-center gap-2.5 font-mono text-xs tracking-[0.2em] uppercase text-espresso border-b border-espresso pb-1.5 hover:text-mocha hover:border-mocha transition-colors"
+                  className="group inline-flex items-center gap-2.5 text-[10px] md:text-xs font-mono uppercase tracking-[0.18em] font-medium text-espresso border-b border-espresso pb-1.5 hover:text-mocha hover:border-mocha transition-colors"
                 >
                   Baca Dossier Lengkap
                   <ArrowRight
@@ -577,37 +567,37 @@ export const HomePage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
               <div className="bg-offwhite border border-espresso/15 p-5 sm:p-7 space-y-4">
-                <p className="font-mono text-[10px] tracking-[0.26em] uppercase text-mocha">
+                <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.18em] font-medium text-mocha">
                   RINGKASAN TERVERIFIKASI
                 </p>
-                <dl className="divide-y divide-espresso/10 text-[15px] md:text-sm">
-                  <div className="py-3 flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4">
-                    <dt className="text-espresso/65">Tempat Lahir</dt>
-                    <dd className="font-medium text-espresso sm:text-right">
+                <dl className="divide-y divide-espresso/10">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
+                    <dt className="text-xs text-espresso/60">Tempat Lahir</dt>
+                    <dd className="text-sm font-medium text-espresso sm:text-right">
                       {personalData.birthplace}
                     </dd>
                   </div>
-                  <div className="py-3 flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4">
-                    <dt className="text-espresso/65">Domisili</dt>
-                    <dd className="font-medium text-espresso sm:text-right">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
+                    <dt className="text-xs text-espresso/60">Domisili</dt>
+                    <dd className="text-sm font-medium text-espresso sm:text-right">
                       {personalData.currentLocation}
                     </dd>
                   </div>
-                  <div className="py-3 flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4">
-                    <dt className="text-espresso/65">Usia (Real-Time)</dt>
-                    <dd className="font-medium text-mocha sm:text-right">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
+                    <dt className="text-xs text-espresso/60">Usia (Real-Time)</dt>
+                    <dd className="text-sm font-medium text-mocha sm:text-right">
                       {ageInfo.age} Tahun · 2 Des 2005
                     </dd>
                   </div>
-                  <div className="py-3 flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4">
-                    <dt className="text-espresso/65">Universitas</dt>
-                    <dd className="font-medium text-espresso sm:text-right">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
+                    <dt className="text-xs text-espresso/60">Universitas</dt>
+                    <dd className="text-sm font-medium text-espresso sm:text-right">
                       {personalData.university}
                     </dd>
                   </div>
-                  <div className="py-3 flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4">
-                    <dt className="text-espresso/65">Magang</dt>
-                    <dd className="font-medium text-espresso sm:text-right">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
+                    <dt className="text-xs text-espresso/60">Magang</dt>
+                    <dd className="text-sm font-medium text-espresso sm:text-right">
                       PT Puskomedia Indonesia Kreatif (Sep 2026 – Jan 2027)
                     </dd>
                   </div>
@@ -626,24 +616,24 @@ export const HomePage: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 sm:mb-16 lg:mb-20">
             <div className="space-y-4">
               <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
-                BAB 02 — KARYA TERPILIH &amp; SOFTWARE QA
+                BAB 02 · KARYA TERPILIH &amp; SOFTWARE QA
               </p>
               <TextReveal
                 as="h2"
-                className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[4rem] font-light leading-[1.06] lg:leading-[1.04]"
+                className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-[1.08] text-ivory"
                 lines={[
                   <>
-                    Indeks <span className="italic text-champagne">Terkurasi</span>
+                    Indeks <span className="italic text-champagne/90">Terkurasi</span>
                   </>,
                 ]}
               />
             </div>
 
             <Reveal variant="up" delay={0.1} className="max-w-md space-y-4">
-              <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 leading-relaxed">
+              <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
                 Kumpulan karya pengembangan web, aplikasi mobile kampus, serta evaluasi
-                kualitas perangkat lunak—disajikan transparan sesuai peran dan kontribusi
-                aktual.
+                kualitas perangkat lunak yang disajikan transparan sesuai peran dan
+                kontribusi aktual.
               </p>
               <Link
                 to="/projects"
@@ -672,7 +662,7 @@ export const HomePage: React.FC = () => {
               </p>
               <TextReveal
                 as="h2"
-                className="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight text-espresso"
+                className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-tight text-espresso/90"
                 lines={[
                   <>
                     Masuk ke Dalam <span className="italic text-mocha">Arsip</span>
@@ -707,16 +697,16 @@ export const HomePage: React.FC = () => {
                 </div>
 
                 <div className="relative z-10 mt-auto pt-12 sm:pt-14 space-y-4">
-                  <p
+                  <h3
                     aria-label="Sistem Visual Interaktif"
-                    className="font-serif italic text-[2.25rem] sm:text-5xl lg:text-6xl leading-[0.98] lg:leading-[0.96] font-light text-champagne"
+                    className="font-serif italic text-3xl md:text-5xl leading-[1.04] font-light tracking-tight text-champagne/90"
                   >
                     <span aria-hidden="true">
                       {'Sistem Visual '}
                       <span className="block not-italic text-ivory">Interaktif</span>
                     </span>
-                  </p>
-                  <p className="font-sans text-[15px] sm:text-base text-ivory/75 max-w-lg leading-relaxed">
+                  </h3>
+                  <p className="font-sans text-sm md:text-base text-ivory/80 max-w-lg leading-relaxed">
                     Jelajahi kompositor tipografi editorial, kanvas chiaroscuro interaktif,
                     koreografi kurva motion, serta matriks kontras warna WCAG secara langsung.
                   </p>

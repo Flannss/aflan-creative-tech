@@ -138,10 +138,10 @@ export const AboutPage: React.FC = () => {
 
             <div className="md:col-span-7 md:pl-2 lg:pl-6 space-y-10">
               <Reveal variant="up" delay={0.08}>
-                <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha mb-4">
+                <p className="font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-mocha font-medium mb-4">
                   NARASI PERSONAL &amp; TEKNIS
                 </p>
-                <div className="space-y-5 font-sans text-base sm:text-[1.06rem] leading-[1.85] text-charcoal">
+                <div className="space-y-4 font-sans text-sm md:text-base leading-relaxed text-espresso/80">
                   {personalData.extendedStory.map((paragraph, idx) => (
                     <p key={`story-${idx}`}>{paragraph}</p>
                   ))}
@@ -203,17 +203,17 @@ export const AboutPage: React.FC = () => {
               </p>
               <TextReveal
                 as="h2"
-                className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-[1.06] lg:leading-[1.04]"
+                className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-[1.08] text-ivory"
                 lines={[
                   <>Kebiasaan di balik setiap</>,
                   <>
-                    <span className="italic text-champagne">build &amp; evaluasi</span>
+                    <span className="italic text-champagne/90">build &amp; evaluasi</span>
                   </>,
                 ]}
               />
             </div>
             <Reveal variant="up" delay={0.08} className="lg:col-span-5">
-              <p className="font-sans text-[15px] sm:text-base text-ivory/80 leading-relaxed">
+              <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
                 Memadukan ketelitian Software QA dengan kepekaan antarmuka menjaga setiap
                 implementasi tetap bersih, teruji, dan transparan terhadap ruang lingkupnya.
               </p>
@@ -258,7 +258,7 @@ export const AboutPage: React.FC = () => {
             <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-mocha mb-3">
               DOSSIER TERVERIFIKASI
             </p>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-espresso mb-8 sm:mb-10">
+            <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight text-espresso/90 mb-8 sm:mb-10">
               Spesifikasi <span className="italic text-mocha">Identitas</span>
             </h2>
 
@@ -266,12 +266,12 @@ export const AboutPage: React.FC = () => {
               {dossierRows.map((row) => (
                 <div
                   key={row.label}
-                  className="py-4.5 grid grid-cols-1 sm:grid-cols-12 gap-1.5 sm:gap-4"
+                  className="py-4 grid grid-cols-1 sm:grid-cols-12 gap-1.5 sm:gap-4"
                 >
-                  <dt className="sm:col-span-4 font-mono text-[11px] uppercase tracking-[0.18em] text-mocha">
+                  <dt className="sm:col-span-4 text-xs font-mono uppercase tracking-[0.15em] text-espresso/60">
                     {row.label}
                   </dt>
-                  <dd className="sm:col-span-8 font-sans text-[15px] sm:text-base text-espresso">
+                  <dd className="sm:col-span-8 font-sans text-sm font-medium text-espresso">
                     {row.value}
                   </dd>
                 </div>
@@ -294,10 +294,10 @@ export const AboutPage: React.FC = () => {
                     <Award className="size-3.5 text-champagne" aria-hidden="true" />
                     KREDENSIAL &amp; PUBLIKASI
                   </span>
-                  <p className="font-serif text-2xl text-ivory leading-snug">
+                  <h3 className="font-serif text-xl md:text-2xl font-light text-ivory leading-snug">
                     CCNA: Introduction to Networks &amp; Publikasi Jurnal Garuda
-                  </p>
-                  <p className="font-sans text-sm lg:text-xs text-ivory/70 leading-relaxed">
+                  </h3>
+                  <p className="font-sans text-sm text-ivory/75 leading-relaxed">
                     Cisco Networking Academy (2026) serta Jurnal Pengabdian Masyarakat
                     Bangsa (Terindeks Garuda, 2026).
                   </p>
@@ -307,11 +307,11 @@ export const AboutPage: React.FC = () => {
                   <span className="block font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
                     INISIATIF STUDIO MAHASISWA
                   </span>
-                  <p className="font-serif text-2xl text-champagne italic leading-snug">
+                  <h3 className="font-serif text-xl md:text-2xl font-light text-champagne italic leading-snug">
                     Satu Ruang Creative
-                  </p>
-                  <p className="font-sans text-sm lg:text-xs text-ivory/75 leading-relaxed">
-                    Co-Founder &amp; Web Developer — &ldquo;Satu Ruang, Banyak Ide, Satu
+                  </h3>
+                  <p className="font-sans text-sm text-ivory/75 leading-relaxed">
+                    Co-Founder &amp; Web Developer · &ldquo;Satu Ruang, Banyak Ide, Satu
                     Cerita&rdquo;.
                   </p>
                   <a

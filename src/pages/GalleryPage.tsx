@@ -655,12 +655,12 @@ export const GalleryPage: React.FC = () => {
                             {item.title}
                           </h2>
 
-                          <p className="font-serif italic text-xl text-champagne/85">
+                          <p className="font-serif italic text-base md:text-lg text-champagne/85">
                             {item.subtitle}
                           </p>
                         </div>
 
-                        <p className="font-sans text-[15px] sm:text-base leading-[1.85] text-ivory/80">
+                        <p className="font-sans text-sm md:text-base leading-relaxed text-ivory/80">
                           {item.caption}
                         </p>
 

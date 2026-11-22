@@ -416,9 +416,9 @@ const MagneticCursorPlayground: React.FC = () => {
                       {node.glyph}
                     </span>
                   </div>
-                  <p className="font-serif text-2xl font-light text-ivory leading-tight">
+                  <h3 className="font-serif text-xl font-light text-ivory leading-tight">
                     {node.label}
-                  </p>
+                  </h3>
                   <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-taupe mt-1">
                     {node.sub}
                   </p>

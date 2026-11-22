@@ -80,7 +80,7 @@ export const ProjectDetailPage: React.FC = () => {
                 className="font-serif text-[2.1rem] sm:text-5xl md:text-6xl lg:text-[4.6rem] leading-[1.06] lg:leading-[1.02] font-light"
                 lines={[project.title]}
               />
-              <p className="font-sans text-base sm:text-lg text-ivory/75 max-w-2xl leading-relaxed">
+              <p className="font-sans text-sm md:text-base text-ivory/80 max-w-2xl leading-relaxed">
                 {project.subtitle}
               </p>
             </div>
@@ -225,7 +225,7 @@ export const ProjectDetailPage: React.FC = () => {
                     {project.stack.map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 bg-ivory border border-espresso/20 font-mono text-[10px] tracking-[0.14em] uppercase text-espresso"
+                        className="px-3 py-1 bg-ivory border border-espresso/20 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-espresso"
                       >
                         {tech}
                       </span>
@@ -254,7 +254,7 @@ export const ProjectDetailPage: React.FC = () => {
                 <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha">
                   TINJAUAN PROYEK
                 </p>
-                <div className="space-y-5 font-sans text-base sm:text-[1.06rem] leading-[1.85] text-charcoal">
+                <div className="space-y-4 font-sans text-sm md:text-base leading-relaxed text-espresso/80">
                   {project.overview.map((p, idx) => (
                     <p key={`${project.slug}-overview-${idx}`}>{p}</p>
                   ))}

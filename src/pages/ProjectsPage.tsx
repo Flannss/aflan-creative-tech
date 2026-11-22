@@ -81,10 +81,10 @@ export const ProjectsPage: React.FC = () => {
             </div>
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5 space-y-4">
-              <p className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed">
+              <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
                 Mencakup inisiatif studio mahasiswa Satu Ruang Creative, aplikasi mobile
-                SOMASII, evaluasi QA pada ASIS Builder (NDA), serta identitas digital AFLAN—
-                disajikan jujur dengan ruang lingkup yang terukur.
+                SOMASII, evaluasi QA pada ASIS Builder (NDA), serta identitas digital AFLAN,
+                disajikan transparan dengan ruang lingkup yang terukur.
               </p>
               <div className="flex items-start gap-2.5 p-4 bg-espresso/75 border border-champagne/20 text-sm lg:text-xs text-champagne/90 leading-relaxed">
                 <ShieldCheck className="size-4 shrink-0 mt-0.5" aria-hidden="true" />

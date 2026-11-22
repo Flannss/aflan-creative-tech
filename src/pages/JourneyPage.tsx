@@ -284,7 +284,7 @@ export const JourneyPage: React.FC = () => {
                       {item.title}
                     </h3>
 
-                    <p className="font-sans text-[15px] sm:text-base leading-[1.82] text-ivory/80">
+                    <p className="font-sans text-sm md:text-base leading-relaxed text-ivory/80">
                       {item.summary}
                     </p>
 
