@@ -69,17 +69,74 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
               transition: { duration: 0.95, ease: EASE_SPLASH },
             }
       }
-      className="fixed inset-0 z-[9999] bg-[#1A1412] text-ivory flex flex-col items-center justify-between px-6 py-10 sm:px-10 sm:py-12 overflow-hidden select-none"
+      className="fixed inset-0 h-dvh z-[9999] bg-[radial-gradient(circle_at_center,_#2C211B_0%,_#1A1412_50%,_#0A0807_100%)] text-ivory flex flex-col items-center justify-between px-6 py-10 sm:px-10 sm:py-12 overflow-hidden select-none"
     >
-      {/* Subtle warm radial depth */}
+      {/* Layered luxury atmospheric depth & subtle animated warm mesh glow */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(60% 52% at 50% 48%, rgba(118,86,65,0.22) 0%, rgba(43,29,23,0.34) 48%, rgba(26,20,18,0.98) 100%)',
-        }}
-      />
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        <motion.div
+          initial={prefersReducedMotion ? false : { opacity: 0.65, scale: 0.96 }}
+          animate={
+            prefersReducedMotion
+              ? { opacity: 0.72, scale: 1 }
+              : { opacity: [0.65, 0.92, 0.65], scale: [0.96, 1.08, 0.96] }
+          }
+          transition={
+            prefersReducedMotion
+              ? undefined
+              : { duration: 10, repeat: Infinity, ease: 'easeInOut' }
+          }
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(125vw,900px)] h-[min(125vw,900px)] rounded-full will-change-transform"
+          style={{
+            background:
+              'radial-gradient(circle at center, rgba(165,126,95,0.28) 0%, rgba(118,86,65,0.16) 34%, rgba(43,29,23,0.06) 62%, transparent 76%)',
+          }}
+        />
+
+        <motion.div
+          initial={prefersReducedMotion ? false : { opacity: 0.45, x: '-6%', y: '-4%' }}
+          animate={
+            prefersReducedMotion
+              ? { opacity: 0.45 }
+              : {
+                  opacity: [0.4, 0.65, 0.4],
+                  x: ['-6%', '6%', '-6%'],
+                  y: ['-4%', '5%', '-4%'],
+                }
+          }
+          transition={
+            prefersReducedMotion
+              ? undefined
+              : { duration: 14, repeat: Infinity, ease: 'easeInOut' }
+          }
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(95vw,660px)] h-[min(95vw,660px)] rounded-full will-change-transform"
+          style={{
+            background:
+              'radial-gradient(circle at center, rgba(216,195,165,0.14) 0%, rgba(118,86,65,0.08) 42%, transparent 72%)',
+          }}
+        />
+
+        {/* Deep espresso perimeter vignette */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(circle at 50% 48%, transparent 34%, rgba(10,8,7,0.45) 72%, rgba(6,5,4,0.82) 100%)',
+          }}
+        />
+
+        {/* Fine film grain to keep gradient transitions silky without color banding */}
+        <div
+          className="absolute inset-0 opacity-[0.045] mix-blend-overlay"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E\")",
+            backgroundSize: '200px 200px',
+          }}
+        />
+      </div>
 
       {/* Top minimal crest */}
       <motion.div

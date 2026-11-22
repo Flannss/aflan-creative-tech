@@ -8,12 +8,16 @@ import {
 } from '@/data/projects';
 import { ProjectPreviewList } from '@/components/projects/ProjectPreviewList';
 import { TypographicDossierPlate } from '@/components/projects/TypographicDossierPlate';
+import { ProjectTransitionPortal } from '@/components/projects/ProjectClickTransition';
+import { useProjectTransition } from '@/hooks/useProjectTransition';
 import { Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 
 export const ProjectsPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'All' | ProjectCategory>('All');
   const [viewMode, setViewMode] = useState<'index' | 'spread'>('index');
+  const { transitionState, transitioningSlug, triggerProjectTransition } =
+    useProjectTransition();
 
   const filteredProjects = useMemo(() => {
     if (selectedCategory === 'All') return projectsData;
@@ -149,9 +153,22 @@ export const ProjectsPage: React.FC = () => {
                   >
                     <Link
                       to={`/projects/${project.slug}`}
-                      className="group flex flex-col h-full bg-obsidian border border-champagne/20 hover:border-champagne/60 active:border-champagne active:scale-[0.985] transition-all overflow-hidden"
+                      onClick={(e) => {
+                        const previewEl = e.currentTarget.querySelector<HTMLElement>(
+                          '[data-project-preview]',
+                        );
+                        triggerProjectTransition(e, project, previewEl);
+                      }}
+                      className={`group flex flex-col h-full bg-obsidian border border-champagne/20 hover:border-champagne/60 active:border-champagne active:scale-[0.985] transition-all duration-300 overflow-hidden ${
+                        transitioningSlug !== null && transitioningSlug !== project.slug
+                          ? 'opacity-30'
+                          : ''
+                      }`}
                     >
-                      <div className="relative aspect-video overflow-hidden border-b border-champagne/15">
+                      <div
+                        data-project-preview
+                        className="relative aspect-video overflow-hidden border-b border-champagne/15"
+                      >
                         {project.previewImage ? (
                           <div
                             className="w-full h-full"
@@ -162,7 +179,11 @@ export const ProjectsPage: React.FC = () => {
                               alt={project.previewCaption}
                               loading="lazy"
                               style={{ objectPosition: project.previewObjectPosition ?? 'center' }}
-                              className={`w-full h-full transition-transform duration-700 group-hover:scale-[1.03] ${
+                              className={`w-full h-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                                transitioningSlug === project.slug
+                                  ? 'scale-[1.08]'
+                                  : 'group-hover:scale-[1.04]'
+                              } ${
                                 project.previewImageFit === 'contain'
                                   ? 'object-contain p-8'
                                   : 'object-cover'
@@ -212,6 +233,7 @@ export const ProjectsPage: React.FC = () => {
           )}
         </div>
       </section>
+      <ProjectTransitionPortal state={transitionState} />
     </div>
   );
 };

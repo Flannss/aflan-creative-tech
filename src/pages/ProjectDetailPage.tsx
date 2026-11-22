@@ -256,7 +256,7 @@ export const ProjectDetailPage: React.FC = () => {
                 </p>
                 <div className="space-y-5 font-sans text-base sm:text-[1.06rem] leading-[1.85] text-charcoal">
                   {project.overview.map((p, idx) => (
-                    <p key={idx}>{p}</p>
+                    <p key={`${project.slug}-overview-${idx}`}>{p}</p>
                   ))}
                 </div>
               </div>
