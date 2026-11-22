@@ -19,7 +19,7 @@ import {
   type GalleryItem,
 } from '@/data/gallery';
 import { MonogramMark } from '@/components/brand/Monogram';
-import { Reveal } from '@/components/motion/Reveal';
+import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { EASE_LUXURY } from '@/utils/motion';
 
@@ -32,7 +32,7 @@ const TONAL_FILTERS: Record<
   original: {
     label: 'Asli',
     cssFilter: '',
-    note: 'Nada warna autentik masing-masing aset visual.',
+    note: 'Nada warna autentik masing-masing pelat personal.',
   },
   sepia: {
     label: 'Sepia',
@@ -47,7 +47,7 @@ const TONAL_FILTERS: Record<
 };
 
 const PALETTE_BARS = [
-  { name: 'Obsidian', hex: '#171615' },
+  { name: 'Obsidian', hex: '#1A1412' },
   { name: 'Espresso', hex: '#2B1D17' },
   { name: 'Mocha', hex: '#765641' },
   { name: 'Champagne', hex: '#D8C3A5' },
@@ -65,8 +65,9 @@ interface PlateVisualProps {
 }
 
 /**
- * Renders either an authentic local photo asset or a minimalist typographic/geometric plate.
- * Zero stock photography or third-party faces.
+ * Renders either a CSS-treated variation of AFLAN's personal studio portrait
+ * or a minimalist typographic abstract plate.
+ * In Lightbox mode, strictly uses object-contain so portraits are never cropped on mobile.
  */
 const PlateVisual: React.FC<PlateVisualProps> = ({
   item,
@@ -79,42 +80,65 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
       .filter(Boolean)
       .join(' ') || 'none';
 
+  if (inLightbox && item.kind === 'photo' && item.src) {
+    return (
+      <div className="relative inline-flex items-center justify-center max-w-full max-h-[80vh] sm:max-h-[85vh] overflow-hidden">
+        <img
+          src={item.src}
+          alt={item.title}
+          loading="eager"
+          style={{ filter: combinedFilter }}
+          className="block max-w-full max-h-[78vh] sm:max-h-[84vh] w-auto h-auto object-contain mx-auto"
+        />
+        {filmGrain && (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 opacity-20 mix-blend-overlay"
+            style={{
+              backgroundImage: FILM_GRAIN_DATA_URI,
+              backgroundSize: '160px 160px',
+            }}
+          />
+        )}
+      </div>
+    );
+  }
+
   return (
     <div
-      className={`relative w-full h-full overflow-hidden ${
-        inLightbox ? 'min-h-[320px] sm:min-h-[420px]' : ''
+      className={`relative overflow-hidden bg-obsidian ${
+        inLightbox
+          ? `w-[min(84vw,540px)] max-h-[76vh] ${item.aspectClass} mx-auto`
+          : 'w-full h-full'
       }`}
-      style={{ backgroundColor: item.imageBg ?? '#171615' }}
     >
       {item.kind === 'photo' && item.src && (
         <img
           src={item.src}
           alt={item.title}
-          loading={inLightbox ? 'eager' : 'lazy'}
+          loading="lazy"
           style={{
             objectPosition: item.objectPosition ?? 'center',
             filter: combinedFilter,
           }}
-          className={`w-full h-full transition-transform duration-700 ${
-            item.imageFit === 'contain'
-              ? 'object-contain p-8 sm:p-10 group-hover:scale-[1.04]'
-              : `object-cover group-hover:scale-[1.05] ${item.imageScaleClass ?? ''}`
+          className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05] ${
+            item.imageScaleClass ?? ''
           }`}
         />
       )}
 
       {item.kind === 'abstract-monogram' && (
         <div
-          className="w-full h-full bg-espresso text-ivory p-6 sm:p-8 flex flex-col justify-between relative"
+          className="w-full h-full bg-[#1A1412] text-ivory p-6 sm:p-8 flex flex-col justify-between relative"
           style={{ filter: TONAL_FILTERS[tonalMode].cssFilter || 'none' }}
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 opacity-15"
+            className="pointer-events-none absolute inset-0 opacity-12"
             style={{
               backgroundImage:
-                'linear-gradient(to right, rgba(216,195,165,0.3) 1px, transparent 1px), linear-gradient(to bottom, rgba(216,195,165,0.3) 1px, transparent 1px)',
-              backgroundSize: '32px 32px',
+                'linear-gradient(to right, rgba(216,195,165,0.28) 1px, transparent 1px), linear-gradient(to bottom, rgba(216,195,165,0.28) 1px, transparent 1px)',
+              backgroundSize: '36px 36px',
             }}
           />
           <div className="relative z-10 flex items-center justify-between font-mono text-[9px] tracking-[0.22em] uppercase text-champagne/80">
@@ -177,7 +201,7 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
           </div>
 
           <div className="flex items-center justify-between font-mono text-[9px] tracking-[0.18em] uppercase text-taupe border-t border-champagne/15 pt-2.5">
-            <span>#171615 → #F5F0E8</span>
+            <span>#1A1412 → #F5F0E8</span>
             <span>CHIAROSCURO</span>
           </div>
         </div>
@@ -197,10 +221,10 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
             <span>SERIF EDITORIAL</span>
           </div>
           <div className="relative z-10 my-auto py-4 space-y-1 text-center">
-            <p className="font-serif text-5xl sm:text-6xl font-light tracking-[0.1em] uppercase text-ivory leading-[0.9] transition-transform duration-700 group-hover:scale-[1.03]">
+            <p className="font-serif text-4xl sm:text-5xl font-light tracking-[0.12em] uppercase text-ivory leading-[0.9] transition-transform duration-700 group-hover:scale-[1.03]">
               AFLAN
             </p>
-            <p className="font-serif italic text-3xl sm:text-4xl font-light tracking-[0.06em] uppercase editorial-outline-strong leading-none">
+            <p className="font-serif italic text-2xl sm:text-3xl font-light tracking-[0.06em] uppercase editorial-outline-strong leading-none">
               MU&apos;AFA DZULFIQAR
             </p>
           </div>
@@ -297,17 +321,17 @@ export const GalleryPage: React.FC = () => {
         />
       )}
 
-      <section className="bg-offwhite text-espresso pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-espresso/15">
+      <section className="bg-offwhite text-espresso pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-espresso/10">
         <div className="max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
-            className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-espresso/15"
+            className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-espresso/10"
           >
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
-              BAB 07 — GALERI MONOGRAF · {String(filteredItems.length).padStart(2, '0')} PELAT
+              BAB 07 — GALERI PERSONAL · {String(filteredItems.length).padStart(2, '0')} PELAT
             </span>
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-espresso/65">
-              ASET ASLI &amp; KOMPOSISI TIPOGRAFI
+              POTRET PERSONAL &amp; STUDI TIPOGRAFI AFLAN
             </span>
           </Reveal>
 
@@ -320,7 +344,7 @@ export const GalleryPage: React.FC = () => {
                 lines={[
                   <>Edisi Monograf</>,
                   <>
-                    <span className="italic text-mocha">Potret &amp; Identitas Visual</span>
+                    <span className="italic text-mocha">Potret &amp; Abstrak Personal</span>
                   </>,
                 ]}
               />
@@ -328,13 +352,13 @@ export const GalleryPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
               <p className="font-sans text-[15px] sm:text-base text-charcoal/85 leading-relaxed">
-                Kumpulan potret pribadi, studi tipografi, sistem warna, serta identitas karya
-                asli—disusun dalam tata letak Masonry editorial yang bersih dan interaktif.
+                Kurasi visual personal AFLAN yang memadukan variasi tonal potret studio bersama
+                pelat abstrak tipografi dan sistem warna—disusun lapang dalam grid Masonry.
               </p>
             </Reveal>
           </div>
 
-          <div className="mt-10 lg:mt-12 pt-6 border-t border-espresso/15 space-y-5">
+          <div className="mt-10 lg:mt-12 pt-6 border-t border-espresso/10 space-y-5">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div
                 role="tablist"
@@ -390,7 +414,7 @@ export const GalleryPage: React.FC = () => {
                   <span>Grain 35mm: {filmGrainEnabled ? 'Aktif' : 'Mati'}</span>
                 </button>
 
-                <div className="inline-flex items-center rounded-full border border-espresso/25 bg-ivory p-1">
+                <div className="inline-flex items-center rounded-full border border-espresso/20 bg-ivory p-1">
                   <button
                     type="button"
                     onClick={() => setLayoutMode('masonry')}
@@ -458,20 +482,18 @@ export const GalleryPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-obsidian text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
+      <section className="bg-obsidian text-ivory py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           {layoutMode === 'masonry' ? (
-            <div className="columns-1 md:columns-2 lg:columns-3 gap-7 space-y-7">
-              {filteredItems.map((item, idx) => {
+            <StaggerGroup
+              key={selectedCategory}
+              className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8"
+            >
+              {filteredItems.map((item) => {
                 const isDetailOpen = revealedCardId === item.id;
                 return (
-                  <Reveal
-                    key={item.id}
-                    variant="up"
-                    delay={idx * 0.05}
-                    className="break-inside-avoid"
-                  >
-                    <article className="group bg-espresso/55 border border-champagne/20 hover:border-champagne/60 active:border-champagne transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-[0_24px_70px_rgba(0,0,0,0.6)]">
+                  <StaggerItem key={item.id} className="break-inside-avoid">
+                    <article className="group bg-espresso/40 border border-champagne/15 hover:border-champagne/50 active:border-champagne transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-[0_24px_70px_rgba(0,0,0,0.55)]">
                       <div className={`relative ${item.aspectClass} w-full overflow-hidden bg-obsidian`}>
                         <button
                           type="button"
@@ -487,9 +509,8 @@ export const GalleryPage: React.FC = () => {
                           />
                         </button>
 
-                        {/* Top Minimal Controls (Badge + Touch-Friendly Info Toggle + Lightbox Icon) */}
                         <div className="absolute top-3.5 left-3.5 right-3.5 z-30 flex items-center justify-between gap-2 pointer-events-none">
-                          <span className="px-3 py-1 bg-obsidian/85 backdrop-blur-xs border border-champagne/30 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne">
+                          <span className="px-3 py-1 bg-obsidian/85 backdrop-blur-xs border border-champagne/25 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne">
                             {item.badge}
                           </span>
                           <div className="flex items-center gap-1.5 pointer-events-auto">
@@ -505,7 +526,7 @@ export const GalleryPage: React.FC = () => {
                               className={`size-8 rounded-full border flex items-center justify-center active:scale-95 transition-colors ${
                                 isDetailOpen
                                   ? 'bg-champagne text-obsidian border-champagne'
-                                  : 'bg-obsidian/80 text-champagne border-champagne/35 hover:bg-champagne hover:text-obsidian'
+                                  : 'bg-obsidian/80 text-champagne border-champagne/30 hover:bg-champagne hover:text-obsidian'
                               }`}
                             >
                               <Info className="size-3.5" aria-hidden="true" />
@@ -514,14 +535,13 @@ export const GalleryPage: React.FC = () => {
                               type="button"
                               onClick={() => setLightboxId(item.id)}
                               aria-label={`Perbesar ${item.title}`}
-                              className="size-8 rounded-full bg-obsidian/80 border border-champagne/35 flex items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-colors"
+                              className="size-8 rounded-full bg-obsidian/80 border border-champagne/30 flex items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-colors"
                             >
                               <Maximize2 className="size-3.5" aria-hidden="true" />
                             </button>
                           </div>
                         </div>
 
-                        {/* Minimalist Hover & Tap Detail Overlay */}
                         <div
                           className={`pointer-events-none absolute inset-0 z-20 bg-obsidian/84 backdrop-blur-[4px] p-5 sm:p-6 flex flex-col justify-end transition-all duration-300 ${
                             isDetailOpen
@@ -529,7 +549,7 @@ export const GalleryPage: React.FC = () => {
                               : 'opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0'
                           }`}
                         >
-                          <div className="space-y-3 border-t border-champagne/30 pt-3.5">
+                          <div className="space-y-3 border-t border-champagne/25 pt-3.5">
                             <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne">
                               <span>CATATAN VISUAL</span>
                               <span>{item.plateNumber}</span>
@@ -573,7 +593,7 @@ export const GalleryPage: React.FC = () => {
                         </div>
                       </div>
 
-                      <div className="p-5 sm:p-6 space-y-3">
+                      <div className="p-6 space-y-3">
                         <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] tracking-[0.2em] uppercase">
                           <span className="text-champagne">
                             {item.plateNumber} · {item.category}
@@ -595,17 +615,17 @@ export const GalleryPage: React.FC = () => {
                         </p>
                       </div>
                     </article>
-                  </Reveal>
+                  </StaggerItem>
                 );
               })}
-            </div>
+            </StaggerGroup>
           ) : (
-            <div className="space-y-20 sm:space-y-28">
+            <div className="space-y-24 sm:space-y-32">
               {filteredItems.map((item, idx) => {
                 const isEven = idx % 2 === 0;
                 return (
                   <Reveal key={item.id} variant="up">
-                    <article className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center border-b border-champagne/15 pb-16 sm:pb-24 last:border-b-0 last:pb-0">
+                    <article className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center border-b border-champagne/10 pb-20 sm:pb-28 last:border-b-0 last:pb-0">
                       <div
                         className={
                           isEven
@@ -618,7 +638,7 @@ export const GalleryPage: React.FC = () => {
                           onClick={() => setLightboxId(item.id)}
                           data-cursor="LIGHTBOX"
                           aria-label={`Buka ${item.title} pada lightbox layar penuh`}
-                          className="group relative block w-full text-left border border-champagne/25 bg-espresso p-3 sm:p-5 shadow-[0_32px_90px_rgba(0,0,0,0.65)] active:scale-[0.99] transition-transform focus-visible:outline-2 focus-visible:outline-champagne"
+                          className="group relative block w-full text-left border border-champagne/20 bg-espresso/60 p-3 sm:p-5 shadow-[0_32px_90px_rgba(0,0,0,0.65)] active:scale-[0.99] transition-transform focus-visible:outline-2 focus-visible:outline-champagne"
                         >
                           <div className={`relative ${item.aspectClass} overflow-hidden`}>
                             <PlateVisual
@@ -698,6 +718,7 @@ export const GalleryPage: React.FC = () => {
         </div>
       </section>
 
+      {/* FULL-SCREEN LIGHTBOX — MOBILE-SAFE OBJECT-CONTAIN & GENEROUS TOUCH PADDING */}
       <AnimatePresence>
         {activeItem && lightboxIndex !== null && (
           <motion.div
@@ -709,11 +730,12 @@ export const GalleryPage: React.FC = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: prefersReducedMotion ? 0.15 : 0.3, ease: EASE_LUXURY }}
             onClick={() => setLightboxId(null)}
-            className="fixed inset-0 z-80 bg-obsidian/95 backdrop-blur-lg flex flex-col justify-between p-5 sm:p-8 overflow-y-auto"
+            className="fixed inset-0 z-80 bg-obsidian/96 backdrop-blur-lg flex flex-col justify-between p-4 sm:p-6 md:p-8 overflow-y-auto"
           >
+            {/* Top Toolbar */}
             <div
               onClick={(e) => e.stopPropagation()}
-              className="max-w-[1360px] w-full mx-auto flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-champagne/15"
+              className="max-w-[1360px] w-full mx-auto flex flex-wrap items-center justify-between gap-3 pb-3.5 border-b border-champagne/15 shrink-0"
             >
               <span className="font-mono text-xs tracking-[0.22em] uppercase text-champagne">
                 {String(lightboxIndex + 1).padStart(2, '0')} /{' '}
@@ -760,16 +782,17 @@ export const GalleryPage: React.FC = () => {
               </div>
             </div>
 
+            {/* Center Media Viewport — Never Cropped on Mobile or Desktop */}
             <div
               onClick={(e) => e.stopPropagation()}
-              className="max-w-[1200px] w-full mx-auto my-auto py-6 flex items-center justify-between gap-3 sm:gap-4"
+              className="max-w-[1280px] w-full mx-auto my-auto py-4 sm:py-6 flex items-center justify-center sm:justify-between gap-4"
             >
               {hasMultiplePlates && (
                 <button
                   type="button"
                   onClick={() => stepLightbox(-1)}
                   aria-label="Pelat sebelumnya"
-                  className="shrink-0 size-11 rounded-full border border-champagne/35 bg-espresso/75 flex items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-all"
+                  className="hidden sm:flex shrink-0 size-11 rounded-full border border-champagne/35 bg-espresso/75 items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-all"
                 >
                   <ChevronLeft className="size-5" aria-hidden="true" />
                 </button>
@@ -780,9 +803,9 @@ export const GalleryPage: React.FC = () => {
                 initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.32, ease: EASE_LUXURY }}
-                className="flex-1 flex flex-col items-center"
+                className="flex-1 w-full flex items-center justify-center p-4 sm:p-6"
               >
-                <div className="relative w-full max-w-[680px] aspect-4/3 sm:aspect-video max-h-[65vh] border border-champagne/25 bg-espresso overflow-hidden flex items-center justify-center">
+                <div className="max-w-full max-h-[85vh] flex items-center justify-center border border-champagne/25 bg-espresso/40 p-2 sm:p-3 shadow-2xl">
                   <PlateVisual
                     item={activeItem}
                     tonalMode={tonalMode}
@@ -797,26 +820,50 @@ export const GalleryPage: React.FC = () => {
                   type="button"
                   onClick={() => stepLightbox(1)}
                   aria-label="Pelat berikutnya"
-                  className="shrink-0 size-11 rounded-full border border-champagne/35 bg-espresso/75 flex items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-all"
+                  className="hidden sm:flex shrink-0 size-11 rounded-full border border-champagne/35 bg-espresso/75 items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-all"
                 >
                   <ChevronRight className="size-5" aria-hidden="true" />
                 </button>
               )}
             </div>
 
+            {/* Mobile Touch Navigation + Caption Footer */}
             <div
               onClick={(e) => e.stopPropagation()}
-              className="max-w-[1000px] w-full mx-auto pt-4 border-t border-champagne/15 text-center"
+              className="max-w-[1000px] w-full mx-auto pt-3.5 border-t border-champagne/15 text-center shrink-0 space-y-3"
             >
+              {hasMultiplePlates && (
+                <div className="flex sm:hidden items-center justify-center gap-4">
+                  <button
+                    type="button"
+                    onClick={() => stepLightbox(-1)}
+                    aria-label="Pelat sebelumnya"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-champagne/35 bg-espresso/75 text-champagne font-mono text-[10px] tracking-[0.18em] uppercase active:scale-95 transition-all"
+                  >
+                    <ChevronLeft className="size-4" aria-hidden="true" />
+                    Sebelumnya
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => stepLightbox(1)}
+                    aria-label="Pelat berikutnya"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-champagne/35 bg-espresso/75 text-champagne font-mono text-[10px] tracking-[0.18em] uppercase active:scale-95 transition-all"
+                  >
+                    Berikutnya
+                    <ChevronRight className="size-4" aria-hidden="true" />
+                  </button>
+                </div>
+              )}
+
               {showCaptions && (
-                <div className="space-y-1.5">
-                  <h3 className="font-serif text-2xl sm:text-3xl font-light text-ivory">
+                <div className="space-y-1">
+                  <h3 className="font-serif text-xl sm:text-3xl font-light text-ivory">
                     {activeItem.title}
                   </h3>
-                  <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 max-w-2xl mx-auto">
+                  <p className="font-sans text-sm text-ivory/75 max-w-2xl mx-auto">
                     {activeItem.caption}
                   </p>
-                  <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-taupe pt-1">
+                  <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-taupe pt-0.5">
                     {activeItem.meta.medium} · {activeItem.meta.treatment}
                   </p>
                 </div>

@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter,
   Route,
   Routes,
   useLocation,
 } from 'react-router-dom';
-import { MotionConfig } from 'framer-motion';
+import { AnimatePresence, MotionConfig } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
+import { SplashIntro } from '@/components/layout/SplashIntro';
 import { PageTransition } from '@/components/motion/PageTransition';
 import { HomePage } from '@/pages/HomePage';
 import { AboutPage } from '@/pages/AboutPage';
@@ -44,8 +45,19 @@ const AppRoutes: React.FC = () => {
 };
 
 export const App: React.FC = () => {
+  const [showSplash, setShowSplash] = useState<boolean>(true);
+
   return (
     <MotionConfig reducedMotion="user">
+      <AnimatePresence mode="wait">
+        {showSplash && (
+          <SplashIntro
+            key="aflan-splash-intro"
+            onEnter={() => setShowSplash(false)}
+          />
+        )}
+      </AnimatePresence>
+
       <BrowserRouter>
         <Layout>
           <ErrorBoundary>

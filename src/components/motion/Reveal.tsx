@@ -59,3 +59,82 @@ export const Reveal: React.FC<RevealProps> = ({
     </motion.div>
   );
 };
+
+interface StaggerGroupProps {
+  children: React.ReactNode;
+  className?: string;
+  stagger?: number;
+  delayChildren?: number;
+}
+
+/**
+ * Orchestrated staggered entrance container for editorial grids and lists.
+ */
+export const StaggerGroup: React.FC<StaggerGroupProps> = ({
+  children,
+  className = '',
+  stagger = 0.075,
+  delayChildren = 0.04,
+}) => {
+  const prefersReducedMotion = useReducedMotion();
+
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.08 }}
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            staggerChildren: stagger,
+            delayChildren,
+          },
+        },
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+interface StaggerItemProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export const StaggerItem: React.FC<StaggerItemProps> = ({
+  children,
+  className = '',
+}) => {
+  const prefersReducedMotion = useReducedMotion();
+
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 22, scale: 0.985 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          transition: {
+            duration: 0.72,
+            ease: [0.22, 1, 0.36, 1],
+          },
+        },
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};

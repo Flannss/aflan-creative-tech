@@ -1,11 +1,10 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowRight,
   ArrowUpRight,
   Compass,
-  Download,
   Github,
   Sparkles,
 } from 'lucide-react';
@@ -16,7 +15,7 @@ import { calculateExactAge } from '@/utils/age';
 import { EASE_LUXURY } from '@/utils/motion';
 import { useIsCoarsePointer } from '@/hooks/useMediaQuery';
 import { EditorialMarquee } from '@/components/ui/EditorialMarquee';
-import { Reveal } from '@/components/motion/Reveal';
+import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { ProjectPreviewList } from '@/components/projects/ProjectPreviewList';
 import { MonogramMark } from '@/components/brand/Monogram';
@@ -25,6 +24,23 @@ export const HomePage: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
   const isCoarsePointer = useIsCoarsePointer();
   const disableMotion = Boolean(prefersReducedMotion);
+  const [archHover, setArchHover] = useState<{ x: number; y: number; active: boolean }>({
+    x: 0,
+    y: 0,
+    active: false,
+  });
+
+  const handleArchPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (disableMotion) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const relX = ((e.clientX - rect.left) / rect.width - 0.5) * 14;
+    const relY = ((e.clientY - rect.top) / rect.height - 0.5) * 14;
+    setArchHover({ x: relX, y: relY, active: true });
+  };
+
+  const resetArchHover = () => {
+    setArchHover({ x: 0, y: 0, active: false });
+  };
 
   const heroRef = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll({
@@ -155,7 +171,7 @@ export const HomePage: React.FC = () => {
               </div>
             </motion.aside>
 
-            {/* Centerpiece Studio Portrait with Integrated Editorial Dossier Plate */}
+            {/* Centerpiece Arch Window Portrait with Parallax Hover & Integrated Dossier Plate */}
             <div className="order-1 md:col-span-2 lg:order-2 lg:col-span-4 flex flex-col items-center relative">
               <motion.div
                 style={{ y: portraitY }}
@@ -166,32 +182,57 @@ export const HomePage: React.FC = () => {
                 }
                 animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }}
                 transition={{ duration: 1.05, delay: 0.12, ease: EASE_LUXURY }}
-                className="relative z-10 w-full max-w-[300px] sm:max-w-[340px] lg:max-w-[350px] xl:max-w-[390px] aspect-4/5 overflow-hidden border border-champagne/30 bg-obsidian shadow-[0_32px_90px_rgba(0,0,0,0.75)]"
+                onPointerMove={handleArchPointerMove}
+                onPointerLeave={resetArchHover}
+                onPointerUp={resetArchHover}
+                whileTap={disableMotion ? undefined : { scale: 0.985 }}
+                className="group relative z-10 w-full max-w-[295px] sm:max-w-[335px] lg:max-w-[345px] xl:max-w-[385px] aspect-[3/4] rounded-t-full rounded-b-lg p-2 border border-champagne/25 bg-espresso/30 shadow-[0_36px_100px_rgba(0,0,0,0.78)] transition-colors duration-500 hover:border-champagne/50"
               >
-                <motion.img
-                  style={{ scale: portraitScale }}
-                  src={personalData.portraitPath}
-                  alt="Potret studio Aflan Mu'afa Dzulfiqar"
-                  className="w-full h-full object-cover object-[50%_18%] will-change-transform"
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-linear-to-t from-obsidian via-obsidian/25 to-obsidian/10"
-                />
-
-                {/* Integrated Editorial Dossier Plate inside Portrait Frame */}
-                <div className="absolute inset-x-0 bottom-0 z-20 px-4 sm:px-5 pb-4 sm:pb-5 pt-10 flex flex-col items-center text-center">
-                  <div className="w-full flex items-center justify-between text-[10px] font-mono tracking-[0.22em] uppercase text-champagne/80 pb-2.5 mb-2.5 border-b border-champagne/20">
-                    <span>POTRET · I</span>
-                    <span>AMDZ</span>
-                  </div>
-                  <p
-                    aria-hidden="true"
-                    className="select-none flex flex-wrap items-baseline justify-center gap-x-2 sm:gap-x-2.5 font-serif italic font-light uppercase tracking-[0.09em] leading-none text-[clamp(1.25rem,4.6vw,1.85rem)] sm:text-[1.75rem] lg:text-[clamp(1.45rem,2.1vw,2.05rem)]"
+                <div className="relative w-full h-full rounded-t-full rounded-b-md overflow-hidden bg-obsidian">
+                  <motion.div
+                    style={{ scale: portraitScale }}
+                    className="w-full h-full will-change-transform"
                   >
-                    <span className="text-champagne">MU&apos;AFA</span>{' '}
-                    <span className="editorial-outline-strong">DZULFIQAR</span>
-                  </p>
+                    <motion.div
+                      animate={
+                        disableMotion
+                          ? undefined
+                          : {
+                              x: archHover.x,
+                              y: archHover.y,
+                              scale: archHover.active ? 1.06 : 1.01,
+                            }
+                      }
+                      transition={{ type: 'spring', stiffness: 150, damping: 20, mass: 0.8 }}
+                      className="w-full h-full will-change-transform"
+                    >
+                      <img
+                        src={personalData.portraitPath}
+                        alt="Potret studio Aflan Mu'afa Dzulfiqar"
+                        className="w-full h-full object-cover object-[50%_18%]"
+                      />
+                    </motion.div>
+                  </motion.div>
+
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 bg-linear-to-t from-obsidian via-obsidian/20 to-transparent"
+                  />
+
+                  {/* Integrated Editorial Dossier Plate inside Arch Portrait Frame */}
+                  <div className="absolute inset-x-0 bottom-0 z-20 px-5 sm:px-6 pb-5 pt-12 flex flex-col items-center text-center">
+                    <div className="w-full flex items-center justify-between text-[10px] font-mono tracking-[0.22em] uppercase text-champagne/75 pb-2.5 mb-2.5 border-b border-champagne/15">
+                      <span>POTRET · I</span>
+                      <span>AMDZ</span>
+                    </div>
+                    <p
+                      aria-hidden="true"
+                      className="select-none flex flex-wrap items-baseline justify-center gap-x-2 sm:gap-x-2.5 font-serif italic font-light uppercase tracking-[0.09em] leading-none text-[clamp(1.2rem,4.5vw,1.8rem)] sm:text-[1.7rem] lg:text-[clamp(1.4rem,2vw,1.95rem)]"
+                    >
+                      <span className="text-champagne">MU&apos;AFA</span>{' '}
+                      <span className="editorial-outline-strong">DZULFIQAR</span>
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             </div>
@@ -235,18 +276,6 @@ export const HomePage: React.FC = () => {
 
               <div className="flex flex-wrap items-center lg:justify-end gap-x-5 gap-y-2.5 pt-3 border-t border-champagne/15 w-full max-w-md md:max-w-none lg:max-w-md">
                 <a
-                  href={contactData.cvHref}
-                  download={contactData.cvFilename}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Unduh CV Aflan Mu'afa Dzulfiqar"
-                  className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase text-champagne hover:text-ivory transition-colors"
-                >
-                  <Download className="size-3.5" aria-hidden="true" />
-                  <span>Unduh CV</span>
-                </a>
-                <span className="text-champagne/30" aria-hidden="true">·</span>
-                <a
                   href={contactData.githubHref}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -254,7 +283,8 @@ export const HomePage: React.FC = () => {
                   className="inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.18em] uppercase text-ivory/80 hover:text-champagne transition-colors"
                 >
                   <Github className="size-3.5" aria-hidden="true" />
-                  <span>GitHub</span>
+                  <span>GitHub · Flannss</span>
+                  <ArrowUpRight className="size-3.5" aria-hidden="true" />
                 </a>
               </div>
             </motion.div>
@@ -290,7 +320,7 @@ export const HomePage: React.FC = () => {
       ====================================================================== */}
       <section
         aria-labelledby="monogram-philosophy-heading"
-        className="relative bg-obsidian text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-champagne/15 overflow-hidden"
+        className="relative bg-obsidian text-ivory py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12 border-b border-champagne/10 overflow-hidden"
       >
         <div
           aria-hidden="true"
@@ -392,7 +422,7 @@ export const HomePage: React.FC = () => {
                 </Reveal>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 pt-2">
+              <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 pt-4 border-t border-champagne/15">
                 {[
                   {
                     code: '01 · PUNCAK A',
@@ -414,14 +444,12 @@ export const HomePage: React.FC = () => {
                     title: 'Ketelitian QA',
                     desc: 'Titik bulat di dasar lambang menjadi pengingat bahwa setiap fitur harus diuji dan diverifikasi di kondisi nyata.',
                   },
-                ].map((item, idx) => (
-                  <Reveal
+                ].map((item) => (
+                  <StaggerItem
                     key={item.code}
-                    variant="up"
-                    delay={0.12 + idx * 0.06}
-                    className="p-5 sm:p-6 bg-espresso/45 border border-champagne/20 hover:border-champagne/55 active:border-champagne transition-colors space-y-2.5"
+                    className="pt-4 border-t border-champagne/15 sm:border-t-0 sm:pt-2 space-y-2"
                   >
-                    <span className="block font-mono text-[10px] tracking-[0.22em] uppercase text-champagne">
+                    <span className="block font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/90">
                       {item.code}
                     </span>
                     <h3 className="font-serif text-2xl font-light text-ivory">
@@ -430,9 +458,9 @@ export const HomePage: React.FC = () => {
                     <p className="font-sans text-sm leading-relaxed text-ivory/75">
                       {item.desc}
                     </p>
-                  </Reveal>
+                  </StaggerItem>
                 ))}
-              </div>
+              </StaggerGroup>
             </div>
           </div>
         </div>
@@ -487,7 +515,7 @@ export const HomePage: React.FC = () => {
                     </span>
                   ))}
                 </div>
-                <div className="pt-3 flex flex-wrap items-center gap-6">
+                <div className="pt-3">
                   <Link
                     to="/about"
                     data-cursor="PROFIL"
@@ -499,17 +527,6 @@ export const HomePage: React.FC = () => {
                       aria-hidden="true"
                     />
                   </Link>
-                  <a
-                    href={contactData.cvHref}
-                    download={contactData.cvFilename}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Unduh CV Aflan Mu'afa Dzulfiqar"
-                    className="group inline-flex items-center gap-2 font-mono text-xs tracking-[0.2em] uppercase text-mocha border-b border-mocha/40 pb-1.5 hover:text-espresso hover:border-espresso transition-colors"
-                  >
-                    <Download className="size-3.5" aria-hidden="true" />
-                    Unduh CV
-                  </a>
                 </div>
               </Reveal>
 

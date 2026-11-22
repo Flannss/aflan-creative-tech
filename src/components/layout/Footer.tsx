@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Check, Copy, Download, Github } from 'lucide-react';
+import { ArrowUpRight, Check, Copy, Github } from 'lucide-react';
 import { BrandSignature } from '@/components/brand/Monogram';
 import { navigationRoutes, personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
@@ -58,22 +58,11 @@ export const Footer: React.FC = () => {
             <Link
               to="/contact"
               data-cursor="KONTAK"
-              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory transition-colors"
+              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
             >
               Mulai Percakapan
               <ArrowUpRight className="size-4" aria-hidden="true" />
             </Link>
-            <a
-              href={contactData.cvHref}
-              download={contactData.cvFilename}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Unduh CV Aflan Mu'afa Dzulfiqar"
-              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full border border-champagne/40 bg-obsidian/60 text-champagne font-mono text-xs tracking-[0.16em] uppercase hover:bg-champagne hover:text-obsidian active:scale-[0.97] transition-all"
-            >
-              <Download className="size-3.5" aria-hidden="true" />
-              Unduh CV
-            </a>
             <button
               type="button"
               onClick={handleCopyEmail}

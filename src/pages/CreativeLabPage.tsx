@@ -56,28 +56,32 @@ const EASING_PRESETS = [
 
 const MAGNETIC_NODES = [
   {
-    id: 'ui-arch',
-    code: '01',
-    label: 'UI Architecture',
-    sub: 'Component Precision',
+    id: 'letter-a',
+    glyph: 'A',
+    code: '01 · AFLAN',
+    label: 'Arsitektur Web',
+    sub: 'React & TypeScript',
   },
   {
-    id: 'motion-craft',
-    code: '02',
-    label: 'Motion Physics',
-    sub: 'Spring Kinematics',
+    id: 'letter-m',
+    glyph: 'M',
+    code: '02 · MU’AFA',
+    label: 'Motion & Interaksi',
+    sub: 'Framer Kinematics',
   },
   {
-    id: 'optical-grid',
-    code: '03',
-    label: 'Editorial Grid',
-    sub: 'Asymmetric Balance',
+    id: 'letter-d',
+    glyph: 'D',
+    code: '03 · DZULFIQAR',
+    label: 'Desain Editorial',
+    sub: 'Tipografi & Ruang',
   },
   {
-    id: 'qa-discipline',
-    code: '04',
-    label: 'Quality Assurance',
-    sub: 'Zero-Defect Flow',
+    id: 'letter-z',
+    glyph: 'Z',
+    code: '04 · AMDZ QA',
+    label: 'Ketelitian Pengujian',
+    sub: 'Functional Testing',
   },
 ] as const;
 
@@ -405,8 +409,10 @@ const MagneticCursorPlayground: React.FC = () => {
                   className="w-full p-4 bg-espresso text-ivory border border-champagne/30 hover:border-champagne active:border-champagne shadow-lg text-left transition-colors"
                 >
                   <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne mb-2">
-                    <span>NODE {node.code}</span>
-                    <Magnet className="size-3.5" aria-hidden="true" />
+                    <span>{node.code}</span>
+                    <span className="font-serif italic text-xl leading-none text-champagne">
+                      {node.glyph}
+                    </span>
                   </div>
                   <p className="font-serif text-2xl font-light text-ivory leading-tight">
                     {node.label}
@@ -441,12 +447,12 @@ const MagneticCursorPlayground: React.FC = () => {
             }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 210, damping: 15 }}
-            data-cursor="TARIK"
-            className="size-32 rounded-full border border-champagne/50 bg-obsidian/80 flex flex-col items-center justify-center gap-1 shadow-[0_24px_60px_rgba(0,0,0,0.65)]"
+            data-cursor="AMDZ"
+            className="size-36 rounded-full border border-champagne/50 bg-obsidian/80 flex flex-col items-center justify-center gap-1.5 shadow-[0_24px_60px_rgba(0,0,0,0.65)]"
           >
-            <MonogramMark size={46} className="text-champagne" />
-            <span className="font-mono text-[9px] tracking-[0.24em] uppercase text-taupe">
-              TARIK
+            <MonogramMark size={44} className="text-champagne" />
+            <span className="font-serif italic text-lg tracking-[0.2em] uppercase text-ivory leading-none">
+              AMDZ
             </span>
           </motion.div>
 
@@ -727,7 +733,7 @@ const ChiaroscuroCanvas: React.FC = () => {
 export const CreativeLabPage: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
 
-  const [specimenText, setSpecimenText] = useState("AFLAN MU'AFA DZULFIQAR");
+  const [specimenText, setSpecimenText] = useState('AFLAN · AMDZ');
   const [tracking, setTracking] = useState(0.08);
   const [fontSize, setFontSize] = useState(54);
   const [italicMode, setItalicMode] = useState(true);
@@ -871,15 +877,15 @@ export const CreativeLabPage: React.FC = () => {
             <div className="lg:col-span-7">
               <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.26em] uppercase text-mocha">
                 <Magnet className="size-3.5" aria-hidden="true" />
-                LAB 02 · MAGNETIC CURSOR UI · SPRING KINEMATICS
+                LAB 02 · MEDAN MAGNETIK AMDZ · FISIKA PEGAS
               </span>
               <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
-                Medan Interaksi Magnetik Multi-Elemen
+                Interaksi Magnetik Inisial AMDZ
               </h2>
             </div>
             <p className="lg:col-span-5 font-sans text-[15px] sm:text-base lg:text-sm text-charcoal/80 leading-relaxed">
-              Setiap kartu dan segel merespons jarak vektor kursor maupun sentuhan dengan tarikan
-              fisik berbasis pegas, lalu kembali tenang ke titik tengah saat dilepas.
+              Keempat inisial A·M·D·Z dan segel monogram merespons arah kursor maupun geseran jari
+              dengan tarikan fisik berbasis pegas, lalu kembali tenang ke pusat.
             </p>
           </Reveal>
 

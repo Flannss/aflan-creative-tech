@@ -6,7 +6,7 @@ import {
   skillTiers,
   type SkillTier,
 } from '@/data/skills';
-import { Reveal } from '@/components/motion/Reveal';
+import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 
 function getTierTypographyClasses(tier: SkillTier, isLight: boolean): {
@@ -399,8 +399,8 @@ export const SkillsPage: React.FC = () => {
             </div>
           </Reveal>
 
-          <Reveal variant="up" delay={0.1} className="lg:col-span-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="lg:col-span-6">
+            <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {[
                 {
                   num: 'I',
@@ -418,9 +418,9 @@ export const SkillsPage: React.FC = () => {
                   body: 'Functional Testing, Bug Identification, Debugging, Requirement Analysis, dan Documentation.',
                 },
               ].map((node, nodeIdx) => (
-                <div
+                <StaggerItem
                   key={node.num}
-                  className={`p-6 bg-obsidian/65 border border-champagne/20 flex flex-col justify-between min-h-[195px] lg:min-h-[215px] ${
+                  className={`p-6 bg-obsidian/65 border border-champagne/15 flex flex-col justify-between min-h-[195px] lg:min-h-[215px] ${
                     nodeIdx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
                   }`}
                 >
@@ -433,10 +433,10 @@ export const SkillsPage: React.FC = () => {
                       {node.body}
                     </p>
                   </div>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
-          </Reveal>
+            </StaggerGroup>
+          </div>
         </div>
       </section>
     </div>

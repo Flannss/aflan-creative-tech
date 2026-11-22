@@ -6,7 +6,6 @@ import {
   Award,
   Briefcase,
   Calendar,
-  Download,
   ExternalLink,
   Github,
   GraduationCap,
@@ -16,7 +15,7 @@ import { personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
 import { getProjectBySlug } from '@/data/projects';
 import { calculateExactAge } from '@/utils/age';
-import { Reveal } from '@/components/motion/Reveal';
+import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { ParallaxFrame } from '@/components/motion/ParallaxFrame';
 import { MonogramMark } from '@/components/brand/Monogram';
@@ -172,24 +171,24 @@ export const AboutPage: React.FC = () => {
                 </div>
               </Reveal>
 
-              <Reveal variant="up" delay={0.2} className="pt-4 border-t border-espresso/15">
+              <div className="pt-4 border-t border-espresso/15">
                 <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha mb-4">
                   KARAKTER KERJA
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   {personalData.traits.map((trait, index) => (
-                    <div
+                    <StaggerItem
                       key={trait}
-                      className="flex items-center justify-between px-4 py-3.5 bg-offwhite border border-espresso/15"
+                      className="flex items-center justify-between px-4 py-3.5 bg-offwhite border border-espresso/10"
                     >
                       <span className="font-serif text-lg sm:text-xl text-espresso">{trait}</span>
                       <span className="font-mono text-[10px] tracking-[0.2em] text-mocha">
                         0{index + 1}
                       </span>
-                    </div>
+                    </StaggerItem>
                   ))}
-                </div>
-              </Reveal>
+                </StaggerGroup>
+              </div>
             </div>
           </div>
         </div>
@@ -329,20 +328,9 @@ export const AboutPage: React.FC = () => {
             </aside>
 
             <div className="flex flex-wrap gap-3 pt-2">
-              <a
-                href={contactData.cvHref}
-                download={contactData.cvFilename}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Unduh CV Aflan Mu'afa Dzulfiqar"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-espresso text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:bg-mocha active:scale-[0.97] transition-all"
-              >
-                <Download className="size-3.5" aria-hidden="true" />
-                Unduh CV
-              </a>
               <Link
                 to="/journey"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-espresso/30 text-espresso font-mono text-xs tracking-[0.18em] uppercase hover:border-espresso hover:bg-ivory active:scale-[0.97] transition-all"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-espresso text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:bg-mocha active:scale-[0.97] transition-all"
               >
                 Jelajahi Perjalanan
                 <ArrowRight className="size-4" aria-hidden="true" />
