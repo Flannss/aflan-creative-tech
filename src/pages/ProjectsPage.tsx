@@ -47,7 +47,7 @@ export const ProjectsPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-36 lg:pt-40 pb-14 sm:pb-24 px-4 sm:px-8 lg:px-12 border-b border-champagne/15">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 studio-vignette opacity-75"
@@ -97,7 +97,7 @@ export const ProjectsPage: React.FC = () => {
             </Reveal>
           </div>
 
-          <div className="mt-10 lg:mt-12 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div className="mt-8 lg:mt-12 flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4 min-w-0">
             <SegmentedControl
               options={categoryOptions}
               value={selectedCategory}
@@ -105,6 +105,7 @@ export const ProjectsPage: React.FC = () => {
               layoutId="projects-category-pill"
               ariaLabel="Filter proyek berdasarkan kategori"
               surface="dark"
+              className="lg:w-auto"
             />
 
             <SegmentedControl
@@ -116,12 +117,13 @@ export const ProjectsPage: React.FC = () => {
               surface="dark"
               roleMode="group"
               size="sm"
+              className="lg:w-auto"
             />
           </div>
         </div>
       </section>
 
-      <section className="bg-espresso text-ivory py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12 min-h-[55vh]">
+      <section className="bg-espresso text-ivory py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12 min-h-[55vh]">
         <div className="max-w-[1440px] mx-auto">
           {viewMode === 'index' ? (
             <ProjectPreviewList projects={filteredProjects} />

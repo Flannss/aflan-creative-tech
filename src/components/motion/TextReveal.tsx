@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 
 interface TextRevealProps {
@@ -27,8 +27,8 @@ function extractNodeText(node: React.ReactNode): string {
 }
 
 /**
- * Print-editorial masked line-by-line typography reveal.
- * Preserves intact accessible spacing for screen readers and copy-paste DOM extraction.
+ * Editorial line-by-line typography reveal.
+ * Observes the untransformed outer wrapper with amount: 'some' so clipped child spans never stall invisible.
  */
 export const TextReveal: React.FC<TextRevealProps> = ({
   id,
@@ -40,7 +40,10 @@ export const TextReveal: React.FC<TextRevealProps> = ({
   stagger = 0.08,
   immediate = false,
 }) => {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
+  const isInView = useInView(wrapperRef, { once: true, amount: 'some' });
+  const shouldReveal = immediate || isInView;
 
   const fullAccessibleText = lines
     .map((line) => extractNodeText(line).replace(/\s+/g, ' ').trim())
@@ -63,34 +66,33 @@ export const TextReveal: React.FC<TextRevealProps> = ({
   }
 
   return (
-    <Tag id={id} className={className} aria-label={fullAccessibleText || undefined}>
-      {lines.map((line, index) => (
-        <React.Fragment key={index}>
-          <span
-            aria-hidden="true"
-            className={`block overflow-hidden pb-[0.08em] -mb-[0.08em] ${lineClassName}`}
-          >
-            <motion.span
-              className="block will-change-transform"
-              initial={{ y: '108%', opacity: 0.15 }}
-              {...(immediate
-                ? { animate: { y: '0%', opacity: 1 } }
-                : {
-                    whileInView: { y: '0%', opacity: 1 },
-                    viewport: { once: true, amount: 0.2 },
-                  })}
-              transition={{
-                duration: MOTION_DURATION,
-                delay: delay + index * stagger,
-                ease: EASE_LUXURY,
-              }}
+    <div ref={wrapperRef}>
+      <Tag id={id} className={className} aria-label={fullAccessibleText || undefined}>
+        {lines.map((line, index) => (
+          <React.Fragment key={index}>
+            <span
+              aria-hidden="true"
+              className={`block overflow-hidden pb-[0.08em] -mb-[0.08em] ${lineClassName}`}
             >
-              {line}
-            </motion.span>
-          </span>
-          {index < lines.length - 1 ? ' ' : null}
-        </React.Fragment>
-      ))}
-    </Tag>
+              <motion.span
+                className="block will-change-transform"
+                initial={{ y: '104%', opacity: 0 }}
+                animate={
+                  shouldReveal ? { y: '0%', opacity: 1 } : { y: '104%', opacity: 0 }
+                }
+                transition={{
+                  duration: MOTION_DURATION,
+                  delay: delay + index * stagger,
+                  ease: EASE_LUXURY,
+                }}
+              >
+                {line}
+              </motion.span>
+            </span>
+            {index < lines.length - 1 ? ' ' : null}
+          </React.Fragment>
+        ))}
+      </Tag>
+    </div>
   );
 };

@@ -98,7 +98,7 @@ export const SkillsPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-espresso text-ivory pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-espresso text-ivory pt-24 sm:pt-36 lg:pt-40 pb-14 sm:pb-24 px-4 sm:px-8 lg:px-12 border-b border-champagne/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-champagne/15">
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
@@ -178,7 +178,7 @@ export const SkillsPage: React.FC = () => {
             </div>
           </Reveal>
 
-          <div className="mt-8 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+          <div className="mt-8 flex flex-col gap-3 min-w-0">
             <SegmentedControl
               options={domainOptions}
               value={selectedDomain}
@@ -225,7 +225,7 @@ export const SkillsPage: React.FC = () => {
             return (
               <section
                 key={domain.id}
-                className={`py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b ${
+                className={`py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12 border-b ${
                   isLight
                     ? 'bg-ivory text-espresso border-espresso/15'
                     : 'bg-obsidian text-ivory border-champagne/15'

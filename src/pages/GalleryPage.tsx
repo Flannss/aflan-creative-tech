@@ -351,7 +351,7 @@ export const GalleryPage: React.FC = () => {
         />
       )}
 
-      <section className="bg-offwhite text-espresso pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-espresso/10">
+      <section className="bg-offwhite text-espresso pt-24 sm:pt-36 lg:pt-40 pb-14 sm:pb-24 px-4 sm:px-8 lg:px-12 border-b border-espresso/10">
         <div className="max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
@@ -388,8 +388,8 @@ export const GalleryPage: React.FC = () => {
             </Reveal>
           </div>
 
-          <div className="mt-10 lg:mt-12 pt-6 border-t border-espresso/10 space-y-5">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div className="mt-8 lg:mt-12 pt-6 border-t border-espresso/10 space-y-5 min-w-0">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 min-w-0">
               <SegmentedControl
                 options={categoryOptions}
                 value={selectedCategory}
@@ -397,15 +397,16 @@ export const GalleryPage: React.FC = () => {
                 layoutId="gallery-category-pill"
                 ariaLabel="Filter kategori galeri"
                 surface="light"
+                className="lg:w-auto"
               />
 
-              <div className="flex flex-wrap items-center gap-2.5">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 min-w-0">
                 <button
                   type="button"
                   onClick={() => setFilmGrainEnabled((prev) => !prev)}
                   aria-pressed={filmGrainEnabled}
                   data-cursor="GRAIN"
-                  className={`inline-flex items-center gap-2 px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border active:scale-[0.97] transition-all cursor-pointer ${
+                  className={`self-start sm:self-auto shrink-0 inline-flex items-center gap-2 px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border active:scale-[0.97] transition-all cursor-pointer ${
                     filmGrainEnabled
                       ? 'bg-mocha text-ivory border-mocha shadow-sm'
                       : 'bg-ivory text-espresso/80 border-espresso/25 hover:border-espresso'
@@ -424,13 +425,14 @@ export const GalleryPage: React.FC = () => {
                   surface="light"
                   roleMode="group"
                   size="sm"
+                  className="sm:w-auto"
                 />
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4 border-t border-espresso/10">
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-mocha">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4 border-t border-espresso/10 min-w-0">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
+                <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-mocha shrink-0">
                   TONAL:
                 </span>
                 <SegmentedControl
@@ -442,6 +444,7 @@ export const GalleryPage: React.FC = () => {
                   surface="light"
                   roleMode="group"
                   size="sm"
+                  className="sm:w-auto"
                 />
               </div>
 
@@ -453,7 +456,7 @@ export const GalleryPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-obsidian text-ivory py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12">
+      <section className="bg-obsidian text-ivory py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           {layoutMode === 'masonry' ? (
             <StaggerGroup

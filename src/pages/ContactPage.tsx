@@ -217,7 +217,7 @@ export const ContactPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="bg-ivory text-espresso pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-espresso/15">
+      <section className="bg-ivory text-espresso pt-24 sm:pt-36 lg:pt-40 pb-14 sm:pb-24 px-4 sm:px-8 lg:px-12 border-b border-espresso/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
@@ -257,7 +257,7 @@ export const ContactPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-obsidian text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
+      <section className="bg-obsidian text-ivory py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start">
           <Reveal variant="up" className="lg:col-span-5 space-y-6">
             <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">

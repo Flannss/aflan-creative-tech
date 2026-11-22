@@ -54,7 +54,7 @@ export const AboutPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-ivory text-espresso pt-28 sm:pt-36 lg:pt-40 pb-20 sm:pb-28 lg:pb-32 px-6 sm:px-8 lg:px-12 border-b border-espresso/15">
+      <section className="relative bg-ivory text-espresso pt-24 sm:pt-36 lg:pt-40 pb-14 sm:pb-24 lg:pb-28 px-4 sm:px-8 lg:px-12 border-b border-espresso/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-espresso/15">
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
@@ -200,9 +200,9 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-espresso text-ivory py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12">
+      <section className="relative bg-espresso text-ivory py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-14 lg:pb-16 border-b border-champagne/15 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 pb-10 sm:pb-14 lg:pb-16 border-b border-champagne/15 items-end">
             <div className="lg:col-span-7">
               <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-champagne mb-4">
                 PRINSIP PENGEMBANGAN
@@ -218,52 +218,47 @@ export const AboutPage: React.FC = () => {
                 ]}
               />
             </div>
-            <div className="lg:col-span-5">
-              <LineReveal
-                delay={0.08}
-                className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed"
-                text="Memadukan ketelitian Software QA dengan kepekaan antarmuka menjaga setiap implementasi tetap bersih, teruji, dan transparan terhadap ruang lingkupnya."
-              />
-            </div>
+            <Reveal variant="up" delay={0.08} className="lg:col-span-5">
+              <p className="font-sans text-[15px] sm:text-base text-ivory/80 leading-relaxed">
+                Memadukan ketelitian Software QA dengan kepekaan antarmuka menjaga setiap
+                implementasi tetap bersih, teruji, dan transparan terhadap ruang lingkupnya.
+              </p>
+            </Reveal>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-0 divide-y md:divide-y-0 lg:divide-x divide-champagne/15 border-b border-champagne/15 md:py-10 lg:py-0">
             {personalData.philosophyPillars.map((pillar, idx) => (
-              <div
+              <Reveal
                 key={pillar.number}
-                className={`py-10 md:p-7 md:border md:border-champagne/15 lg:border-0 lg:py-14 lg:px-9 first:lg:pl-0 last:lg:pr-0 flex flex-col justify-between gap-6 ${
+                variant="up"
+                delay={idx * 0.08}
+                className={`py-8 sm:py-10 md:p-7 md:border md:border-champagne/15 lg:border-0 lg:py-14 lg:px-9 first:lg:pl-0 last:lg:pr-0 flex flex-col justify-between gap-5 ${
                   idx === personalData.philosophyPillars.length - 1
                     ? 'md:col-span-2 lg:col-span-1'
                     : ''
                 }`}
               >
-                <div className="space-y-4">
-                  <span className="font-serif italic text-4xl sm:text-5xl text-champagne/65 block leading-none">
+                <div className="space-y-3.5">
+                  <span className="font-serif italic text-4xl sm:text-5xl text-champagne/70 block leading-none">
                     {pillar.number}
                   </span>
                   <h3 className="font-serif text-2xl sm:text-3xl font-light text-ivory">
                     {pillar.title}
                   </h3>
-                  <LineReveal
-                    text={pillar.summary}
-                    delay={idx * 0.06}
-                    stagger={0.07}
-                    className="font-sans text-[15px] sm:text-base lg:text-sm font-medium text-champagne/90 leading-relaxed"
-                  />
+                  <p className="font-sans text-[15px] sm:text-base lg:text-sm font-medium text-champagne/95 leading-relaxed">
+                    {pillar.summary}
+                  </p>
                 </div>
-                <LineReveal
-                  text={pillar.detail}
-                  delay={0.08 + idx * 0.06}
-                  stagger={0.075}
-                  className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 leading-relaxed"
-                />
-              </div>
+                <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/80 leading-relaxed">
+                  {pillar.detail}
+                </p>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="relative bg-offwhite text-espresso py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12">
+      <section className="relative bg-offwhite text-espresso py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 items-start">
           <Reveal variant="up" className="lg:col-span-7">
             <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-mocha mb-3">

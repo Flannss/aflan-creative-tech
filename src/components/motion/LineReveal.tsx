@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import React, { useMemo, useRef } from 'react';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 
 interface LineRevealProps {
@@ -13,7 +13,7 @@ interface LineRevealProps {
 }
 
 /**
- * Splits editorial prose into balanced sentence/clause lines for masked line-by-line scroll reveals.
+ * Splits editorial prose into balanced sentence/clause lines for staggered scroll reveals.
  */
 function splitEditorialLines(text: string): string[] {
   const sentences = text
@@ -38,8 +38,8 @@ function splitEditorialLines(text: string): string[] {
 }
 
 /**
- * Calm masked line-by-line typography reveal driven by Framer Motion whileInView.
- * Uses GPU-only transform (translateY) and opacity with cubic-bezier(0.22, 1, 0.36, 1).
+ * Standard fade-in + translateY line-by-line reveal without overflow-hidden clipping.
+ * Observes the untransformed container with amount: 'some' so text is guaranteed 100% visible on scroll.
  */
 export const LineReveal: React.FC<LineRevealProps> = ({
   text = '',
@@ -48,9 +48,11 @@ export const LineReveal: React.FC<LineRevealProps> = ({
   className = '',
   lineClassName = '',
   delay = 0,
-  stagger = 0.085,
+  stagger = 0.065,
 }) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
+  const isInView = useInView(containerRef, { once: true, amount: 'some' });
 
   const resolvedLines = useMemo(() => {
     if (lines && lines.length > 0) return lines;
@@ -64,18 +66,15 @@ export const LineReveal: React.FC<LineRevealProps> = ({
   }
 
   return (
-    <Tag className={className} aria-label={fullText || undefined}>
-      {resolvedLines.map((line, index) => (
-        <React.Fragment key={`${index}-${line.slice(0, 18)}`}>
-          <span
-            aria-hidden="true"
-            className={`block overflow-hidden pb-[0.06em] -mb-[0.06em] ${lineClassName}`}
-          >
+    <div ref={containerRef}>
+      <Tag className={className} aria-label={fullText || undefined}>
+        {resolvedLines.map((line, index) => (
+          <React.Fragment key={`${index}-${line.slice(0, 18)}`}>
             <motion.span
-              className="block will-change-transform"
-              initial={{ y: '104%', opacity: 0 }}
-              whileInView={{ y: '0%', opacity: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
+              aria-hidden="true"
+              className={`block will-change-transform ${lineClassName}`}
+              initial={{ opacity: 0, y: 12 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               transition={{
                 duration: MOTION_DURATION,
                 delay: delay + index * stagger,
@@ -84,10 +83,10 @@ export const LineReveal: React.FC<LineRevealProps> = ({
             >
               {line}
             </motion.span>
-          </span>
-          {index < resolvedLines.length - 1 ? ' ' : null}
-        </React.Fragment>
-      ))}
-    </Tag>
+            {index < resolvedLines.length - 1 ? ' ' : null}
+          </React.Fragment>
+        ))}
+      </Tag>
+    </div>
   );
 };

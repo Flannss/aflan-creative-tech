@@ -47,7 +47,7 @@ export const Reveal: React.FC<RevealProps> = ({
     <motion.div
       initial={initialMap[variant]}
       whileInView={visibleMap[variant]}
-      viewport={{ once, amount: 0.1 }}
+      viewport={{ once, amount: 'some' }}
       transition={{
         duration,
         delay,
@@ -86,7 +86,7 @@ export const StaggerGroup: React.FC<StaggerGroupProps> = ({
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.08 }}
+      viewport={{ once: true, amount: 'some' }}
       variants={{
         hidden: {},
         visible: {

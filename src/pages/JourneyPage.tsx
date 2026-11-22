@@ -76,7 +76,7 @@ export const JourneyPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-36 lg:pt-40 pb-14 sm:pb-24 px-4 sm:px-8 lg:px-12 border-b border-champagne/15">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 studio-vignette opacity-80"
@@ -130,7 +130,7 @@ export const JourneyPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-ivory text-espresso py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12">
+      <section className="relative bg-ivory text-espresso py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           {/* Pinned Editorial Category Heading & Chapter Controls */}
           <aside className="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
@@ -165,7 +165,7 @@ export const JourneyPage: React.FC = () => {
                     key={item.id}
                     type="button"
                     onClick={() => scrollToMilestone(item.id)}
-                    className={`w-full text-left px-4 py-3 border transition-colors duration-200 flex items-center justify-between gap-3 cursor-pointer ${
+                    className={`w-full text-left px-4 py-3 border transition-colors duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 cursor-pointer ${
                       isSelected
                         ? 'bg-espresso text-ivory border-espresso'
                         : 'bg-offwhite text-espresso border-espresso/15 hover:border-mocha'
@@ -179,7 +179,7 @@ export const JourneyPage: React.FC = () => {
                       >
                         BAB {item.chapter} · {item.category}
                       </span>
-                      <span className="block font-serif text-lg leading-snug truncate mt-0.5">
+                      <span className="block font-serif text-lg leading-snug sm:truncate mt-0.5">
                         {item.title}
                       </span>
                     </div>
@@ -195,7 +195,7 @@ export const JourneyPage: React.FC = () => {
               })}
             </nav>
 
-            <div className="pt-4 border-t border-espresso/15 flex items-center justify-between gap-3">
+            <div className="pt-4 border-t border-espresso/15 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-espresso/65">
                 {String(activeIndex + 1).padStart(2, '0')} /{' '}
                 {String(filteredMilestones.length).padStart(2, '0')}

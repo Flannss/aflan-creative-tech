@@ -50,7 +50,7 @@ export const AchievementsPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="bg-espresso text-ivory pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-champagne/15">
+      <section className="bg-espresso text-ivory pt-24 sm:pt-36 lg:pt-40 pb-14 sm:pb-24 px-4 sm:px-8 lg:px-12 border-b border-champagne/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-champagne/15">
             <span className="inline-flex items-center gap-2 font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
@@ -99,7 +99,7 @@ export const AchievementsPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-ivory text-espresso py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12">
+      <section className="bg-ivory text-espresso py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 lg:block gap-0 md:gap-4 lg:gap-0 divide-y md:divide-y-0 lg:divide-y divide-espresso/15 border-y md:border-y-0 lg:border-y border-espresso/15">
             {filteredEntries.map((entry, idx) => {

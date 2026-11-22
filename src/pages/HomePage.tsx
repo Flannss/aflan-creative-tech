@@ -13,7 +13,7 @@ import { contactData } from '@/data/contact';
 import { projectsData } from '@/data/projects';
 import { calculateExactAge } from '@/utils/age';
 import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
-import { useIsCoarsePointer, useMediaQuery } from '@/hooks/useMediaQuery';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { EditorialMarquee } from '@/components/ui/EditorialMarquee';
 import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
 import { LineReveal } from '@/components/motion/LineReveal';
@@ -23,9 +23,10 @@ import { MonogramMark } from '@/components/brand/Monogram';
 
 export const HomePage: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
-  const isCoarsePointer = useIsCoarsePointer();
+  const isTabletOrDesktop = useMediaQuery('(min-width: 768px)');
   const isDesktopLayout = useMediaQuery('(min-width: 1024px)');
   const disableMotion = Boolean(prefersReducedMotion);
+  const enableHeroParallax = isTabletOrDesktop && !disableMotion;
   const [archHover, setArchHover] = useState<{ x: number; y: number; active: boolean }>({
     x: 0,
     y: 0,
@@ -33,7 +34,7 @@ export const HomePage: React.FC = () => {
   });
 
   const handleArchPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (disableMotion) return;
+    if (!enableHeroParallax || e.pointerType === 'touch') return;
     const rect = e.currentTarget.getBoundingClientRect();
     const relX = ((e.clientX - rect.left) / rect.width - 0.5) * 14;
     const relY = ((e.clientY - rect.top) / rect.height - 0.5) * 14;
@@ -55,46 +56,46 @@ export const HomePage: React.FC = () => {
     offset: ['start end', 'end start'],
   });
 
-  // Layered subtle parallax across Hero background, typography, arch photo, and side columns
+  // Layered subtle parallax on tablet/desktop only; disabled cleanly on mobile (< 768px)
   const haloY = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, disableMotion || !isDesktopLayout ? 0 : 24],
+    [0, !isDesktopLayout || disableMotion ? 0 : 22],
   );
   const portraitY = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, disableMotion ? 0 : isCoarsePointer ? 16 : 44],
+    [0, enableHeroParallax ? (isDesktopLayout ? 38 : 18) : 0],
   );
   const portraitScale = useTransform(
     scrollYProgress,
     [0, 1],
-    [1, disableMotion ? 1 : isCoarsePointer ? 1.03 : 1.06],
+    [1, enableHeroParallax ? (isDesktopLayout ? 1.05 : 1.03) : 1],
   );
   const wordmarkY = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, disableMotion ? 0 : isCoarsePointer ? -14 : -42],
+    [0, enableHeroParallax ? (isDesktopLayout ? -36 : -16) : 0],
   );
   const wordmarkOpacity = useTransform(
     scrollYProgress,
     [0, 0.85],
-    [1, disableMotion ? 1 : 0.72],
+    [1, enableHeroParallax ? 0.76 : 1],
   );
   const dossierY = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, disableMotion || !isDesktopLayout ? 0 : -18],
+    [0, !isDesktopLayout || disableMotion ? 0 : -16],
   );
   const copyY = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, disableMotion || !isDesktopLayout ? 0 : 20],
+    [0, !isDesktopLayout || disableMotion ? 0 : 18],
   );
   const monogramCardY = useTransform(
     philosophyProgress,
     [0, 1],
-    disableMotion || !isDesktopLayout ? [0, 0] : [16, -16],
+    !isDesktopLayout || disableMotion ? [0, 0] : [14, -14],
   );
 
   const ageInfo = useMemo(() => calculateExactAge(personalData.birthDateISO), []);
@@ -110,7 +111,7 @@ export const HomePage: React.FC = () => {
       ====================================================================== */}
       <section
         ref={heroRef}
-        className="relative min-h-svh bg-obsidian text-ivory flex flex-col justify-between pt-28 sm:pt-32 pb-12 px-6 sm:px-8 lg:px-12 overflow-hidden"
+        className="relative min-h-svh bg-obsidian text-ivory flex flex-col justify-between pt-24 sm:pt-32 pb-10 sm:pb-12 px-4 sm:px-8 lg:px-12 overflow-hidden"
       >
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 studio-vignette" />
         <motion.div
@@ -171,7 +172,7 @@ export const HomePage: React.FC = () => {
                   </span>
                 </div>
 
-                <dl className="grid grid-cols-2 gap-x-4 gap-y-3.5 text-sm lg:text-xs">
+                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3.5 text-sm lg:text-xs">
                   <div>
                     <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-taupe">
                       Nama Lengkap
@@ -328,7 +329,7 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* Bottom Scroll Indicator */}
-        <div className="relative z-20 max-w-[1440px] w-full mx-auto pt-4 flex items-end justify-between gap-4">
+        <div className="relative z-20 max-w-[1440px] w-full mx-auto pt-4 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 sm:gap-4">
           <div className="font-mono text-[10px] tracking-[0.24em] uppercase text-taupe">
             <span>2 DESEMBER 2005</span>
             <span className="mx-2 text-champagne/40">/</span>
@@ -357,7 +358,7 @@ export const HomePage: React.FC = () => {
       <section
         ref={philosophyRef}
         aria-labelledby="monogram-philosophy-heading"
-        className="relative bg-obsidian text-ivory py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12 border-b border-champagne/10 overflow-hidden"
+        className="relative bg-obsidian text-ivory py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12 border-b border-champagne/10 overflow-hidden"
       >
         <div
           aria-hidden="true"
@@ -419,7 +420,7 @@ export const HomePage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="relative z-10 grid grid-cols-3 gap-2 pt-5 border-t border-champagne/15 font-mono text-[9px] tracking-[0.18em] uppercase text-taupe text-center">
+                <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-2 pt-5 border-t border-champagne/15 font-mono text-[9px] tracking-[0.18em] uppercase text-taupe text-center">
                   <div className="p-2 bg-obsidian/60 border border-champagne/15">
                     <span className="block text-champagne">PUNCAK (A)</span>
                     <span>Struktur Kode</span>
@@ -508,109 +509,113 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* =====================================================================
-          BAND 03 — LIGHT IVORY EDITORIAL MANIFESTO (LUAS & BREATHING ROOM)
+          BAND 03 — LIGHT IVORY EDITORIAL MANIFESTO (COHESIVE & BALANCED)
       ====================================================================== */}
-      <section className="relative bg-ivory text-espresso py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12 border-b border-espresso/10">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-start">
-          <Reveal variant="up" className="lg:col-span-3 space-y-5">
-            <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
-              BAB 01 — IDENTITAS
-            </p>
-            <div className="flex items-center gap-4">
-              <span className="font-serif italic text-5xl sm:text-6xl lg:text-7xl leading-none text-espresso/20 select-none">
-                01
-              </span>
-              <MonogramMark size={40} className="text-mocha" />
+      <section className="relative bg-ivory text-espresso py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12 border-b border-espresso/10">
+        <div className="max-w-[1440px] mx-auto space-y-8 sm:space-y-10">
+          {/* Unified Editorial Chapter Header */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 pb-8 sm:pb-10 border-b border-espresso/15 items-end">
+            <Reveal variant="up" className="lg:col-span-4 space-y-3">
+              <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
+                BAB 01 — IDENTITAS
+              </p>
+              <div className="flex items-center gap-4">
+                <span className="font-serif italic text-5xl sm:text-6xl leading-none text-espresso/20 select-none">
+                  01
+                </span>
+                <MonogramMark size={38} className="text-mocha" />
+              </div>
+              <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-espresso/65">
+                {personalData.status} · {personalData.studyProgram}
+              </p>
+            </Reveal>
+
+            <div className="lg:col-span-8">
+              <TextReveal
+                as="h2"
+                className="font-serif text-[1.95rem] sm:text-4xl md:text-[2.85rem] lg:text-[3.65rem] leading-[1.1] lg:leading-[1.06] font-light text-espresso max-w-4xl"
+                lines={[
+                  <>Sederhana, jernih, dan terarah—</>,
+                  <>
+                    <span className="italic text-mocha">antarmuka interaktif</span> yang
+                    fungsional,
+                  </>,
+                  <>teruji, dan nyaman digunakan.</>,
+                ]}
+              />
             </div>
-            <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-espresso/65 pt-2">
-              {personalData.status} · {personalData.studyProgram}
-            </p>
-          </Reveal>
+          </div>
 
-          <div className="lg:col-span-9 space-y-10 lg:space-y-12">
-            <TextReveal
-              as="h2"
-              className="font-serif text-[2rem] sm:text-4xl md:text-5xl lg:text-[4.1rem] leading-[1.1] lg:leading-[1.06] font-light text-espresso max-w-4xl"
-              lines={[
-                <>Sederhana, jernih, dan terarah—</>,
-                <>
-                  <span className="italic text-mocha">antarmuka interaktif</span> yang
-                  fungsional,
-                </>,
-                <>teruji, dan nyaman digunakan.</>,
-              ]}
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pt-8 border-t border-espresso/15">
-              <Reveal variant="up" delay={0.12} className="md:col-span-7 space-y-6">
-                <p className="font-sans text-base sm:text-lg leading-[1.8] text-charcoal/90">
-                  {personalData.shortBio}
-                </p>
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {personalData.traits.map((trait) => (
-                    <span
-                      key={trait}
-                      className="px-3.5 py-1.5 border border-espresso/20 bg-offwhite font-mono text-[10px] tracking-[0.16em] uppercase text-espresso"
-                    >
-                      {trait}
-                    </span>
-                  ))}
-                </div>
-                <div className="pt-3">
-                  <Link
-                    to="/about"
-                    data-cursor="PROFIL"
-                    className="group inline-flex items-center gap-2.5 font-mono text-xs tracking-[0.2em] uppercase text-espresso border-b border-espresso pb-1.5 hover:text-mocha hover:border-mocha transition-colors"
+          {/* Balanced Bio & Verified Summary Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            <Reveal variant="up" delay={0.08} className="lg:col-span-7 space-y-6">
+              <p className="font-sans text-[15px] sm:text-lg leading-[1.8] text-charcoal/90">
+                {personalData.shortBio}
+              </p>
+              <div className="flex flex-wrap gap-2 pt-1">
+                {personalData.traits.map((trait) => (
+                  <span
+                    key={trait}
+                    className="px-3.5 py-1.5 border border-espresso/20 bg-offwhite font-mono text-[10px] tracking-[0.16em] uppercase text-espresso"
                   >
-                    Baca Dossier Lengkap
-                    <ArrowRight
-                      className="size-4 group-hover:translate-x-1 transition-transform"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </div>
-              </Reveal>
+                    {trait}
+                  </span>
+                ))}
+              </div>
+              <div className="pt-2">
+                <Link
+                  to="/about"
+                  data-cursor="PROFIL"
+                  className="group inline-flex items-center gap-2.5 font-mono text-xs tracking-[0.2em] uppercase text-espresso border-b border-espresso pb-1.5 hover:text-mocha hover:border-mocha transition-colors"
+                >
+                  Baca Dossier Lengkap
+                  <ArrowRight
+                    className="size-4 group-hover:translate-x-1 transition-transform"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </div>
+            </Reveal>
 
-              <Reveal variant="up" delay={0.18} className="md:col-span-5">
-                <div className="bg-offwhite border border-espresso/15 p-6 sm:p-7 space-y-4">
-                  <p className="font-mono text-[10px] tracking-[0.26em] uppercase text-mocha">
-                    RINGKASAN TERVERIFIKASI
-                  </p>
-                  <dl className="divide-y divide-espresso/10 text-[15px] md:text-sm">
-                    <div className="py-3 flex justify-between gap-4">
-                      <dt className="text-espresso/65">Tempat Lahir</dt>
-                      <dd className="font-medium text-espresso text-right">
-                        {personalData.birthplace}
-                      </dd>
-                    </div>
-                    <div className="py-3 flex justify-between gap-4">
-                      <dt className="text-espresso/65">Domisili</dt>
-                      <dd className="font-medium text-espresso text-right">
-                        {personalData.currentLocation}
-                      </dd>
-                    </div>
-                    <div className="py-3 flex justify-between gap-4">
-                      <dt className="text-espresso/65">Usia (Real-Time)</dt>
-                      <dd className="font-medium text-mocha text-right">
-                        {ageInfo.age} Tahun · 2 Des 2005
-                      </dd>
-                    </div>
-                    <div className="py-3 flex justify-between gap-4">
-                      <dt className="text-espresso/65">Universitas</dt>
-                      <dd className="font-medium text-espresso text-right">
-                        {personalData.university}
-                      </dd>
-                    </div>
-                    <div className="py-3 flex justify-between gap-4">
-                      <dt className="text-espresso/65">Magang</dt>
-                      <dd className="font-medium text-espresso text-right">
-                        PT Puskomedia Indonesia Kreatif (Sep 2026 – Jan 2027)
-                      </dd>
-                    </div>
-                  </dl>
-                </div>
-              </Reveal>
-            </div>
+            <Reveal variant="up" delay={0.14} className="lg:col-span-5">
+              <div className="bg-offwhite border border-espresso/15 p-5 sm:p-7 space-y-4">
+                <p className="font-mono text-[10px] tracking-[0.26em] uppercase text-mocha">
+                  RINGKASAN TERVERIFIKASI
+                </p>
+                <dl className="divide-y divide-espresso/10 text-[15px] md:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4">
+                    <dt className="text-espresso/65">Tempat Lahir</dt>
+                    <dd className="font-medium text-espresso sm:text-right">
+                      {personalData.birthplace}
+                    </dd>
+                  </div>
+                  <div className="py-3 flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4">
+                    <dt className="text-espresso/65">Domisili</dt>
+                    <dd className="font-medium text-espresso sm:text-right">
+                      {personalData.currentLocation}
+                    </dd>
+                  </div>
+                  <div className="py-3 flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4">
+                    <dt className="text-espresso/65">Usia (Real-Time)</dt>
+                    <dd className="font-medium text-mocha sm:text-right">
+                      {ageInfo.age} Tahun · 2 Des 2005
+                    </dd>
+                  </div>
+                  <div className="py-3 flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4">
+                    <dt className="text-espresso/65">Universitas</dt>
+                    <dd className="font-medium text-espresso sm:text-right">
+                      {personalData.university}
+                    </dd>
+                  </div>
+                  <div className="py-3 flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4">
+                    <dt className="text-espresso/65">Magang</dt>
+                    <dd className="font-medium text-espresso sm:text-right">
+                      PT Puskomedia Indonesia Kreatif (Sep 2026 – Jan 2027)
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -618,7 +623,7 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 04 — DARK ESPRESSO SELECTED WORK & EVALUATION ARCHIVE
       ====================================================================== */}
-      <section className="relative bg-espresso text-ivory py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12">
+      <section className="relative bg-espresso text-ivory py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 sm:mb-16 lg:mb-20">
             <div className="space-y-4">
@@ -660,7 +665,7 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 05 — OFF-WHITE ASYMMETRIC EXPLORATION DOORS
       ====================================================================== */}
-      <section className="relative bg-offwhite text-espresso py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12">
+      <section className="relative bg-offwhite text-espresso py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 lg:mb-14">
             <div>
