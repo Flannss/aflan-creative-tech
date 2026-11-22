@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { EASE_LUXURY } from '@/utils/motion';
+import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 
 interface TextRevealProps {
+  id?: string;
   lines: React.ReactNode[];
   as?: 'h1' | 'h2' | 'h3' | 'p';
   className?: string;
@@ -30,6 +31,7 @@ function extractNodeText(node: React.ReactNode): string {
  * Preserves intact accessible spacing for screen readers and copy-paste DOM extraction.
  */
 export const TextReveal: React.FC<TextRevealProps> = ({
+  id,
   lines,
   as: Tag = 'h2',
   className = '',
@@ -47,7 +49,7 @@ export const TextReveal: React.FC<TextRevealProps> = ({
 
   if (prefersReducedMotion) {
     return (
-      <Tag className={className} aria-label={fullAccessibleText || undefined}>
+      <Tag id={id} className={className} aria-label={fullAccessibleText || undefined}>
         {lines.map((line, index) => (
           <React.Fragment key={index}>
             <span aria-hidden="true" className={`block ${lineClassName}`}>
@@ -61,7 +63,7 @@ export const TextReveal: React.FC<TextRevealProps> = ({
   }
 
   return (
-    <Tag className={className} aria-label={fullAccessibleText || undefined}>
+    <Tag id={id} className={className} aria-label={fullAccessibleText || undefined}>
       {lines.map((line, index) => (
         <React.Fragment key={index}>
           <span
@@ -78,7 +80,7 @@ export const TextReveal: React.FC<TextRevealProps> = ({
                     viewport: { once: true, amount: 0.2 },
                   })}
               transition={{
-                duration: 0.9,
+                duration: MOTION_DURATION,
                 delay: delay + index * stagger,
                 ease: EASE_LUXURY,
               }}

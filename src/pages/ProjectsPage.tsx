@@ -121,7 +121,7 @@ export const ProjectsPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-espresso text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 min-h-[55vh]">
+      <section className="bg-espresso text-ivory py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12 min-h-[55vh]">
         <div className="max-w-[1440px] mx-auto">
           {viewMode === 'index' ? (
             <ProjectPreviewList projects={filteredProjects} />
@@ -151,7 +151,10 @@ export const ProjectsPage: React.FC = () => {
               </aside>
 
               {/* Pure Stacking Project Cards */}
-              <div ref={stackRef} className="lg:col-span-8 space-y-6 md:space-y-10 pb-6">
+              <div
+                ref={stackRef}
+                className="relative isolate lg:col-span-8 space-y-6 md:space-y-10 pb-6"
+              >
                 {filteredProjects.map((project, idx) => (
                   <StackingCard
                     key={`${selectedCategory}-${project.slug}`}

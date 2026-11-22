@@ -3,8 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
 import { TypographicDossierPlate } from '@/components/projects/TypographicDossierPlate';
 import type { ProjectTransitionState } from '@/hooks/useProjectTransition';
-
-const EASE_CINEMATIC: [number, number, number, number] = [0.22, 1, 0.36, 1];
+import { EASE_LUXURY } from '@/utils/motion';
 
 interface ProjectTransitionPortalProps {
   state: ProjectTransitionState | null;
@@ -32,7 +31,7 @@ export const ProjectTransitionPortal: React.FC<ProjectTransitionPortalProps> = (
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.44, ease: EASE_CINEMATIC }}
+        transition={{ duration: 0.44, ease: EASE_LUXURY }}
         className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#291E18_0%,_#171615_55%,_#0A0807_100%)]"
       />
 
@@ -52,13 +51,13 @@ export const ProjectTransitionPortal: React.FC<ProjectTransitionPortalProps> = (
           height: '100%',
           borderColor: 'rgba(216, 195, 165, 0)',
         }}
-        transition={{ duration: 0.52, ease: EASE_CINEMATIC }}
+        transition={{ duration: 0.52, ease: EASE_LUXURY }}
         className="absolute overflow-hidden bg-obsidian border shadow-[0_32px_100px_rgba(0,0,0,0.85)] will-change-[top,left,width,height]"
       >
         <motion.div
           initial={{ scale: 1, clipPath: 'inset(3% 3% 3% 3%)' }}
           animate={{ scale: 1.08, clipPath: 'inset(0% 0% 0% 0%)' }}
-          transition={{ duration: 0.54, ease: EASE_CINEMATIC }}
+          transition={{ duration: 0.54, ease: EASE_LUXURY }}
           className="w-full h-full will-change-transform"
         >
           {project.previewImage ? (
@@ -89,7 +88,7 @@ export const ProjectTransitionPortal: React.FC<ProjectTransitionPortalProps> = (
         <motion.div
           initial={{ opacity: 0.12 }}
           animate={{ opacity: 0.78 }}
-          transition={{ duration: 0.48, ease: EASE_CINEMATIC }}
+          transition={{ duration: 0.48, ease: EASE_LUXURY }}
           className="absolute inset-0 bg-linear-to-t from-obsidian via-obsidian/65 to-obsidian/40"
         />
 
@@ -97,7 +96,7 @@ export const ProjectTransitionPortal: React.FC<ProjectTransitionPortalProps> = (
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.42, delay: 0.08, ease: EASE_CINEMATIC }}
+          transition={{ duration: 0.42, delay: 0.08, ease: EASE_LUXURY }}
           className="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14 max-w-[1440px] mx-auto"
         >
           <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.26em] uppercase text-champagne mb-2">

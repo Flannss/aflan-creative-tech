@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { EASE_LUXURY } from '@/utils/motion';
+import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 
 interface LineRevealProps {
   text?: string;
@@ -77,7 +77,7 @@ export const LineReveal: React.FC<LineRevealProps> = ({
               whileInView={{ y: '0%', opacity: 1 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{
-                duration: 0.78,
+                duration: MOTION_DURATION,
                 delay: delay + index * stagger,
                 ease: EASE_LUXURY,
               }}

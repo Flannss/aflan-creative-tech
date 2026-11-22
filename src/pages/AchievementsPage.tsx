@@ -8,12 +8,26 @@ import {
 } from '@/data/achievements';
 import { Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
+import { SegmentedControl } from '@/components/ui/SegmentedControl';
 
 export const AchievementsPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'Semua' | AchievementCategory>(
     'Semua',
   );
   const [activeId, setActiveId] = useState<string>(achievementsData[0]?.id ?? '');
+
+  const categoryOptions = useMemo(
+    () =>
+      achievementCategories.map((cat) => ({
+        value: cat,
+        label: cat,
+        badge:
+          cat === 'Semua'
+            ? achievementsData.length
+            : achievementsData.filter((a) => a.category === cat).length,
+      })),
+    [],
+  );
 
   const filteredEntries = useMemo(() => {
     if (selectedCategory === 'Semua') return achievementsData;
@@ -72,35 +86,20 @@ export const AchievementsPage: React.FC = () => {
             </Reveal>
           </div>
 
-          <div
-            role="tablist"
-            aria-label="Filter catatan pencapaian"
-            className="flex flex-wrap gap-2.5 mt-10 lg:mt-12"
-          >
-            {achievementCategories.map((cat) => {
-              const active = selectedCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  type="button"
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => handleCategoryChange(cat)}
-                  className={`px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.18em] uppercase border transition-colors ${
-                    active
-                      ? 'bg-champagne text-obsidian border-champagne font-medium'
-                      : 'bg-obsidian/45 text-ivory/80 border-champagne/20 hover:border-champagne/60'
-                  }`}
-                >
-                  {cat}
-                </button>
-              );
-            })}
+          <div className="mt-10 lg:mt-12">
+            <SegmentedControl
+              options={categoryOptions}
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              layoutId="achievements-category-pill"
+              ariaLabel="Filter catatan pencapaian"
+              surface="dark"
+            />
           </div>
         </div>
       </section>
 
-      <section className="bg-ivory text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
+      <section className="bg-ivory text-espresso py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 lg:block gap-0 md:gap-4 lg:gap-0 divide-y md:divide-y-0 lg:divide-y divide-espresso/15 border-y md:border-y-0 lg:border-y border-espresso/15">
             {filteredEntries.map((entry, idx) => {

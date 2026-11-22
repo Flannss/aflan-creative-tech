@@ -2,12 +2,11 @@ import React, { useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { MonogramMark } from '@/components/brand/Monogram';
+import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 
 interface SplashIntroProps {
   onEnter: () => void;
 }
-
-const EASE_SPLASH: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const containerVariants = {
   hidden: { opacity: 1 },
@@ -25,7 +24,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.85, ease: EASE_SPLASH },
+    transition: { duration: MOTION_DURATION, ease: EASE_LUXURY },
   },
 };
 
@@ -66,7 +65,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           : {
               y: '-100%',
               opacity: 0.92,
-              transition: { duration: 0.95, ease: EASE_SPLASH },
+              transition: { duration: MOTION_DURATION, ease: EASE_LUXURY },
             }
       }
       className="fixed inset-0 h-dvh z-[9999] bg-[radial-gradient(circle_at_center,_#2C211B_0%,_#1A1412_50%,_#0A0807_100%)] text-ivory flex flex-col items-center justify-between px-6 py-10 sm:px-10 sm:py-12 overflow-hidden select-none"
@@ -142,7 +141,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
       <motion.div
         initial={prefersReducedMotion ? false : { opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.75, ease: EASE_SPLASH }}
+        transition={{ duration: MOTION_DURATION, ease: EASE_LUXURY }}
         className="relative z-10 w-full max-w-[1360px] flex items-center justify-between font-mono text-[10px] sm:text-[11px] tracking-[0.26em] uppercase text-champagne/80"
       >
         <span className="inline-flex items-center gap-2.5">
@@ -202,7 +201,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
       <motion.div
         initial={prefersReducedMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.9, delay: 0.35, ease: EASE_SPLASH }}
+        transition={{ duration: MOTION_DURATION, delay: 0.3, ease: EASE_LUXURY }}
         className="relative z-10 w-full max-w-[1360px] flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-taupe"
       >
         <span>WEB DEVELOPER · UI ENGINEER</span>

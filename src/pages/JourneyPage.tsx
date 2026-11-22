@@ -130,7 +130,7 @@ export const JourneyPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-ivory text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
+      <section className="relative bg-ivory text-espresso py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           {/* Pinned Editorial Category Heading & Chapter Controls */}
           <aside className="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
@@ -239,7 +239,10 @@ export const JourneyPage: React.FC = () => {
           </aside>
 
           {/* Stacking Dossier Cards Deck */}
-          <div ref={stackRef} className="lg:col-span-8 space-y-6 md:space-y-10 pb-6">
+          <div
+            ref={stackRef}
+            className="relative isolate lg:col-span-8 space-y-6 md:space-y-10 pb-6"
+          >
             {filteredMilestones.map((item, idx) => (
               <StackingCard
                 key={`${selectedCategory}-${item.id}`}

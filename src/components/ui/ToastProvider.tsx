@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { Check } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { ToastContext, type ToastPayload } from '@/hooks/useToast';
 import { EASE_LUXURY } from '@/utils/motion';
 
@@ -43,6 +43,11 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
     [clearExistingTimer],
   );
 
+  const dismissToast = useCallback(() => {
+    clearExistingTimer();
+    setToast(null);
+  }, [clearExistingTimer]);
+
   const contextValue = useMemo(() => ({ showToast }), [showToast]);
 
   return (
@@ -53,6 +58,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
           <div
             aria-live="polite"
             aria-atomic="true"
+            aria-label="Notifikasi sistem"
             className="pointer-events-none fixed inset-x-0 top-20 sm:top-24 z-[95] flex justify-center px-4 sm:px-6"
           >
             <AnimatePresence mode="wait">
@@ -72,7 +78,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
                       : { opacity: 0, y: -14, scale: 0.97 }
                   }
                   transition={{ duration: 0.42, ease: EASE_LUXURY }}
-                  className="pointer-events-auto relative overflow-hidden max-w-md w-full sm:w-auto min-w-[260px] rounded-2xl bg-obsidian/95 backdrop-blur-md border border-champagne/40 text-ivory shadow-[0_24px_64px_rgba(0,0,0,0.68)] px-4 sm:px-5 py-3.5"
+                  className="pointer-events-auto relative overflow-hidden max-w-md w-full sm:w-auto min-w-[240px] rounded-2xl bg-obsidian/95 backdrop-blur-md border border-champagne/40 text-ivory shadow-[0_24px_64px_rgba(0,0,0,0.68)] px-4 sm:px-5 py-3.5"
                 >
                   <div className="flex items-center gap-3">
                     <span
@@ -81,16 +87,24 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
                     >
                       <Check className="size-3.5 stroke-[2.4]" />
                     </span>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-champagne">
                         {toast.title}
                       </p>
                       {toast.detail && (
-                        <p className="font-sans text-xs text-ivory/80 mt-0.5 truncate max-w-[280px] sm:max-w-[340px]">
+                        <p className="font-sans text-xs text-ivory/80 mt-0.5 truncate max-w-[240px] sm:max-w-[320px]">
                           {toast.detail}
                         </p>
                       )}
                     </div>
+                    <button
+                      type="button"
+                      onClick={dismissToast}
+                      aria-label="Tutup notifikasi"
+                      className="shrink-0 size-7 rounded-full flex items-center justify-center text-champagne/70 hover:text-champagne hover:bg-espresso/80 transition-colors cursor-pointer"
+                    >
+                      <X className="size-3.5" aria-hidden="true" />
+                    </button>
                   </div>
 
                   {/* GPU scaleX countdown hairline */}

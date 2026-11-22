@@ -12,7 +12,7 @@ import { personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
 import { projectsData } from '@/data/projects';
 import { calculateExactAge } from '@/utils/age';
-import { EASE_LUXURY } from '@/utils/motion';
+import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 import { useIsCoarsePointer, useMediaQuery } from '@/hooks/useMediaQuery';
 import { EditorialMarquee } from '@/components/ui/EditorialMarquee';
 import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
@@ -141,7 +141,7 @@ export const HomePage: React.FC = () => {
             style={{ y: wordmarkY, opacity: wordmarkOpacity }}
             initial={disableMotion ? false : { opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.95, ease: EASE_LUXURY }}
+            transition={{ duration: MOTION_DURATION, ease: EASE_LUXURY }}
             className="relative z-20 w-full text-center select-none pointer-events-none mb-5 sm:mb-7 md:mb-8 lg:-mb-10 will-change-transform"
           >
             <h1
@@ -158,7 +158,7 @@ export const HomePage: React.FC = () => {
               style={{ y: dossierY }}
               initial={disableMotion ? false : { opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.85, delay: 0.28, ease: EASE_LUXURY }}
+              transition={{ duration: MOTION_DURATION, delay: 0.22, ease: EASE_LUXURY }}
               className="order-2 md:col-span-1 lg:order-1 lg:col-span-4 lg:pb-8 will-change-transform"
             >
               <div className="border border-champagne/20 bg-espresso/70 backdrop-blur-md p-5 sm:p-6 max-w-md md:max-w-none lg:max-w-md">
@@ -216,7 +216,7 @@ export const HomePage: React.FC = () => {
                     : { opacity: 0, clipPath: 'inset(12% 0% 0% 0%)' }
                 }
                 animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }}
-                transition={{ duration: 1.05, delay: 0.12, ease: EASE_LUXURY }}
+                transition={{ duration: MOTION_DURATION, delay: 0.1, ease: EASE_LUXURY }}
                 onPointerMove={handleArchPointerMove}
                 onPointerLeave={resetArchHover}
                 onPointerUp={resetArchHover}
@@ -277,7 +277,7 @@ export const HomePage: React.FC = () => {
               style={{ y: copyY }}
               initial={disableMotion ? false : { opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.85, delay: 0.34, ease: EASE_LUXURY }}
+              transition={{ duration: MOTION_DURATION, delay: 0.28, ease: EASE_LUXURY }}
               className="order-3 md:col-span-1 lg:col-span-4 lg:pb-8 flex flex-col lg:items-end lg:text-right gap-5 lg:gap-6 will-change-transform"
             >
               <p
@@ -441,6 +441,7 @@ export const HomePage: React.FC = () => {
             <div className="lg:col-span-7 space-y-8">
               <div className="space-y-4">
                 <TextReveal
+                  id="monogram-philosophy-heading"
                   as="h2"
                   className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] leading-[1.06] font-light text-ivory"
                   lines={[
@@ -452,16 +453,14 @@ export const HomePage: React.FC = () => {
                     <>estetika ruang editorial.</>,
                   ]}
                 />
-                <div id="monogram-philosophy-heading">
-                  <LineReveal
-                    delay={0.08}
-                    className="font-sans text-[15px] sm:text-base leading-[1.8] text-ivory/75 max-w-2xl"
-                    lines={[
-                      "Monogram AMDZ (Aflan Mu'afa Dzulfiqar) merangkum cara kerja saya:",
-                      'memadukan struktur kode yang rapi dengan ketenangan komposisi tipografi editorial.',
-                    ]}
-                  />
-                </div>
+                <LineReveal
+                  delay={0.08}
+                  className="font-sans text-[15px] sm:text-base leading-[1.8] text-ivory/80 max-w-2xl"
+                  lines={[
+                    "Monogram AMDZ (Aflan Mu'afa Dzulfiqar) merangkum cara kerja saya:",
+                    'memadukan struktur kode yang rapi dengan ketenangan komposisi tipografi editorial.',
+                  ]}
+                />
               </div>
 
               <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 pt-4 border-t border-champagne/15">
@@ -511,7 +510,7 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 03 — LIGHT IVORY EDITORIAL MANIFESTO (LUAS & BREATHING ROOM)
       ====================================================================== */}
-      <section className="relative bg-ivory text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-espresso/10">
+      <section className="relative bg-ivory text-espresso py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12 border-b border-espresso/10">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-start">
           <Reveal variant="up" className="lg:col-span-3 space-y-5">
             <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
@@ -619,7 +618,7 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 04 — DARK ESPRESSO SELECTED WORK & EVALUATION ARCHIVE
       ====================================================================== */}
-      <section className="relative bg-espresso text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
+      <section className="relative bg-espresso text-ivory py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 sm:mb-16 lg:mb-20">
             <div className="space-y-4">
@@ -661,7 +660,7 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 05 — OFF-WHITE ASYMMETRIC EXPLORATION DOORS
       ====================================================================== */}
-      <section className="relative bg-offwhite text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
+      <section className="relative bg-offwhite text-espresso py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 lg:mb-14">
             <div>
@@ -768,7 +767,7 @@ export const HomePage: React.FC = () => {
                       <h3 className="font-serif text-2xl font-light text-ivory">
                         Edisi Monograf
                       </h3>
-                      <p className="mt-1.5 text-sm lg:text-xs text-ivory/70">
+                      <p className="mt-1.5 text-sm lg:text-xs text-ivory/80">
                         Potret studio, studi tonal &amp; lightbox.
                       </p>
                     </div>

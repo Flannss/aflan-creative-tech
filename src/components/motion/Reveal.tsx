@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { EASE_LUXURY } from '@/utils/motion';
+import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 
 type RevealVariant = 'up' | 'left' | 'right' | 'fade' | 'clip';
 
@@ -17,7 +17,7 @@ export const Reveal: React.FC<RevealProps> = ({
   children,
   variant = 'up',
   delay = 0,
-  duration = 0.78,
+  duration = MOTION_DURATION,
   className = '',
   once = true,
 }) => {
@@ -49,7 +49,7 @@ export const Reveal: React.FC<RevealProps> = ({
       whileInView={visibleMap[variant]}
       viewport={{ once, amount: 0.1 }}
       transition={{
-        duration: variant === 'clip' ? Math.max(duration, 0.88) : duration,
+        duration,
         delay,
         ease: EASE_LUXURY,
       }}
@@ -127,8 +127,8 @@ export const StaggerItem: React.FC<StaggerItemProps> = ({
           y: 0,
           scale: 1,
           transition: {
-            duration: 0.72,
-            ease: [0.22, 1, 0.36, 1],
+            duration: MOTION_DURATION,
+            ease: EASE_LUXURY,
           },
         },
       }}

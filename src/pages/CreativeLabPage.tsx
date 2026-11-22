@@ -13,7 +13,9 @@ import {
 import { Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { MonogramMark } from '@/components/brand/Monogram';
+import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { useIsCoarsePointer } from '@/hooks/useMediaQuery';
+import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 
 const PALETTE_SWATCHES = [
   { name: 'Obsidian', hex: '#171615' },
@@ -30,26 +32,26 @@ const PALETTE_SWATCHES = [
 const EASING_PRESETS = [
   {
     id: 'luxury',
-    label: 'Luxury Power4 Out',
-    bezier: [0.16, 1, 0.3, 1] as [number, number, number, number],
-    css: 'cubic-bezier(0.16, 1, 0.3, 1)',
-    duration: 1.15,
-    note: 'Akselerasi tajam yang mendarat tenang—standar transisi editorial utama AFLAN.',
+    label: 'Luxury Slow-Out',
+    bezier: EASE_LUXURY,
+    css: 'cubic-bezier(0.22, 1, 0.36, 1)',
+    duration: MOTION_DURATION,
+    note: 'Akselerasi halus yang mendarat tenang—kurva standar utama seluruh portofolio AFLAN.',
   },
   {
     id: 'editorial',
-    label: 'Editorial Expo',
-    bezier: [0.22, 1, 0.36, 1] as [number, number, number, number],
-    css: 'cubic-bezier(0.22, 1, 0.36, 1)',
+    label: 'Editorial Glide',
+    bezier: [0.16, 1, 0.3, 1] as [number, number, number, number],
+    css: 'cubic-bezier(0.16, 1, 0.3, 1)',
     duration: 1.0,
-    note: 'Ritme halus dan tegas untuk reveal tipografi serta elemen konten.',
+    note: 'Ritme panjang dan sinematik untuk reveal komposisi display berskala besar.',
   },
   {
     id: 'snap',
     label: 'Architectural Snap',
     bezier: [0.4, 0, 0.2, 1] as [number, number, number, number],
     css: 'cubic-bezier(0.4, 0, 0.2, 1)',
-    duration: 0.62,
+    duration: 0.56,
     note: 'Respons cepat dan taktil untuk kontrol filter, tombol, dan drawer.',
   },
 ] as const;
@@ -521,6 +523,7 @@ const ChiaroscuroCanvas: React.FC = () => {
     let rafId = 0;
     let width = 0;
     let height = 0;
+    let isInView = true;
 
     interface Particle {
       x: number;
@@ -554,9 +557,10 @@ const ChiaroscuroCanvas: React.FC = () => {
     };
 
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', resize, { passive: true });
 
     const drawFrame = () => {
+      rafId = 0;
       ctx.fillStyle = '#171615';
       ctx.fillRect(0, 0, width, height);
 
@@ -630,7 +634,7 @@ const ChiaroscuroCanvas: React.FC = () => {
         }
       }
 
-      if (running) {
+      if (running && isInView) {
         rafId = window.requestAnimationFrame(drawFrame);
       }
     };
@@ -638,10 +642,31 @@ const ChiaroscuroCanvas: React.FC = () => {
     redrawRef.current = drawFrame;
     drawFrame();
 
+    let observer: IntersectionObserver | null = null;
+    if (typeof IntersectionObserver !== 'undefined') {
+      observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries[0]?.isIntersecting ?? true;
+          isInView = visible;
+          if (visible && running && !rafId) {
+            rafId = window.requestAnimationFrame(drawFrame);
+          } else if (!visible && rafId) {
+            window.cancelAnimationFrame(rafId);
+            rafId = 0;
+          }
+        },
+        { threshold: 0.05 },
+      );
+      observer.observe(canvas);
+    }
+
     return () => {
       redrawRef.current = null;
+      observer?.disconnect();
       window.removeEventListener('resize', resize);
-      window.cancelAnimationFrame(rafId);
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
     };
   }, [running, density]);
 
@@ -1066,28 +1091,24 @@ export const CreativeLabPage: React.FC = () => {
             </h2>
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            {EASING_PRESETS.map((preset) => {
-              const active = selectedPreset.id === preset.id;
-              return (
-                <button
-                  key={preset.id}
-                  type="button"
-                  onClick={() => {
-                    setSelectedPreset(preset);
-                    setRunCount((c) => c + 1);
-                  }}
-                  className={`px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border transition-colors ${
-                    active
-                      ? 'bg-espresso text-ivory border-espresso'
-                      : 'bg-offwhite text-espresso border-espresso/20 hover:border-mocha'
-                  }`}
-                >
-                  {preset.label}
-                </button>
-              );
-            })}
-          </div>
+          <SegmentedControl
+            options={EASING_PRESETS.map((preset) => ({
+              value: preset.id,
+              label: preset.label,
+            }))}
+            value={selectedPreset.id}
+            onChange={(nextId) => {
+              const found = EASING_PRESETS.find((p) => p.id === nextId);
+              if (found) {
+                setSelectedPreset(found);
+                setRunCount((c) => c + 1);
+              }
+            }}
+            layoutId="lab-easing-pill"
+            ariaLabel="Pilih kurva easing animasi"
+            surface="light"
+            roleMode="group"
+          />
 
           <div className="bg-offwhite border border-espresso/15 p-5 sm:p-6 space-y-5">
             <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-mocha">

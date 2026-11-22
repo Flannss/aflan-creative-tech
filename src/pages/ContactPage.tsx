@@ -338,7 +338,7 @@ export const ContactPage: React.FC = () => {
                 );
               })}
 
-              <div className="md:col-span-2 lg:col-span-1 p-6 bg-chocolate/50 border border-champagne/15 font-mono text-[11px] tracking-[0.16em] uppercase text-taupe flex flex-col justify-between gap-4 lg:mt-2">
+              <div className="md:col-span-2 lg:col-span-1 p-6 bg-chocolate/65 border border-champagne/20 font-mono text-[11px] tracking-[0.16em] uppercase text-ivory/85 flex flex-col justify-between gap-4 lg:mt-2">
                 <div className="space-y-1.5">
                   <p className="text-champagne">BASIS &amp; INSTITUSI</p>
                   <p>{contactData.location}</p>
@@ -545,7 +545,7 @@ export const ContactPage: React.FC = () => {
                       type="submit"
                       disabled={submitPhase === 'loading'}
                       aria-busy={submitPhase === 'loading'}
-                      className={`inline-flex items-center justify-center gap-2.5 min-w-[250px] px-7 py-3.5 rounded-full font-mono text-xs tracking-[0.2em] uppercase active:scale-[0.97] transition-all duration-300 cursor-pointer disabled:cursor-wait ${
+                      className={`inline-flex items-center justify-center gap-2.5 w-full sm:w-auto sm:min-w-[250px] px-7 py-3.5 rounded-full font-mono text-xs tracking-[0.2em] uppercase active:scale-[0.97] transition-all duration-300 cursor-pointer disabled:cursor-wait ${
                         submitPhase === 'success'
                           ? 'bg-mocha text-ivory'
                           : 'bg-espresso text-ivory hover:bg-mocha'

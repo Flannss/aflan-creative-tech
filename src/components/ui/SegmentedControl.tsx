@@ -1,3 +1,4 @@
+import type React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { EASE_LUXURY } from '@/utils/motion';
 
@@ -21,7 +22,7 @@ interface SegmentedControlProps<T extends string> {
 
 /**
  * Tactile iOS/macOS-inspired luxury segmented control with a gliding champagne indicator pill
- * driven by Framer Motion layoutId and cubic-bezier(0.22, 1, 0.36, 1).
+ * driven by Framer Motion layoutId, cubic-bezier(0.22, 1, 0.36, 1), and full keyboard arrow support.
  */
 export function SegmentedControl<T extends string>({
   options,
@@ -46,17 +47,46 @@ export function SegmentedControl<T extends string>({
       ? 'px-3 py-1.5 text-[10px] tracking-[0.15em]'
       : 'px-3.5 sm:px-4 py-2 text-[10px] sm:text-[11px] tracking-[0.16em]';
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (options.length <= 1) return;
+    const currentIndex = options.findIndex((o) => o.value === value);
+    if (currentIndex < 0) return;
+
+    let nextIndex: number | null = null;
+    if (e.key === 'ArrowRight') {
+      nextIndex = (currentIndex + 1) % options.length;
+    } else if (e.key === 'ArrowLeft') {
+      nextIndex = (currentIndex - 1 + options.length) % options.length;
+    } else if (e.key === 'Home') {
+      nextIndex = 0;
+    } else if (e.key === 'End') {
+      nextIndex = options.length - 1;
+    }
+
+    if (nextIndex !== null) {
+      e.preventDefault();
+      onChange(options[nextIndex].value);
+      const buttons = e.currentTarget.querySelectorAll<HTMLButtonElement>('button');
+      buttons[nextIndex]?.focus();
+    }
+  };
+
   return (
     <div
       role={roleMode}
       aria-label={ariaLabel}
+      onKeyDown={handleKeyDown}
       className={`inline-flex flex-wrap items-center gap-1 p-1 rounded-2xl sm:rounded-full border max-w-full ${trackClass} ${className}`}
     >
       {options.map((option) => {
         const active = option.value === value;
         const tabProps =
           roleMode === 'tablist'
-            ? { role: 'tab' as const, 'aria-selected': active }
+            ? {
+                role: 'tab' as const,
+                'aria-selected': active,
+                tabIndex: active ? 0 : -1,
+              }
             : { 'aria-pressed': active };
 
         return (

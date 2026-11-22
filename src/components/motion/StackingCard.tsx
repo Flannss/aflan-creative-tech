@@ -72,7 +72,7 @@ export const StackingCard: React.FC<StackingCardProps> = ({
     >
       <motion.div
         style={{ scale }}
-        className="relative origin-top will-change-transform"
+        className="relative overflow-hidden origin-top will-change-transform"
       >
         {children}
         {enableStacking && !isLast && (
