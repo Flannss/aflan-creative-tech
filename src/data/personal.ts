@@ -20,6 +20,8 @@ export const personalData = {
   lastName: 'DZULFIQAR',
   brandName: 'AFLAN',
   monogram: 'AMDZ',
+  siteUrl: 'https://aflandossier.vercel.app/',
+  siteDomain: 'aflandossier.vercel.app',
   birthDateISO: '2005-12-02',
   birthplace: 'Tangerang, Indonesia',
   currentLocation: 'Purwokerto, Indonesia',

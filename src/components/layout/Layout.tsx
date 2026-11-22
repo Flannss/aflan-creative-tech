@@ -4,7 +4,9 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ScrollProgress } from '@/components/motion/ScrollProgress';
 import { CustomCursor } from '@/components/motion/CustomCursor';
-import { navigationRoutes } from '@/data/personal';
+import { navigationRoutes, personalData } from '@/data/personal';
+
+const CANONICAL_ORIGIN = personalData.siteUrl.replace(/\/$/, '');
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -26,6 +28,21 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       document.title = 'Dossier Proyek — AFLAN (AMDZ)';
     } else {
       document.title = 'AFLAN — Identitas Digital Personal';
+    }
+
+    const canonicalUrl =
+      pathname === '/' ? `${CANONICAL_ORIGIN}/` : `${CANONICAL_ORIGIN}${pathname}`;
+    const canonicalLink = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (canonicalLink) {
+      canonicalLink.href = canonicalUrl;
+    }
+    const ogUrl = document.querySelector<HTMLMetaElement>('meta[property="og:url"]');
+    if (ogUrl) {
+      ogUrl.content = canonicalUrl;
+    }
+    const twitterUrl = document.querySelector<HTMLMetaElement>('meta[name="twitter:url"]');
+    if (twitterUrl) {
+      twitterUrl.content = canonicalUrl;
     }
   }, [pathname]);
 

@@ -186,6 +186,8 @@ export const projectsData: ProjectEntry[] = [
     previewBg: '#171615',
     previewCaption: 'Integrasi potret studio pribadi dalam sistem editorial AFLAN.',
     featuredOnHome: false,
+    liveUrl: 'https://aflandossier.vercel.app/',
+    liveUrlLabel: 'aflandossier.vercel.app',
     liveRoute: '/lab',
   },
 ];
