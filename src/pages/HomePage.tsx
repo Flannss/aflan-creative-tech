@@ -13,9 +13,10 @@ import { contactData } from '@/data/contact';
 import { projectsData } from '@/data/projects';
 import { calculateExactAge } from '@/utils/age';
 import { EASE_LUXURY } from '@/utils/motion';
-import { useIsCoarsePointer } from '@/hooks/useMediaQuery';
+import { useIsCoarsePointer, useMediaQuery } from '@/hooks/useMediaQuery';
 import { EditorialMarquee } from '@/components/ui/EditorialMarquee';
 import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
+import { LineReveal } from '@/components/motion/LineReveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { ProjectPreviewList } from '@/components/projects/ProjectPreviewList';
 import { MonogramMark } from '@/components/brand/Monogram';
@@ -23,6 +24,7 @@ import { MonogramMark } from '@/components/brand/Monogram';
 export const HomePage: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
   const isCoarsePointer = useIsCoarsePointer();
+  const isDesktopLayout = useMediaQuery('(min-width: 1024px)');
   const disableMotion = Boolean(prefersReducedMotion);
   const [archHover, setArchHover] = useState<{ x: number; y: number; active: boolean }>({
     x: 0,
@@ -43,25 +45,56 @@ export const HomePage: React.FC = () => {
   };
 
   const heroRef = useRef<HTMLElement | null>(null);
+  const philosophyRef = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
   });
+  const { scrollYProgress: philosophyProgress } = useScroll({
+    target: philosophyRef,
+    offset: ['start end', 'end start'],
+  });
 
+  // Layered subtle parallax across Hero background, typography, arch photo, and side columns
+  const haloY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, disableMotion || !isDesktopLayout ? 0 : 24],
+  );
   const portraitY = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, disableMotion ? 0 : isCoarsePointer ? 24 : 54],
+    [0, disableMotion ? 0 : isCoarsePointer ? 16 : 44],
   );
   const portraitScale = useTransform(
     scrollYProgress,
     [0, 1],
-    [1, disableMotion ? 1 : isCoarsePointer ? 1.04 : 1.07],
+    [1, disableMotion ? 1 : isCoarsePointer ? 1.03 : 1.06],
   );
   const wordmarkY = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, disableMotion ? 0 : isCoarsePointer ? -20 : -44],
+    [0, disableMotion ? 0 : isCoarsePointer ? -14 : -42],
+  );
+  const wordmarkOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.85],
+    [1, disableMotion ? 1 : 0.72],
+  );
+  const dossierY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, disableMotion || !isDesktopLayout ? 0 : -18],
+  );
+  const copyY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, disableMotion || !isDesktopLayout ? 0 : 20],
+  );
+  const monogramCardY = useTransform(
+    philosophyProgress,
+    [0, 1],
+    disableMotion || !isDesktopLayout ? [0, 0] : [16, -16],
   );
 
   const ageInfo = useMemo(() => calculateExactAge(personalData.birthDateISO), []);
@@ -80,9 +113,10 @@ export const HomePage: React.FC = () => {
         className="relative min-h-svh bg-obsidian text-ivory flex flex-col justify-between pt-28 sm:pt-32 pb-12 px-6 sm:px-8 lg:px-12 overflow-hidden"
       >
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 studio-vignette" />
-        <div
+        <motion.div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-12 h-[78vh] studio-warm-halo"
+          style={{ y: haloY }}
+          className="pointer-events-none absolute inset-x-0 top-12 h-[78vh] studio-warm-halo will-change-transform"
         />
 
         {/* Top Editorial Meta Strip */}
@@ -104,11 +138,11 @@ export const HomePage: React.FC = () => {
         {/* Center Layered Composition: Full Name Editorial Lockup + Parallax Portrait */}
         <div className="relative z-10 max-w-[1440px] w-full mx-auto my-auto py-6 sm:py-10 lg:py-12 flex flex-col items-center justify-center">
           <motion.div
-            style={{ y: wordmarkY }}
+            style={{ y: wordmarkY, opacity: wordmarkOpacity }}
             initial={disableMotion ? false : { opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.95, ease: EASE_LUXURY }}
-            className="relative z-20 w-full text-center select-none pointer-events-none mb-5 sm:mb-7 md:mb-8 lg:-mb-10"
+            className="relative z-20 w-full text-center select-none pointer-events-none mb-5 sm:mb-7 md:mb-8 lg:-mb-10 will-change-transform"
           >
             <h1
               aria-label="Aflan Mu'afa Dzulfiqar"
@@ -121,10 +155,11 @@ export const HomePage: React.FC = () => {
           <div className="relative w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 items-end gap-8 lg:gap-6 z-10">
             {/* Left Floating Identity Dossier */}
             <motion.aside
+              style={{ y: dossierY }}
               initial={disableMotion ? false : { opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.85, delay: 0.28, ease: EASE_LUXURY }}
-              className="order-2 md:col-span-1 lg:order-1 lg:col-span-4 lg:pb-8"
+              className="order-2 md:col-span-1 lg:order-1 lg:col-span-4 lg:pb-8 will-change-transform"
             >
               <div className="border border-champagne/20 bg-espresso/70 backdrop-blur-md p-5 sm:p-6 max-w-md md:max-w-none lg:max-w-md">
                 <div className="flex items-center justify-between gap-2 pb-3 mb-4 border-b border-champagne/15">
@@ -239,10 +274,11 @@ export const HomePage: React.FC = () => {
 
             {/* Right Asymmetric Editorial Intro & Primary CTAs */}
             <motion.div
+              style={{ y: copyY }}
               initial={disableMotion ? false : { opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.85, delay: 0.34, ease: EASE_LUXURY }}
-              className="order-3 md:col-span-1 lg:col-span-4 lg:pb-8 flex flex-col lg:items-end lg:text-right gap-5 lg:gap-6"
+              className="order-3 md:col-span-1 lg:col-span-4 lg:pb-8 flex flex-col lg:items-end lg:text-right gap-5 lg:gap-6 will-change-transform"
             >
               <p
                 aria-label="Membangun pengalaman web yang jernih dengan ketelitian kode dan kepekaan editorial."
@@ -319,6 +355,7 @@ export const HomePage: React.FC = () => {
           BAND 02B — THE IDENTITY & MONOGRAM PHILOSOPHY (SPATIAL BRIDGE)
       ====================================================================== */}
       <section
+        ref={philosophyRef}
         aria-labelledby="monogram-philosophy-heading"
         className="relative bg-obsidian text-ivory py-20 sm:py-28 lg:py-32 px-6 sm:px-8 lg:px-12 border-b border-champagne/10 overflow-hidden"
       >
@@ -342,8 +379,12 @@ export const HomePage: React.FC = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Left Split: Architectural Monogram Emblem Blueprint */}
-            <Reveal variant="up" className="lg:col-span-5">
-              <div className="relative bg-espresso/65 border border-champagne/25 p-7 sm:p-10 shadow-[0_28px_80px_rgba(0,0,0,0.65)] overflow-hidden">
+            <motion.div
+              style={{ y: monogramCardY }}
+              className="lg:col-span-5 will-change-transform"
+            >
+              <Reveal variant="up">
+                <div className="relative bg-espresso/65 border border-champagne/25 p-7 sm:p-10 shadow-[0_28px_80px_rgba(0,0,0,0.65)] overflow-hidden">
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-0 opacity-15"
@@ -393,7 +434,8 @@ export const HomePage: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </Reveal>
+              </Reveal>
+            </motion.div>
 
             {/* Right Split: Deconstructed Brand Narrative & Pillars */}
             <div className="lg:col-span-7 space-y-8">
@@ -410,16 +452,16 @@ export const HomePage: React.FC = () => {
                     <>estetika ruang editorial.</>,
                   ]}
                 />
-                <Reveal variant="up" delay={0.1}>
-                  <p
-                    id="monogram-philosophy-heading"
+                <div id="monogram-philosophy-heading">
+                  <LineReveal
+                    delay={0.08}
                     className="font-sans text-[15px] sm:text-base leading-[1.8] text-ivory/75 max-w-2xl"
-                  >
-                    Monogram <span className="text-champagne font-medium">AMDZ</span> (Aflan
-                    Mu&apos;afa Dzulfiqar) merangkum cara kerja saya: memadukan struktur kode
-                    yang rapi dengan ketenangan komposisi tipografi editorial.
-                  </p>
-                </Reveal>
+                    lines={[
+                      "Monogram AMDZ (Aflan Mu'afa Dzulfiqar) merangkum cara kerja saya:",
+                      'memadukan struktur kode yang rapi dengan ketenangan komposisi tipografi editorial.',
+                    ]}
+                  />
+                </div>
               </div>
 
               <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 pt-4 border-t border-champagne/15">

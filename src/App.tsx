@@ -9,6 +9,7 @@ import { AnimatePresence, MotionConfig } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
 import { SplashIntro } from '@/components/layout/SplashIntro';
+import { ToastProvider } from '@/components/ui/ToastProvider';
 import { PageTransition } from '@/components/motion/PageTransition';
 import { HomePage } from '@/pages/HomePage';
 import { AboutPage } from '@/pages/AboutPage';
@@ -49,22 +50,24 @@ export const App: React.FC = () => {
 
   return (
     <MotionConfig reducedMotion="user">
-      <AnimatePresence mode="wait">
-        {showSplash && (
-          <SplashIntro
-            key="aflan-splash-intro"
-            onEnter={() => setShowSplash(false)}
-          />
-        )}
-      </AnimatePresence>
+      <ToastProvider>
+        <AnimatePresence mode="wait">
+          {showSplash && (
+            <SplashIntro
+              key="aflan-splash-intro"
+              onEnter={() => setShowSplash(false)}
+            />
+          )}
+        </AnimatePresence>
 
-      <BrowserRouter>
-        <Layout>
-          <ErrorBoundary>
-            <AppRoutes />
-          </ErrorBoundary>
-        </Layout>
-      </BrowserRouter>
+        <BrowserRouter>
+          <Layout>
+            <ErrorBoundary>
+              <AppRoutes />
+            </ErrorBoundary>
+          </Layout>
+        </BrowserRouter>
+      </ToastProvider>
     </MotionConfig>
   );
 };

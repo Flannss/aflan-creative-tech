@@ -8,6 +8,7 @@ import {
 } from '@/data/skills';
 import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
+import { SegmentedControl } from '@/components/ui/SegmentedControl';
 
 function getTierTypographyClasses(tier: SkillTier, isLight: boolean): {
   titleClass: string;
@@ -58,6 +59,26 @@ function getTierTypographyClasses(tier: SkillTier, isLight: boolean): {
 export const SkillsPage: React.FC = () => {
   const [selectedDomain, setSelectedDomain] = useState<string>('all');
   const [selectedTier, setSelectedTier] = useState<'All' | SkillTier>('All');
+
+  const domainOptions = useMemo(
+    () => [
+      { value: 'all', label: 'Semua 04 Domain' },
+      ...skillDomains.map((domain) => ({
+        value: domain.id,
+        label: `${domain.index} · ${domain.title}`,
+      })),
+    ],
+    [],
+  );
+
+  const tierOptions = useMemo(
+    () =>
+      skillTiers.map((tier) => ({
+        value: tier,
+        label: tier === 'All' ? 'Semua Level' : tier,
+      })),
+    [],
+  );
 
   const visibleDomains = useMemo(() => {
     const base =
@@ -157,70 +178,26 @@ export const SkillsPage: React.FC = () => {
             </div>
           </Reveal>
 
-          <div className="mt-8 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            <div
-              role="tablist"
-              aria-label="Filter domain teknis"
-              className="flex flex-wrap gap-2"
-            >
-              <button
-                type="button"
-                role="tab"
-                aria-selected={selectedDomain === 'all'}
-                onClick={() => setSelectedDomain('all')}
-                className={`px-4 py-2 rounded-full font-mono text-[11px] tracking-[0.18em] uppercase border transition-colors ${
-                  selectedDomain === 'all'
-                    ? 'bg-champagne text-obsidian border-champagne font-medium'
-                    : 'bg-obsidian/45 text-ivory/80 border-champagne/20 hover:border-champagne/60'
-                }`}
-              >
-                Semua 04 Domain
-              </button>
-              {skillDomains.map((domain) => {
-                const active = selectedDomain === domain.id;
-                return (
-                  <button
-                    key={domain.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={active}
-                    onClick={() => setSelectedDomain(domain.id)}
-                    className={`px-4 py-2 rounded-full font-mono text-[11px] tracking-[0.18em] uppercase border transition-colors ${
-                      active
-                        ? 'bg-champagne text-obsidian border-champagne font-medium'
-                        : 'bg-obsidian/45 text-ivory/80 border-champagne/20 hover:border-champagne/60'
-                    }`}
-                  >
-                    {domain.index} · {domain.title}
-                  </button>
-                );
-              })}
-            </div>
+          <div className="mt-8 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+            <SegmentedControl
+              options={domainOptions}
+              value={selectedDomain}
+              onChange={setSelectedDomain}
+              layoutId="skills-domain-pill"
+              ariaLabel="Filter domain teknis"
+              surface="dark"
+            />
 
-            <div
-              role="group"
-              aria-label="Filter berdasarkan tingkat pengalaman"
-              className="flex flex-wrap gap-2"
-            >
-              {skillTiers.map((tier) => {
-                const active = selectedTier === tier;
-                return (
-                  <button
-                    key={tier}
-                    type="button"
-                    aria-pressed={active}
-                    onClick={() => setSelectedTier(tier)}
-                    className={`px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-[0.16em] uppercase border transition-colors ${
-                      active
-                        ? 'bg-ivory text-espresso border-ivory font-medium'
-                        : 'bg-transparent text-champagne/80 border-champagne/25 hover:border-champagne'
-                    }`}
-                  >
-                    {tier === 'All' ? 'Semua Level' : tier}
-                  </button>
-                );
-              })}
-            </div>
+            <SegmentedControl
+              options={tierOptions}
+              value={selectedTier}
+              onChange={setSelectedTier}
+              layoutId="skills-tier-pill"
+              ariaLabel="Filter berdasarkan tingkat pengalaman"
+              surface="dark"
+              roleMode="group"
+              size="sm"
+            />
           </div>
         </div>
       </section>

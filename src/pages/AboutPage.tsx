@@ -16,6 +16,7 @@ import { contactData } from '@/data/contact';
 import { getProjectBySlug } from '@/data/projects';
 import { calculateExactAge } from '@/utils/age';
 import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
+import { LineReveal } from '@/components/motion/LineReveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { ParallaxFrame } from '@/components/motion/ParallaxFrame';
 import { MonogramMark } from '@/components/brand/Monogram';
@@ -137,16 +138,21 @@ export const AboutPage: React.FC = () => {
             </Reveal>
 
             <div className="md:col-span-7 md:pl-2 lg:pl-6 space-y-10">
-              <Reveal variant="up" delay={0.1}>
+              <div>
                 <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha mb-4">
                   NARASI PERSONAL &amp; TEKNIS
                 </p>
                 <div className="space-y-5 font-sans text-base sm:text-[1.06rem] leading-[1.85] text-charcoal">
                   {personalData.extendedStory.map((paragraph, idx) => (
-                    <p key={idx}>{paragraph}</p>
+                    <LineReveal
+                      key={`story-${idx}`}
+                      text={paragraph}
+                      delay={idx * 0.08}
+                      stagger={0.075}
+                    />
                   ))}
                 </div>
-              </Reveal>
+              </div>
 
               <Reveal variant="up" delay={0.15}>
                 <div className="bg-espresso text-ivory p-6 sm:p-8 border border-espresso space-y-3.5">
@@ -212,20 +218,19 @@ export const AboutPage: React.FC = () => {
                 ]}
               />
             </div>
-            <Reveal variant="up" delay={0.1} className="lg:col-span-5">
-              <p className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed">
-                Memadukan ketelitian Software QA dengan kepekaan antarmuka menjaga setiap
-                implementasi tetap bersih, teruji, dan transparan terhadap ruang lingkupnya.
-              </p>
-            </Reveal>
+            <div className="lg:col-span-5">
+              <LineReveal
+                delay={0.08}
+                className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed"
+                text="Memadukan ketelitian Software QA dengan kepekaan antarmuka menjaga setiap implementasi tetap bersih, teruji, dan transparan terhadap ruang lingkupnya."
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-0 divide-y md:divide-y-0 lg:divide-x divide-champagne/15 border-b border-champagne/15 md:py-10 lg:py-0">
             {personalData.philosophyPillars.map((pillar, idx) => (
-              <Reveal
+              <div
                 key={pillar.number}
-                variant="up"
-                delay={idx * 0.1}
                 className={`py-10 md:p-7 md:border md:border-champagne/15 lg:border-0 lg:py-14 lg:px-9 first:lg:pl-0 last:lg:pr-0 flex flex-col justify-between gap-6 ${
                   idx === personalData.philosophyPillars.length - 1
                     ? 'md:col-span-2 lg:col-span-1'
@@ -239,14 +244,20 @@ export const AboutPage: React.FC = () => {
                   <h3 className="font-serif text-2xl sm:text-3xl font-light text-ivory">
                     {pillar.title}
                   </h3>
-                  <p className="font-sans text-[15px] sm:text-base lg:text-sm font-medium text-champagne/90 leading-relaxed">
-                    {pillar.summary}
-                  </p>
+                  <LineReveal
+                    text={pillar.summary}
+                    delay={idx * 0.06}
+                    stagger={0.07}
+                    className="font-sans text-[15px] sm:text-base lg:text-sm font-medium text-champagne/90 leading-relaxed"
+                  />
                 </div>
-                <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 leading-relaxed">
-                  {pillar.detail}
-                </p>
-              </Reveal>
+                <LineReveal
+                  text={pillar.detail}
+                  delay={0.08 + idx * 0.06}
+                  stagger={0.075}
+                  className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 leading-relaxed"
+                />
+              </div>
             ))}
           </div>
         </div>

@@ -1,9 +1,9 @@
 import type { Variants } from 'framer-motion';
 
 /**
- * Editorial easing curve for smooth, decisive transitions.
+ * Curated luxury editorial easing curve: cubic-bezier(0.22, 1, 0.36, 1).
  */
-export const EASE_LUXURY: [number, number, number, number] = [0.16, 1, 0.3, 1];
+export const EASE_LUXURY: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export const pageContentVariants: Variants = {
   initial: {

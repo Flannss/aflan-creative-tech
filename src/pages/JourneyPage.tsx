@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, CheckCircle2, MapPin } from 'lucide-react';
 import {
   journeyCategories,
@@ -8,12 +8,14 @@ import {
   type JourneyCategory,
 } from '@/data/journey';
 import { Reveal } from '@/components/motion/Reveal';
+import { StackingCard } from '@/components/motion/StackingCard';
 import { TextReveal } from '@/components/motion/TextReveal';
-import { EASE_LUXURY } from '@/utils/motion';
+import { SegmentedControl } from '@/components/ui/SegmentedControl';
 
 export const JourneyPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'Semua' | JourneyCategory>('Semua');
   const [activeId, setActiveId] = useState<string>(journeyMilestones[0].id);
+  const stackRef = useRef<HTMLDivElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
   const filteredMilestones = useMemo(() => {
@@ -27,6 +29,30 @@ export const JourneyPage: React.FC = () => {
   }, [filteredMilestones, activeId]);
 
   const activeMilestone = filteredMilestones[activeIndex] ?? filteredMilestones[0];
+
+  const categoryOptions = useMemo(
+    () =>
+      journeyCategories.map((cat) => ({
+        value: cat,
+        label: cat,
+        badge:
+          cat === 'Semua'
+            ? journeyMilestones.length
+            : journeyMilestones.filter((m) => m.category === cat).length,
+      })),
+    [],
+  );
+
+  const scrollToMilestone = (id: string) => {
+    setActiveId(id);
+    const el = document.getElementById(`journey-card-${id}`);
+    if (el) {
+      el.scrollIntoView({
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        block: 'start',
+      });
+    }
+  };
 
   const handleSelectCategory = (cat: 'Semua' | JourneyCategory) => {
     setSelectedCategory(cat);
@@ -45,7 +71,7 @@ export const JourneyPage: React.FC = () => {
   const stepMilestone = (delta: number) => {
     const nextIdx = activeIndex + delta;
     if (nextIdx < 0 || nextIdx >= filteredMilestones.length) return;
-    setActiveId(filteredMilestones[nextIdx].id);
+    scrollToMilestone(filteredMilestones[nextIdx].id);
   };
 
   return (
@@ -56,7 +82,10 @@ export const JourneyPage: React.FC = () => {
           className="pointer-events-none absolute inset-0 studio-vignette opacity-80"
         />
         <div className="relative z-10 max-w-[1440px] mx-auto">
-          <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-champagne/15">
+          <Reveal
+            variant="up"
+            className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-champagne/15"
+          >
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
               BAB 03 — PERJALANAN &amp; LINIMASA
             </span>
@@ -81,163 +110,191 @@ export const JourneyPage: React.FC = () => {
             </div>
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
               <p className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed">
-                Linimasa interaktif yang mendokumentasikan pengalaman Programmer Intern di PT
+                Linimasa kronologis yang mendokumentasikan pengalaman Programmer Intern di PT
                 Puskomedia Indonesia Kreatif, studi Teknologi Informasi di Universitas Amikom
                 Purwokerto, serta pengembangan karya web dan aplikasi mobile.
               </p>
             </Reveal>
           </div>
 
-          <div
-            role="tablist"
-            aria-label="Filter linimasa berdasarkan kategori"
-            className="flex flex-wrap gap-2.5 mt-10 lg:mt-12"
-          >
-            {journeyCategories.map((category) => {
-              const active = selectedCategory === category;
-              return (
-                <button
-                  key={category}
-                  type="button"
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => handleSelectCategory(category)}
-                  className={`px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.18em] uppercase transition-all duration-300 border ${
-                    active
-                      ? 'bg-champagne text-obsidian border-champagne font-medium'
-                      : 'bg-espresso/50 text-ivory/80 border-champagne/20 hover:border-champagne/60 hover:text-ivory'
-                  }`}
-                >
-                  {category}
-                </button>
-              );
-            })}
+          <div className="mt-10 lg:mt-12">
+            <SegmentedControl
+              options={categoryOptions}
+              value={selectedCategory}
+              onChange={handleSelectCategory}
+              layoutId="journey-category-pill"
+              ariaLabel="Filter linimasa berdasarkan kategori"
+              surface="dark"
+            />
           </div>
         </div>
       </section>
 
       <section className="relative bg-ivory text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          <div className="lg:col-span-5 relative">
-            <div
-              aria-hidden="true"
-              className="md:hidden lg:block absolute left-[19px] top-4 bottom-4 w-px bg-espresso/15"
-            />
-            <ol className="grid grid-cols-1 md:grid-cols-2 lg:block gap-4 lg:gap-0 lg:space-y-4">
-              {filteredMilestones.map((item, idx) => {
+          {/* Pinned Editorial Category Heading & Chapter Controls */}
+          <aside className="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
+            <div className="space-y-3 pb-6 border-b border-espresso/15">
+              <p className="font-mono text-[10px] tracking-[0.26em] uppercase text-mocha">
+                KATEGORI AKTIF · {String(filteredMilestones.length).padStart(2, '0')} BAB
+              </p>
+              <h2 className="font-serif text-3xl sm:text-4xl font-light leading-[1.08] text-espresso">
+                {selectedCategory === 'Semua' ? (
+                  <>
+                    Kronologi <span className="italic text-mocha">Lengkap</span>
+                  </>
+                ) : (
+                  <span className="italic text-mocha">{selectedCategory}</span>
+                )}
+              </h2>
+              {activeMilestone && (
+                <p className="font-sans text-sm text-charcoal/80 leading-relaxed">
+                  Bab aktif:{' '}
+                  <span className="font-medium text-espresso">
+                    {activeMilestone.chapter} · {activeMilestone.periodLabel}
+                  </span>
+                </p>
+              )}
+            </div>
+
+            <nav aria-label="Indeks bab perjalanan" className="space-y-2">
+              {filteredMilestones.map((item) => {
                 const isSelected = activeMilestone?.id === item.id;
-                const isOrphanOnTablet =
-                  filteredMilestones.length % 2 === 1 &&
-                  idx === filteredMilestones.length - 1;
                 return (
-                  <li
+                  <button
                     key={item.id}
-                    className={`relative pl-11 sm:pl-12 md:pl-0 lg:pl-12 ${
-                      isOrphanOnTablet ? 'md:col-span-2' : ''
+                    type="button"
+                    onClick={() => scrollToMilestone(item.id)}
+                    className={`w-full text-left px-4 py-3 border transition-colors duration-200 flex items-center justify-between gap-3 cursor-pointer ${
+                      isSelected
+                        ? 'bg-espresso text-ivory border-espresso'
+                        : 'bg-offwhite text-espresso border-espresso/15 hover:border-mocha'
                     }`}
                   >
+                    <div className="min-w-0">
+                      <span
+                        className={`block font-mono text-[10px] tracking-[0.2em] uppercase ${
+                          isSelected ? 'text-champagne' : 'text-mocha'
+                        }`}
+                      >
+                        BAB {item.chapter} · {item.category}
+                      </span>
+                      <span className="block font-serif text-lg leading-snug truncate mt-0.5">
+                        {item.title}
+                      </span>
+                    </div>
                     <span
-                      aria-hidden="true"
-                      className={`md:hidden lg:block absolute left-3 top-6 size-3.5 rounded-full border-2 transition-all duration-300 ${
-                        isSelected
-                          ? 'bg-mocha border-espresso scale-125'
-                          : 'bg-ivory border-espresso/35'
-                      }`}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setActiveId(item.id)}
-                      className={`w-full h-full text-left p-5 sm:p-6 border active:scale-[0.985] transition-all duration-300 ${
-                        isSelected
-                          ? 'bg-espresso text-ivory border-espresso shadow-xl'
-                          : 'bg-offwhite text-espresso border-espresso/15 hover:border-mocha hover:bg-ivory'
+                      className={`shrink-0 font-mono text-[10px] tracking-[0.14em] uppercase ${
+                        isSelected ? 'text-taupe' : 'text-espresso/55'
                       }`}
                     >
-                      <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                        <span
-                          className={`font-mono text-[10px] tracking-[0.24em] uppercase ${
-                            isSelected ? 'text-champagne' : 'text-mocha'
-                          }`}
-                        >
-                          BAB {item.chapter} · {item.category}
-                        </span>
-                        <span
-                          className={`font-mono text-[10px] tracking-[0.16em] uppercase ${
-                            isSelected ? 'text-taupe' : 'text-espresso/60'
-                          }`}
-                        >
-                          {item.periodLabel}
-                        </span>
-                      </div>
-                      <h2
-                        className={`font-serif text-xl sm:text-2xl md:text-[1.5rem] lg:text-[1.65rem] leading-snug font-light ${
-                          isSelected ? 'text-ivory' : 'text-espresso'
-                        }`}
-                      >
-                        {item.title}
-                      </h2>
-                      <p
-                        className={`mt-1.5 font-mono text-[10px] tracking-[0.16em] uppercase ${
-                          isSelected ? 'text-champagne/75' : 'text-espresso/60'
-                        }`}
-                      >
-                        {item.location}
-                      </p>
-                    </button>
-                  </li>
+                      {item.periodLabel}
+                    </span>
+                  </button>
                 );
               })}
-            </ol>
-          </div>
+            </nav>
 
-          <div className="lg:col-span-7 lg:sticky lg:top-28">
-            {activeMilestone && (
-              <AnimatePresence mode="wait">
+            <div className="pt-4 border-t border-espresso/15 flex items-center justify-between gap-3">
+              <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-espresso/65">
+                {String(activeIndex + 1).padStart(2, '0')} /{' '}
+                {String(filteredMilestones.length).padStart(2, '0')}
+              </span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => stepMilestone(-1)}
+                  disabled={isFirst}
+                  aria-disabled={isFirst}
+                  aria-label="Milestone sebelumnya"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-espresso/30 text-espresso font-mono text-[10px] tracking-[0.16em] uppercase hover:bg-espresso hover:text-ivory transition-colors disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-espresso"
+                >
+                  <ArrowLeft className="size-3.5" aria-hidden="true" />
+                  Sebelumnya
+                </button>
+                <button
+                  type="button"
+                  onClick={() => stepMilestone(1)}
+                  disabled={isLast}
+                  aria-disabled={isLast}
+                  aria-label="Milestone berikutnya"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-espresso text-ivory font-mono text-[10px] tracking-[0.16em] uppercase font-medium hover:bg-mocha transition-colors disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-espresso"
+                >
+                  Berikutnya
+                  <ArrowRight className="size-3.5" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-2 flex items-center justify-between text-[11px] font-mono tracking-[0.16em] uppercase text-espresso/70">
+              <span>LANJUTKAN</span>
+              <Link
+                to="/skills"
+                className="inline-flex items-center gap-1.5 text-espresso hover:text-mocha transition-colors"
+              >
+                04 · Keahlian Teknis
+                <ArrowRight className="size-3.5" aria-hidden="true" />
+              </Link>
+            </div>
+          </aside>
+
+          {/* Stacking Dossier Cards Deck */}
+          <div ref={stackRef} className="lg:col-span-8 space-y-6 md:space-y-10 pb-6">
+            {filteredMilestones.map((item, idx) => (
+              <StackingCard
+                key={`${selectedCategory}-${item.id}`}
+                id={`journey-card-${item.id}`}
+                containerRef={stackRef}
+                index={idx}
+                total={filteredMilestones.length}
+                baseTopPx={112}
+                offsetStepPx={18}
+              >
                 <motion.article
-                  key={activeMilestone.id}
-                  initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -14 }}
-                  transition={{ duration: 0.56, ease: EASE_LUXURY }}
-                  className="bg-obsidian text-ivory border border-champagne/25 p-6 sm:p-10 lg:p-12 shadow-2xl"
+                  onViewportEnter={() => setActiveId(item.id)}
+                  viewport={{ amount: 0.45 }}
+                  className="bg-obsidian text-ivory border border-champagne/25 p-6 sm:p-10 lg:p-12 shadow-[0_24px_70px_rgba(23,22,21,0.35)]"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3.5">
                       <span className="font-serif italic text-4xl text-champagne leading-none">
-                        {activeMilestone.chapter}
+                        {item.chapter}
                       </span>
                       <div>
                         <span className="block font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
-                          {activeMilestone.category}
+                          {item.category}
                         </span>
                         <span className="block font-mono text-xs text-taupe mt-0.5">
-                          {activeMilestone.periodLabel}
+                          {item.periodLabel}
                         </span>
                       </div>
                     </div>
 
                     <span className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.18em] uppercase px-3 py-1 border border-champagne/25 text-champagne/90">
                       <MapPin className="size-3" aria-hidden="true" />
-                      {activeMilestone.location}
+                      {item.location}
                     </span>
                   </div>
 
                   <div className="py-7 sm:py-8 space-y-6">
-                    <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-[2.85rem] leading-[1.12] lg:leading-[1.08] font-light text-ivory">
-                      {activeMilestone.title}
+                    <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-[2.65rem] leading-[1.12] lg:leading-[1.08] font-light text-ivory">
+                      {item.title}
                     </h3>
 
-                    <p className="font-sans text-base leading-[1.82] text-ivory/80">
-                      {activeMilestone.summary}
+                    <p className="font-sans text-[15px] sm:text-base leading-[1.82] text-ivory/80">
+                      {item.summary}
                     </p>
 
-                    <div className="pt-4 space-y-3">
+                    <div className="pt-3 space-y-3">
                       <p className="font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
                         POIN TERVERIFIKASI
                       </p>
                       <ul className="space-y-3">
-                        {activeMilestone.highlights.map((hl) => (
-                          <li key={hl} className="flex items-start gap-3 text-[15px] sm:text-base lg:text-sm text-ivory/85">
+                        {item.highlights.map((hl) => (
+                          <li
+                            key={hl}
+                            className="flex items-start gap-3 text-[15px] sm:text-base lg:text-sm text-ivory/85"
+                          >
                             <CheckCircle2
                               className="size-4 text-champagne shrink-0 mt-1 lg:mt-0.5"
                               aria-hidden="true"
@@ -249,50 +306,16 @@ export const JourneyPage: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="pt-6 border-t border-champagne/15 flex flex-wrap items-center justify-between gap-4">
-                    <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-taupe">
-                      MILESTONE {String(activeIndex + 1).padStart(2, '0')} /{' '}
+                  <div className="pt-5 border-t border-champagne/15 flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.22em] uppercase text-taupe">
+                    <span>
+                      BAB {String(idx + 1).padStart(2, '0')} /{' '}
                       {String(filteredMilestones.length).padStart(2, '0')}
                     </span>
-                    <div className="flex items-center gap-2.5">
-                      <button
-                        type="button"
-                        onClick={() => stepMilestone(-1)}
-                        disabled={isFirst}
-                        aria-disabled={isFirst}
-                        aria-label="Milestone sebelumnya"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-champagne/30 text-ivory font-mono text-[11px] tracking-[0.16em] uppercase hover:bg-champagne hover:text-obsidian transition-colors disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-ivory"
-                      >
-                        <ArrowLeft className="size-3.5" aria-hidden="true" />
-                        Sebelumnya
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => stepMilestone(1)}
-                        disabled={isLast}
-                        aria-disabled={isLast}
-                        aria-label="Milestone berikutnya"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-champagne text-obsidian font-mono text-[11px] tracking-[0.16em] uppercase font-medium hover:bg-ivory transition-colors disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-champagne"
-                      >
-                        Berikutnya
-                        <ArrowRight className="size-3.5" aria-hidden="true" />
-                      </button>
-                    </div>
+                    <span className="text-champagne/80">ARSIP TERVERIFIKASI · AMDZ</span>
                   </div>
                 </motion.article>
-              </AnimatePresence>
-            )}
-
-            <div className="mt-6 flex items-center justify-between px-1 text-xs font-mono tracking-[0.16em] uppercase text-espresso/70">
-              <span>LANJUTKAN MEMBACA</span>
-              <Link
-                to="/skills"
-                className="inline-flex items-center gap-2 text-espresso hover:text-mocha transition-colors"
-              >
-                04 · Keahlian Teknis
-                <ArrowRight className="size-3.5" aria-hidden="true" />
-              </Link>
-            </div>
+              </StackingCard>
+            ))}
           </div>
         </div>
       </section>

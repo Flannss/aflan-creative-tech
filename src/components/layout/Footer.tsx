@@ -4,10 +4,12 @@ import { ArrowUpRight, Check, Copy, Github } from 'lucide-react';
 import { BrandSignature } from '@/components/brand/Monogram';
 import { navigationRoutes, personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
+import { useToast } from '@/hooks/useToast';
 
 export const Footer: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const copyTimerRef = useRef<number | null>(null);
+  const { showToast } = useToast();
   const currentYear = new Date().getFullYear();
 
   useEffect(() => {
@@ -22,10 +24,11 @@ export const Footer: React.FC = () => {
     try {
       await navigator.clipboard.writeText(contactData.email);
       setCopied(true);
+      showToast('Email Tersalin', contactData.email);
       if (copyTimerRef.current !== null) {
         window.clearTimeout(copyTimerRef.current);
       }
-      copyTimerRef.current = window.setTimeout(() => setCopied(false), 2200);
+      copyTimerRef.current = window.setTimeout(() => setCopied(false), 3000);
     } catch {
       window.location.href = `mailto:${contactData.email}`;
     }

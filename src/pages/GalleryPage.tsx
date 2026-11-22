@@ -6,9 +6,7 @@ import {
   Eye,
   EyeOff,
   Info,
-  LayoutGrid,
   Maximize2,
-  Rows3,
   Sparkles,
   X,
 } from 'lucide-react';
@@ -21,6 +19,7 @@ import {
 import { MonogramMark } from '@/components/brand/Monogram';
 import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
+import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { EASE_LUXURY } from '@/utils/motion';
 
 type TonalTreatment = 'original' | 'sepia' | 'monochrome';
@@ -266,6 +265,37 @@ export const GalleryPage: React.FC = () => {
     return galleryItems.filter((item) => item.category === selectedCategory);
   }, [selectedCategory]);
 
+  const categoryOptions = useMemo(
+    () =>
+      galleryCategories.map((cat) => ({
+        value: cat,
+        label: cat,
+        badge:
+          cat === 'Semua'
+            ? galleryItems.length
+            : galleryItems.filter((item) => item.category === cat).length,
+      })),
+    [],
+  );
+
+  const layoutOptions = useMemo(
+    () =>
+      [
+        { value: 'masonry', label: 'Masonry' },
+        { value: 'monograph', label: 'Monograf' },
+      ] as const,
+    [],
+  );
+
+  const tonalOptions = useMemo(
+    () =>
+      (Object.keys(TONAL_FILTERS) as TonalTreatment[]).map((key) => ({
+        value: key,
+        label: TONAL_FILTERS[key].label,
+      })),
+    [],
+  );
+
   const lightboxIndex = useMemo(() => {
     if (!lightboxId) return null;
     const idx = filteredItems.findIndex((item) => item.id === lightboxId);
@@ -360,43 +390,14 @@ export const GalleryPage: React.FC = () => {
 
           <div className="mt-10 lg:mt-12 pt-6 border-t border-espresso/10 space-y-5">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-              <div
-                role="tablist"
-                aria-label="Filter kategori galeri"
-                className="flex flex-wrap gap-2"
-              >
-                {galleryCategories.map((cat) => {
-                  const active = selectedCategory === cat;
-                  const count =
-                    cat === 'Semua'
-                      ? galleryItems.length
-                      : galleryItems.filter((item) => item.category === cat).length;
-
-                  return (
-                    <button
-                      key={cat}
-                      type="button"
-                      role="tab"
-                      aria-selected={active}
-                      onClick={() => setSelectedCategory(cat)}
-                      className={`inline-flex items-center gap-2 px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border active:scale-[0.97] transition-all ${
-                        active
-                          ? 'bg-espresso text-ivory border-espresso font-medium'
-                          : 'bg-ivory text-espresso border-espresso/20 hover:border-mocha'
-                      }`}
-                    >
-                      <span>{cat}</span>
-                      <span
-                        className={`text-[10px] ${
-                          active ? 'text-champagne' : 'text-mocha'
-                        }`}
-                      >
-                        ({count})
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
+              <SegmentedControl
+                options={categoryOptions}
+                value={selectedCategory}
+                onChange={setSelectedCategory}
+                layoutId="gallery-category-pill"
+                ariaLabel="Filter kategori galeri"
+                surface="light"
+              />
 
               <div className="flex flex-wrap items-center gap-2.5">
                 <button
@@ -404,7 +405,7 @@ export const GalleryPage: React.FC = () => {
                   onClick={() => setFilmGrainEnabled((prev) => !prev)}
                   aria-pressed={filmGrainEnabled}
                   data-cursor="GRAIN"
-                  className={`inline-flex items-center gap-2 px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border active:scale-[0.97] transition-all ${
+                  className={`inline-flex items-center gap-2 px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border active:scale-[0.97] transition-all cursor-pointer ${
                     filmGrainEnabled
                       ? 'bg-mocha text-ivory border-mocha shadow-sm'
                       : 'bg-ivory text-espresso/80 border-espresso/25 hover:border-espresso'
@@ -414,64 +415,34 @@ export const GalleryPage: React.FC = () => {
                   <span>Grain 35mm: {filmGrainEnabled ? 'Aktif' : 'Mati'}</span>
                 </button>
 
-                <div className="inline-flex items-center rounded-full border border-espresso/20 bg-ivory p-1">
-                  <button
-                    type="button"
-                    onClick={() => setLayoutMode('masonry')}
-                    aria-pressed={layoutMode === 'masonry'}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-[0.16em] uppercase transition-colors ${
-                      layoutMode === 'masonry'
-                        ? 'bg-espresso text-ivory font-medium'
-                        : 'text-espresso/75 hover:text-mocha'
-                    }`}
-                  >
-                    <LayoutGrid className="size-3.5" aria-hidden="true" />
-                    Masonry
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setLayoutMode('monograph')}
-                    aria-pressed={layoutMode === 'monograph'}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-[0.16em] uppercase transition-colors ${
-                      layoutMode === 'monograph'
-                        ? 'bg-espresso text-ivory font-medium'
-                        : 'text-espresso/75 hover:text-mocha'
-                    }`}
-                  >
-                    <Rows3 className="size-3.5" aria-hidden="true" />
-                    Monograf
-                  </button>
-                </div>
+                <SegmentedControl
+                  options={layoutOptions}
+                  value={layoutMode}
+                  onChange={setLayoutMode}
+                  layoutId="gallery-layout-pill"
+                  ariaLabel="Pilihan tata letak galeri"
+                  surface="light"
+                  roleMode="group"
+                  size="sm"
+                />
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4 border-t border-espresso/10">
-              <div
-                className="flex flex-wrap items-center gap-2"
-                role="group"
-                aria-label="Pilihan tonal visual"
-              >
-                <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-mocha mr-1">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-mocha">
                   TONAL:
                 </span>
-                {(Object.keys(TONAL_FILTERS) as TonalTreatment[]).map((key) => {
-                  const active = tonalMode === key;
-                  return (
-                    <button
-                      key={key}
-                      type="button"
-                      aria-pressed={active}
-                      onClick={() => setTonalMode(key)}
-                      className={`px-3.5 py-1.5 rounded-full font-mono text-[10px] tracking-[0.16em] uppercase border active:scale-[0.97] transition-all ${
-                        active
-                          ? 'bg-espresso text-ivory border-espresso'
-                          : 'bg-offwhite text-espresso border-espresso/20 hover:border-mocha'
-                      }`}
-                    >
-                      {TONAL_FILTERS[key].label}
-                    </button>
-                  );
-                })}
+                <SegmentedControl
+                  options={tonalOptions}
+                  value={tonalMode}
+                  onChange={setTonalMode}
+                  layoutId="gallery-tonal-pill"
+                  ariaLabel="Pilihan tonal visual"
+                  surface="light"
+                  roleMode="group"
+                  size="sm"
+                />
               </div>
 
               <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-espresso/65">

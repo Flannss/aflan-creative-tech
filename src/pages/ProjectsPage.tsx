@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, LayoutGrid, List, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, ShieldCheck } from 'lucide-react';
 import {
   projectCategories,
   projectsData,
@@ -11,11 +11,14 @@ import { TypographicDossierPlate } from '@/components/projects/TypographicDossie
 import { ProjectTransitionPortal } from '@/components/projects/ProjectClickTransition';
 import { useProjectTransition } from '@/hooks/useProjectTransition';
 import { Reveal } from '@/components/motion/Reveal';
+import { StackingCard } from '@/components/motion/StackingCard';
 import { TextReveal } from '@/components/motion/TextReveal';
+import { SegmentedControl } from '@/components/ui/SegmentedControl';
 
 export const ProjectsPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'All' | ProjectCategory>('All');
   const [viewMode, setViewMode] = useState<'index' | 'spread'>('index');
+  const stackRef = useRef<HTMLDivElement | null>(null);
   const { transitionState, transitioningSlug, triggerProjectTransition } =
     useProjectTransition();
 
@@ -23,6 +26,24 @@ export const ProjectsPage: React.FC = () => {
     if (selectedCategory === 'All') return projectsData;
     return projectsData.filter((p) => p.category === selectedCategory);
   }, [selectedCategory]);
+
+  const categoryOptions = useMemo(
+    () =>
+      projectCategories.map((cat) => ({
+        value: cat,
+        label: cat === 'All' ? 'Semua' : cat,
+      })),
+    [],
+  );
+
+  const viewOptions = useMemo(
+    () =>
+      [
+        { value: 'index', label: 'Indeks Editorial' },
+        { value: 'spread', label: 'Kartu Bertumpuk' },
+      ] as const,
+    [],
+  );
 
   return (
     <div className="w-full overflow-x-clip">
@@ -32,7 +53,10 @@ export const ProjectsPage: React.FC = () => {
           className="pointer-events-none absolute inset-0 studio-vignette opacity-75"
         />
         <div className="relative z-10 max-w-[1440px] mx-auto">
-          <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-champagne/15">
+          <Reveal
+            variant="up"
+            className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-champagne/15"
+          >
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
               BAB 05 — PROYEK &amp; ARSIP KERJA
             </span>
@@ -73,61 +97,26 @@ export const ProjectsPage: React.FC = () => {
             </Reveal>
           </div>
 
-          <div className="mt-10 lg:mt-12 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div
-              role="tablist"
-              aria-label="Filter proyek berdasarkan kategori"
-              className="flex flex-wrap gap-2"
-            >
-              {projectCategories.map((category) => {
-                const active = selectedCategory === category;
-                return (
-                  <button
-                    key={category}
-                    type="button"
-                    role="tab"
-                    aria-selected={active}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.18em] uppercase border transition-colors ${
-                      active
-                        ? 'bg-champagne text-obsidian border-champagne font-medium'
-                        : 'bg-espresso/50 text-ivory/80 border-champagne/20 hover:border-champagne/60'
-                    }`}
-                  >
-                    {category === 'All' ? 'Semua' : category}
-                  </button>
-                );
-              })}
-            </div>
+          <div className="mt-10 lg:mt-12 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <SegmentedControl
+              options={categoryOptions}
+              value={selectedCategory}
+              onChange={setSelectedCategory}
+              layoutId="projects-category-pill"
+              ariaLabel="Filter proyek berdasarkan kategori"
+              surface="dark"
+            />
 
-            <div className="inline-flex items-center rounded-full border border-champagne/25 bg-espresso/55 p-1 self-start md:self-auto">
-              <button
-                type="button"
-                onClick={() => setViewMode('index')}
-                aria-pressed={viewMode === 'index'}
-                className={`inline-flex items-center gap-2 px-3.5 py-2 lg:py-1.5 rounded-full font-mono text-[10px] tracking-[0.18em] uppercase transition-colors ${
-                  viewMode === 'index'
-                    ? 'bg-champagne text-obsidian font-medium'
-                    : 'text-ivory/75 hover:text-champagne'
-                }`}
-              >
-                <List className="size-3.5" aria-hidden="true" />
-                Indeks Editorial
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewMode('spread')}
-                aria-pressed={viewMode === 'spread'}
-                className={`inline-flex items-center gap-2 px-3.5 py-2 lg:py-1.5 rounded-full font-mono text-[10px] tracking-[0.18em] uppercase transition-colors ${
-                  viewMode === 'spread'
-                    ? 'bg-champagne text-obsidian font-medium'
-                    : 'text-ivory/75 hover:text-champagne'
-                }`}
-              >
-                <LayoutGrid className="size-3.5" aria-hidden="true" />
-                Galeri Spread
-              </button>
-            </div>
+            <SegmentedControl
+              options={viewOptions}
+              value={viewMode}
+              onChange={setViewMode}
+              layoutId="projects-view-pill"
+              ariaLabel="Mode tampilan arsip proyek"
+              surface="dark"
+              roleMode="group"
+              size="sm"
+            />
           </div>
         </div>
       </section>
@@ -137,19 +126,40 @@ export const ProjectsPage: React.FC = () => {
           {viewMode === 'index' ? (
             <ProjectPreviewList projects={filteredProjects} />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8">
-              {filteredProjects.map((project, idx) => {
-                const isWide = idx % 3 === 0;
-                const isOrphanOnTablet =
-                  filteredProjects.length % 2 === 1 && idx === filteredProjects.length - 1;
-                return (
-                  <Reveal
-                    key={project.slug}
-                    variant="up"
-                    delay={idx * 0.07}
-                    className={`${isOrphanOnTablet ? 'md:col-span-2 ' : ''}${
-                      isWide ? 'lg:col-span-7' : 'lg:col-span-5'
-                    }`}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+              {/* Pinned Category Heading Rail */}
+              <aside className="lg:col-span-4 lg:sticky lg:top-28 space-y-4">
+                <p className="font-mono text-[10px] tracking-[0.26em] uppercase text-champagne">
+                  DOSSIER BERTUMPUK · {String(filteredProjects.length).padStart(2, '0')} KARYA
+                </p>
+                <h2 className="font-serif text-3xl sm:text-4xl lg:text-[2.85rem] font-light leading-[1.06] text-ivory">
+                  {selectedCategory === 'All' ? (
+                    <>
+                      Seluruh <span className="italic text-champagne">Karya Terkurasi</span>
+                    </>
+                  ) : (
+                    <span className="italic text-champagne">{selectedCategory}</span>
+                  )}
+                </h2>
+                <p className="font-sans text-[15px] lg:text-sm text-ivory/75 leading-relaxed">
+                  Gulir untuk menelusuri kartu proyek yang bertumpuk lembut, lalu klik kartu
+                  mana saja untuk membuka studi kasus penuh.
+                </p>
+                <div className="pt-4 border-t border-champagne/15 font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
+                  KLIK KARTU UNTUK TRANSISI DOSSIER →
+                </div>
+              </aside>
+
+              {/* Pure Stacking Project Cards */}
+              <div ref={stackRef} className="lg:col-span-8 space-y-6 md:space-y-10 pb-6">
+                {filteredProjects.map((project, idx) => (
+                  <StackingCard
+                    key={`${selectedCategory}-${project.slug}`}
+                    containerRef={stackRef}
+                    index={idx}
+                    total={filteredProjects.length}
+                    baseTopPx={112}
+                    offsetStepPx={18}
                   >
                     <Link
                       to={`/projects/${project.slug}`}
@@ -159,7 +169,7 @@ export const ProjectsPage: React.FC = () => {
                         );
                         triggerProjectTransition(e, project, previewEl);
                       }}
-                      className={`group flex flex-col h-full bg-obsidian border border-champagne/20 hover:border-champagne/60 active:border-champagne active:scale-[0.985] transition-all duration-300 overflow-hidden ${
+                      className={`group flex flex-col bg-obsidian border border-champagne/25 hover:border-champagne/65 active:border-champagne transition-all duration-300 overflow-hidden shadow-[0_28px_80px_rgba(0,0,0,0.55)] ${
                         transitioningSlug !== null && transitioningSlug !== project.slug
                           ? 'opacity-30'
                           : ''
@@ -178,7 +188,9 @@ export const ProjectsPage: React.FC = () => {
                               src={project.previewImage}
                               alt={project.previewCaption}
                               loading="lazy"
-                              style={{ objectPosition: project.previewObjectPosition ?? 'center' }}
+                              style={{
+                                objectPosition: project.previewObjectPosition ?? 'center',
+                              }}
                               className={`w-full h-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                                 transitioningSlug === project.slug
                                   ? 'scale-[1.08]'
@@ -199,7 +211,7 @@ export const ProjectsPage: React.FC = () => {
                         )}
                       </div>
 
-                      <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between gap-5">
+                      <div className="p-6 sm:p-8 flex flex-col justify-between gap-5">
                         <div className="space-y-3">
                           <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] tracking-[0.2em] uppercase">
                             <span className="text-champagne">
@@ -207,9 +219,9 @@ export const ProjectsPage: React.FC = () => {
                             </span>
                             <span className="text-taupe">{project.verificationState}</span>
                           </div>
-                          <h2 className="font-serif text-2xl sm:text-3xl font-light text-ivory group-hover:text-champagne transition-colors">
+                          <h3 className="font-serif text-2xl sm:text-3xl font-light text-ivory group-hover:text-champagne transition-colors">
                             {project.title}
-                          </h2>
+                          </h3>
                           <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 leading-relaxed">
                             {project.summary}
                           </p>
@@ -220,15 +232,15 @@ export const ProjectsPage: React.FC = () => {
                             {project.role}
                           </span>
                           <span className="inline-flex items-center gap-1 font-mono text-[11px] tracking-[0.18em] uppercase text-champagne shrink-0">
-                            Detail
+                            Buka Dossier
                             <ArrowUpRight className="size-3.5" aria-hidden="true" />
                           </span>
                         </div>
                       </div>
                     </Link>
-                  </Reveal>
-                );
-              })}
+                  </StackingCard>
+                ))}
+              </div>
             </div>
           )}
         </div>
