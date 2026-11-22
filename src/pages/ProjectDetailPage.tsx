@@ -29,11 +29,11 @@ export const ProjectDetailPage: React.FC = () => {
 
   if (!project) {
     return (
-      <section className="min-h-[80vh] bg-obsidian text-ivory flex flex-col items-center justify-center px-6 sm:px-8 pt-28 pb-20 text-center">
-        <p className="font-mono text-xs tracking-[0.26em] uppercase text-champagne mb-4">
+      <section className="min-h-[80vh] bg-obsidian text-ivory flex flex-col items-center justify-center px-4 sm:px-6 pt-24 pb-16 text-center">
+        <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne mb-4">
           ENTRI TIDAK DITEMUKAN
         </p>
-        <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-light mb-6">
+        <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light tracking-tight mb-6 text-ivory/95">
           Dossier proyek yang dicari tidak tersedia.
         </h1>
         <Link
@@ -54,30 +54,30 @@ export const ProjectDetailPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
         <div className="max-w-[1440px] mx-auto">
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-champagne/15">
+          <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15">
             <Link
               to="/projects"
-              className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-champagne hover:text-ivory transition-colors"
+              className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne hover:text-ivory transition-colors"
             >
               <ArrowLeft className="size-3.5" aria-hidden="true" />
               Kembali ke Arsip Proyek
             </Link>
-            <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-taupe">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
               ENTRI {project.index} · {project.category}
             </span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pt-12 lg:pt-14 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-8 space-y-5">
-              <span className="inline-block font-mono text-[10px] tracking-[0.22em] uppercase px-3 py-1 border border-champagne/30 text-champagne">
+              <span className="inline-block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium px-3 py-1 border border-champagne/30 text-champagne">
                 {project.verificationState}
               </span>
               <TextReveal
                 as="h1"
                 immediate
-                className="font-serif text-[2.1rem] sm:text-5xl md:text-6xl lg:text-[4.6rem] leading-[1.06] lg:leading-[1.02] font-light"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-ivory/95"
                 lines={[project.title]}
               />
               <p className="font-sans text-sm md:text-base text-ivory/80 max-w-2xl leading-relaxed">
@@ -86,10 +86,10 @@ export const ProjectDetailPage: React.FC = () => {
             </div>
 
             <Reveal variant="up" delay={0.1} className="lg:col-span-4 min-w-0 lg:text-right space-y-3">
-              <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-taupe">
+              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
                 LINIMASA / STATUS
               </p>
-              <p className="font-serif text-2xl text-champagne">{project.yearLabel}</p>
+              <p className="font-serif text-xl text-champagne/90">{project.yearLabel}</p>
 
               {project.liveUrl && (
                 <div className="pt-2 flex lg:justify-end">
@@ -139,7 +139,7 @@ export const ProjectDetailPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-ivory text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
+      <section className="bg-ivory text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto space-y-12 sm:space-y-16">
           <Reveal variant="clip">
             <figure className="border border-espresso/20 bg-obsidian overflow-hidden shadow-2xl">
@@ -180,38 +180,38 @@ export const ProjectDetailPage: React.FC = () => {
             <Reveal variant="up" className="md:col-span-5 lg:col-span-4 space-y-6">
               <div className="bg-offwhite border border-espresso/15 p-6 sm:p-7 space-y-6">
                 <div>
-                  <p className="font-mono text-[10px] tracking-[0.24em] uppercase text-mocha">
+                  <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
                     PLATFORM
                   </p>
-                  <p className="font-sans text-[15px] lg:text-sm font-medium text-espresso mt-1">
+                  <p className="font-sans text-sm font-medium text-espresso mt-1">
                     {project.platform}
                   </p>
                 </div>
 
                 <div className="pt-5 border-t border-espresso/15">
-                  <p className="font-mono text-[10px] tracking-[0.24em] uppercase text-mocha">
+                  <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
                     PERAN &amp; TANGGUNG JAWAB
                   </p>
-                  <p className="font-serif text-xl sm:text-2xl text-espresso mt-1.5 leading-snug">
+                  <p className="font-serif text-lg sm:text-xl text-espresso mt-1.5 leading-snug">
                     {project.role}
                   </p>
                 </div>
 
                 <div className="pt-5 border-t border-espresso/15">
-                  <p className="font-mono text-[10px] tracking-[0.24em] uppercase text-mocha">
+                  <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
                     ATRIBUSI KONTRIBUSI
                   </p>
-                  <p className="font-sans text-[15px] lg:text-sm text-charcoal/85 mt-2 leading-relaxed">
+                  <p className="font-sans text-sm text-espresso/80 mt-2 leading-relaxed">
                     {project.contributionScope}
                   </p>
                 </div>
 
                 {project.notableWork && (
                   <div className="pt-5 border-t border-espresso/15">
-                    <p className="font-mono text-[10px] tracking-[0.24em] uppercase text-mocha">
+                    <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
                       NOTABLE WORK
                     </p>
-                    <p className="font-sans text-[15px] lg:text-sm text-espresso font-medium mt-2 leading-relaxed">
+                    <p className="font-sans text-sm text-espresso font-medium mt-2 leading-relaxed">
                       {project.notableWork}
                     </p>
                   </div>

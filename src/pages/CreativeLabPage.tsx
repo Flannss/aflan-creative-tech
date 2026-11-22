@@ -474,7 +474,7 @@ const MagneticCursorPlayground: React.FC = () => {
 
       {/* Magnetic Physics Controls */}
       <div className="flex flex-wrap items-center justify-between gap-4 bg-offwhite border border-espresso/15 p-4 sm:p-5">
-        <p className="font-sans text-[15px] sm:text-sm text-charcoal/85">
+        <p className="font-sans text-sm md:text-base text-espresso/80">
           Gerakkan kursor mendekati kartu atau geser jari pada segel untuk merasakan tarikan pegas magnetik secara langsung.
         </p>
 
@@ -801,7 +801,7 @@ export const CreativeLabPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 studio-warm-halo opacity-60"
@@ -809,23 +809,23 @@ export const CreativeLabPage: React.FC = () => {
         <div className="relative z-10 max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
-            className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-champagne/15"
+            className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15"
           >
-            <span className="inline-flex items-center gap-2 font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
+            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
               <Sparkles className="size-3.5" aria-hidden="true" />
-              BAB 06 — CREATIVE LAB
+              BAB 06 · CREATIVE LAB
             </span>
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.22em] uppercase text-taupe">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
               06 MODUL INTERAKTIF CREATIVE-TECH
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 lg:pt-14 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-7">
               <TextReveal
                 as="h1"
                 immediate
-                className="font-serif text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.9rem] leading-[1.04] lg:leading-[0.98] font-light"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-ivory/95"
                 lines={[
                   <>Sistem Visual</>,
                   <>
@@ -835,9 +835,9 @@ export const CreativeLabPage: React.FC = () => {
               />
             </div>
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
-              <p className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed">
-                Etalase interaktif Creative-Tech &amp; Interactive UI Implementation—menampilkan{' '}
-                <span className="text-champagne">Dynamic Spotlight Masking</span>,{' '}
+              <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
+                Etalase interaktif Creative-Tech &amp; Interactive UI Implementation yang
+                menampilkan <span className="text-champagne">Dynamic Spotlight Masking</span>,{' '}
                 <span className="text-champagne">Magnetic Cursor UI</span>, kompositor tipografi
                 editorial, kanvas cahaya chiaroscuro, koreografi motion, dan matriks kontras WCAG.
               </p>
@@ -869,20 +869,20 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 01 — DYNAMIC SPOTLIGHT MASKING */}
       <section
         id="lab-spotlight"
-        className="bg-espresso text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-champagne/15"
+        className="bg-espresso text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b border-champagne/15"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
             <div className="lg:col-span-7">
-              <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
+              <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
                 <Compass className="size-3.5" aria-hidden="true" />
                 LAB 01 · DYNAMIC SPOTLIGHT · CSS MASK COMPOSITING
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light tracking-tight mt-2">
                 Senter Masking Editorial Interaktif
               </h2>
             </div>
-            <p className="lg:col-span-5 font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 leading-relaxed">
+            <p className="lg:col-span-5 font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
               Kursor berfungsi sebagai senter optik yang menembus lapisan gelap untuk mengungkap
               manifesto tipografi dan cetak biru koordinat di baliknya secara real-time.
             </p>
@@ -895,20 +895,20 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 02 — MAGNETIC CURSOR UI PLAYGROUND */}
       <section
         id="lab-magnetic"
-        className="bg-ivory text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-espresso/15"
+        className="bg-ivory text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b border-espresso/15"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
             <div className="lg:col-span-7">
-              <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.26em] uppercase text-mocha">
+              <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
                 <Magnet className="size-3.5" aria-hidden="true" />
                 LAB 02 · MEDAN MAGNETIK AMDZ · FISIKA PEGAS
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light tracking-tight mt-2">
                 Interaksi Magnetik Inisial AMDZ
               </h2>
             </div>
-            <p className="lg:col-span-5 font-sans text-[15px] sm:text-base lg:text-sm text-charcoal/80 leading-relaxed">
+            <p className="lg:col-span-5 font-sans text-sm md:text-base text-espresso/80 leading-relaxed">
               Keempat inisial A·M·D·Z dan segel monogram merespons arah kursor maupun geseran jari
               dengan tarikan fisik berbasis pegas, lalu kembali tenang ke pusat.
             </p>
@@ -921,7 +921,7 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 03 — TYPOGRAPHY COMPOSITOR */}
       <section
         id="lab-typography"
-        className="bg-espresso text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-champagne/15"
+        className="bg-espresso text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b border-champagne/15"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up" className="flex flex-wrap items-end justify-between gap-4">
@@ -1054,19 +1054,19 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 04 — CHIAROSCURO CANVAS */}
       <section
         id="lab-chiaroscuro"
-        className="bg-obsidian text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-champagne/15"
+        className="bg-obsidian text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b border-champagne/15"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
             <div className="lg:col-span-7">
-              <span className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
+              <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
                 LAB 04 · CREATIVE CODING · HTML5 CANVAS
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light tracking-tight mt-2">
                 Medan Cahaya Warm Chiaroscuro
               </h2>
             </div>
-            <p className="lg:col-span-5 font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 leading-relaxed">
+            <p className="lg:col-span-5 font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
               Terinspirasi dari pencahayaan amber studio pada Potret Utama. Partikel bergerak
               lembut mengikuti arah pointer dan memancarkan gelombang konsentris saat diklik.
             </p>
@@ -1079,7 +1079,7 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 05 — EASING CHOREOGRAPHY */}
       <section
         id="lab-easing"
-        className="bg-ivory text-espresso py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12 border-b border-espresso/15"
+        className="bg-ivory text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b border-espresso/15"
       >
         <div className="max-w-[1440px] mx-auto space-y-6">
           <div>
@@ -1135,13 +1135,13 @@ export const CreativeLabPage: React.FC = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <p className="font-sans text-[15px] sm:text-base lg:text-sm text-charcoal/80">
+              <p className="font-sans text-sm md:text-base text-espresso/80">
                 {selectedPreset.note}
               </p>
               <button
                 type="button"
                 onClick={() => setRunCount((c) => c + 1)}
-                className="self-start sm:self-auto shrink-0 px-4 py-2.5 lg:py-2 rounded-full bg-mocha text-ivory font-mono text-[10px] tracking-[0.18em] uppercase hover:bg-espresso transition-colors"
+                className="self-start sm:self-auto shrink-0 px-4 py-2.5 lg:py-2 rounded-full bg-mocha text-ivory font-mono text-[10px] tracking-[0.18em] uppercase hover:bg-espresso transition-colors cursor-pointer"
               >
                 Putar Ulang
               </button>
@@ -1153,7 +1153,7 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 06 — CONTRAST MATRIX */}
       <section
         id="lab-contrast"
-        className="bg-chocolate text-ivory py-16 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12"
+        className="bg-chocolate text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up">
@@ -1238,7 +1238,7 @@ export const CreativeLabPage: React.FC = () => {
                   Nuansa espresso &amp; obsidian dengan{' '}
                   <span className="italic">keterbacaan presisi</span>.
                 </p>
-                <p className="font-sans text-[15px] sm:text-base opacity-90 max-w-xl leading-relaxed">
+                <p className="font-sans text-sm md:text-base opacity-90 max-w-xl leading-relaxed">
                   Menjaga rasio luminansi secara presisi memastikan karakter editorial tetap
                   nyaman dibaca pada permukaan gelap maupun terang.
                 </p>

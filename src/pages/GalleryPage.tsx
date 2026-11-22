@@ -351,26 +351,26 @@ export const GalleryPage: React.FC = () => {
         />
       )}
 
-      <section className="bg-offwhite text-espresso pt-24 sm:pt-36 lg:pt-40 pb-14 sm:pb-24 px-4 sm:px-8 lg:px-12 border-b border-espresso/10">
+      <section className="bg-offwhite text-espresso pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-espresso/10">
         <div className="max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
-            className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-espresso/10"
+            className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-espresso/10"
           >
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
-              BAB 07 — GALERI PERSONAL · {String(filteredItems.length).padStart(2, '0')} PELAT
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
+              BAB 07 · GALERI PERSONAL · {String(filteredItems.length).padStart(2, '0')} PELAT
             </span>
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-espresso/65">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-espresso/60">
               POTRET PERSONAL &amp; STUDI TIPOGRAFI AFLAN
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 lg:pt-14 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-7">
               <TextReveal
                 as="h1"
                 immediate
-                className="font-serif text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.85rem] leading-[1.04] lg:leading-[0.98] font-light"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-espresso/90"
                 lines={[
                   <>Edisi Monograf</>,
                   <>
@@ -381,9 +381,9 @@ export const GalleryPage: React.FC = () => {
             </div>
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
-              <p className="font-sans text-[15px] sm:text-base text-charcoal/85 leading-relaxed">
+              <p className="font-sans text-sm md:text-base text-espresso/80 leading-relaxed">
                 Kurasi visual personal AFLAN yang memadukan variasi tonal potret studio bersama
-                pelat abstrak tipografi dan sistem warna—disusun lapang dalam grid Masonry.
+                pelat abstrak tipografi dan sistem warna, disusun lapang dalam grid Masonry.
               </p>
             </Reveal>
           </div>
@@ -456,7 +456,7 @@ export const GalleryPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-obsidian text-ivory py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
+      <section className="bg-obsidian text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           {layoutMode === 'masonry' ? (
             <StaggerGroup
@@ -529,7 +529,7 @@ export const GalleryPage: React.FC = () => {
                               <span>{item.plateNumber}</span>
                             </div>
 
-                            <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
+                            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2 text-xs">
                               <div>
                                 <dt className="font-mono text-[9px] tracking-[0.18em] uppercase text-taupe">
                                   Medium
@@ -594,12 +594,12 @@ export const GalleryPage: React.FC = () => {
               })}
             </StaggerGroup>
           ) : (
-            <div className="space-y-24 sm:space-y-32">
+            <div className="space-y-12 sm:space-y-16">
               {filteredItems.map((item, idx) => {
                 const isEven = idx % 2 === 0;
                 return (
                   <Reveal key={item.id} variant="up">
-                    <article className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center border-b border-champagne/10 pb-20 sm:pb-28 last:border-b-0 last:pb-0">
+                    <article className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-14 items-center border-b border-champagne/10 pb-12 sm:pb-16 last:border-b-0 last:pb-0">
                       <div
                         className={
                           isEven
@@ -664,7 +664,7 @@ export const GalleryPage: React.FC = () => {
                           {item.caption}
                         </p>
 
-                        <dl className="grid grid-cols-2 gap-4 pt-5 border-t border-champagne/15 text-sm">
+                        <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-5 border-t border-champagne/15 text-sm">
                           <div>
                             <dt className="font-mono text-[10px] tracking-[0.2em] uppercase text-champagne">
                               Medium &amp; Karakter

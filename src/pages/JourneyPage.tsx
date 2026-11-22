@@ -76,7 +76,7 @@ export const JourneyPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-36 lg:pt-40 pb-14 sm:pb-24 px-4 sm:px-8 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 studio-vignette opacity-80"
@@ -84,32 +84,32 @@ export const JourneyPage: React.FC = () => {
         <div className="relative z-10 max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
-            className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-champagne/15"
+            className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15"
           >
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
-              BAB 03 — PERJALANAN &amp; LINIMASA
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
+              BAB 03 · PERJALANAN &amp; LINIMASA
             </span>
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-taupe">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
               REKAM JEJAK AKADEMIK &amp; PROFESIONAL
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 lg:pt-14 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-7">
               <TextReveal
                 as="h1"
                 immediate
-                className="font-serif text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.9rem] leading-[1.04] lg:leading-[0.98] font-light"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-ivory/95"
                 lines={[
                   <>Rekam Jejak Belajar,</>,
                   <>
-                    <span className="italic text-champagne">Magang &amp; Karya</span>
+                    <span className="italic text-champagne/90">Magang &amp; Karya</span>
                   </>,
                 ]}
               />
             </div>
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
-              <p className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed">
+              <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
                 Linimasa interaktif yang mendokumentasikan pengalaman Programmer Intern di PT
                 Puskomedia Indonesia Kreatif, studi Teknologi Informasi di Universitas Amikom
                 Purwokerto, serta pengembangan karya web dan aplikasi mobile.
@@ -130,7 +130,7 @@ export const JourneyPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-ivory text-espresso py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
+      <section className="relative bg-ivory text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           {/* Pinned Editorial Category Heading & Chapter Controls */}
           <aside className="lg:col-span-4 lg:sticky lg:top-28 space-y-6">

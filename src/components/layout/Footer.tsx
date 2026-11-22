@@ -45,15 +45,15 @@ export const Footer: React.FC = () => {
         }}
       />
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 pt-16 sm:pt-24 lg:pt-28 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-14 sm:pb-16 border-b border-champagne/15 items-end">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 pt-14 sm:pt-20 lg:pt-24 pb-10 sm:pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 sm:pb-14 border-b border-champagne/15 items-end">
           <div className="lg:col-span-7">
-            <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-champagne mb-4">
+            <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne mb-3">
               KORESPONDENSI &amp; KOLABORASI
             </p>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.06] lg:leading-[1.03] font-light text-ivory">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-ivory/95">
               Punya ide menarik untuk{' '}
-              <span className="italic text-champagne">dieksplorasi bersama?</span>
+              <span className="italic text-champagne/90">dieksplorasi bersama?</span>
             </h2>
           </div>
 
@@ -89,7 +89,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 py-14 sm:py-16 border-b border-champagne/15">
           <div className="md:col-span-2 lg:col-span-4 space-y-5">
             <BrandSignature tone="light" />
-            <p className="font-sans text-[15px] md:text-sm leading-relaxed text-ivory/75 max-w-md lg:max-w-sm">
+            <p className="font-sans text-sm md:text-base leading-relaxed text-ivory/80 max-w-md lg:max-w-sm">
               <span className="text-ivory font-medium">{personalData.fullName}</span>
               {` — ${personalData.positioning}. Mahasiswa ${personalData.studyProgram} di ${personalData.university}.`}
             </p>

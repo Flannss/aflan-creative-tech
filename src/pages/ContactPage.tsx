@@ -217,27 +217,27 @@ export const ContactPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="bg-ivory text-espresso pt-24 sm:pt-36 lg:pt-40 pb-14 sm:pb-24 px-4 sm:px-8 lg:px-12 border-b border-espresso/15">
+      <section className="bg-ivory text-espresso pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-espresso/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
-            className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-espresso/15"
+            className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-espresso/15"
           >
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
-              BAB 09 — KONTAK &amp; KORESPONDENSI
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
+              BAB 09 · KONTAK &amp; KORESPONDENSI
             </span>
-            <span className="inline-flex items-center gap-2 font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-espresso/75">
+            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-espresso/60">
               <Clock className="size-3.5 text-mocha" aria-hidden="true" />
               WAKTU LOKAL PURWOKERTO · {localTime} WIB
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 lg:pt-14 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-7">
               <TextReveal
                 as="h1"
                 immediate
-                className="font-serif text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[5rem] leading-[1.04] lg:leading-[0.96] font-light"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-espresso/90"
                 lines={[
                   <>Mari mulai</>,
                   <>
@@ -248,7 +248,7 @@ export const ContactPage: React.FC = () => {
             </div>
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
-              <p className="font-sans text-[15px] sm:text-base text-charcoal/80 leading-relaxed">
+              <p className="font-sans text-sm md:text-base text-espresso/80 leading-relaxed">
                 {contactData.availabilityNote} Hubungi langsung lewat email, WhatsApp,
                 Instagram, atau susun draf pesan terstruktur melalui formulir di bawah.
               </p>
@@ -257,7 +257,7 @@ export const ContactPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-obsidian text-ivory py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
+      <section className="bg-obsidian text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start">
           <Reveal variant="up" className="lg:col-span-5 space-y-6">
             <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
@@ -394,7 +394,7 @@ export const ContactPage: React.FC = () => {
                 <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
                   Siapkan catatan langsung untuk Aflan
                 </h2>
-                <p className="font-sans text-sm sm:text-[15px] lg:text-sm text-charcoal/75 mt-2 leading-relaxed">
+                <p className="font-sans text-sm md:text-base text-espresso/80 mt-2 leading-relaxed">
                   Portofolio ini tidak menyimpan data di server pihak ketiga. Pengiriman akan
                   memvalidasi pesan Anda lalu membuka draf siap kirim lewat Email atau
                   WhatsApp resmi Aflan.
@@ -620,7 +620,7 @@ export const ContactPage: React.FC = () => {
                     <p className="font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
                       DRAF SIAP — PILIH KANAL PENGIRIMAN
                     </p>
-                    <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/85 leading-relaxed">
+                    <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
                       Pesan Anda lolos validasi dan diarahkan ke aplikasi email menuju{' '}
                       <span className="text-champagne">{contactData.email}</span>. Anda juga
                       dapat mengirim draf yang sama via WhatsApp atau menyalin teksnya:

@@ -53,23 +53,23 @@ export const AboutPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-ivory text-espresso pt-24 sm:pt-36 lg:pt-40 pb-14 sm:pb-24 lg:pb-28 px-4 sm:px-8 lg:px-12 border-b border-espresso/15">
+      <section className="relative bg-ivory text-espresso pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 lg:pb-24 px-4 sm:px-6 lg:px-12 border-b border-espresso/15">
         <div className="max-w-[1440px] mx-auto">
-          <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-espresso/15">
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha">
-              BAB 02 — TENTANG AFLAN
+          <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-espresso/15">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
+              BAB 02 · TENTANG AFLAN
             </span>
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-espresso/70">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-espresso/60">
               {personalData.positioning}
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-10 pt-12 lg:pt-14 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pt-10 lg:pt-12 items-start">
             <div className="lg:col-span-8">
               <TextReveal
                 as="h1"
                 immediate
-                className="font-serif text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.85rem] leading-[1.04] lg:leading-[0.98] font-light text-espresso"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-espresso/90"
                 lines={[
                   <>Merancang Web Software dengan</>,
                   <>
@@ -80,8 +80,8 @@ export const AboutPage: React.FC = () => {
               />
             </div>
 
-            <Reveal variant="up" delay={0.14} className="lg:col-span-4 lg:pt-4 space-y-5">
-              <p className="font-sans text-[15px] sm:text-base leading-relaxed text-charcoal/85">
+            <Reveal variant="up" delay={0.14} className="lg:col-span-4 lg:pt-2 space-y-5">
+              <p className="font-sans text-sm md:text-base leading-relaxed text-espresso/80">
                 Berfokus pada High-Performance Web Development, pengembangan aplikasi lintas
                 platform, dan evaluasi kualitas perangkat lunak yang terstruktur.
               </p>
@@ -124,7 +124,7 @@ export const AboutPage: React.FC = () => {
                 </ParallaxFrame>
                 <figcaption className="pt-4 pb-1 px-1 flex items-center justify-between gap-4 text-ivory">
                   <div>
-                    <p className="font-serif text-lg leading-none">
+                    <p className="font-serif text-base leading-none">
                       {personalData.fullName}
                     </p>
                     <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-champagne/80 mt-1">
@@ -165,7 +165,7 @@ export const AboutPage: React.FC = () => {
                       {personalData.internship.company}
                     </span>
                   </h2>
-                  <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/80 leading-relaxed">
+                  <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
                     {personalData.internship.focus}
                   </p>
                 </div>
@@ -194,7 +194,7 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-espresso text-ivory py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
+      <section className="relative bg-espresso text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 pb-10 sm:pb-14 lg:pb-16 border-b border-champagne/15 items-end">
             <div className="lg:col-span-7">
@@ -239,11 +239,11 @@ export const AboutPage: React.FC = () => {
                   <h3 className="font-serif text-2xl sm:text-3xl font-light text-ivory">
                     {pillar.title}
                   </h3>
-                  <p className="font-sans text-[15px] sm:text-base lg:text-sm font-medium text-champagne/95 leading-relaxed">
+                  <p className="font-sans text-sm md:text-base font-medium text-champagne/90 leading-relaxed">
                     {pillar.summary}
                   </p>
                 </div>
-                <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/80 leading-relaxed">
+                <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
                   {pillar.detail}
                 </p>
               </Reveal>
@@ -252,7 +252,7 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-offwhite text-espresso py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
+      <section className="relative bg-offwhite text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 items-start">
           <Reveal variant="up" className="lg:col-span-7">
             <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-mocha mb-3">

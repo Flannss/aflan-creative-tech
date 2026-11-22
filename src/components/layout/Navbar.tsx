@@ -10,7 +10,6 @@ import { EASE_LUXURY } from '@/utils/motion';
 
 export const Navbar: React.FC = () => {
   const location = useLocation();
-  // Store the pathname where the menu was opened so route changes close it automatically without setState-in-effect
   const [menuOpenPath, setMenuOpenPath] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
@@ -81,7 +80,7 @@ export const Navbar: React.FC = () => {
               : 'bg-obsidian/65 backdrop-blur-sm border-b border-champagne/10 py-4 sm:py-5'
         }`}
       >
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 flex items-center justify-between gap-3 sm:gap-4">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between gap-3 sm:gap-4">
           <Link
             to="/"
             aria-label="Beranda AFLAN"
@@ -235,7 +234,7 @@ export const Navbar: React.FC = () => {
             transition={{ duration: prefersReducedMotion ? 0.2 : 0.72, ease: EASE_LUXURY }}
             className="fixed inset-0 z-65 bg-obsidian text-ivory overflow-y-auto"
           >
-            <div className="studio-vignette min-h-dvh flex flex-col justify-between px-6 sm:px-8 lg:px-12 py-6">
+            <div className="studio-vignette min-h-dvh flex flex-col justify-between px-4 sm:px-6 lg:px-12 py-6">
               <div className="max-w-[1440px] w-full mx-auto flex items-center justify-between gap-3 pb-5 sm:pb-6 border-b border-champagne/15">
                 <Link to="/" onClick={closeMenu} aria-label="Beranda AFLAN" className="shrink-0">
                   <BrandSignature tone="light" />

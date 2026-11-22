@@ -98,36 +98,36 @@ export const SkillsPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-espresso text-ivory pt-24 sm:pt-36 lg:pt-40 pb-14 sm:pb-24 px-4 sm:px-8 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-espresso text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
         <div className="max-w-[1440px] mx-auto">
-          <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-champagne/15">
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
-              BAB 04 — KEAHLIAN TEKNIS &amp; DISIPLIN
+          <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
+              BAB 04 · KEAHLIAN TEKNIS &amp; DISIPLIN
             </span>
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-taupe">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
               PEMETAAN KOMPETENSI · 04 DOMAIN UTAMA
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 lg:pt-14 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-7">
               <TextReveal
                 as="h1"
                 immediate
-                className="font-serif text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.85rem] leading-[1.04] lg:leading-[0.98] font-light"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-ivory/95"
                 lines={[
                   <>Kompetensi Teknis,</>,
                   <>
-                    <span className="italic text-champagne">Diukur Secara Jujur</span>
+                    <span className="italic text-champagne/90">Diukur Secara Jujur</span>
                   </>,
                 ]}
               />
             </div>
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
-              <p className="font-sans text-[15px] sm:text-base text-ivory/75 leading-relaxed">
+              <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
                 Setiap teknologi dipetakan melalui hierarki tipografi editorial yang
-                jernih—membedakan pengalaman praktik langsung, penerapan dalam proyek,
+                jernih, membedakan pengalaman praktik langsung, penerapan dalam proyek,
                 hingga fokus pendalaman saat ini.
               </p>
             </Reveal>
@@ -225,7 +225,7 @@ export const SkillsPage: React.FC = () => {
             return (
               <section
                 key={domain.id}
-                className={`py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12 border-b ${isLight
+                className={`py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b ${isLight
                     ? 'bg-ivory text-espresso border-espresso/15'
                     : 'bg-obsidian text-ivory border-champagne/15'
                   }`}
@@ -334,7 +334,7 @@ export const SkillsPage: React.FC = () => {
         )}
       </div>
 
-      <section className="bg-chocolate text-ivory py-20 sm:py-24 lg:py-28 px-6 sm:px-8 lg:px-12">
+      <section className="bg-chocolate text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           <Reveal variant="up" className="lg:col-span-6 space-y-5">
             <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">

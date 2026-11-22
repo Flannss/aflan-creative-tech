@@ -164,7 +164,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                   <h3 className="font-serif text-2xl sm:text-3xl md:text-[1.9rem] lg:text-[2.65rem] leading-[1.08] lg:leading-[1.06] font-light text-ivory group-hover:text-champagne group-hover:translate-x-1.5 transition-all duration-500">
                     {project.title}
                   </h3>
-                  <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 max-w-2xl leading-relaxed">
+                  <p className="font-sans text-sm md:text-base text-ivory/80 max-w-2xl leading-relaxed">
                     {project.subtitle}
                   </p>
                 </div>

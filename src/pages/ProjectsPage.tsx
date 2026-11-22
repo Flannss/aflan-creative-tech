@@ -47,7 +47,7 @@ export const ProjectsPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-36 lg:pt-40 pb-14 sm:pb-24 px-4 sm:px-8 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 studio-vignette opacity-75"
@@ -55,26 +55,26 @@ export const ProjectsPage: React.FC = () => {
         <div className="relative z-10 max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
-            className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-champagne/15"
+            className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15"
           >
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
-              BAB 05 — PROYEK &amp; ARSIP KERJA
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
+              BAB 05 · PROYEK &amp; ARSIP KERJA
             </span>
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-taupe">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
               {filteredProjects.length} ENTRI DITAMPILKAN
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 lg:pt-14 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-7">
               <TextReveal
                 as="h1"
                 immediate
-                className="font-serif text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.9rem] leading-[1.04] lg:leading-[0.98] font-light"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-ivory/95"
                 lines={[
                   <>Karya Terpilih &amp;</>,
                   <>
-                    <span className="italic text-champagne">Evaluasi Sistem</span>
+                    <span className="italic text-champagne/90">Evaluasi Sistem</span>
                   </>,
                 ]}
               />
@@ -123,7 +123,7 @@ export const ProjectsPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-espresso text-ivory py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12 min-h-[55vh]">
+      <section className="bg-espresso text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 min-h-[55vh]">
         <div className="max-w-[1440px] mx-auto">
           {viewMode === 'index' ? (
             <ProjectPreviewList projects={filteredProjects} />
@@ -143,7 +143,7 @@ export const ProjectsPage: React.FC = () => {
                     <span className="italic text-champagne">{selectedCategory}</span>
                   )}
                 </h2>
-                <p className="font-sans text-[15px] lg:text-sm text-ivory/75 leading-relaxed">
+                <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
                   Gulir untuk menelusuri kartu proyek yang bertumpuk lembut, lalu klik kartu
                   mana saja untuk membuka studi kasus penuh.
                 </p>
@@ -227,7 +227,7 @@ export const ProjectsPage: React.FC = () => {
                           <h3 className="font-serif text-2xl sm:text-3xl font-light text-ivory group-hover:text-champagne transition-colors">
                             {project.title}
                           </h3>
-                          <p className="font-sans text-[15px] sm:text-base lg:text-sm text-ivory/75 leading-relaxed">
+                          <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
                             {project.summary}
                           </p>
                         </div>

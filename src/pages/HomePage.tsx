@@ -55,7 +55,6 @@ export const HomePage: React.FC = () => {
     offset: ['start end', 'end start'],
   });
 
-  // Layered subtle parallax on tablet/desktop only; disabled cleanly on mobile (< 768px)
   const haloY = useTransform(
     scrollYProgress,
     [0, 1],
@@ -110,7 +109,7 @@ export const HomePage: React.FC = () => {
       ====================================================================== */}
       <section
         ref={heroRef}
-        className="relative min-h-svh bg-obsidian text-ivory flex flex-col justify-between pt-24 sm:pt-32 pb-10 sm:pb-12 px-4 sm:px-8 lg:px-12 overflow-hidden"
+        className="relative min-h-[85svh] lg:min-h-svh bg-obsidian text-ivory flex flex-col justify-between pt-24 sm:pt-28 pb-10 sm:pb-12 px-4 sm:px-6 lg:px-12 overflow-hidden"
       >
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 studio-vignette" />
         <motion.div
@@ -282,7 +281,7 @@ export const HomePage: React.FC = () => {
             >
               <p
                 aria-label="Membangun pengalaman web yang jernih dengan ketelitian kode dan kepekaan editorial."
-                className="font-serif text-lg md:text-xl leading-snug font-light text-champagne/90 max-w-md md:max-w-none lg:max-w-md"
+                className="font-serif text-base md:text-lg leading-snug font-light text-champagne/90 max-w-md md:max-w-none lg:max-w-md"
               >
                 <span aria-hidden="true">
                   {'Membangun '}
@@ -357,7 +356,7 @@ export const HomePage: React.FC = () => {
       <section
         ref={philosophyRef}
         aria-labelledby="monogram-philosophy-heading"
-        className="relative bg-obsidian text-ivory py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12 border-b border-champagne/10 overflow-hidden"
+        className="relative bg-obsidian text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b border-champagne/10 overflow-hidden"
       >
         <div
           aria-hidden="true"
@@ -509,7 +508,7 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 03 — LIGHT IVORY EDITORIAL DOSSIER (BAB 01 — IDENTITAS)
       ====================================================================== */}
-      <section className="relative bg-ivory text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-8 lg:px-12 border-b border-espresso/10">
+      <section className="relative bg-ivory text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b border-espresso/10">
         <div className="max-w-[1440px] mx-auto space-y-8">
           {/* Compact Dossier Chapter Header */}
           <Reveal
@@ -611,7 +610,7 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 04 — DARK ESPRESSO SELECTED WORK & EVALUATION ARCHIVE
       ====================================================================== */}
-      <section className="relative bg-espresso text-ivory py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
+      <section className="relative bg-espresso text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 sm:mb-16 lg:mb-20">
             <div className="space-y-4">
@@ -653,7 +652,7 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 05 — OFF-WHITE ASYMMETRIC EXPLORATION DOORS
       ====================================================================== */}
-      <section className="relative bg-offwhite text-espresso py-14 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-12">
+      <section className="relative bg-offwhite text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 lg:mb-14">
             <div>
@@ -735,7 +734,7 @@ export const HomePage: React.FC = () => {
                     <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-espresso group-hover:text-mocha transition-colors">
                       Linimasa &amp; <span className="italic">Pengalaman</span>
                     </h3>
-                    <p className="mt-2.5 font-sans text-[15px] sm:text-base lg:text-sm text-charcoal/80 leading-relaxed">
+                    <p className="mt-2.5 font-sans text-sm md:text-base text-espresso/80 leading-relaxed">
                       Dari studi Teknologi Informasi di Universitas Amikom Purwokerto hingga
                       magang Programmer Intern di PT Puskomedia Indonesia Kreatif.
                     </p>

@@ -99,10 +99,10 @@ export const ProjectTransitionPortal: React.FC<ProjectTransitionPortalProps> = (
           transition={{ duration: 0.42, delay: 0.08, ease: EASE_LUXURY }}
           className="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14 max-w-[1440px] mx-auto"
         >
-          <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.26em] uppercase text-champagne mb-2">
+          <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne mb-2">
             MEMBUKA DOSSIER · {project.index} · {project.category}
           </p>
-          <p className="font-serif text-3xl sm:text-5xl lg:text-6xl font-light text-ivory leading-[1.04]">
+          <p className="font-serif text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-ivory/95 leading-[1.06]">
             {project.title}
           </p>
         </motion.div>
