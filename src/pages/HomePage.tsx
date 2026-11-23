@@ -228,8 +228,7 @@ export const HomePage: React.FC = () => {
                       className="text-ivory/90 mt-0.5"
                     >
                       <span className="block">{personalData.internship.company}</span>
-                      <span className="mt-1.5 flex w-fit max-w-full px-2.5 py-0.5 rounded-full border border-champagne/30 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne">
-                        Aktif · {personalData.internship.period}
+                      <span className="mt-1 block font-mono text-[10px] tracking-[0.15em] uppercase text-champagne/80 leading-relaxed">                        Aktif · {personalData.internship.period}
                       </span>
                     </dd>
                   </div>
