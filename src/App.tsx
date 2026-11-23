@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   BrowserRouter,
+  Navigate,
   Route,
   Routes,
   useLocation,
@@ -36,6 +37,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/projects/:slug" element={<ProjectDetailPage />} />
         <Route path="/lab" element={<CreativeLabPage />} />
+        <Route path="/creative-lab" element={<Navigate to="/lab" replace />} />
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/achievements" element={<AchievementsPage />} />
         <Route path="/contact" element={<ContactPage />} />
