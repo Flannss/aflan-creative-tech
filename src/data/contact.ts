@@ -13,8 +13,8 @@ export const contactData = {
   whatsappHref: 'https://wa.me/6283146134546',
   instagramHandle: '@flanssly',
   instagramHref: 'https://www.instagram.com/flanssly/',
-  githubHandle: 'MIizzurou',
-  githubHref: 'https://github.com/MIizzurou',
+  githubHandle: 'Flannss',
+  githubHref: 'https://github.com/Flannss',
   location: 'Purwokerto, Jawa Tengah, Indonesia',
   availabilityStatus: 'Terbuka untuk Kolaborasi, Proyek Web & Peluang Magang',
   availabilityNote:
@@ -47,9 +47,9 @@ export const contactData = {
     {
       id: 'github',
       label: 'GitHub',
-      value: 'MIizzurou',
+      value: 'Flannss',
       displayHint: 'Repositori kode, eksperimen frontend & arsip proyek',
-      href: 'https://github.com/MIizzurou',
+      href: 'https://github.com/Flannss',
       external: true,
     },
   ] satisfies ContactChannel[],
