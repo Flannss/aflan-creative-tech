@@ -88,6 +88,7 @@ export const ContactPage: React.FC = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitPhase, setSubmitPhase] = useState<SubmitPhase>('idle');
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const [isActivationNotice, setIsActivationNotice] = useState<boolean>(false);
 
   const nameShake = useAnimationControls();
   const emailShake = useAnimationControls();
@@ -179,6 +180,7 @@ export const ContactPage: React.FC = () => {
 
     setSubmitPhase('loading');
     setFeedbackMessage(null);
+    setIsActivationNotice(false);
 
     if (resetSuccessTimerRef.current !== null) {
       window.clearTimeout(resetSuccessTimerRef.current);
@@ -189,37 +191,41 @@ export const ContactPage: React.FC = () => {
     const trimmedSubject = values.subject.trim();
     const trimmedMessage = values.message.trim();
 
+    const formData = new FormData();
+    formData.append('name', trimmedName);
+    formData.append('email', trimmedEmail);
+    formData.append('subject', trimmedSubject);
+    formData.append('message', trimmedMessage);
+    formData.append('_subject', `[AFLAN DOSSIER] Pesan dari ${trimmedName}`);
+    formData.append('_replyto', trimmedEmail);
+    formData.append('_template', 'table');
+    formData.append('_captcha', 'false');
+    formData.append('_honey', '');
+
     try {
-      const response = await fetch(CONTACT_ENDPOINT, {
+      const res = await fetch(CONTACT_ENDPOINT, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({
-          name: trimmedName,
-          email: trimmedEmail,
-          subject: trimmedSubject,
-          message: trimmedMessage,
-          _subject: `[AFLAN DOSSIER] Pesan baru dari ${trimmedName}`,
-          _replyto: trimmedEmail,
-          _template: 'table',
-          _captcha: 'false',
-          _honey: honey,
-        }),
+        body: formData,
       });
 
       const data: { success?: boolean | string; message?: string } | null =
-        await response.json().catch(() => null);
+        await res.json().catch(() => null);
 
       const isSuccess =
-        response.ok && data?.success !== false && data?.success !== 'false';
+        res.ok && (data?.success === true || data?.success === 'true');
 
       if (!isSuccess) {
-        throw new Error(data?.message || 'Pengiriman tidak dapat diproses oleh server.');
+        const serverMessage = typeof data?.message === 'string' ? data.message : '';
+        throw new Error(
+          serverMessage || `HTTP ${res.status}: Pengiriman tidak dapat diproses oleh server.`,
+        );
       }
 
       setSubmitPhase('success');
+      setIsActivationNotice(false);
       setFeedbackMessage(
         `Terima kasih, ${trimmedName}. Pesan Anda telah terkirim langsung ke inbox Aflan (${contactData.email}) dan akan dibalas ke ${trimmedEmail}.`,
       );
@@ -235,10 +241,20 @@ export const ContactPage: React.FC = () => {
         resetSuccessTimerRef.current = null;
         setSubmitPhase('idle');
       }, 4200);
-    } catch {
+    } catch (err) {
+      if (import.meta.env.DEV) {
+        console.warn('[ContactPage] Direct email submission error:', err);
+      }
+
+      const rawErrorMessage = err instanceof Error ? err.message : '';
+      const requiresActivation = /activat(e|ion)/i.test(rawErrorMessage);
+
       setSubmitPhase('error');
+      setIsActivationNotice(requiresActivation);
       setFeedbackMessage(
-        'Koneksi pengiriman langsung sedang terkendala. Silakan salin alamat email Aflan dalam 1 klik atau hubungi via WhatsApp di sebelah kiri.',
+        requiresActivation
+          ? 'Endpoint pengiriman langsung sedang menunggu konfirmasi aktivasi pertama di kotak masuk email tujuan. Sementara aktivasi diselesaikan, silakan salin alamat email Aflan atau hubungi langsung via WhatsApp di bawah ini.'
+          : 'Koneksi pengiriman langsung sedang terkendala. Silakan salin alamat email Aflan dalam 1 klik atau hubungi langsung via WhatsApp di bawah ini.',
       );
       if (!prefersReducedMotion) {
         void submitShake.start({
@@ -295,9 +311,9 @@ export const ContactPage: React.FC = () => {
       <section className="bg-obsidian text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           {/* KOLOM KIRI: KANAL LANGSUNG, KETERSEDIAAN & KONTAK CEPAT */}
-          <Reveal variant="up" className="lg:col-span-5 space-y-6">
+          <Reveal variant="up" className="lg:col-span-5 min-w-0 space-y-6">
             {/* Availability & Location Header Card */}
-            <div className="p-6 bg-espresso/75 border border-champagne/25 space-y-4">
+            <div className="w-full max-w-full min-w-0 overflow-hidden p-5 sm:p-6 bg-espresso/75 border border-champagne/25 space-y-4">
               <div className="flex items-center justify-between gap-3 pb-3 border-b border-champagne/15">
                 <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
                   <span
@@ -337,7 +353,7 @@ export const ContactPage: React.FC = () => {
               </div>
 
               {/* Primary Email Copy Card */}
-              <div className="p-5 sm:p-6 bg-espresso/55 border border-champagne/20 space-y-4">
+              <div className="w-full max-w-full min-w-0 overflow-hidden p-5 sm:p-6 bg-espresso/55 border border-champagne/20 space-y-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <span className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne">
@@ -466,7 +482,7 @@ export const ContactPage: React.FC = () => {
               </div>
 
               {/* Portfolio Link Quick Copy */}
-              <div className="p-4 sm:p-5 bg-chocolate/55 border border-champagne/15 flex flex-wrap items-center justify-between gap-3">
+              <div className="w-full max-w-full min-w-0 overflow-hidden p-4 sm:p-5 bg-chocolate/55 border border-champagne/15 flex flex-wrap items-center justify-between gap-3">
                 <div className="min-w-0">
                   <span className="block text-[10px] font-mono uppercase tracking-[0.15em] text-champagne">
                     TAUTAN RESMI DOSSIER
@@ -505,8 +521,8 @@ export const ContactPage: React.FC = () => {
           </Reveal>
 
           {/* KOLOM KANAN: FORM PESAN LANGSUNG KE INBOX */}
-          <Reveal variant="up" delay={0.1} className="lg:col-span-7">
-            <div className="bg-ivory text-espresso border border-champagne/25 p-6 sm:p-10 lg:p-12 shadow-2xl">
+          <Reveal variant="up" delay={0.1} className="lg:col-span-7 min-w-0">
+            <div className="w-full max-w-full min-w-0 overflow-hidden bg-ivory text-espresso border border-champagne/25 p-5 sm:p-10 lg:p-12 shadow-2xl">
               <div className="pb-6 mb-8 border-b border-espresso/15 space-y-2">
                 <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-[#8A6D4B]">
                   KIRIM PESAN LANGSUNG
@@ -535,7 +551,7 @@ export const ContactPage: React.FC = () => {
                 />
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <motion.div animate={nameShake} className="will-change-transform">
+                  <motion.div animate={nameShake} className="min-w-0 will-change-transform">
                     <label
                       htmlFor="contact-name"
                       className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-[#8A6D4B] mb-2"
@@ -573,7 +589,7 @@ export const ContactPage: React.FC = () => {
                     )}
                   </motion.div>
 
-                  <motion.div animate={emailShake} className="will-change-transform">
+                  <motion.div animate={emailShake} className="min-w-0 will-change-transform">
                     <label
                       htmlFor="contact-email"
                       className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-[#8A6D4B] mb-2"
@@ -612,14 +628,17 @@ export const ContactPage: React.FC = () => {
                   </motion.div>
                 </div>
 
-                <motion.div animate={subjectShake} className="space-y-3 will-change-transform">
+                <motion.div
+                  animate={subjectShake}
+                  className="min-w-0 space-y-3 will-change-transform"
+                >
                   <label
                     htmlFor="contact-subject"
                     className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-[#8A6D4B]"
                   >
                     SUBJEK / TOPIK *
                   </label>
-                  <div className="flex flex-nowrap overflow-x-auto scrollbar-hide gap-2 pb-1">
+                  <div className="w-full max-w-full min-w-0 flex flex-nowrap overflow-x-auto scrollbar-hide gap-2 pb-1">
                     {SUBJECT_PRESETS.map((preset) => {
                       const active = values.subject === preset;
                       return (
@@ -717,13 +736,13 @@ export const ContactPage: React.FC = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
                   <motion.div
                     animate={submitShake}
-                    className="w-full sm:w-auto will-change-transform"
+                    className="w-full sm:w-auto max-w-full will-change-transform"
                   >
                     <button
                       type="submit"
                       disabled={submitPhase === 'loading'}
                       aria-busy={submitPhase === 'loading'}
-                      className={`inline-flex items-center justify-center gap-2.5 w-full sm:w-auto sm:min-w-[240px] px-7 py-3.5 rounded-full text-[10px] md:text-xs font-mono uppercase tracking-[0.18em] whitespace-nowrap font-medium active:scale-[0.97] transition-all duration-300 cursor-pointer disabled:opacity-75 disabled:cursor-wait ${
+                      className={`inline-flex items-center justify-center text-center gap-2.5 w-full sm:w-auto max-w-full sm:min-w-[240px] px-5 sm:px-7 py-3.5 rounded-full text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium active:scale-[0.97] transition-all duration-300 cursor-pointer disabled:opacity-75 disabled:cursor-wait ${
                         submitPhase === 'success'
                           ? 'bg-[#8A6D4B] text-ivory'
                           : 'bg-espresso text-ivory hover:bg-[#8A6D4B]'
@@ -795,13 +814,13 @@ export const ContactPage: React.FC = () => {
                     transition={{ duration: 0.4, ease: EASE_LUXURY }}
                     role="status"
                     aria-live="polite"
-                    className="mt-8 p-6 bg-espresso text-ivory border border-champagne/35 space-y-2.5"
+                    className="mt-8 w-full max-w-full min-w-0 overflow-hidden p-5 sm:p-6 bg-espresso text-ivory border border-champagne/35 space-y-2.5"
                   >
-                    <div className="flex items-center gap-2.5 text-[10px] md:text-xs font-mono uppercase tracking-[0.18em] text-champagne">
-                      <Check className="size-4" aria-hidden="true" />
-                      TERKIRIM LANGSUNG KE INBOX AFLAN
+                    <div className="flex items-center gap-2.5 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne">
+                      <Check className="size-4 shrink-0" aria-hidden="true" />
+                      <span>TERKIRIM LANGSUNG KE INBOX AFLAN</span>
                     </div>
-                    <p className="font-sans text-sm md:text-base text-ivory/85 leading-relaxed">
+                    <p className="font-sans text-sm md:text-base text-ivory/85 leading-relaxed max-w-prose break-words">
                       {feedbackMessage}
                     </p>
                   </motion.div>
@@ -815,16 +834,26 @@ export const ContactPage: React.FC = () => {
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.4, ease: EASE_LUXURY }}
                     role="alert"
-                    className="mt-8 p-6 bg-espresso text-ivory border border-champagne/35 space-y-4"
+                    className="mt-8 w-full max-w-full min-w-0 overflow-hidden p-5 sm:p-6 bg-espresso text-ivory border border-champagne/35 space-y-4"
                   >
-                    <div className="flex items-center gap-2.5 text-[10px] md:text-xs font-mono uppercase tracking-[0.18em] text-champagne">
-                      <AlertCircle className="size-4" aria-hidden="true" />
-                      GANGGUAN JARINGAN · OPSI ALTERNATIF CEPAT
+                    <div className="flex items-start sm:items-center gap-2.5 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne">
+                      <AlertCircle className="size-4 shrink-0 mt-0.5 sm:mt-0" aria-hidden="true" />
+                      <span>
+                        {isActivationNotice
+                          ? 'MENUNGGU AKTIVASI INBOX · OPSI KONTAK LANGSUNG'
+                          : 'GANGGUAN JARINGAN · OPSI ALTERNATIF CEPAT'}
+                      </span>
                     </div>
-                    <p className="font-sans text-sm text-ivory/85 leading-relaxed">
+
+                    <p className="font-sans text-sm md:text-base text-ivory/85 leading-relaxed max-w-prose">
                       {feedbackMessage}
                     </p>
-                    <div className="flex flex-wrap gap-3">
+
+                    <p className="font-mono text-xs text-champagne break-all opacity-80">
+                      {contactData.email}
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row gap-3 w-full">
                       <button
                         type="button"
                         onClick={() =>
@@ -835,28 +864,29 @@ export const ContactPage: React.FC = () => {
                             contactData.email,
                           )
                         }
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-champagne text-obsidian text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium hover:bg-ivory transition-colors cursor-pointer"
+                        className="inline-flex items-center justify-center text-center gap-2 w-full sm:w-auto max-w-full px-4 py-3 rounded-full bg-champagne text-obsidian text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium hover:bg-ivory active:scale-[0.98] transition-all cursor-pointer"
                       >
                         {copiedId === 'fallback-email' ? (
                           <>
-                            <Check className="size-3.5" aria-hidden="true" />
-                            Email Tersalin
+                            <Check className="size-3.5 shrink-0" aria-hidden="true" />
+                            <span>Email Tersalin</span>
                           </>
                         ) : (
                           <>
-                            <Copy className="size-3.5" aria-hidden="true" />
-                            Salin Email ({contactData.email})
+                            <Copy className="size-3.5 shrink-0" aria-hidden="true" />
+                            <span>Salin Alamat Email</span>
                           </>
                         )}
                       </button>
+
                       <a
                         href={contactData.whatsappHref}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-champagne/40 text-ivory text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap hover:border-champagne transition-colors"
+                        className="inline-flex items-center justify-center text-center gap-2 w-full sm:w-auto max-w-full px-4 py-3 rounded-full border border-champagne/40 text-ivory text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] hover:border-champagne active:scale-[0.98] transition-all"
                       >
-                        <MessageCircle className="size-3.5" aria-hidden="true" />
-                        Hubungi via WhatsApp
+                        <MessageCircle className="size-3.5 shrink-0" aria-hidden="true" />
+                        <span>Hubungi via WhatsApp</span>
                       </a>
                     </div>
                   </motion.div>
