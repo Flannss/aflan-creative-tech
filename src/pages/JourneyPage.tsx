@@ -1,6 +1,6 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, CheckCircle2, MapPin } from 'lucide-react';
 import {
   journeyCategories,
@@ -11,12 +11,17 @@ import { Reveal } from '@/components/motion/Reveal';
 import { StackingCard } from '@/components/motion/StackingCard';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 export const JourneyPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'Semua' | JourneyCategory>('Semua');
   const [activeId, setActiveId] = useState<string>(journeyMilestones[0].id);
   const stackRef = useRef<HTMLDivElement | null>(null);
+  const anchorRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const isNavigatingRef = useRef<boolean>(false);
+  const navTimeoutRef = useRef<number | null>(null);
   const prefersReducedMotion = useReducedMotion();
+  const isTabletOrDesktop = useMediaQuery('(min-width: 768px)');
 
   const filteredMilestones = useMemo(() => {
     if (selectedCategory === 'Semua') return journeyMilestones;
@@ -44,15 +49,77 @@ export const JourneyPage: React.FC = () => {
   );
 
   const scrollToMilestone = (id: string) => {
+    const idx = filteredMilestones.findIndex((m) => m.id === id);
+    if (idx < 0) return;
+
     setActiveId(id);
-    const el = document.getElementById(`journey-card-${id}`);
-    if (el) {
-      el.scrollIntoView({
+    isNavigatingRef.current = true;
+    if (navTimeoutRef.current !== null) {
+      window.clearTimeout(navTimeoutRef.current);
+    }
+
+    const anchorEl =
+      anchorRefs.current[id] || document.getElementById(`journey-anchor-${id}`);
+    if (anchorEl) {
+      const elementDocTop = anchorEl.getBoundingClientRect().top + window.scrollY;
+      const stickyTop = 96 + Math.min(idx, 5) * 14;
+      const topOffset = isTabletOrDesktop ? stickyTop : 80;
+      const targetTop = Math.max(0, elementDocTop - topOffset);
+
+      window.scrollTo({
+        top: targetTop,
         behavior: prefersReducedMotion ? 'auto' : 'smooth',
-        block: 'start',
       });
     }
+
+    const unlock = () => {
+      isNavigatingRef.current = false;
+      if (navTimeoutRef.current !== null) {
+        window.clearTimeout(navTimeoutRef.current);
+        navTimeoutRef.current = null;
+      }
+    };
+
+    if ('onscrollend' in window) {
+      window.addEventListener('scrollend', unlock, { once: true });
+    }
+    navTimeoutRef.current = window.setTimeout(unlock, 850);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isNavigatingRef.current) return;
+      if (filteredMilestones.length === 0) return;
+
+      const threshold = isTabletOrDesktop ? 160 : 120;
+      let currentActiveId = filteredMilestones[0].id;
+
+      for (let i = 0; i < filteredMilestones.length; i++) {
+        const item = filteredMilestones[i];
+        const el =
+          anchorRefs.current[item.id] ||
+          document.getElementById(`journey-anchor-${item.id}`);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= threshold) {
+            currentActiveId = item.id;
+          } else {
+            break;
+          }
+        }
+      }
+
+      setActiveId((prev) => (prev === currentActiveId ? prev : currentActiveId));
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (navTimeoutRef.current !== null) {
+        window.clearTimeout(navTimeoutRef.current);
+      }
+    };
+  }, [filteredMilestones, isTabletOrDesktop]);
 
   const handleSelectCategory = (cat: 'Semua' | JourneyCategory) => {
     setSelectedCategory(cat);
@@ -62,6 +129,17 @@ export const JourneyPage: React.FC = () => {
         : journeyMilestones.filter((m) => m.category === cat);
     if (nextList.length > 0) {
       setActiveId(nextList[0].id);
+      const firstAnchor =
+        anchorRefs.current[nextList[0].id] ||
+        document.getElementById(`journey-anchor-${nextList[0].id}`);
+      if (firstAnchor) {
+        const elementDocTop = firstAnchor.getBoundingClientRect().top + window.scrollY;
+        const topOffset = isTabletOrDesktop ? 96 : 80;
+        window.scrollTo({
+          top: Math.max(0, elementDocTop - topOffset),
+          behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        });
+      }
     }
   };
 
@@ -241,23 +319,29 @@ export const JourneyPage: React.FC = () => {
           {/* Stacking Dossier Cards Deck */}
           <div
             ref={stackRef}
-            className="relative isolate lg:col-span-8 space-y-6 md:space-y-10 pb-6"
+            className="relative isolate lg:col-span-8 pb-6"
           >
             {filteredMilestones.map((item, idx) => (
-              <StackingCard
-                key={`${selectedCategory}-${item.id}`}
-                id={`journey-card-${item.id}`}
-                containerRef={stackRef}
-                index={idx}
-                total={filteredMilestones.length}
-                baseTopPx={96}
-                offsetStepPx={14}
-              >
-                <motion.article
-                  onViewportEnter={() => setActiveId(item.id)}
-                  viewport={{ amount: 0.45 }}
-                  className="bg-obsidian text-ivory border border-champagne/25 p-6 sm:p-9 lg:p-10 shadow-[0_24px_70px_rgba(23,22,21,0.35)]"
+              <React.Fragment key={`${selectedCategory}-${item.id}`}>
+                {/* Non-sticky document flow anchor */}
+                <div
+                  id={`journey-anchor-${item.id}`}
+                  ref={(el) => {
+                    anchorRefs.current[item.id] = el;
+                  }}
+                  className="h-0 w-full pointer-events-none -scroll-mt-24"
+                  aria-hidden="true"
+                />
+                <StackingCard
+                  id={`journey-card-${item.id}`}
+                  containerRef={stackRef}
+                  index={idx}
+                  total={filteredMilestones.length}
+                  baseTopPx={96}
+                  offsetStepPx={14}
+                  className="mb-6 md:mb-10 last:mb-0"
                 >
+                  <article className="bg-obsidian text-ivory border border-champagne/25 p-6 sm:p-9 lg:p-10 shadow-[0_24px_70px_rgba(23,22,21,0.35)]">
                   <div className="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-champagne/15">
                     <div className="flex items-center gap-3.5">
                       <span className="font-serif italic text-3xl sm:text-4xl text-champagne leading-none">
@@ -323,10 +407,11 @@ export const JourneyPage: React.FC = () => {
                     </span>
                     <span className="text-champagne/80">ARSIP TERVERIFIKASI · AMDZ</span>
                   </div>
-                </motion.article>
+                </article>
               </StackingCard>
-            ))}
-          </div>
+            </React.Fragment>
+          ))}
+        </div>
         </div>
       </section>
     </div>

@@ -147,7 +147,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.985 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: MOTION_DURATION * 1.2, ease: EASE_LUXURY }}
-        className="pointer-events-none absolute inset-4 md:inset-8 z-[5] border border-champagne/15"
+        className="pointer-events-none absolute inset-4 md:inset-8 z-[5] border border-champagne/15 rounded-2xl md:rounded-3xl"
       />
 
       {/* Top minimal crest */}
@@ -155,7 +155,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         initial={prefersReducedMotion ? false : { opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: MOTION_DURATION, ease: EASE_LUXURY }}
-        className="relative z-10 w-full max-w-[1360px] flex items-center justify-between gap-4 font-mono text-[10px] sm:text-[11px] tracking-[0.26em] uppercase text-champagne/80"
+        className="relative z-10 w-full max-w-[1360px] flex items-center justify-between gap-4 px-2 sm:px-4 font-mono text-[10px] sm:text-[11px] tracking-[0.26em] uppercase text-champagne/80"
       >
         <span className="inline-flex items-center gap-2.5">
           <MonogramMark size={24} className="text-champagne" />
@@ -241,7 +241,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         initial={prefersReducedMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: MOTION_DURATION, delay: 0.3, ease: EASE_LUXURY }}
-        className="relative z-10 w-full max-w-[1360px] flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.22em] uppercase text-taupe"
+        className="relative z-10 w-full max-w-[1360px] flex items-center justify-between gap-4 px-2 sm:px-4 font-mono text-[10px] tracking-[0.22em] uppercase text-taupe"
       >
         <span>DOSSIER DIGITAL PERSONAL</span>
         <span className="hidden sm:inline text-champagne/70">TEKAN ENTER UNTUK MASUK</span>
