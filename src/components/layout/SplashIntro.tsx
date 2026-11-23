@@ -171,43 +171,35 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         animate="visible"
         className="relative z-10 w-full flex flex-col items-center text-center max-w-4xl mx-auto my-auto"
       >
-        <motion.p
-          variants={prefersReducedMotion ? undefined : itemVariants}
-          className="font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase text-champagne/85"
-        >
-          AFLAN MU&apos;AFA DZULFIQAR
-        </motion.p>
-
         <motion.span
           aria-hidden="true"
           variants={prefersReducedMotion ? undefined : ruleVariants}
-          className="block w-12 h-px bg-champagne/40 my-7 sm:my-9 origin-center"
+          className="block w-12 h-px bg-champagne/40 mb-6 sm:mb-8 origin-center"
         />
 
         <motion.h1
           variants={prefersReducedMotion ? undefined : itemVariants}
           aria-label="Portfolio by AMDZ"
-          className="flex flex-col items-center gap-3 sm:gap-4"
+          className="flex flex-col items-center"
         >
           <span
             aria-hidden="true"
-            className="block font-serif font-light uppercase text-5xl md:text-6xl tracking-[0.04em] leading-none text-ivory"
+            className="block font-serif font-light uppercase text-5xl sm:text-6xl md:text-7xl tracking-[0.06em] leading-none text-ivory"
           >
             PORTFOLIO
           </span>
           <span
             aria-hidden="true"
-            className="block font-serif italic font-light uppercase text-3xl md:text-5xl leading-none text-champagne/90"
+            className="block font-serif italic font-semibold uppercase text-3xl sm:text-4xl md:text-5xl tracking-[0.06em] leading-none text-champagne mt-2 sm:mt-3"
           >
-            <span className="editorial-outline-strong">BY</span>{' '}
-            <span>AMDZ</span>
+            BY AMDZ
           </span>
         </motion.h1>
 
         <motion.span
           aria-hidden="true"
           variants={prefersReducedMotion ? undefined : ruleVariants}
-          className="block w-12 h-px bg-champagne/40 my-7 sm:my-9 origin-center"
+          className="block w-12 h-px bg-champagne/40 my-6 sm:my-8 origin-center"
         />
 
         <motion.p
@@ -219,7 +211,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
 
         <motion.div
           variants={prefersReducedMotion ? undefined : itemVariants}
-          className="mt-10 sm:mt-12"
+          className="mt-8 sm:mt-10 md:mt-12"
         >
           <button
             type="button"

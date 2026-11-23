@@ -141,17 +141,14 @@ export const HomePage: React.FC = () => {
             initial={disableMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: MOTION_DURATION, ease: EASE_LUXURY }}
-            className="relative z-20 w-full text-center select-none mb-6 sm:mb-8 will-change-transform"
+            className="relative z-20 w-full text-center select-none mb-5 md:mb-6 will-change-transform"
           >
             <h1
-              aria-label="AFLAN — Aflan Mu'afa Dzulfiqar"
-              className="font-serif font-light uppercase tracking-tight leading-[1.04] text-5xl md:text-6xl text-ivory/95"
+              aria-label="AFLAN · Aflan Mu'afa Dzulfiqar"
+              className="font-serif font-normal uppercase tracking-[0.14em] leading-[0.95] text-5xl sm:text-6xl md:text-7xl lg:text-[5.25rem] text-ivory drop-shadow-[0_8px_24px_rgba(23,22,21,0.65)]"
             >
               AFLAN
             </h1>
-            <p className="mt-2 font-mono text-[10px] sm:text-[11px] tracking-[0.26em] uppercase text-champagne/80">
-              {personalData.fullName} · {personalData.monogram}
-            </p>
           </motion.div>
 
           <div className="relative w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 items-end gap-7 lg:gap-6 z-10">
