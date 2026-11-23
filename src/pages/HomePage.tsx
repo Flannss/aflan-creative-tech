@@ -144,7 +144,7 @@ export const HomePage: React.FC = () => {
             className="relative z-20 w-full text-center select-none mb-6 sm:mb-8 will-change-transform"
           >
             <h1
-              aria-label="AFLAN · Aflan Mu'afa Dzulfiqar"
+              aria-label="AFLAN — Aflan Mu'afa Dzulfiqar"
               className="font-serif font-light uppercase tracking-tight leading-[1.04] text-5xl md:text-6xl text-ivory/95"
             >
               AFLAN
@@ -227,12 +227,8 @@ export const HomePage: React.FC = () => {
                       aria-labelledby="hero-dossier-internship"
                       className="text-ivory/90 mt-0.5"
                     >
-                      <span>{personalData.internship.company}</span>
-                      <span className="mt-1 inline-flex items-center gap-1.5 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne">
-                        <span
-                          aria-hidden="true"
-                          className="size-1.5 rounded-full bg-emerald-400"
-                        />
+                      <span className="block">{personalData.internship.company}</span>
+                      <span className="mt-1.5 flex w-fit max-w-full px-2.5 py-0.5 rounded-full border border-champagne/30 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne">
                         Aktif · {personalData.internship.period}
                       </span>
                     </dd>
@@ -268,10 +264,10 @@ export const HomePage: React.FC = () => {
                         disableMotion
                           ? undefined
                           : {
-                              x: archHover.x,
-                              y: archHover.y,
-                              scale: archHover.active ? 1.06 : 1.01,
-                            }
+                            x: archHover.x,
+                            y: archHover.y,
+                            scale: archHover.active ? 1.06 : 1.01,
+                          }
                       }
                       transition={{ type: 'spring', stiffness: 150, damping: 20, mass: 0.8 }}
                       className="w-full h-full will-change-transform"
@@ -420,55 +416,55 @@ export const HomePage: React.FC = () => {
             >
               <Reveal variant="up">
                 <div className="relative bg-espresso/65 border border-champagne/25 p-7 sm:p-10 shadow-[0_28px_80px_rgba(0,0,0,0.65)] overflow-hidden">
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 opacity-15"
-                  style={{
-                    backgroundImage:
-                      'linear-gradient(to right, rgba(216,195,165,0.28) 1px, transparent 1px), linear-gradient(to bottom, rgba(216,195,165,0.28) 1px, transparent 1px)',
-                    backgroundSize: '36px 36px',
-                  }}
-                />
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 opacity-15"
+                    style={{
+                      backgroundImage:
+                        'linear-gradient(to right, rgba(216,195,165,0.28) 1px, transparent 1px), linear-gradient(to bottom, rgba(216,195,165,0.28) 1px, transparent 1px)',
+                      backgroundSize: '36px 36px',
+                    }}
+                  />
 
-                <div className="relative z-10 flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/80 pb-5 border-b border-champagne/15">
-                  <span>MONOGRAM · AMDZ</span>
-                  <span>EST. 2005</span>
+                  <div className="relative z-10 flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/80 pb-5 border-b border-champagne/15">
+                    <span>MONOGRAM · AMDZ</span>
+                    <span>EST. 2005</span>
+                  </div>
+
+                  <div className="relative z-10 py-10 sm:py-12 flex flex-col items-center justify-center text-center">
+                    <div className="relative flex items-center justify-center size-44 sm:size-52 rounded-full border border-dashed border-champagne/35 bg-obsidian/75 shadow-inner">
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-3 rounded-full border border-champagne/20"
+                      />
+                      <MonogramMark size={112} className="text-champagne" />
+                    </div>
+
+                    <div className="mt-7 space-y-1.5">
+                      <p className="font-serif text-3xl sm:text-4xl tracking-[0.24em] uppercase font-light text-ivory">
+                        AFLAN
+                      </p>
+                      <p className="font-mono text-[10px] tracking-[0.28em] uppercase text-champagne">
+                        A · M · D · Z
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-2 pt-5 border-t border-champagne/15 font-mono text-[9px] tracking-[0.18em] uppercase text-taupe text-center">
+                    <div className="p-2 bg-obsidian/60 border border-champagne/15">
+                      <span className="block text-champagne">PUNCAK (A)</span>
+                      <span>Struktur Kode</span>
+                    </div>
+                    <div className="p-2 bg-obsidian/60 border border-champagne/15">
+                      <span className="block text-champagne">RUANG (M)</span>
+                      <span>Estetika Editorial</span>
+                    </div>
+                    <div className="p-2 bg-obsidian/60 border border-champagne/15">
+                      <span className="block text-champagne">TUMPUAN (DZ)</span>
+                      <span>Pengujian QA</span>
+                    </div>
+                  </div>
                 </div>
-
-                <div className="relative z-10 py-10 sm:py-12 flex flex-col items-center justify-center text-center">
-                  <div className="relative flex items-center justify-center size-44 sm:size-52 rounded-full border border-dashed border-champagne/35 bg-obsidian/75 shadow-inner">
-                    <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute inset-3 rounded-full border border-champagne/20"
-                    />
-                    <MonogramMark size={112} className="text-champagne" />
-                  </div>
-
-                  <div className="mt-7 space-y-1.5">
-                    <p className="font-serif text-3xl sm:text-4xl tracking-[0.24em] uppercase font-light text-ivory">
-                      AFLAN
-                    </p>
-                    <p className="font-mono text-[10px] tracking-[0.28em] uppercase text-champagne">
-                      A · M · D · Z
-                    </p>
-                  </div>
-                </div>
-
-                <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-2 pt-5 border-t border-champagne/15 font-mono text-[9px] tracking-[0.18em] uppercase text-taupe text-center">
-                  <div className="p-2 bg-obsidian/60 border border-champagne/15">
-                    <span className="block text-champagne">PUNCAK (A)</span>
-                    <span>Struktur Kode</span>
-                  </div>
-                  <div className="p-2 bg-obsidian/60 border border-champagne/15">
-                    <span className="block text-champagne">RUANG (M)</span>
-                    <span>Estetika Editorial</span>
-                  </div>
-                  <div className="p-2 bg-obsidian/60 border border-champagne/15">
-                    <span className="block text-champagne">TUMPUAN (DZ)</span>
-                    <span>Pengujian QA</span>
-                  </div>
-                </div>
-              </div>
               </Reveal>
             </motion.div>
 
@@ -659,12 +655,8 @@ export const HomePage: React.FC = () => {
                       className="text-sm font-medium text-espresso sm:text-right space-y-1"
                     >
                       <span className="block">{personalData.internship.company}</span>
-                      <span className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.14em] uppercase text-bronze">
-                        <span
-                          aria-hidden="true"
-                          className="size-1.5 rounded-full bg-emerald-600"
-                        />
-                        {personalData.internship.period}
+                      <span className="inline-flex max-w-full px-2.5 py-0.5 rounded-full border border-bronze/30 font-mono text-[10px] tracking-[0.14em] uppercase text-bronze">
+                        Aktif · {personalData.internship.period}
                       </span>
                     </dd>
                   </div>

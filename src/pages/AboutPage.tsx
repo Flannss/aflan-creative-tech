@@ -168,11 +168,7 @@ export const AboutPage: React.FC = () => {
                       <Briefcase className="size-3.5" aria-hidden="true" />
                       MAGANG PROFESIONAL TERVERIFIKASI
                     </span>
-                    <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne/90">
-                      <span
-                        aria-hidden="true"
-                        className="size-1.5 rounded-full bg-emerald-400"
-                      />
+                    <span className="inline-flex max-w-full px-2.5 py-0.5 rounded-full border border-champagne/30 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne/90">
                       Aktif · {personalData.internship.period}
                     </span>
                   </div>

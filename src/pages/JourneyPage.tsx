@@ -269,11 +269,7 @@ export const JourneyPage: React.FC = () => {
                             {item.category}
                           </span>
                           {item.isActive && (
-                            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-champagne/15 border border-champagne/40 text-[10px] font-mono uppercase tracking-[0.14em] whitespace-nowrap text-champagne">
-                              <span
-                                aria-hidden="true"
-                                className="size-1.5 rounded-full bg-champagne"
-                              />
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-full border border-champagne/40 text-[10px] font-mono uppercase tracking-[0.14em] whitespace-nowrap text-champagne">
                               Aktif
                             </span>
                           )}

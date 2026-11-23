@@ -815,8 +815,7 @@ export const CreativeLabPage: React.FC = () => {
               <Sparkles className="size-3.5" aria-hidden="true" />
               BAB 06 / CREATIVE LAB
             </span>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-espresso/85 border border-champagne/35 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
-              <span aria-hidden="true" className="size-1.5 rounded-full bg-champagne" />
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-espresso/85 border border-champagne/35 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
               AREA EKSPERIMEN VISUAL · NON-EDITORIAL
             </span>
           </Reveal>

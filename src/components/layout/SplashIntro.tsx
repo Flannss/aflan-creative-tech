@@ -14,13 +14,13 @@ const containerVariants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.12,
-      delayChildren: 0.08,
+      delayChildren: 0.18,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
@@ -28,9 +28,22 @@ const itemVariants = {
   },
 };
 
+const ruleVariants = {
+  hidden: { opacity: 0, scaleX: 0 },
+  visible: {
+    opacity: 1,
+    scaleX: 1,
+    transition: { duration: MOTION_DURATION, ease: EASE_LUXURY },
+  },
+};
+
+const FILM_GRAIN_DATA_URI =
+  "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E\")";
+
 /**
- * Luxury editorial entry screen revealed before the portfolio homepage.
- * Exits with a smooth upward curtain glide on user interaction.
+ * Luxury editorial entry screen (magazine cover / dossier composition)
+ * revealed once per session before the portfolio homepage.
+ * Exits with a smooth upward curtain glide on click or Enter / Space.
  */
 export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -68,13 +81,10 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
               transition: { duration: MOTION_DURATION, ease: EASE_LUXURY },
             }
       }
-      className="fixed inset-0 h-dvh z-[9999] bg-[radial-gradient(circle_at_center,_#2C211B_0%,_#1A1412_50%,_#0A0807_100%)] text-ivory flex flex-col items-center justify-between px-6 py-10 sm:px-10 sm:py-12 overflow-hidden select-none"
+      className="fixed inset-0 h-dvh z-[9999] bg-[radial-gradient(circle_at_center,_#2C211B_0%,_#1A1412_50%,_#0A0807_100%)] text-ivory flex flex-col items-center justify-between px-8 py-10 sm:px-14 sm:py-14 md:px-16 md:py-16 overflow-hidden select-none"
     >
-      {/* Layered luxury atmospheric depth & subtle animated warm mesh glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-      >
+      {/* Layered atmospheric depth: warm breathing glow, perimeter vignette, fine grain */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         <motion.div
           initial={prefersReducedMotion ? false : { opacity: 0.65, scale: 0.96 }}
           animate={
@@ -117,7 +127,6 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           }}
         />
 
-        {/* Deep espresso perimeter vignette */}
         <div
           className="absolute inset-0"
           style={{
@@ -126,71 +135,101 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           }}
         />
 
-        {/* Fine film grain to keep gradient transitions silky without color banding */}
         <div
-          className="absolute inset-0 opacity-[0.045] mix-blend-overlay"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E\")",
-            backgroundSize: '200px 200px',
-          }}
+          className="absolute inset-0 opacity-[0.05] mix-blend-overlay"
+          style={{ backgroundImage: FILM_GRAIN_DATA_URI, backgroundSize: '200px 200px' }}
         />
       </div>
+
+      {/* Hairline dossier frame inside the viewport */}
+      <motion.div
+        aria-hidden="true"
+        initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.985 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: MOTION_DURATION * 1.2, ease: EASE_LUXURY }}
+        className="pointer-events-none absolute inset-4 md:inset-8 z-[5] border border-champagne/15"
+      />
 
       {/* Top minimal crest */}
       <motion.div
         initial={prefersReducedMotion ? false : { opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: MOTION_DURATION, ease: EASE_LUXURY }}
-        className="relative z-10 w-full max-w-[1360px] flex items-center justify-between font-mono text-[10px] sm:text-[11px] tracking-[0.26em] uppercase text-champagne/80"
+        className="relative z-10 w-full max-w-[1360px] flex items-center justify-between gap-4 font-mono text-[10px] sm:text-[11px] tracking-[0.26em] uppercase text-champagne/80"
       >
         <span className="inline-flex items-center gap-2.5">
           <MonogramMark size={24} className="text-champagne" />
           <span>AFLAN</span>
         </span>
-        <span className="text-taupe">PURWOKERTO · ID</span>
+        <span className="text-taupe whitespace-nowrap">PURWOKERTO · ID</span>
       </motion.div>
 
-      {/* Center monumental editorial display */}
+      {/* Center editorial cover composition */}
       <motion.div
         variants={prefersReducedMotion ? undefined : containerVariants}
         initial={prefersReducedMotion ? false : 'hidden'}
         animate="visible"
-        className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto my-auto"
+        className="relative z-10 w-full flex flex-col items-center text-center max-w-4xl mx-auto my-auto"
       >
         <motion.p
           variants={prefersReducedMotion ? undefined : itemVariants}
-          className="font-mono text-[10px] sm:text-xs tracking-[0.34em] uppercase text-champagne/85 mb-6 sm:mb-8"
+          className="font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase text-champagne/85"
         >
           AFLAN MU&apos;AFA DZULFIQAR
         </motion.p>
 
-        <motion.div
+        <motion.span
+          aria-hidden="true"
+          variants={prefersReducedMotion ? undefined : ruleVariants}
+          className="block w-12 h-px bg-champagne/40 my-7 sm:my-9 origin-center"
+        />
+
+        <motion.h1
           variants={prefersReducedMotion ? undefined : itemVariants}
-          className="space-y-2 sm:space-y-3"
+          aria-label="Portfolio by AMDZ"
+          className="flex flex-col items-center gap-3 sm:gap-4"
         >
-          <p className="font-serif font-light uppercase tracking-tight leading-[1.02] text-4xl sm:text-5xl md:text-6xl text-ivory">
+          <span
+            aria-hidden="true"
+            className="block font-serif font-light uppercase text-5xl md:text-6xl tracking-[0.04em] leading-none text-ivory"
+          >
             PORTFOLIO
-          </p>
-          <p className="font-serif italic font-light uppercase tracking-tight leading-[1.04] text-3xl sm:text-4xl md:text-5xl text-champagne">
+          </span>
+          <span
+            aria-hidden="true"
+            className="block font-serif italic font-light uppercase text-3xl md:text-5xl leading-none text-champagne/90"
+          >
             <span className="editorial-outline-strong">BY</span>{' '}
             <span>AMDZ</span>
-          </p>
-        </motion.div>
+          </span>
+        </motion.h1>
+
+        <motion.span
+          aria-hidden="true"
+          variants={prefersReducedMotion ? undefined : ruleVariants}
+          className="block w-12 h-px bg-champagne/40 my-7 sm:my-9 origin-center"
+        />
+
+        <motion.p
+          variants={prefersReducedMotion ? undefined : itemVariants}
+          className="font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-taupe"
+        >
+          WEB DEVELOPER · UI ENGINEER · SOFTWARE QA
+        </motion.p>
 
         <motion.div
           variants={prefersReducedMotion ? undefined : itemVariants}
-          className="mt-12 sm:mt-16"
+          className="mt-10 sm:mt-12"
         >
           <button
             type="button"
             onClick={onEnter}
             autoFocus
-            className="group inline-flex items-center gap-3 pb-2 border-b border-champagne/55 hover:border-champagne text-ivory hover:text-champagne font-mono text-xs sm:text-[13px] tracking-[0.28em] uppercase active:scale-[0.97] transition-all duration-300 cursor-pointer"
+            className="group inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-full border border-champagne/40 bg-obsidian/30 backdrop-blur-sm text-ivory font-mono text-xs uppercase tracking-[0.22em] hover:bg-champagne hover:border-champagne hover:text-obsidian active:scale-[0.97] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne"
           >
             <span>MASUK / ENTER</span>
             <ArrowUpRight
-              className="size-4 text-champagne transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              className="size-4 text-champagne transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-obsidian group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               aria-hidden="true"
             />
           </button>
@@ -202,9 +241,9 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         initial={prefersReducedMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: MOTION_DURATION, delay: 0.3, ease: EASE_LUXURY }}
-        className="relative z-10 w-full max-w-[1360px] flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-taupe"
+        className="relative z-10 w-full max-w-[1360px] flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.22em] uppercase text-taupe"
       >
-        <span>WEB DEVELOPER · UI ENGINEER</span>
+        <span>DOSSIER DIGITAL PERSONAL</span>
         <span className="hidden sm:inline text-champagne/70">TEKAN ENTER UNTUK MASUK</span>
       </motion.div>
     </motion.div>
