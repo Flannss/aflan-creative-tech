@@ -12,6 +12,7 @@ export const Navbar: React.FC = () => {
   const location = useLocation();
   const [menuOpenPath, setMenuOpenPath] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [overDarkSurface, setOverDarkSurface] = useState(false);
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
   const prefersReducedMotion = useReducedMotion();
   const triggerRef = useRef<HTMLButtonElement | null>(null);
@@ -26,13 +27,45 @@ export const Navbar: React.FC = () => {
   );
 
   useEffect(() => {
-    const handleScroll = () => {
+    const syncHeaderSurface = () => {
       setScrolled(window.scrollY > 24);
+
+      const forcedTheme = document.documentElement.dataset.headerTheme;
+      if (forcedTheme === 'dark') {
+        setOverDarkSurface(true);
+        return;
+      }
+      if (forcedTheme === 'light') {
+        setOverDarkSurface(false);
+        return;
+      }
+
+      const darkSections = document.querySelectorAll<HTMLElement>(
+        '[data-nav-surface="dark"]',
+      );
+      const probeY = 56;
+      let intersectsDark = false;
+      darkSections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= probeY && rect.bottom > probeY) {
+          intersectsDark = true;
+        }
+      });
+      setOverDarkSurface(intersectsDark);
     };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
+    syncHeaderSurface();
+    const rafId = window.requestAnimationFrame(syncHeaderSurface);
+    window.addEventListener('scroll', syncHeaderSurface, { passive: true });
+    window.addEventListener('resize', syncHeaderSurface, { passive: true });
+    window.addEventListener('aflan-nav-theme-sync', syncHeaderSurface);
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', syncHeaderSurface);
+      window.removeEventListener('resize', syncHeaderSurface);
+      window.removeEventListener('aflan-nav-theme-sync', syncHeaderSurface);
+    };
+  }, [location.pathname]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -63,9 +96,10 @@ export const Navbar: React.FC = () => {
     navigationRoutes[0];
 
   const isLightHeaderRoute =
-    location.pathname === '/about' ||
-    location.pathname === '/gallery' ||
-    location.pathname === '/contact';
+    (location.pathname === '/about' ||
+      location.pathname === '/gallery' ||
+      location.pathname === '/contact') &&
+    !overDarkSurface;
 
   return (
     <>
@@ -355,7 +389,7 @@ export const Navbar: React.FC = () => {
                           Usia &amp; Basis
                         </p>
                         <p className="text-ivory mt-1">
-                          {ageDetails.age} Tahun · Purwokerto
+                          {ageDetails.age}{' '}Tahun · Purwokerto
                         </p>
                       </div>
                     </div>
@@ -378,9 +412,10 @@ export const Navbar: React.FC = () => {
                     href={contactData.githubHref}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`Profil GitHub ${contactData.githubHandle}`}
                     className="py-1 lg:py-0 hover:text-champagne transition-colors"
                   >
-                    GitHub
+                    GitHub ({contactData.githubHandle})
                   </a>
                   <a
                     href={contactData.whatsappHref}

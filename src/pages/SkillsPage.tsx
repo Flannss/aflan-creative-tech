@@ -60,15 +60,17 @@ export const SkillsPage: React.FC = () => {
   const [selectedDomain, setSelectedDomain] = useState<string>('all');
   const [selectedTier, setSelectedTier] = useState<'All' | SkillTier>('All');
 
+  const totalDomainsLabel = String(skillDomains.length).padStart(2, '0');
+
   const domainOptions = useMemo(
     () => [
-      { value: 'all', label: 'Semua 04 Domain' },
+      { value: 'all', label: `Semua ${totalDomainsLabel} Domain` },
       ...skillDomains.map((domain) => ({
         value: domain.id,
         label: `${domain.index} · ${domain.title}`,
       })),
     ],
-    [],
+    [totalDomainsLabel],
   );
 
   const tierOptions = useMemo(
@@ -98,14 +100,14 @@ export const SkillsPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-espresso text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-espresso text-ivory pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-24 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15">
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
-              BAB 04 · KEAHLIAN TEKNIS &amp; DISIPLIN
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-champagne">
+              BAB 04 / KEAHLIAN TEKNIS &amp; AI ORCHESTRATION
             </span>
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
-              PEMETAAN KOMPETENSI · 04 DOMAIN UTAMA
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
+              PEMETAAN KOMPETENSI · {totalDomainsLabel} DOMAIN UTAMA
             </span>
           </Reveal>
 
@@ -225,32 +227,32 @@ export const SkillsPage: React.FC = () => {
             return (
               <section
                 key={domain.id}
-                className={`py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b ${isLight
+                className={`py-16 md:py-24 px-4 sm:px-6 lg:px-12 border-b ${isLight
                     ? 'bg-ivory text-espresso border-espresso/15'
                     : 'bg-obsidian text-ivory border-champagne/15'
                   }`}
               >
                 <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-                  <Reveal variant="up" className="lg:col-span-4 lg:sticky lg:top-28 space-y-5">
+                  <Reveal variant="up" className="lg:col-span-4 lg:sticky lg:top-24 space-y-5">
                     <div className="flex items-baseline gap-4">
                       <span
-                        className={`font-serif italic text-5xl sm:text-6xl leading-none ${isLight ? 'text-mocha/35' : 'text-champagne/30'
+                        className={`font-serif italic text-5xl sm:text-6xl leading-none ${isLight ? 'text-bronze/40' : 'text-champagne/30'
                           }`}
                       >
                         {domain.index}
                       </span>
                       <span
-                        className={`font-mono text-[10px] tracking-[0.26em] uppercase ${isLight ? 'text-mocha' : 'text-champagne'
+                        className={`font-mono text-[10px] tracking-[0.26em] uppercase ${isLight ? 'text-bronze' : 'text-champagne'
                           }`}
                       >
-                        DOMAIN {domain.index} / 04
+                        DOMAIN {domain.index} / {totalDomainsLabel}
                       </span>
                     </div>
                     <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-[2.7rem] leading-[1.08] lg:leading-[1.06] font-light">
                       {domain.title}
                     </h2>
                     <p
-                      className={`font-mono text-[11px] tracking-[0.18em] uppercase ${isLight ? 'text-espresso/60' : 'text-taupe'
+                      className={`font-mono text-[11px] tracking-[0.18em] uppercase ${isLight ? 'text-bronze' : 'text-taupe'
                         }`}
                     >
                       {domain.subtitle}
@@ -334,21 +336,22 @@ export const SkillsPage: React.FC = () => {
         )}
       </div>
 
-      <section className="bg-chocolate text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
+      <section className="bg-chocolate text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           <Reveal variant="up" className="lg:col-span-6 space-y-5">
             <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
               <Layers className="size-4" aria-hidden="true" />
-              SINERGI DEVELOPMENT &amp; QUALITY ASSURANCE
+              SINERGI ENGINEERING, QA &amp; AI ORCHESTRATION
             </span>
             <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-[1.08] text-ivory">
               Membangun antarmuka dengan{' '}
               <span className="italic text-champagne/90">ketelitian seorang tester</span>.
             </h2>
             <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed max-w-xl">
-              Praktik langsung pada Software Testing dan Requirement Analysis di PT Puskomedia
-              Indonesia Kreatif ikut meningkatkan cara saya menyusun komponen React, tata letak
-              responsif, dan arsitektur aplikasi mobile.
+              Praktik langsung Software Testing dan Requirement Analysis di PT Puskomedia
+              Indonesia Kreatif berpadu dengan orkestrasi agen AI (Antigravity, Lunyzz,
+              Gemini) untuk mempercepat implementasi React, Flutter, dan audit produksi
+              secara deterministik.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
               <Link
@@ -383,8 +386,8 @@ export const SkillsPage: React.FC = () => {
                 },
                 {
                   num: 'III',
-                  title: 'Kualitas & Analisis',
-                  body: 'Functional Testing, Bug Identification, Debugging, Requirement Analysis, dan Documentation.',
+                  title: 'QA & AI Orchestration',
+                  body: 'Functional Testing, Requirement Analysis, Lunyzz QA audit, Antigravity & Gemini workflow.',
                 },
               ].map((node, nodeIdx) => (
                 <StaggerItem

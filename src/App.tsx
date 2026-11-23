@@ -45,8 +45,28 @@ const AppRoutes: React.FC = () => {
   );
 };
 
+const INTRO_SEEN_KEY = 'aflan-intro-seen';
+
 export const App: React.FC = () => {
-  const [showSplash, setShowSplash] = useState<boolean>(true);
+  const [showSplash, setShowSplash] = useState<boolean>(() => {
+    try {
+      return (
+        typeof window !== 'undefined' &&
+        !window.sessionStorage.getItem(INTRO_SEEN_KEY)
+      );
+    } catch {
+      return false;
+    }
+  });
+
+  const handleEnterPortfolio = () => {
+    try {
+      window.sessionStorage.setItem(INTRO_SEEN_KEY, '1');
+    } catch {
+      // Ignore restricted storage environments
+    }
+    setShowSplash(false);
+  };
 
   return (
     <MotionConfig reducedMotion="user">
@@ -55,7 +75,7 @@ export const App: React.FC = () => {
           {showSplash && (
             <SplashIntro
               key="aflan-splash-intro"
-              onEnter={() => setShowSplash(false)}
+              onEnter={handleEnterPortfolio}
             />
           )}
         </AnimatePresence>

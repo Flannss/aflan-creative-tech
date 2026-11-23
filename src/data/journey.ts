@@ -8,6 +8,7 @@ export interface JourneyMilestone {
   id: string;
   chapter: string;
   periodLabel: string;
+  isActive?: boolean;
   category: JourneyCategory;
   title: string;
   location: string;
@@ -27,16 +28,17 @@ export const journeyMilestones: JourneyMilestone[] = [
   {
     id: 'intern-puskomedia',
     chapter: '01',
-    periodLabel: 'Sep 2026 – Jan 2027',
+    periodLabel: 'Sep 2026 – Sedang Berjalan',
+    isActive: true,
     category: 'Pengalaman Profesional',
-    title: 'Programmer Intern — PT Puskomedia Indonesia Kreatif',
-    location: 'Indonesia',
+    title: 'Programmer Intern · PT Puskomedia Indonesia Kreatif',
+    location: 'Purwokerto, Indonesia',
     summary:
-      'Menjalani program magang sebagai Programmer Intern dengan fokus utama pada Software Evaluation, Functional Testing, Bug Identification, dan System Requirement Analysis—termasuk mengevaluasi alur kerja ASIS Builder.',
+      'Menjalani program magang aktif sebagai Programmer Intern dengan fokus utama pada Software Evaluation, Functional Testing, Bug Identification, dan System Requirement Analysis, termasuk mengevaluasi alur kerja ASIS Builder.',
     highlights: [
-      'Peran: Programmer Intern di PT Puskomedia Indonesia Kreatif (Sep 2026 – Jan 2027)',
+      'Peran: Programmer Intern di PT Puskomedia Indonesia Kreatif (Sep 2026 – Sedang Berjalan)',
       'Fokus utama: Software Evaluation, Functional Testing & System Requirement Analysis',
-      'Mengevaluasi alur kerja ASIS Builder (Website Template Page Generator) dan menyusun rekomendasi perbaikan berbasis pengujian',
+      'Mengevaluasi alur kerja ASIS Builder (Website Template Page Generator) dan menyusun rekomendasi perbaikan berbasis bukti pengujian',
     ],
   },
   {
@@ -44,7 +46,7 @@ export const journeyMilestones: JourneyMilestone[] = [
     chapter: '02',
     periodLabel: 'Studio Aktif',
     category: 'Proyek & Studio',
-    title: 'Co-Founder & Web Developer — Satu Ruang Creative',
+    title: 'Co-Founder & Web Developer · SatuRuangCreative',
     location: 'Student-Built Creative & Digital Studio',
     summary:
       'Membangun wadah studio kreatif & digital mahasiswa ("Satu Ruang, Banyak Ide, Satu Cerita") dengan tanggung jawab pada perancangan struktur UI/UX, Responsive Web Design, dan Frontend Implementation.',
@@ -59,7 +61,7 @@ export const journeyMilestones: JourneyMilestone[] = [
     chapter: '03',
     periodLabel: 'Academic Final Project',
     category: 'Proyek & Studio',
-    title: 'SOMASII — System Online Mahasiswa Sharing Items Information',
+    title: 'SOMASII · System Online Mahasiswa Sharing Items Information',
     location: 'Mobile Application · Flutter & Firebase',
     summary:
       'Merancang dan mengembangkan aplikasi mobile Lost & Found kampus menggunakan Flutter, Dart, dan Firebase (Authentication, Cloud Firestore, Storage) dengan integrasi kontak WhatsApp serta verifikasi klaim admin.',
@@ -72,30 +74,47 @@ export const journeyMilestones: JourneyMilestone[] = [
   {
     id: 'amikom-purwokerto',
     chapter: '04',
-    periodLabel: 'Studi Sarjana · 2026',
+    periodLabel: 'Studi Sarjana · TI24A',
     category: 'Pendidikan',
-    title: 'Teknologi Informasi — Universitas Amikom Purwokerto',
+    title: 'S1 Teknologi Informasi (TI24A) · Universitas Amikom Purwokerto',
     location: 'Purwokerto, Indonesia',
     summary:
-      'Menempuh pendidikan sarjana Program Studi Teknologi Informasi di Universitas Amikom Purwokerto—dilengkapi pencapaian sertifikasi CCNA: Introduction to Networks (Cisco Networking Academy, 2026) serta publikasi Artikel Pengabdian Masyarakat terindeks Garuda (2026).',
+      'Menempuh pendidikan sarjana S1 Teknologi Informasi (kelas TI24A) di Universitas Amikom Purwokerto, dilengkapi sertifikasi CCNA: Introduction to Networks (Cisco, Jul 2026) serta publikasi Jurnal JPMBA terindeks Garuda (Okt 2026).',
     highlights: [
-      'Program Studi: Teknologi Informasi, Universitas Amikom Purwokerto',
-      'Sertifikasi CCNA: Introduction to Networks — Cisco Networking Academy (2026)',
-      'Publikasi Artikel Pengabdian Masyarakat — Jurnal Pengabdian Masyarakat Bangsa (Terindeks Garuda, 2026)',
+      'Program Studi: S1 Teknologi Informasi (TI24A), Universitas Amikom Purwokerto',
+      'Sertifikasi CCNA: Introduction to Networks · Cisco Networking Academy (Jul 2026)',
+      'Publikasi Jurnal Pengabdian Masyarakat Bangsa (JPMBA) · Terindeks Garuda (Okt 2026)',
+    ],
+  },
+  {
+    id: 'pkl-gt-computer',
+    chapter: '05',
+    periodLabel: 'PKL SMK · 3 Bulan (Kelas XI)',
+    category: 'Pengalaman Profesional',
+    title: 'Technical Support & Hardware Specialist · GT Computer Purwokerto',
+    location: 'GT Computer Purwokerto · SMK Wiworotomo Purwokerto',
+    summary:
+      'Menjalani Praktik Kerja Lapangan (PKL) selama 3 bulan saat kelas XI SMK Wiworotomo Purwokerto di GT Computer Purwokerto, menangani diagnostik serta reparasi hardware/software PC & laptop, manajemen inventaris suku cadang, dan konsultasi pengadaan unit pelanggan.',
+    highlights: [
+      'Diagnostik serta reparasi hardware & software PC dan laptop secara sistematis',
+      'Manajemen inventaris suku cadang (spare parts) dan pencatatan kebutuhan komponen perbaikan',
+      'Konsultasi teknis spesifikasi perangkat dan pendampingan pengadaan unit pelanggan',
+      'Program PKL SMK (3 Bulan, Kelas XI) · Alumni SMK Wiworotomo Purwokerto',
     ],
   },
   {
     id: 'roots-tangerang',
-    chapter: '05',
+    chapter: '06',
     periodLabel: '2 Desember 2005',
     category: 'Latar Belakang',
-    title: 'Akar Perjalanan di Tangerang, Indonesia',
-    location: 'Tangerang, Indonesia',
+    title: 'Akar Perjalanan · Tangerang ke Purwokerto',
+    location: 'Tangerang · Purwokerto, Indonesia',
     summary:
-      'Lahir di Tangerang sebelum melanjutkan studi ke Purwokerto—tumbuh dengan rasa ingin tahu tinggi terhadap dunia digital, estetika antarmuka, dan cara membangun karya yang nyata.',
+      'Lahir di Tangerang sebelum menyelesaikan pendidikan kejuruan di SMK Wiworotomo Purwokerto dan melanjutkan studi S1 Teknologi Informasi di Universitas Amikom Purwokerto.',
     highlights: [
-      'Tempat lahir terverifikasi: Tangerang, Indonesia',
-      'Domisili saat ini: Purwokerto, Indonesia',
+      'Tempat lahir terverifikasi: Tangerang, Indonesia (2 Desember 2005)',
+      'Pendidikan Menengah: Alumni SMK Wiworotomo Purwokerto',
+      'Domisili saat ini: Purwokerto, Jawa Tengah, Indonesia',
     ],
   },
 ];

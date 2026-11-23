@@ -15,9 +15,10 @@ interface StackingCardProps {
 
 /**
  * Scroll-driven editorial stacking card:
- * - Tracks parent deck scroll progress so covered cards smoothly scale down slightly
- *   and dim via a GPU-composited scrim overlay as subsequent cards layer above them.
- * - On mobile (< 768px) or reduced-motion: relaxes cleanly into static flow to prevent layout crowding.
+ * - Sticky offset starts at top-24 (96px) with sequential z-index and smooth scale-down.
+ * - Constrains tall cards on desktop/tablet to max-h-[78vh] with internal scroll fallback
+ *   so long descriptions never clip past the viewport bottom.
+ * - Relaxes cleanly into static vertical flow on mobile (< 768px) and reduced-motion.
  */
 export const StackingCard: React.FC<StackingCardProps> = ({
   children,
@@ -25,8 +26,8 @@ export const StackingCard: React.FC<StackingCardProps> = ({
   index,
   total,
   className = '',
-  baseTopPx = 112,
-  offsetStepPx = 18,
+  baseTopPx = 96,
+  offsetStepPx = 14,
   id,
 }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -40,8 +41,8 @@ export const StackingCard: React.FC<StackingCardProps> = ({
   });
 
   const startRange = total > 1 ? index / total : 0;
-  const targetScale = isLast ? 1 : Math.max(0.91, 1 - (total - 1 - index) * 0.028);
-  const targetDim = isLast ? 0 : Math.min(0.36, (total - 1 - index) * 0.12);
+  const targetScale = isLast ? 1 : Math.max(0.92, 1 - (total - 1 - index) * 0.025);
+  const targetDim = isLast ? 0 : Math.min(0.32, (total - 1 - index) * 0.11);
 
   const scale = useTransform(
     scrollYProgress,
@@ -68,11 +69,13 @@ export const StackingCard: React.FC<StackingCardProps> = ({
             }
           : undefined
       }
-      className={`scroll-mt-28 ${className}`}
+      className={`scroll-mt-24 ${className}`}
     >
       <motion.div
         style={{ scale }}
-        className="relative overflow-hidden origin-top will-change-transform"
+        className={`relative origin-top will-change-transform ${
+          enableStacking ? 'md:max-h-[78vh] md:overflow-y-auto scrollbar-hide' : ''
+        }`}
       >
         {children}
         {enableStacking && !isLast && (

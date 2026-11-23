@@ -27,39 +27,52 @@ export const AboutPage: React.FC = () => {
     'https://saturuangcreative.framer.website/';
 
   const dossierRows = [
-    { label: 'Nama Lengkap', value: personalData.fullName },
-    { label: 'Posisi Fokus', value: personalData.positioning },
-    { label: 'Identitas Brand', value: `${personalData.brandName} · ${personalData.monogram}` },
-    { label: 'Tanggal Lahir', value: '2 Desember 2005' },
+    { id: 'about-fullname', label: 'Nama Lengkap', value: personalData.fullName },
+    { id: 'about-positioning', label: 'Posisi Fokus', value: personalData.positioning },
     {
+      id: 'about-brand',
+      label: 'Identitas Brand',
+      value: `${personalData.brandName} · ${personalData.monogram}`,
+    },
+    { id: 'about-birthdate', label: 'Tanggal Lahir', value: '2 Desember 2005' },
+    {
+      id: 'about-age',
       label: 'Usia Aktual',
       value: ageInfo.isBirthdayToday
-        ? `${ageInfo.age} Tahun — Berulang Tahun Hari Ini`
+        ? `${ageInfo.age} Tahun · Berulang Tahun Hari Ini`
         : `${ageInfo.age} Tahun (${ageInfo.daysUntilNextBirthday} hari menuju usia ${ageInfo.age + 1})`,
     },
-    { label: 'Tempat Lahir', value: personalData.birthplace },
-    { label: 'Domisili Saat Ini', value: personalData.currentLocation },
-    { label: 'Universitas', value: personalData.university },
-    { label: 'Program Studi', value: personalData.studyProgram },
+    { id: 'about-birthplace', label: 'Tempat Lahir', value: personalData.birthplace },
+    { id: 'about-domicile', label: 'Domisili Saat Ini', value: personalData.currentLocation },
+    { id: 'about-university', label: 'Universitas', value: personalData.university },
+    { id: 'about-program', label: 'Program Studi', value: personalData.studyProgram },
+    { id: 'about-vocational', label: 'Pendidikan Menengah', value: personalData.vocationalSchool },
     {
-      label: 'Pengalaman Magang',
-      value: `${personalData.internship.role} — ${personalData.internship.company} (${personalData.internship.period})`,
+      id: 'about-internship',
+      label: 'Magang Aktif',
+      value: `${personalData.internship.role} · ${personalData.internship.company} (${personalData.internship.period})`,
     },
     {
+      id: 'about-pkl',
+      label: 'PKL SMK (3 Bulan)',
+      value: `${personalData.vocationalInternship.role} · ${personalData.vocationalInternship.company} (${personalData.vocationalInternship.period})`,
+    },
+    {
+      id: 'about-studio',
       label: 'Inisiatif Studio',
-      value: 'Co-Founder & Web Developer — Satu Ruang Creative',
+      value: 'Co-Founder & Web Developer · Satu Ruang Creative',
     },
   ];
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-ivory text-espresso pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 lg:pb-24 px-4 sm:px-6 lg:px-12 border-b border-espresso/15">
+      <section className="relative bg-ivory text-espresso pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-24 px-4 sm:px-6 lg:px-12 border-b border-espresso/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-espresso/15">
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
-              BAB 02 · TENTANG AFLAN
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
+              BAB 02 / TENTANG AFLAN
             </span>
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-espresso/60">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
               {personalData.positioning}
             </span>
           </Reveal>
@@ -136,9 +149,9 @@ export const AboutPage: React.FC = () => {
               </figure>
             </Reveal>
 
-            <div className="md:col-span-7 md:pl-2 lg:pl-6 space-y-10">
+            <div className="md:col-span-7 md:pl-2 lg:pl-6 space-y-8">
               <Reveal variant="up" delay={0.08}>
-                <p className="font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-mocha font-medium mb-4">
+                <p className="font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-bronze font-medium mb-4">
                   NARASI PERSONAL &amp; TEKNIS
                 </p>
                 <div className="space-y-4 font-sans text-sm md:text-base leading-relaxed text-espresso/80">
@@ -148,19 +161,23 @@ export const AboutPage: React.FC = () => {
                 </div>
               </Reveal>
 
-              <Reveal variant="up" delay={0.15}>
-                <div className="bg-espresso text-ivory p-6 sm:p-8 border border-espresso space-y-3.5">
+              <Reveal variant="up" delay={0.14} className="space-y-4">
+                <div className="bg-espresso text-ivory p-6 sm:p-7 border border-espresso space-y-3.5">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
                       <Briefcase className="size-3.5" aria-hidden="true" />
-                      PENGALAMAN PROFESIONAL TERVERIFIKASI
+                      MAGANG PROFESIONAL TERVERIFIKASI
                     </span>
-                    <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
-                      {personalData.internship.period}
+                    <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne/90">
+                      <span
+                        aria-hidden="true"
+                        className="size-1.5 rounded-full bg-emerald-400"
+                      />
+                      Aktif · {personalData.internship.period}
                     </span>
                   </div>
                   <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-light text-ivory">
-                    {personalData.internship.role} —{' '}
+                    {personalData.internship.role} ·{' '}
                     <span className="italic text-champagne">
                       {personalData.internship.company}
                     </span>
@@ -169,10 +186,31 @@ export const AboutPage: React.FC = () => {
                     {personalData.internship.focus}
                   </p>
                 </div>
+
+                <div className="bg-offwhite text-espresso p-6 sm:p-7 border border-espresso/15 space-y-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.22em] uppercase text-bronze font-medium">
+                      <Briefcase className="size-3.5" aria-hidden="true" />
+                      PKL SMK · {personalData.vocationalInternship.school}
+                    </span>
+                    <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-bronze">
+                      {personalData.vocationalInternship.period}
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-xl sm:text-2xl font-light text-espresso">
+                    {personalData.vocationalInternship.role} ·{' '}
+                    <span className="italic text-mocha">
+                      {personalData.vocationalInternship.company}
+                    </span>
+                  </h3>
+                  <p className="font-sans text-sm md:text-base text-espresso/80 leading-relaxed">
+                    {personalData.vocationalInternship.focus}
+                  </p>
+                </div>
               </Reveal>
 
               <div className="pt-4 border-t border-espresso/15">
-                <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha mb-4">
+                <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-bronze font-medium mb-4">
                   KARAKTER KERJA
                 </p>
                 <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -182,7 +220,7 @@ export const AboutPage: React.FC = () => {
                       className="flex items-center justify-between px-4 py-3.5 bg-offwhite border border-espresso/10"
                     >
                       <span className="font-serif text-lg sm:text-xl text-espresso">{trait}</span>
-                      <span className="font-mono text-[10px] tracking-[0.2em] text-mocha">
+                      <span className="font-mono text-[10px] tracking-[0.2em] text-bronze">
                         0{index + 1}
                       </span>
                     </StaggerItem>
@@ -194,7 +232,10 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-espresso text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
+      <section
+        data-nav-surface="dark"
+        className="relative bg-espresso text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12"
+      >
         <div className="max-w-[1440px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 pb-10 sm:pb-14 lg:pb-16 border-b border-champagne/15 items-end">
             <div className="lg:col-span-7">
@@ -252,10 +293,10 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-offwhite text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
+      <section className="relative bg-offwhite text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 items-start">
           <Reveal variant="up" className="lg:col-span-7">
-            <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-mocha mb-3">
+            <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-bronze font-medium mb-3">
               DOSSIER TERVERIFIKASI
             </p>
             <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight text-espresso/90 mb-8 sm:mb-10">
@@ -265,13 +306,19 @@ export const AboutPage: React.FC = () => {
             <dl className="divide-y divide-espresso/15 border-y border-espresso/15">
               {dossierRows.map((row) => (
                 <div
-                  key={row.label}
+                  key={row.id}
                   className="py-4 grid grid-cols-1 sm:grid-cols-12 gap-1.5 sm:gap-4"
                 >
-                  <dt className="sm:col-span-4 text-xs font-mono uppercase tracking-[0.15em] text-espresso/60">
+                  <dt
+                    id={row.id}
+                    className="sm:col-span-4 text-xs font-mono uppercase tracking-[0.15em] text-bronze"
+                  >
                     {row.label}
                   </dt>
-                  <dd className="sm:col-span-8 font-sans text-sm font-medium text-espresso">
+                  <dd
+                    aria-labelledby={row.id}
+                    className="sm:col-span-8 font-sans text-sm font-medium text-espresso"
+                  >
                     {row.value}
                   </dd>
                 </div>
@@ -295,11 +342,11 @@ export const AboutPage: React.FC = () => {
                     KREDENSIAL &amp; PUBLIKASI
                   </span>
                   <h3 className="font-serif text-xl md:text-2xl font-light text-ivory leading-snug">
-                    CCNA: Introduction to Networks &amp; Publikasi Jurnal Garuda
+                    CCNA: Introduction to Networks &amp; Publikasi Jurnal JPMBA
                   </h3>
                   <p className="font-sans text-sm text-ivory/75 leading-relaxed">
-                    Cisco Networking Academy (2026) serta Jurnal Pengabdian Masyarakat
-                    Bangsa (Terindeks Garuda, 2026).
+                    Cisco Networking Academy (Jul 2026) serta Jurnal Pengabdian Masyarakat
+                    Bangsa (Terindeks Garuda, Okt 2026).
                   </p>
                 </div>
 
@@ -352,7 +399,7 @@ export const AboutPage: React.FC = () => {
                 className="inline-flex items-center gap-1.5 hover:text-mocha transition-colors"
               >
                 <Github className="size-3.5" aria-hidden="true" />
-                GitHub (Flannss)
+                GitHub ({contactData.githubHandle})
                 <ArrowUpRight className="size-3.5" aria-hidden="true" />
               </a>
             </div>

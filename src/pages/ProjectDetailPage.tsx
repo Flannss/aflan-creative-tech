@@ -22,8 +22,8 @@ export const ProjectDetailPage: React.FC = () => {
     if (project) {
       document.title =
         project.slug === 'aflan-digital-identity'
-          ? 'Studi Kasus: Identitas Digital Personal — AFLAN (AMDZ)'
-          : `${project.title} — AFLAN (AMDZ)`;
+          ? 'Studi Kasus: Identitas Digital Personal · AFLAN (AMDZ)'
+          : `${project.title} · AFLAN (AMDZ)`;
     }
   }, [project]);
 
@@ -139,7 +139,7 @@ export const ProjectDetailPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-ivory text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
+      <section className="bg-ivory text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto space-y-12 sm:space-y-16">
           <Reveal variant="clip">
             <figure className="border border-espresso/20 bg-obsidian overflow-hidden shadow-2xl">

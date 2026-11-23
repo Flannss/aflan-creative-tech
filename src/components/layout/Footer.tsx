@@ -89,11 +89,11 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 py-14 sm:py-16 border-b border-champagne/15">
           <div className="md:col-span-2 lg:col-span-4 space-y-5">
             <BrandSignature tone="light" />
-            <p className="font-sans text-sm md:text-base leading-relaxed text-ivory/80 max-w-md lg:max-w-sm">
-              <span className="text-ivory font-medium">{personalData.fullName}</span>
-              {` — ${personalData.positioning}. Mahasiswa ${personalData.studyProgram} di ${personalData.university}.`}
+            <p className="font-sans text-sm md:text-base leading-relaxed text-ivory/80 max-w-prose">
+              <span className="text-ivory font-medium">{personalData.fullName}</span>{' '}
+              {`· ${personalData.positioning}. Mahasiswa ${personalData.studyProgram} di ${personalData.university}.`}
             </p>
-            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-taupe">
+            <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-taupe">
               {`${personalData.currentLocation} · ${personalData.coordinates}`}
             </p>
             <div className="flex flex-wrap items-center gap-2.5 pt-1">
@@ -101,11 +101,11 @@ export const Footer: React.FC = () => {
                 href={contactData.githubHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="GitHub Flannss"
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/25 bg-espresso/50 font-mono text-[11px] tracking-[0.16em] uppercase text-ivory/90 hover:border-champagne hover:text-champagne active:scale-[0.97] transition-all"
+                aria-label={`GitHub ${contactData.githubHandle}`}
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/25 bg-espresso/50 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-ivory/90 hover:border-champagne hover:text-champagne active:scale-[0.97] transition-all"
               >
                 <Github className="size-3.5" aria-hidden="true" />
-                <span>GitHub</span>
+                <span>GitHub · {contactData.githubHandle}</span>
                 <ArrowUpRight className="size-3" aria-hidden="true" />
               </a>
             </div>
@@ -113,7 +113,7 @@ export const Footer: React.FC = () => {
 
           <div className="md:col-span-1 lg:col-span-4">
             <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne mb-5">
-              INDEKS HALAMAN (01 — 09)
+              INDEKS HALAMAN (01 – 09)
             </p>
             <ul className="grid grid-cols-2 gap-x-6 gap-y-3 md:gap-y-2.5">
               {navigationRoutes.map((route) => (
@@ -164,21 +164,21 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="py-10 sm:py-14 lg:py-16 select-none overflow-hidden">
+        <div className="py-10 sm:py-12 select-none overflow-hidden">
           <Link
             to="/contact"
             data-cursor="HUBUNGI"
             className="group block text-center"
-            aria-label="AFLAN CONNECT — Hubungi Aflan"
+            aria-label="AFLAN CONNECT · Hubungi Aflan"
           >
             <div
               aria-hidden="true"
-              className="flex flex-wrap items-baseline justify-center gap-x-3 sm:gap-x-6 lg:gap-x-8 leading-[0.88] lg:leading-[0.86]"
+              className="flex flex-wrap items-baseline justify-center gap-x-3 sm:gap-x-5 leading-none"
             >
-              <span className="font-serif font-light tracking-[0.06em] text-[clamp(2.65rem,12.5vw,4.8rem)] md:text-[clamp(4.8rem,12.5vw,7.4rem)] lg:text-[clamp(3.6rem,13vw,11.5rem)] text-ivory group-hover:text-champagne transition-colors duration-500">
+              <span className="font-serif font-light tracking-tight text-4xl sm:text-5xl md:text-6xl text-ivory group-hover:text-champagne transition-colors duration-500">
                 AFLAN
               </span>{' '}
-              <span className="font-serif italic font-light tracking-[0.04em] text-[clamp(2.35rem,11vw,4.3rem)] md:text-[clamp(4.2rem,11vw,6.6rem)] lg:text-[clamp(3.2rem,11.5vw,10.2rem)] editorial-outline group-hover:text-champagne/25 transition-all duration-500">
+              <span className="font-serif italic font-light tracking-tight text-4xl sm:text-5xl md:text-6xl editorial-outline group-hover:text-champagne/25 transition-all duration-500">
                 CONNECT
               </span>
             </div>

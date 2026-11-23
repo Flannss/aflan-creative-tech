@@ -1,5 +1,5 @@
 export interface ContactChannel {
-  id: 'email' | 'whatsapp' | 'instagram';
+  id: 'email' | 'whatsapp' | 'instagram' | 'github';
   label: string;
   value: string;
   displayHint: string;
@@ -13,10 +13,12 @@ export const contactData = {
   whatsappHref: 'https://wa.me/6283146134546',
   instagramHandle: '@flanssly',
   instagramHref: 'https://www.instagram.com/flanssly/',
-  githubHref: 'https://github.com/Flannss',
+  githubHandle: 'MIizzurou',
+  githubHref: 'https://github.com/MIizzurou',
   location: 'Purwokerto, Jawa Tengah, Indonesia',
+  availabilityStatus: 'Terbuka untuk Kolaborasi, Proyek Web & Peluang Magang',
   availabilityNote:
-    'Terbuka untuk kolaborasi Web Development, diskusi pengembangan produk digital, inisiatif akademik, maupun pertukaran ide kreatif.',
+    'Terbuka untuk kolaborasi Web Development, evaluasi Software QA, inisiatif akademik, maupun diskusi pengembangan produk digital.',
   channels: [
     {
       id: 'email',
@@ -40,6 +42,14 @@ export const contactData = {
       value: '@flanssly',
       displayHint: 'Jurnal visual pribadi & pembaruan kreatif',
       href: 'https://www.instagram.com/flanssly/',
+      external: true,
+    },
+    {
+      id: 'github',
+      label: 'GitHub',
+      value: 'MIizzurou',
+      displayHint: 'Repositori kode, eksperimen frontend & arsip proyek',
+      href: 'https://github.com/MIizzurou',
       external: true,
     },
   ] satisfies ContactChannel[],

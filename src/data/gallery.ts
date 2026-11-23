@@ -48,7 +48,7 @@ export const galleryItems: GalleryItem[] = [
   {
     id: 'plate-01-portrait-chiaroscuro',
     plateNumber: 'PELAT 01',
-    title: 'Potret Studio — Chiaroscuro Asli',
+    title: 'Potret Studio · Chiaroscuro Asli',
     subtitle: 'Identitas Visual Utama AFLAN',
     category: 'Potret',
     badge: 'Asli',
@@ -69,7 +69,7 @@ export const galleryItems: GalleryItem[] = [
   {
     id: 'plate-02-monogram-geometry',
     plateNumber: 'PELAT 02',
-    title: 'Monogram AMDZ — Studi Geometri',
+    title: 'Monogram AMDZ · Studi Geometri',
     subtitle: 'Komposisi Abstrak Lambang',
     category: 'Abstrak Tipografi',
     badge: 'Geometri',
@@ -82,13 +82,13 @@ export const galleryItems: GalleryItem[] = [
       palette: 'Obsidian · Espresso · Champagne',
     },
     caption:
-      'Eksplorasi proporsi lambang AMDZ dalam bingkai geometris minimalis—memadukan sudut tegas arsitektural dengan ruang kosong yang lapang.',
+      'Eksplorasi proporsi lambang AMDZ dalam bingkai geometris minimalis yang memadukan sudut tegas arsitektural dengan ruang kosong yang lapang.',
     technicalNote: 'Lambang AMDZ · Komposisi Vektor',
   },
   {
     id: 'plate-03-portrait-monochrome',
     plateNumber: 'PELAT 03',
-    title: 'Monokrom Perak — Kontras 125%',
+    title: 'Monokrom Perak · Kontras 125%',
     subtitle: 'Studi Grayscale & Grain 35mm',
     category: 'Potret',
     badge: 'Monokrom',
@@ -111,7 +111,7 @@ export const galleryItems: GalleryItem[] = [
   {
     id: 'plate-04-portrait-sepia-archive',
     plateNumber: 'PELAT 04',
-    title: 'Arsip Sepia — Nada Cetak Hangat',
+    title: 'Arsip Sepia · Nada Cetak Hangat',
     subtitle: 'Variasi Sepia Editorial',
     category: 'Potret',
     badge: 'Sepia',
@@ -133,7 +133,7 @@ export const galleryItems: GalleryItem[] = [
   {
     id: 'plate-05-chromatic-spectrum',
     plateNumber: 'PELAT 05',
-    title: 'Spektrum Tonal — Espresso ke Ivory',
+    title: 'Spektrum Tonal · Espresso ke Ivory',
     subtitle: 'Sistem Warna & Spesimen Serif',
     category: 'Abstrak Tipografi',
     badge: 'Palet Warna',
@@ -152,7 +152,7 @@ export const galleryItems: GalleryItem[] = [
   {
     id: 'plate-06-portrait-sculptural-shadow',
     plateNumber: 'PELAT 06',
-    title: 'Bayangan Pahat — Hue Shift & Kontras',
+    title: 'Bayangan Pahat · Hue Shift & Kontras',
     subtitle: 'Eksplorasi Low-Key Chiaroscuro',
     category: 'Potret',
     badge: 'Low-Key',
@@ -174,7 +174,7 @@ export const galleryItems: GalleryItem[] = [
   {
     id: 'plate-07-editorial-specimen',
     plateNumber: 'PELAT 07',
-    title: 'Tipografi Serif — Aflan Mu’afa Dzulfiqar',
+    title: 'Tipografi Serif · Aflan Mu’afa Dzulfiqar',
     subtitle: 'Kontras Solid Ivory & Garis Outline',
     category: 'Abstrak Tipografi',
     badge: 'Tipografi',

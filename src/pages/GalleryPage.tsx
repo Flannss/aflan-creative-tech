@@ -81,13 +81,13 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
 
   if (inLightbox && item.kind === 'photo' && item.src) {
     return (
-      <div className="relative inline-flex items-center justify-center max-w-full max-h-[80vh] sm:max-h-[85vh] overflow-hidden">
+      <div className="relative inline-flex items-center justify-center max-w-full max-h-[82vh] overflow-hidden">
         <img
           src={item.src}
           alt={item.title}
           loading="eager"
           style={{ filter: combinedFilter }}
-          className="block max-w-full max-h-[78vh] sm:max-h-[84vh] w-auto h-auto object-contain mx-auto"
+          className="block max-w-full max-h-[82vh] w-auto h-auto object-contain mx-auto"
         />
         {filmGrain && (
           <div
@@ -161,7 +161,7 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
 
       {item.kind === 'abstract-palette' && (
         <div
-          className="w-full h-full bg-obsidian text-ivory p-6 sm:p-7 flex flex-col justify-between"
+          className="w-full h-full bg-obsidian text-ivory p-5 sm:p-6 flex flex-col justify-between"
           style={{ filter: TONAL_FILTERS[tonalMode].cssFilter || 'none' }}
         >
           <div className="flex items-center justify-between font-mono text-[9px] tracking-[0.22em] uppercase text-champagne">
@@ -169,31 +169,39 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
             <span>05 NADA</span>
           </div>
 
-          <div className="my-auto py-5 space-y-4">
-            <div className="grid grid-cols-5 gap-1.5 h-32 sm:h-40">
-              {PALETTE_BARS.map((bar) => (
-                <div
-                  key={bar.hex}
-                  className="border border-champagne/20 flex flex-col justify-end p-1.5 transition-transform duration-500 group-hover:-translate-y-1"
-                  style={{ backgroundColor: bar.hex }}
-                >
-                  <span
-                    className={`font-mono text-[8px] tracking-wider uppercase truncate ${
-                      bar.hex === '#F5F0E8' || bar.hex === '#D8C3A5'
-                        ? 'text-obsidian'
-                        : 'text-ivory/80'
-                    }`}
+          <div className="my-auto py-3.5 space-y-3">
+            <div className="flex flex-col gap-1.5">
+              {PALETTE_BARS.map((bar) => {
+                const isLightSwatch = bar.hex === '#F5F0E8' || bar.hex === '#D8C3A5';
+                return (
+                  <div
+                    key={bar.hex}
+                    className="border border-champagne/20 flex items-center justify-between gap-3 px-3 py-2 transition-transform duration-500 group-hover:translate-x-0.5"
+                    style={{ backgroundColor: bar.hex }}
                   >
-                    {bar.name}
-                  </span>
-                </div>
-              ))}
+                    <span
+                      className={`font-mono text-[10px] tracking-[0.14em] uppercase whitespace-nowrap font-medium ${
+                        isLightSwatch ? 'text-obsidian' : 'text-ivory'
+                      }`}
+                    >
+                      {bar.name}
+                    </span>
+                    <span
+                      className={`font-mono text-[9px] tracking-[0.14em] uppercase whitespace-nowrap ${
+                        isLightSwatch ? 'text-espresso/80' : 'text-champagne/85'
+                      }`}
+                    >
+                      {bar.hex}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
-            <div className="flex items-baseline justify-between gap-2">
-              <span className="font-serif italic text-4xl sm:text-5xl font-light text-champagne leading-none">
+            <div className="flex items-baseline justify-between gap-2 pt-1">
+              <span className="font-serif italic text-3xl sm:text-4xl font-light text-champagne leading-none">
                 Aa
               </span>
-              <span className="font-mono text-[9px] tracking-[0.18em] uppercase text-taupe text-right">
+              <span className="font-mono text-[9px] tracking-[0.18em] uppercase text-taupe text-right whitespace-nowrap">
                 CORMORANT GARAMOND
               </span>
             </div>
@@ -309,7 +317,11 @@ export const GalleryPage: React.FC = () => {
   useEffect(() => {
     if (lightboxIndex === null) return;
     const prevOverflow = document.body.style.overflow;
+    const prevHeaderTheme = document.documentElement.dataset.headerTheme;
+
     document.body.style.overflow = 'hidden';
+    document.documentElement.dataset.headerTheme = 'dark';
+    window.dispatchEvent(new Event('aflan-nav-theme-sync'));
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -327,6 +339,12 @@ export const GalleryPage: React.FC = () => {
     window.addEventListener('keydown', onKeyDown);
     return () => {
       document.body.style.overflow = prevOverflow;
+      if (prevHeaderTheme === undefined) {
+        delete document.documentElement.dataset.headerTheme;
+      } else {
+        document.documentElement.dataset.headerTheme = prevHeaderTheme;
+      }
+      window.dispatchEvent(new Event('aflan-nav-theme-sync'));
       window.removeEventListener('keydown', onKeyDown);
     };
   }, [lightboxIndex, hasMultiplePlates, filteredItems]);
@@ -351,16 +369,16 @@ export const GalleryPage: React.FC = () => {
         />
       )}
 
-      <section className="bg-offwhite text-espresso pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-espresso/10">
+      <section className="bg-offwhite text-espresso pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-20 px-4 sm:px-6 lg:px-12 border-b border-espresso/10">
         <div className="max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
             className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-espresso/10"
           >
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
-              BAB 07 · GALERI PERSONAL · {String(filteredItems.length).padStart(2, '0')} PELAT
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
+              BAB 07 / GALERI PERSONAL · {String(filteredItems.length).padStart(2, '0')} PELAT
             </span>
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-espresso/60">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
               POTRET PERSONAL &amp; STUDI TIPOGRAFI AFLAN
             </span>
           </Reveal>
@@ -448,7 +466,7 @@ export const GalleryPage: React.FC = () => {
                 />
               </div>
 
-              <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-espresso/65">
+              <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-bronze">
                 {TONAL_FILTERS[tonalMode].note}
               </p>
             </div>
@@ -456,7 +474,10 @@ export const GalleryPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-obsidian text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
+      <section
+        data-nav-surface="dark"
+        className="bg-obsidian text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12"
+      >
         <div className="max-w-[1440px] mx-auto">
           {layoutMode === 'masonry' ? (
             <StaggerGroup
@@ -779,7 +800,7 @@ export const GalleryPage: React.FC = () => {
                 transition={{ duration: 0.32, ease: EASE_LUXURY }}
                 className="flex-1 w-full flex items-center justify-center p-4 sm:p-6"
               >
-                <div className="max-w-full max-h-[85vh] flex items-center justify-center border border-champagne/25 bg-espresso/40 p-2 sm:p-3 shadow-2xl">
+                <div className="max-w-full max-h-[84vh] flex items-center justify-center border border-champagne/25 bg-espresso/40 p-2 sm:p-3 shadow-2xl">
                   <PlateVisual
                     item={activeItem}
                     tonalMode={tonalMode}

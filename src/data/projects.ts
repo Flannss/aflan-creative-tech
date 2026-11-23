@@ -54,8 +54,8 @@ export const projectsData: ProjectEntry[] = [
   {
     slug: 'satu-ruang-creative',
     index: '01',
-    title: 'Satu Ruang Creative',
-    subtitle: 'Student-Built Creative & Digital Studio — "Satu Ruang, Banyak Ide, Satu Cerita"',
+    title: 'SatuRuangCreative',
+    subtitle: 'Student-Built Creative & Digital Studio · "Satu Ruang, Banyak Ide, Satu Cerita"',
     platform: 'Web & Creative Studio',
     category: 'Web Development',
     yearLabel: 'Studio Aktif',
@@ -64,13 +64,13 @@ export const projectsData: ProjectEntry[] = [
     contributionScope:
       'Bertanggung jawab pada perancangan struktur UI/UX, Responsive Web Design, serta Frontend Implementation bersama tim kreatif dan teknis studio.',
     notableWork:
-      'RuangHijau Nusantara — platform web edukasi lingkungan dan kalkulator dampak interaktif.',
+      'RuangHijau Nusantara: platform web edukasi lingkungan dan kalkulator dampak interaktif.',
     summary:
       'Inisiatif studio kreatif & digital berbasis mahasiswa dengan slogan "Satu Ruang, Banyak Ide, Satu Cerita", tempat kolaborasi desain antarmuka, storytelling visual, dan implementasi frontend.',
     overview: [
-      'Satu Ruang Creative lahir sebagai wadah kolaboratif mahasiswa untuk mempertemukan ide kreatif dengan eksekusi digital yang rapi. Mengusung semangat "Satu Ruang, Banyak Ide, Satu Cerita", studio ini tumbuh lewat sinergi tim kecil yang fokus menjaga konsistensi estetika visual dan kejelasan struktur produk.',
+      'SatuRuangCreative lahir sebagai wadah kolaboratif mahasiswa untuk mempertemukan ide kreatif dengan eksekusi digital yang rapi. Mengusung semangat "Satu Ruang, Banyak Ide, Satu Cerita", studio ini tumbuh lewat sinergi tim kecil yang fokus menjaga konsistensi estetika visual dan kejelasan struktur produk.',
       'Sebagai Co-Founder & Web Developer, tanggung jawab saya berpusat pada perancangan struktur UI/UX, penyusunan Responsive Web Design lintas perangkat, serta Frontend Implementation agar setiap gagasan visual diterjemahkan secara presisi menjadi antarmuka web yang ringan dan mudah dinavigasi.',
-      'Salah satu karya utamanya adalah pengembangan platform web "RuangHijau Nusantara"—sebuah landing page edukasi lingkungan lengkap dengan kalkulator dampak interaktif yang dirancang untuk menyampaikan isu keberlanjutan secara lebih visual dan mudah dipahami.',
+      'Salah satu karya utamanya adalah pengembangan platform web "RuangHijau Nusantara", sebuah landing page edukasi lingkungan lengkap dengan kalkulator dampak interaktif yang dirancang untuk menyampaikan isu keberlanjutan secara visual dan mudah dipahami.',
     ],
     stack: ['UI/UX Architecture', 'Responsive Web Design', 'Frontend Implementation', 'Framer', 'Component-Based UI'],
     outcomes: [
@@ -82,7 +82,7 @@ export const projectsData: ProjectEntry[] = [
     previewImageFit: 'contain',
     previewObjectPosition: 'center',
     previewBg: '#2B1D17',
-    previewCaption: 'Satu Ruang Creative — Emblem visual resmi studio digital mahasiswa.',
+    previewCaption: 'SatuRuangCreative · Emblem visual resmi studio digital mahasiswa.',
     featuredOnHome: true,
     liveUrl: 'https://saturuangcreative.framer.website/',
     liveUrlLabel: 'Kunjungi Situs Live',
@@ -105,7 +105,7 @@ export const projectsData: ProjectEntry[] = [
       'Aplikasi mobile Lost & Found kampus dengan real-time CRUD pelaporan melalui Cloud Firestore, integrasi kontak langsung WhatsApp, dan verifikasi klaim kepemilikan oleh admin.',
     overview: [
       'SOMASII (System Online Mahasiswa Sharing Items Information) merupakan aplikasi mobile yang dirancang untuk menjawab permasalahan pelaporan barang hilang dan temuan yang kerap tersebar di lingkungan kampus. Dibangun menggunakan Flutter dan Dart, antarmukanya difokuskan pada alur pelaporan yang ringkas agar mahasiswa dapat mencatat serta menelusuri informasi barang secara terstruktur.',
-      'Pada sisi arsitektur backend, aplikasi ini memanfaatkan ekosistem Firebase—mencakup Authentication untuk manajemen akses, Cloud Firestore untuk real-time CRUD pelaporan, serta Firebase Storage untuk penyimpanan media barang. Alur koordinasi dilengkapi integrasi kontak langsung via WhatsApp serta mekanisme verifikasi klaim kepemilikan oleh admin untuk menjaga akurasi penyerahan barang.',
+      'Pada sisi arsitektur backend, aplikasi ini memanfaatkan ekosistem Firebase yang mencakup Authentication untuk manajemen akses, Cloud Firestore untuk real-time CRUD pelaporan, serta Firebase Storage untuk penyimpanan media barang. Alur koordinasi dilengkapi integrasi kontak langsung via WhatsApp serta mekanisme verifikasi klaim kepemilikan oleh admin untuk menjaga akurasi penyerahan barang.',
     ],
     stack: ['Flutter', 'Dart', 'Firebase Authentication', 'Cloud Firestore', 'Firebase Storage', 'WhatsApp Integration'],
     outcomes: [
@@ -117,7 +117,7 @@ export const projectsData: ProjectEntry[] = [
     previewImageFit: 'cover',
     previewObjectPosition: 'center',
     previewBg: '#171615',
-    previewCaption: 'SOMASII — Cover identitas visual resmi (System Online Mahasiswa Sharing Items Information).',
+    previewCaption: 'SOMASII · Cover identitas visual resmi (System Online Mahasiswa Sharing Items Information).',
     featuredOnHome: true,
   },
   {
@@ -127,15 +127,15 @@ export const projectsData: ProjectEntry[] = [
     subtitle: 'Software QA, Workflow Evaluation & rekomendasi perbaikan berbasis pengujian',
     platform: 'Internal Web System · NDA',
     category: 'QA & Evaluation',
-    yearLabel: 'Magang & Evaluasi',
+    yearLabel: 'Magang Aktif · NDA',
     verificationState: 'Verified Experience · NDA',
     verificationNotice:
-      'Kerahasiaan & Atribusi: Demi mematuhi NDA kerahasiaan sistem internal perusahaan, proyek ini disajikan murni dalam arsitektur tipografi tanpa tangkapan layar internal. Peran saya berfokus pada Software QA, evaluasi fungsional, analisis workflow, dan rekomendasi refinement—bukan pengembang utama seluruh aplikasi.',
+      'Kerahasiaan & Atribusi: Demi mematuhi NDA kerahasiaan sistem internal perusahaan, proyek ini disajikan murni dalam arsitektur tipografi tanpa tangkapan layar internal. Peran saya berfokus pada Software QA, evaluasi fungsional, analisis workflow, dan rekomendasi refinement, bukan pengembang utama seluruh aplikasi.',
     role: 'Software QA, Workflow Analyst & Evaluator',
     contributionScope:
       'Menjalankan Functional Testing pada modul Website Template Page Generator, menganalisis workflow pembuatan halaman, mengidentifikasi bug dan hambatan usability, serta menyusun rekomendasi penyempurnaan berbasis bukti pengujian.',
     summary:
-      'Evaluasi kualitas dan analisis workflow secara sistematis pada generator template halaman berbasis Laravel—disajikan secara tipografis untuk menjaga kerahasiaan sistem internal perusahaan.',
+      'Evaluasi kualitas dan analisis workflow secara sistematis pada generator template halaman berbasis Laravel, disajikan secara tipografis untuk menjaga kerahasiaan sistem internal perusahaan.',
     overview: [
       'ASIS Builder adalah sistem Website Template Page Generator internal berbasis Laravel, PHP, Tailwind CSS, dan Alpine.js. Peran saya di sini berfokus penuh pada Software Quality Assurance, pengujian fungsional, dan evaluasi alur kerja sistem.',
       'Saya menguji alur pembuatan template secara menyeluruh, memetakan defect serta skenario edge-case, mengevaluasi kesesuaian fitur terhadap System Requirements, lalu mendokumentasikan rekomendasi perbaikan yang terukur bagi tim developer inti.',
@@ -147,7 +147,7 @@ export const projectsData: ProjectEntry[] = [
       'Mematuhi kerahasiaan NDA internal perusahaan serta menjaga transparansi atribusi peran QA dan tim engineering inti.',
     ],
     previewBg: '#2B1D17',
-    previewCaption: 'ASIS Builder — Presentasi tipografi arsitektural (tangkapan layar internal dilindungi NDA).',
+    previewCaption: 'ASIS Builder · Presentasi tipografi arsitektural (tangkapan layar internal dilindungi NDA).',
     typographicDisplay: {
       eyebrow: 'INTERNAL SYSTEM · CONFIDENTIAL NDA',
       primaryWord: 'ASIS BUILDER',
@@ -159,32 +159,32 @@ export const projectsData: ProjectEntry[] = [
   {
     slug: 'aflan-digital-identity',
     index: '04',
-    title: 'AFLAN — Personal Digital Identity',
+    title: 'AFLAN DOSSIER · Personal Digital Identity',
     subtitle: 'Portofolio editorial 9 halaman, sistem motion presisi & Creative Lab interaktif',
     platform: 'Web Application',
     category: 'Web Development',
     yearLabel: 'Live Production',
     verificationState: 'Verified Live Work',
-    role: 'Web Developer & UI Designer (Proyek Pribadi)',
+    role: 'Web Developer & UI Engineer (Proyek Pribadi)',
     contributionScope:
-      'Implementasi React.js + TypeScript secara penuh, perancangan sistem warna luxury brown-obsidian dengan Tailwind CSS, koreografi motion berbasis easing editorial, serta empat studi interaktif di Creative Lab.',
+      'Implementasi React.js + TypeScript secara penuh, perancangan sistem warna Espresso-Champagne-Ivory dengan Tailwind CSS, koreografi motion berbasis easing editorial, serta modul interaktif di Creative Lab.',
     summary:
-      'Pengalaman web personal sembilan halaman yang memadukan estetika editorial mewah, High-Performance Web Development, dan keterbukaan informasi profesional.',
+      'Pengalaman web personal sembilan halaman di aflandossier.vercel.app yang memadukan desain editorial dossier, pengujian QA ketat, dan arsitektur frontend React/TypeScript.',
     overview: [
-      'Dirancang bukan sebagai template satu halaman biasa, AFLAN mengolah palet Espresso, Obsidian, Champagne, dan Ivory ke dalam sembilan rute berbeda yang memiliki karakter komposisi masing-masing.',
-      'Seluruh konten dipisahkan ke modul data TypeScript yang bersih serta dilengkapi Creative Lab berisi studi interaktif tipografi, kanvas chiaroscuro, kurva easing motion, dan kalkulator kontras WCAG secara real-time.',
+      'AFLAN DOSSIER dirancang sebagai publikasi digital sembilan rute dengan sistem warna Espresso, Obsidian, Champagne, dan Ivory yang terukur di seluruh perangkat desktop, tablet, dan mobile.',
+      'Seluruh konten dipisahkan ke modul data TypeScript yang terstruktur, dilengkapi pengiriman pesan langsung ke inbox, Creative Lab interaktif, serta audit kualitas lintas viewport.',
     ],
     stack: ['React.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Vite', 'HTML & CSS'],
     outcomes: [
-      'Sembilan halaman terhubung dengan code-splitting ringan dan transisi rute sinematik.',
-      'Visualisasi keahlian berbasis hierarki tipografi editorial yang jernih dan terukur.',
-      'Optimal di desktop maupun touch device melalui penyesuaian coarse-pointer dan reduced-motion.',
+      'Sembilan halaman terhubung dengan arsitektur data terpusat dan transisi rute non-blocking.',
+      'Pemetaan keahlian dan rekam jejak terverifikasi termasuk pengalaman QA, PKL, dan orkestrasi AI.',
+      'Responsif lintas 3 breakpoint utama dengan adaptasi reduced-motion dan kontrol sentuh aman.',
     ],
     previewImage: '/images/aflan.jpeg',
     previewImageFit: 'cover',
     previewObjectPosition: '50% 18%',
     previewBg: '#171615',
-    previewCaption: 'Integrasi potret studio pribadi dalam sistem editorial AFLAN.',
+    previewCaption: 'AFLAN DOSSIER · Sistem editorial personal di aflandossier.vercel.app.',
     featuredOnHome: false,
     liveUrl: 'https://aflandossier.vercel.app/',
     liveUrlLabel: 'aflandossier.vercel.app',

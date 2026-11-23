@@ -36,7 +36,7 @@ const EASING_PRESETS = [
     bezier: EASE_LUXURY,
     css: 'cubic-bezier(0.22, 1, 0.36, 1)',
     duration: MOTION_DURATION,
-    note: 'Akselerasi halus yang mendarat tenang—kurva standar utama seluruh portofolio AFLAN.',
+    note: 'Akselerasi halus yang mendarat tenang sebagai kurva standar utama seluruh portofolio AFLAN.',
   },
   {
     id: 'editorial',
@@ -811,12 +811,13 @@ export const CreativeLabPage: React.FC = () => {
             variant="up"
             className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15"
           >
-            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
+            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-champagne">
               <Sparkles className="size-3.5" aria-hidden="true" />
-              BAB 06 · CREATIVE LAB
+              BAB 06 / CREATIVE LAB
             </span>
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
-              06 MODUL INTERAKTIF CREATIVE-TECH
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-espresso/85 border border-champagne/35 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
+              <span aria-hidden="true" className="size-1.5 rounded-full bg-champagne" />
+              AREA EKSPERIMEN VISUAL · NON-EDITORIAL
             </span>
           </Reveal>
 

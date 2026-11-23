@@ -167,13 +167,13 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
 
         <motion.div
           variants={prefersReducedMotion ? undefined : itemVariants}
-          className="space-y-1 sm:space-y-2"
+          className="space-y-2 sm:space-y-3"
         >
-          <p className="font-serif font-light uppercase tracking-[0.14em] leading-[0.88] text-[clamp(2.85rem,11.5vw,8.25rem)] text-ivory">
+          <p className="font-serif font-light uppercase tracking-tight leading-[1.02] text-4xl sm:text-5xl md:text-6xl text-ivory">
             PORTFOLIO
           </p>
-          <p className="font-serif italic font-light uppercase tracking-[0.12em] leading-[0.92] text-[clamp(2.25rem,8.5vw,6.2rem)] text-champagne">
-            <span className="editorial-outline-strong mr-3 sm:mr-5">BY</span>
+          <p className="font-serif italic font-light uppercase tracking-tight leading-[1.04] text-3xl sm:text-4xl md:text-5xl text-champagne">
+            <span className="editorial-outline-strong">BY</span>{' '}
             <span>AMDZ</span>
           </p>
         </motion.div>

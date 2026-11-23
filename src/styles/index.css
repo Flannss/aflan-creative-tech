@@ -4,6 +4,7 @@
   --color-espresso: #2B1D17;
   --color-chocolate: #3A2921;
   --color-mocha: #765641;
+  --color-bronze: #8A6D4B;
   --color-taupe: #A58B76;
   --color-champagne: #D8C3A5;
   --color-ivory: #F5F0E8;
@@ -107,6 +108,23 @@
   100% {
     transform: translate3d(-50%, 0, 0);
   }
+}
+
+.aflan-marquee-wrapper {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
 }
 
 .aflan-marquee-track {

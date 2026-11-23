@@ -17,17 +17,19 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   useLayoutEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    delete document.documentElement.dataset.headerTheme;
+    window.dispatchEvent(new Event('aflan-nav-theme-sync'));
 
     const matched = navigationRoutes.find((r) => r.path === pathname);
     if (matched) {
       document.title =
         matched.path === '/'
-          ? "AFLAN — Aflan Mu'afa Dzulfiqar | Identitas Digital Personal"
-          : `${matched.label} — AFLAN (AMDZ)`;
+          ? "AFLAN · Aflan Mu'afa Dzulfiqar | Identitas Digital Personal"
+          : `${matched.label} · AFLAN (AMDZ)`;
     } else if (pathname.startsWith('/projects/')) {
-      document.title = 'Dossier Proyek — AFLAN (AMDZ)';
+      document.title = 'Dossier Proyek · AFLAN (AMDZ)';
     } else {
-      document.title = 'AFLAN — Identitas Digital Personal';
+      document.title = 'AFLAN · Identitas Digital Personal';
     }
 
     const canonicalUrl =

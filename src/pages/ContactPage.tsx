@@ -6,14 +6,17 @@ import {
   useReducedMotion,
 } from 'framer-motion';
 import {
+  AlertCircle,
   ArrowUpRight,
   Check,
   Clock,
   Copy,
   Github,
+  Instagram,
   Link2,
   Loader2,
   Mail,
+  MapPin,
   MessageCircle,
   Send,
 } from 'lucide-react';
@@ -27,23 +30,28 @@ import { EASE_LUXURY } from '@/utils/motion';
 interface FormValues {
   name: string;
   email: string;
-  topic: string;
+  subject: string;
   message: string;
 }
 
 interface FormErrors {
   name?: string;
   email?: string;
+  subject?: string;
   message?: string;
 }
 
-type SubmitPhase = 'idle' | 'loading' | 'success';
+type SubmitPhase = 'idle' | 'loading' | 'success' | 'error';
 
-const TOPICS = [
+const CONTACT_ENDPOINT =
+  import.meta.env.VITE_CONTACT_ENDPOINT ||
+  'https://formsubmit.co/ajax/aflanmuafazulfiqar02@gmail.com';
+
+const SUBJECT_PRESETS = [
   'Kolaborasi Web Development',
-  'Diskusi Proyek / QA',
-  'Akademik & Riset',
-  'Percakapan Umum',
+  'Software QA & Evaluasi',
+  'Peluang Magang / Proyek',
+  'Akademik & Diskusi Umum',
 ];
 
 const ERROR_SHAKE_KEYFRAMES = [0, -7, 7, -5, 5, -2, 2, 0];
@@ -64,7 +72,6 @@ function getPurwokertoTime(): string {
 export const ContactPage: React.FC = () => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const copyTimerRef = useRef<number | null>(null);
-  const submitTimerRef = useRef<number | null>(null);
   const resetSuccessTimerRef = useRef<number | null>(null);
 
   const [localTime, setLocalTime] = useState<string>(() => getPurwokertoTime());
@@ -74,19 +81,17 @@ export const ContactPage: React.FC = () => {
   const [values, setValues] = useState<FormValues>({
     name: '',
     email: '',
-    topic: TOPICS[0],
+    subject: SUBJECT_PRESETS[0],
     message: '',
   });
+  const [honey, setHoney] = useState<string>('');
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitPhase, setSubmitPhase] = useState<SubmitPhase>('idle');
-  const [preparedDraft, setPreparedDraft] = useState<{
-    mailtoHref: string;
-    whatsappHref: string;
-    plainText: string;
-  } | null>(null);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
   const nameShake = useAnimationControls();
   const emailShake = useAnimationControls();
+  const subjectShake = useAnimationControls();
   const messageShake = useAnimationControls();
   const submitShake = useAnimationControls();
 
@@ -98,7 +103,6 @@ export const ContactPage: React.FC = () => {
     return () => {
       window.clearInterval(timer);
       if (copyTimerRef.current !== null) window.clearTimeout(copyTimerRef.current);
-      if (submitTimerRef.current !== null) window.clearTimeout(submitTimerRef.current);
       if (resetSuccessTimerRef.current !== null) {
         window.clearTimeout(resetSuccessTimerRef.current);
       }
@@ -129,19 +133,22 @@ export const ContactPage: React.FC = () => {
   const validate = (form: FormValues): FormErrors => {
     const nextErrors: FormErrors = {};
     if (form.name.trim().length < 2) {
-      nextErrors.name = 'Mohon isi nama Anda minimal 2 karakter.';
+      nextErrors.name = 'Mohon isi nama lengkap minimal 2 karakter.';
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(form.email.trim())) {
-      nextErrors.email = 'Mohon masukkan alamat email yang valid.';
+      nextErrors.email = 'Mohon masukkan format alamat email yang valid.';
+    }
+    if (form.subject.trim().length < 3) {
+      nextErrors.subject = 'Mohon pilih atau tulis subjek minimal 3 karakter.';
     }
     if (form.message.trim().length < 15) {
-      nextErrors.message = 'Mohon tuliskan pesan singkat minimal 15 karakter.';
+      nextErrors.message = 'Mohon tuliskan pesan minimal 15 karakter agar konteks jelas.';
     }
     return nextErrors;
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (submitPhase === 'loading') return;
 
@@ -149,7 +156,7 @@ export const ContactPage: React.FC = () => {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
-      setPreparedDraft(null);
+      setFeedbackMessage(null);
       setSubmitPhase('idle');
       if (!prefersReducedMotion) {
         const shakeAnimation = {
@@ -158,77 +165,104 @@ export const ContactPage: React.FC = () => {
         };
         if (validationErrors.name) void nameShake.start(shakeAnimation);
         if (validationErrors.email) void emailShake.start(shakeAnimation);
+        if (validationErrors.subject) void subjectShake.start(shakeAnimation);
         if (validationErrors.message) void messageShake.start(shakeAnimation);
         void submitShake.start(shakeAnimation);
       }
       return;
     }
 
-    const subject = `[AFLAN Portfolio] ${values.topic} — dari ${values.name.trim()}`;
-    const bodyLines = [
-      'Halo Aflan,',
-      '',
-      `Nama: ${values.name.trim()}`,
-      `Email: ${values.email.trim()}`,
-      `Topik: ${values.topic}`,
-      '',
-      'Pesan:',
-      values.message.trim(),
-    ].join('\n');
-
-    const mailtoHref = `mailto:${contactData.email}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(bodyLines)}`;
-
-    const whatsappHref = `${contactData.whatsappHref}?text=${encodeURIComponent(
-      bodyLines,
-    )}`;
+    if (honey.trim().length > 0) {
+      setSubmitPhase('success');
+      return;
+    }
 
     setSubmitPhase('loading');
+    setFeedbackMessage(null);
 
-    if (submitTimerRef.current !== null) {
-      window.clearTimeout(submitTimerRef.current);
-    }
     if (resetSuccessTimerRef.current !== null) {
       window.clearTimeout(resetSuccessTimerRef.current);
     }
 
-    const loadingMs = prefersReducedMotion ? 120 : 620;
-    submitTimerRef.current = window.setTimeout(() => {
-      submitTimerRef.current = null;
-      setPreparedDraft({
-        mailtoHref,
-        whatsappHref,
-        plainText: `${subject}\n\n${bodyLines}`,
-      });
-      setSubmitPhase('success');
-      showToast('Draf Terkirim & Siap', 'Lanjutkan pengiriman lewat Email atau WhatsApp.');
+    const trimmedName = values.name.trim();
+    const trimmedEmail = values.email.trim();
+    const trimmedSubject = values.subject.trim();
+    const trimmedMessage = values.message.trim();
 
-      const tempLink = document.createElement('a');
-      tempLink.href = mailtoHref;
-      tempLink.click();
+    try {
+      const response = await fetch(CONTACT_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: trimmedName,
+          email: trimmedEmail,
+          subject: trimmedSubject,
+          message: trimmedMessage,
+          _subject: `[AFLAN DOSSIER] Pesan baru dari ${trimmedName}`,
+          _replyto: trimmedEmail,
+          _template: 'table',
+          _captcha: 'false',
+          _honey: honey,
+        }),
+      });
+
+      const data: { success?: boolean | string; message?: string } | null =
+        await response.json().catch(() => null);
+
+      const isSuccess =
+        response.ok && data?.success !== false && data?.success !== 'false';
+
+      if (!isSuccess) {
+        throw new Error(data?.message || 'Pengiriman tidak dapat diproses oleh server.');
+      }
+
+      setSubmitPhase('success');
+      setFeedbackMessage(
+        `Terima kasih, ${trimmedName}. Pesan Anda telah terkirim langsung ke inbox Aflan (${contactData.email}) dan akan dibalas ke ${trimmedEmail}.`,
+      );
+      setValues({
+        name: '',
+        email: '',
+        subject: SUBJECT_PRESETS[0],
+        message: '',
+      });
+      showToast('Pesan Terkirim Langsung', 'Pesan Anda telah masuk ke inbox Aflan.');
 
       resetSuccessTimerRef.current = window.setTimeout(() => {
         resetSuccessTimerRef.current = null;
         setSubmitPhase('idle');
-      }, 3200);
-    }, loadingMs);
+      }, 4200);
+    } catch {
+      setSubmitPhase('error');
+      setFeedbackMessage(
+        'Koneksi pengiriman langsung sedang terkendala. Silakan salin alamat email Aflan dalam 1 klik atau hubungi via WhatsApp di sebelah kiri.',
+      );
+      if (!prefersReducedMotion) {
+        void submitShake.start({
+          x: ERROR_SHAKE_KEYFRAMES,
+          transition: { duration: 0.42, ease: EASE_LUXURY },
+        });
+      }
+    }
   };
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="bg-ivory text-espresso pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-espresso/15">
+      <section className="bg-ivory text-espresso pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-24 px-4 sm:px-6 lg:px-12 border-b border-espresso/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
             className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-espresso/15"
           >
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
-              BAB 09 · KONTAK &amp; KORESPONDENSI
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-[#8A6D4B]">
+              BAB 09 / KONTAK &amp; KORESPONDENSI
             </span>
-            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-espresso/60">
-              <Clock className="size-3.5 text-mocha" aria-hidden="true" />
-              WAKTU LOKAL PURWOKERTO · {localTime} WIB
+            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-[#8A6D4B]">
+              <Clock className="size-3.5" aria-hidden="true" />
+              PURWOKERTO · {localTime} WIB
             </span>
           </Reveal>
 
@@ -241,197 +275,298 @@ export const ContactPage: React.FC = () => {
                 lines={[
                   <>Mari mulai</>,
                   <>
-                    <span className="italic text-mocha">Percakapan Bermakna</span>.
+                    <span className="italic text-[#8A6D4B]">Korespondensi Langsung</span>.
                   </>,
                 ]}
               />
             </div>
 
-            <Reveal variant="up" delay={0.14} className="lg:col-span-5">
-              <p className="font-sans text-sm md:text-base text-espresso/80 leading-relaxed">
-                {contactData.availabilityNote} Hubungi langsung lewat email, WhatsApp,
-                Instagram, atau susun draf pesan terstruktur melalui formulir di bawah.
+            <Reveal variant="up" delay={0.12} className="lg:col-span-5">
+              <p className="font-sans text-sm md:text-base text-espresso/80 leading-relaxed max-w-prose">
+                {contactData.availabilityNote} Kirim pesan langsung ke inbox saya melalui
+                formulir tanpa perlu membuka aplikasi email terpisah, atau gunakan kanal
+                kontak cepat di samping.
               </p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="bg-obsidian text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start">
+      <section className="bg-obsidian text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          {/* KOLOM KIRI: KANAL LANGSUNG, KETERSEDIAAN & KONTAK CEPAT */}
           <Reveal variant="up" className="lg:col-span-5 space-y-6">
-            <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
-              KANAL KOMUNIKASI RESMI
-            </p>
+            {/* Availability & Location Header Card */}
+            <div className="p-6 bg-espresso/75 border border-champagne/25 space-y-4">
+              <div className="flex items-center justify-between gap-3 pb-3 border-b border-champagne/15">
+                <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
+                  <span
+                    aria-hidden="true"
+                    className="size-2 rounded-full bg-champagne shadow-[0_0_10px_rgba(216,195,165,0.8)]"
+                  />
+                  STATUS KETERSEDIAAN
+                </span>
+                <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-taupe">
+                  {localTime} WIB
+                </span>
+              </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
-              {contactData.channels.map((channel) => {
-                const isCopied = copiedId === channel.id;
-                const isEmail = channel.id === 'email';
-                return (
-                  <div
-                    key={channel.id}
-                    className={`p-6 bg-espresso/65 border border-champagne/20 hover:border-champagne/55 transition-colors flex flex-col justify-between space-y-4 ${
-                      isEmail ? 'md:col-span-2 lg:col-span-1' : ''
-                    }`}
-                  >
-                    <div className="flex items-start justify-between gap-3 sm:gap-4">
-                      <div className="min-w-0 flex-1">
-                        <span className="block font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
-                          {channel.label}
-                        </span>{' '}
-                        <a
-                          href={channel.href}
-                          target={channel.external ? '_blank' : undefined}
-                          rel={channel.external ? 'noopener noreferrer' : undefined}
-                          className={`block font-serif text-ivory hover:text-champagne transition-colors mt-1 ${
-                            isEmail
-                              ? 'text-[clamp(0.98rem,4.1vw,1.35rem)] md:text-[1.45rem] lg:text-[clamp(1.02rem,1.45vw,1.48rem)] sm:whitespace-nowrap wrap-break-word'
-                              : 'text-xl sm:text-2xl lg:text-[1.6rem] wrap-break-word'
-                          }`}
-                        >
-                          {channel.value}
-                        </a>
-                      </div>
-                      <a
-                        href={channel.href}
-                        target={channel.external ? '_blank' : undefined}
-                        rel={channel.external ? 'noopener noreferrer' : undefined}
-                        aria-label={`Buka ${channel.label}`}
-                        className="shrink-0 size-10 rounded-full border border-champagne/30 flex items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-all"
-                      >
-                        <ArrowUpRight className="size-4" aria-hidden="true" />
-                      </a>
-                    </div>
+              <h2 className="font-serif text-2xl sm:text-3xl font-light tracking-tight text-ivory/95 leading-snug">
+                {contactData.availabilityStatus}
+              </h2>
 
-                    <div className="pt-3 border-t border-champagne/15 flex flex-wrap items-center justify-between gap-3">
-                      <span className="font-sans text-sm lg:text-xs text-taupe">
-                        {channel.displayHint}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          copyValue(
-                            channel.id,
-                            channel.value,
-                            `${channel.label} Tersalin`,
-                            channel.value,
-                          )
-                        }
-                        aria-label={`Salin ${channel.label}`}
-                        className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.2em] uppercase text-champagne hover:text-ivory transition-colors cursor-pointer"
-                      >
-                        {isCopied ? (
-                          <>
-                            <Check className="size-3.5" aria-hidden="true" />
-                            Tersalin
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="size-3.5" aria-hidden="true" />
-                            Salin
-                          </>
-                        )}
-                      </button>
-                    </div>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-mono uppercase tracking-[0.14em] text-champagne/85">
+                <span className="inline-flex items-center gap-1.5">
+                  <MapPin className="size-3.5 text-champagne" aria-hidden="true" />
+                  Purwokerto, Jawa Tengah
+                </span>
+                <span className="text-taupe">·</span>
+                <span className="text-ivory/80">{personalData.studyProgram}</span>
+              </div>
+            </div>
+
+            {/* Kontainer Kontak Cepat terpisah secara visual dari Form */}
+            <div className="space-y-4 pt-2">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-champagne">
+                  KONTAK CEPAT
+                </p>
+                <span className="text-[10px] font-mono uppercase tracking-[0.15em] whitespace-nowrap text-taupe">
+                  SALIN &amp; TAUTAN LANGSUNG
+                </span>
+              </div>
+
+              {/* Primary Email Copy Card */}
+              <div className="p-5 sm:p-6 bg-espresso/55 border border-champagne/20 space-y-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <span className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne">
+                      EMAIL RESMI
+                    </span>
+                    <p className="font-serif text-lg sm:text-xl text-ivory mt-1 break-all">
+                      {contactData.email}
+                    </p>
                   </div>
-                );
-              })}
-
-              <div className="md:col-span-2 lg:col-span-1 p-6 bg-chocolate/65 border border-champagne/20 font-mono text-[11px] tracking-[0.16em] uppercase text-ivory/85 flex flex-col justify-between gap-4 lg:mt-2">
-                <div className="space-y-1.5">
-                  <p className="text-champagne">BASIS &amp; INSTITUSI</p>
-                  <p>{contactData.location}</p>
-                  <p>{`${personalData.university} · ${personalData.studyProgram}`}</p>
-                </div>
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-champagne/15">
-                  <a
-                    href={contactData.githubHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-ivory hover:text-champagne transition-colors"
+                  <span
+                    aria-hidden="true"
+                    className="shrink-0 size-9 rounded-full border border-champagne/25 flex items-center justify-center text-champagne"
                   >
-                    <Github className="size-3.5" aria-hidden="true" />
-                    GitHub (Flannss)
-                    <ArrowUpRight className="size-3" aria-hidden="true" />
-                  </a>
+                    <Mail className="size-4" />
+                  </span>
+                </div>
+
+                <div className="pt-3 border-t border-champagne/15 flex flex-wrap items-center justify-between gap-3">
+                  <span className="font-sans text-xs text-ivory/70">
+                    Respon utama untuk proyek, magang &amp; kolaborasi
+                  </span>
                   <button
                     type="button"
                     onClick={() =>
                       copyValue(
-                        'site-link',
-                        personalData.siteUrl,
-                        'Tautan Portofolio Tersalin',
-                        personalData.siteUrl,
+                        'email',
+                        contactData.email,
+                        'Email Tersalin',
+                        contactData.email,
                       )
                     }
-                    aria-label="Salin tautan portofolio"
-                    className="inline-flex items-center gap-1.5 text-champagne hover:text-ivory transition-colors cursor-pointer"
+                    aria-label="Salin alamat email resmi Aflan"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-champagne text-obsidian text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium hover:bg-ivory active:scale-[0.97] transition-all cursor-pointer"
                   >
-                    {copiedId === 'site-link' ? (
+                    {copiedId === 'email' ? (
                       <>
                         <Check className="size-3.5" aria-hidden="true" />
-                        Link Tersalin
+                        Tersalin
                       </>
                     ) : (
                       <>
-                        <Link2 className="size-3.5" aria-hidden="true" />
-                        Salin Link
+                        <Copy className="size-3.5" aria-hidden="true" />
+                        Salin Email
                       </>
                     )}
                   </button>
                 </div>
               </div>
+
+              {/* Quick Channel Cards: WhatsApp, Instagram, GitHub */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3.5">
+                <a
+                  href={contactData.whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-5 bg-espresso/45 border border-champagne/15 hover:border-champagne/55 transition-colors flex items-center justify-between gap-4"
+                >
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <span className="shrink-0 size-10 rounded-full border border-champagne/25 bg-obsidian/60 flex items-center justify-center text-champagne">
+                      <MessageCircle className="size-4" aria-hidden="true" />
+                    </span>
+                    <div className="min-w-0">
+                      <span className="block text-[10px] font-mono uppercase tracking-[0.15em] text-champagne">
+                        WHATSAPP
+                      </span>
+                      <span className="block font-serif text-lg text-ivory group-hover:text-champagne transition-colors truncate">
+                        {contactData.whatsappNumber}
+                      </span>
+                    </div>
+                  </div>
+                  <ArrowUpRight
+                    className="size-4 shrink-0 text-champagne/75 group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                    aria-hidden="true"
+                  />
+                </a>
+
+                <a
+                  href={contactData.instagramHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-5 bg-espresso/45 border border-champagne/15 hover:border-champagne/55 transition-colors flex items-center justify-between gap-4"
+                >
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <span className="shrink-0 size-10 rounded-full border border-champagne/25 bg-obsidian/60 flex items-center justify-center text-champagne">
+                      <Instagram className="size-4" aria-hidden="true" />
+                    </span>
+                    <div className="min-w-0">
+                      <span className="block text-[10px] font-mono uppercase tracking-[0.15em] text-champagne">
+                        INSTAGRAM
+                      </span>
+                      <span className="block font-serif text-lg text-ivory group-hover:text-champagne transition-colors truncate">
+                        {contactData.instagramHandle}
+                      </span>
+                    </div>
+                  </div>
+                  <ArrowUpRight
+                    className="size-4 shrink-0 text-champagne/75 group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                    aria-hidden="true"
+                  />
+                </a>
+
+                <a
+                  href={contactData.githubHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group sm:col-span-2 lg:col-span-1 p-5 bg-espresso/45 border border-champagne/15 hover:border-champagne/55 transition-colors flex items-center justify-between gap-4"
+                >
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <span className="shrink-0 size-10 rounded-full border border-champagne/25 bg-obsidian/60 flex items-center justify-center text-champagne">
+                      <Github className="size-4" aria-hidden="true" />
+                    </span>
+                    <div className="min-w-0">
+                      <span className="block text-[10px] font-mono uppercase tracking-[0.15em] text-champagne">
+                        GITHUB
+                      </span>
+                      <span className="block font-serif text-lg text-ivory group-hover:text-champagne transition-colors truncate">
+                        {contactData.githubHandle}
+                      </span>
+                    </div>
+                  </div>
+                  <ArrowUpRight
+                    className="size-4 shrink-0 text-champagne/75 group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                    aria-hidden="true"
+                  />
+                </a>
+              </div>
+
+              {/* Portfolio Link Quick Copy */}
+              <div className="p-4 sm:p-5 bg-chocolate/55 border border-champagne/15 flex flex-wrap items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <span className="block text-[10px] font-mono uppercase tracking-[0.15em] text-champagne">
+                    TAUTAN RESMI DOSSIER
+                  </span>
+                  <span className="block font-sans text-xs text-ivory/80 truncate mt-0.5">
+                    {personalData.siteDomain}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    copyValue(
+                      'site-link',
+                      personalData.siteUrl,
+                      'Tautan Portofolio Tersalin',
+                      personalData.siteUrl,
+                    )
+                  }
+                  aria-label="Salin tautan portofolio"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-champagne/30 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne hover:border-champagne hover:text-ivory transition-colors cursor-pointer"
+                >
+                  {copiedId === 'site-link' ? (
+                    <>
+                      <Check className="size-3.5" aria-hidden="true" />
+                      Tersalin
+                    </>
+                  ) : (
+                    <>
+                      <Link2 className="size-3.5" aria-hidden="true" />
+                      Salin Link
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </Reveal>
 
+          {/* KOLOM KANAN: FORM PESAN LANGSUNG KE INBOX */}
           <Reveal variant="up" delay={0.1} className="lg:col-span-7">
             <div className="bg-ivory text-espresso border border-champagne/25 p-6 sm:p-10 lg:p-12 shadow-2xl">
-              <div className="pb-6 mb-8 border-b border-espresso/15">
-                <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha">
-                  PENYUSUN PESAN
+              <div className="pb-6 mb-8 border-b border-espresso/15 space-y-2">
+                <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-[#8A6D4B]">
+                  KIRIM PESAN LANGSUNG
                 </p>
-                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-2">
-                  Siapkan catatan langsung untuk Aflan
+                <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-espresso/95">
+                  Langsung ke Inbox Aflan
                 </h2>
-                <p className="font-sans text-sm md:text-base text-espresso/80 mt-2 leading-relaxed">
-                  Portofolio ini tidak menyimpan data di server pihak ketiga. Pengiriman akan
-                  memvalidasi pesan Anda lalu membuka draf siap kirim lewat Email atau
-                  WhatsApp resmi Aflan.
+                <p className="font-sans text-sm md:text-base text-espresso/80 leading-relaxed max-w-prose">
+                  Tulis pesan Anda di bawah ini. Pengiriman dilakukan langsung secara
+                  asinkron ke inbox email saya tanpa perlu membuka atau login ke aplikasi
+                  Gmail Anda.
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} noValidate className="space-y-6">
+                {/* Hidden Honeypot Anti-Spam Field */}
+                <input
+                  type="text"
+                  name="_honey"
+                  value={honey}
+                  onChange={(e) => setHoney(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <motion.div animate={nameShake} className="will-change-transform">
                     <label
                       htmlFor="contact-name"
-                      className="block font-mono text-[10px] tracking-[0.22em] uppercase text-mocha mb-2"
+                      className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-[#8A6D4B] mb-2"
                     >
-                      Nama Anda *
+                      NAMA LENGKAP *
                     </label>
                     <input
                       id="contact-name"
                       name="name"
                       type="text"
+                      autoComplete="name"
                       value={values.name}
                       onChange={(e) => {
                         setValues((v) => ({ ...v, name: e.target.value }));
                         if (errors.name) setErrors((err) => ({ ...err, name: undefined }));
-                        if (submitPhase === 'success') setSubmitPhase('idle');
+                        if (submitPhase === 'success' || submitPhase === 'error') {
+                          setSubmitPhase('idle');
+                        }
                       }}
                       aria-invalid={Boolean(errors.name)}
                       aria-describedby={errors.name ? 'contact-name-error' : undefined}
                       placeholder="Nama lengkap Anda"
-                      className={`w-full px-4 py-3 bg-offwhite border text-espresso text-base sm:text-sm placeholder:text-espresso/40 focus:border-mocha focus:outline-hidden transition-colors ${
-                        errors.name ? 'border-mocha' : 'border-espresso/25'
+                      className={`w-full px-4 py-3 bg-offwhite border text-espresso text-sm md:text-base placeholder:text-espresso/45 focus:border-[#8A6D4B] focus:ring-2 focus:ring-champagne/60 focus:outline-hidden transition-all ${
+                        errors.name ? 'border-mocha' : 'border-espresso/20'
                       }`}
                     />
                     {errors.name && (
                       <p
                         id="contact-name-error"
                         role="alert"
-                        className="mt-1.5 font-sans text-sm lg:text-xs font-medium text-mocha border-l-2 border-mocha pl-2.5"
+                        className="mt-1.5 font-sans text-xs font-medium text-mocha border-l-2 border-mocha pl-2.5"
                       >
                         {errors.name}
                       </p>
@@ -441,32 +576,35 @@ export const ContactPage: React.FC = () => {
                   <motion.div animate={emailShake} className="will-change-transform">
                     <label
                       htmlFor="contact-email"
-                      className="block font-mono text-[10px] tracking-[0.22em] uppercase text-mocha mb-2"
+                      className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-[#8A6D4B] mb-2"
                     >
-                      Email Anda *
+                      ALAMAT EMAIL *
                     </label>
                     <input
                       id="contact-email"
                       name="email"
                       type="email"
+                      autoComplete="email"
                       value={values.email}
                       onChange={(e) => {
                         setValues((v) => ({ ...v, email: e.target.value }));
                         if (errors.email) setErrors((err) => ({ ...err, email: undefined }));
-                        if (submitPhase === 'success') setSubmitPhase('idle');
+                        if (submitPhase === 'success' || submitPhase === 'error') {
+                          setSubmitPhase('idle');
+                        }
                       }}
                       aria-invalid={Boolean(errors.email)}
                       aria-describedby={errors.email ? 'contact-email-error' : undefined}
                       placeholder="nama@domain.com"
-                      className={`w-full px-4 py-3 bg-offwhite border text-espresso text-base sm:text-sm placeholder:text-espresso/40 focus:border-mocha focus:outline-hidden transition-colors ${
-                        errors.email ? 'border-mocha' : 'border-espresso/25'
+                      className={`w-full px-4 py-3 bg-offwhite border text-espresso text-sm md:text-base placeholder:text-espresso/45 focus:border-[#8A6D4B] focus:ring-2 focus:ring-champagne/60 focus:outline-hidden transition-all ${
+                        errors.email ? 'border-mocha' : 'border-espresso/20'
                       }`}
                     />
                     {errors.email && (
                       <p
                         id="contact-email-error"
                         role="alert"
-                        className="mt-1.5 font-sans text-sm lg:text-xs font-medium text-mocha border-l-2 border-mocha pl-2.5"
+                        className="mt-1.5 font-sans text-xs font-medium text-mocha border-l-2 border-mocha pl-2.5"
                       >
                         {errors.email}
                       </p>
@@ -474,38 +612,73 @@ export const ContactPage: React.FC = () => {
                   </motion.div>
                 </div>
 
-                <div>
-                  <span className="block font-mono text-[10px] tracking-[0.22em] uppercase text-mocha mb-2.5">
-                    Topik
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {TOPICS.map((topic) => {
-                      const active = values.topic === topic;
+                <motion.div animate={subjectShake} className="space-y-3 will-change-transform">
+                  <label
+                    htmlFor="contact-subject"
+                    className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-[#8A6D4B]"
+                  >
+                    SUBJEK / TOPIK *
+                  </label>
+                  <div className="flex flex-nowrap overflow-x-auto scrollbar-hide gap-2 pb-1">
+                    {SUBJECT_PRESETS.map((preset) => {
+                      const active = values.subject === preset;
                       return (
                         <button
-                          key={topic}
+                          key={preset}
                           type="button"
-                          onClick={() => setValues((v) => ({ ...v, topic }))}
+                          onClick={() => {
+                            setValues((v) => ({ ...v, subject: preset }));
+                            if (errors.subject) {
+                              setErrors((err) => ({ ...err, subject: undefined }));
+                            }
+                          }}
                           aria-pressed={active}
-                          className={`px-3.5 py-2.5 lg:py-2 rounded-full font-mono text-[10px] tracking-[0.16em] uppercase border transition-colors cursor-pointer ${
+                          className={`shrink-0 px-3.5 py-2 rounded-full text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap border transition-colors cursor-pointer ${
                             active
-                              ? 'bg-espresso text-ivory border-espresso'
-                              : 'bg-offwhite text-espresso border-espresso/20 hover:border-mocha'
+                              ? 'bg-espresso text-ivory border-espresso font-medium'
+                              : 'bg-offwhite text-espresso/80 border-espresso/20 hover:border-[#8A6D4B]'
                           }`}
                         >
-                          {topic}
+                          {preset}
                         </button>
                       );
                     })}
                   </div>
-                </div>
+                  <input
+                    id="contact-subject"
+                    name="subject"
+                    type="text"
+                    value={values.subject}
+                    onChange={(e) => {
+                      setValues((v) => ({ ...v, subject: e.target.value }));
+                      if (errors.subject) {
+                        setErrors((err) => ({ ...err, subject: undefined }));
+                      }
+                    }}
+                    aria-invalid={Boolean(errors.subject)}
+                    aria-describedby={errors.subject ? 'contact-subject-error' : undefined}
+                    placeholder="Tulis subjek atau pilih preset di atas"
+                    className={`w-full px-4 py-3 bg-offwhite border text-espresso text-sm md:text-base placeholder:text-espresso/45 focus:border-[#8A6D4B] focus:ring-2 focus:ring-champagne/60 focus:outline-hidden transition-all ${
+                      errors.subject ? 'border-mocha' : 'border-espresso/20'
+                    }`}
+                  />
+                  {errors.subject && (
+                    <p
+                      id="contact-subject-error"
+                      role="alert"
+                      className="font-sans text-xs font-medium text-mocha border-l-2 border-mocha pl-2.5"
+                    >
+                      {errors.subject}
+                    </p>
+                  )}
+                </motion.div>
 
                 <motion.div animate={messageShake} className="will-change-transform">
                   <label
                     htmlFor="contact-message"
-                    className="block font-mono text-[10px] tracking-[0.22em] uppercase text-mocha mb-2"
+                    className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-[#8A6D4B] mb-2"
                   >
-                    Pesan *
+                    PESAN *
                   </label>
                   <textarea
                     id="contact-message"
@@ -517,38 +690,43 @@ export const ContactPage: React.FC = () => {
                       if (errors.message) {
                         setErrors((err) => ({ ...err, message: undefined }));
                       }
-                      if (submitPhase === 'success') setSubmitPhase('idle');
+                      if (submitPhase === 'success' || submitPhase === 'error') {
+                        setSubmitPhase('idle');
+                      }
                     }}
                     aria-invalid={Boolean(errors.message)}
                     aria-describedby={
                       errors.message ? 'contact-message-error' : undefined
                     }
-                    placeholder="Ceritakan ide, kebutuhan proyek, atau pertanyaan Anda..."
-                    className={`w-full px-4 py-3 bg-offwhite border text-espresso text-base sm:text-sm placeholder:text-espresso/40 focus:border-mocha focus:outline-hidden resize-y transition-colors ${
-                      errors.message ? 'border-mocha' : 'border-espresso/25'
+                    placeholder="Ceritakan kebutuhan proyek, ruang lingkup kolaborasi, atau pertanyaan Anda..."
+                    className={`w-full px-4 py-3 bg-offwhite border text-espresso text-sm md:text-base placeholder:text-espresso/45 focus:border-[#8A6D4B] focus:ring-2 focus:ring-champagne/60 focus:outline-hidden resize-y transition-all ${
+                      errors.message ? 'border-mocha' : 'border-espresso/20'
                     }`}
                   />
                   {errors.message && (
                     <p
                       id="contact-message-error"
                       role="alert"
-                      className="mt-1.5 font-sans text-sm lg:text-xs font-medium text-mocha border-l-2 border-mocha pl-2.5"
+                      className="mt-1.5 font-sans text-xs font-medium text-mocha border-l-2 border-mocha pl-2.5"
                     >
                       {errors.message}
                     </p>
                   )}
                 </motion.div>
 
-                <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
-                  <motion.div animate={submitShake} className="will-change-transform">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+                  <motion.div
+                    animate={submitShake}
+                    className="w-full sm:w-auto will-change-transform"
+                  >
                     <button
                       type="submit"
                       disabled={submitPhase === 'loading'}
                       aria-busy={submitPhase === 'loading'}
-                      className={`inline-flex items-center justify-center gap-2.5 w-full sm:w-auto sm:min-w-[250px] px-7 py-3.5 rounded-full font-mono text-xs tracking-[0.2em] uppercase active:scale-[0.97] transition-all duration-300 cursor-pointer disabled:cursor-wait ${
+                      className={`inline-flex items-center justify-center gap-2.5 w-full sm:w-auto sm:min-w-[240px] px-7 py-3.5 rounded-full text-[10px] md:text-xs font-mono uppercase tracking-[0.18em] whitespace-nowrap font-medium active:scale-[0.97] transition-all duration-300 cursor-pointer disabled:opacity-75 disabled:cursor-wait ${
                         submitPhase === 'success'
-                          ? 'bg-mocha text-ivory'
-                          : 'bg-espresso text-ivory hover:bg-mocha'
+                          ? 'bg-[#8A6D4B] text-ivory'
+                          : 'bg-espresso text-ivory hover:bg-[#8A6D4B]'
                       }`}
                     >
                       <AnimatePresence mode="wait" initial={false}>
@@ -565,7 +743,7 @@ export const ContactPage: React.FC = () => {
                               className="size-4 animate-spin text-champagne"
                               aria-hidden="true"
                             />
-                            Menyiapkan Draf...
+                            Mengirim...
                           </motion.span>
                         )}
 
@@ -579,11 +757,11 @@ export const ContactPage: React.FC = () => {
                             className="inline-flex items-center gap-2.5 text-champagne"
                           >
                             <Check className="size-4 stroke-[2.5]" aria-hidden="true" />
-                            Terkirim · Draf Siap
+                            Pesan Terkirim
                           </motion.span>
                         )}
 
-                        {submitPhase === 'idle' && (
+                        {(submitPhase === 'idle' || submitPhase === 'error') && (
                           <motion.span
                             key="idle"
                             initial={{ opacity: 0, y: 6 }}
@@ -593,80 +771,93 @@ export const ContactPage: React.FC = () => {
                             className="inline-flex items-center gap-2.5"
                           >
                             <Send className="size-4" aria-hidden="true" />
-                            Siapkan &amp; Buka Draf Email
+                            Kirim Pesan Langsung
                           </motion.span>
                         )}
                       </AnimatePresence>
                     </button>
                   </motion.div>
 
-                  <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-espresso/60">
-                    TERINTEGRASI EMAIL &amp; WHATSAPP
+                  <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-espresso/60">
+                    LANGSUNG KE INBOX · TANPA REDIRECT
                   </span>
                 </div>
               </form>
 
+              {/* Inline Confirmation / Graceful Fallback Banner */}
               <AnimatePresence>
-                {preparedDraft && (
+                {feedbackMessage && submitPhase === 'success' && (
                   <motion.div
-                    initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 14 }}
+                    key="success-banner"
+                    initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.42, ease: EASE_LUXURY }}
+                    transition={{ duration: 0.4, ease: EASE_LUXURY }}
                     role="status"
                     aria-live="polite"
-                    className="mt-8 p-6 bg-espresso text-ivory border border-champagne/30 space-y-4"
+                    className="mt-8 p-6 bg-espresso text-ivory border border-champagne/35 space-y-2.5"
                   >
-                    <p className="font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
-                      DRAF SIAP — PILIH KANAL PENGIRIMAN
+                    <div className="flex items-center gap-2.5 text-[10px] md:text-xs font-mono uppercase tracking-[0.18em] text-champagne">
+                      <Check className="size-4" aria-hidden="true" />
+                      TERKIRIM LANGSUNG KE INBOX AFLAN
+                    </div>
+                    <p className="font-sans text-sm md:text-base text-ivory/85 leading-relaxed">
+                      {feedbackMessage}
                     </p>
-                    <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                      Pesan Anda lolos validasi dan diarahkan ke aplikasi email menuju{' '}
-                      <span className="text-champagne">{contactData.email}</span>. Anda juga
-                      dapat mengirim draf yang sama via WhatsApp atau menyalin teksnya:
-                    </p>
+                  </motion.div>
+                )}
 
-                    <div className="flex flex-wrap gap-3 pt-1">
-                      <a
-                        href={preparedDraft.mailtoHref}
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-[11px] tracking-[0.16em] uppercase font-medium hover:bg-ivory transition-colors"
-                      >
-                        <Mail className="size-3.5" aria-hidden="true" />
-                        Buka Aplikasi Email
-                      </a>
-                      <a
-                        href={preparedDraft.whatsappHref}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-champagne/40 text-ivory font-mono text-[11px] tracking-[0.16em] uppercase hover:border-champagne transition-colors"
-                      >
-                        <MessageCircle className="size-3.5" aria-hidden="true" />
-                        Kirim via WhatsApp
-                      </a>
+                {feedbackMessage && submitPhase === 'error' && (
+                  <motion.div
+                    key="error-banner"
+                    initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.4, ease: EASE_LUXURY }}
+                    role="alert"
+                    className="mt-8 p-6 bg-espresso text-ivory border border-champagne/35 space-y-4"
+                  >
+                    <div className="flex items-center gap-2.5 text-[10px] md:text-xs font-mono uppercase tracking-[0.18em] text-champagne">
+                      <AlertCircle className="size-4" aria-hidden="true" />
+                      GANGGUAN JARINGAN · OPSI ALTERNATIF CEPAT
+                    </div>
+                    <p className="font-sans text-sm text-ivory/85 leading-relaxed">
+                      {feedbackMessage}
+                    </p>
+                    <div className="flex flex-wrap gap-3">
                       <button
                         type="button"
                         onClick={() =>
                           copyValue(
-                            'draft',
-                            preparedDraft.plainText,
-                            'Teks Draf Tersalin',
-                            'Siap ditempel ke aplikasi pesan pilihan Anda.',
+                            'fallback-email',
+                            contactData.email,
+                            'Email Tersalin',
+                            contactData.email,
                           )
                         }
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-champagne/30 text-champagne font-mono text-[11px] tracking-[0.16em] uppercase hover:border-champagne transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-champagne text-obsidian text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium hover:bg-ivory transition-colors cursor-pointer"
                       >
-                        {copiedId === 'draft' ? (
+                        {copiedId === 'fallback-email' ? (
                           <>
                             <Check className="size-3.5" aria-hidden="true" />
-                            Draf Tersalin
+                            Email Tersalin
                           </>
                         ) : (
                           <>
                             <Copy className="size-3.5" aria-hidden="true" />
-                            Salin Teks Draf
+                            Salin Email ({contactData.email})
                           </>
                         )}
                       </button>
+                      <a
+                        href={contactData.whatsappHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-champagne/40 text-ivory text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap hover:border-champagne transition-colors"
+                      >
+                        <MessageCircle className="size-3.5" aria-hidden="true" />
+                        Hubungi via WhatsApp
+                      </a>
                     </div>
                   </motion.div>
                 )}

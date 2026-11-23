@@ -27,8 +27,9 @@ function extractNodeText(node: React.ReactNode): string {
 }
 
 /**
- * Reliable staggered fade-in + translateY typography reveal without overflow-hidden clipping.
- * Uses standard Framer Motion whileInView with amount: 'some' so headings are guaranteed 100% visible on scroll.
+ * Reliable staggered fade-in + translateY typography reveal without overflow clipping.
+ * Guarantees real DOM whitespace between every line/span so copy-paste and screen readers
+ * never concatenate adjacent words.
  */
 export const TextReveal: React.FC<TextRevealProps> = ({
   id,
@@ -54,8 +55,8 @@ export const TextReveal: React.FC<TextRevealProps> = ({
           <React.Fragment key={index}>
             <span aria-hidden="true" className={`block ${lineClassName}`}>
               {line}
+              {index < lines.length - 1 ? ' ' : null}
             </span>
-            {index < lines.length - 1 ? ' ' : null}
           </React.Fragment>
         ))}
       </Tag>
@@ -83,8 +84,8 @@ export const TextReveal: React.FC<TextRevealProps> = ({
             }}
           >
             {line}
+            {index < lines.length - 1 ? ' ' : null}
           </motion.span>
-          {index < lines.length - 1 ? ' ' : null}
         </React.Fragment>
       ))}
     </Tag>

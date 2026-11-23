@@ -57,10 +57,10 @@ export const ProjectsPage: React.FC = () => {
             variant="up"
             className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15"
           >
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
-              BAB 05 · PROYEK &amp; ARSIP KERJA
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-champagne">
+              BAB 05 / PROYEK &amp; ARSIP KERJA
             </span>
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
               {filteredProjects.length} ENTRI DITAMPILKAN
             </span>
           </Reveal>
@@ -123,31 +123,31 @@ export const ProjectsPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-espresso text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 min-h-[55vh]">
+      <section className="bg-espresso text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12 min-h-[55vh]">
         <div className="max-w-[1440px] mx-auto">
           {viewMode === 'index' ? (
             <ProjectPreviewList projects={filteredProjects} />
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
               {/* Pinned Category Heading Rail */}
-              <aside className="lg:col-span-4 lg:sticky lg:top-28 space-y-4">
-                <p className="font-mono text-[10px] tracking-[0.26em] uppercase text-champagne">
+              <aside className="lg:col-span-4 lg:sticky lg:top-24 space-y-4">
+                <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap text-champagne">
                   DOSSIER BERTUMPUK · {String(filteredProjects.length).padStart(2, '0')} KARYA
                 </p>
-                <h2 className="font-serif text-3xl sm:text-4xl lg:text-[2.85rem] font-light leading-[1.06] text-ivory">
+                <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight leading-[1.08] text-ivory">
                   {selectedCategory === 'All' ? (
                     <>
-                      Seluruh <span className="italic text-champagne">Karya Terkurasi</span>
+                      Seluruh <span className="italic text-champagne/90">Karya Terkurasi</span>
                     </>
                   ) : (
-                    <span className="italic text-champagne">{selectedCategory}</span>
+                    <span className="italic text-champagne/90">{selectedCategory}</span>
                   )}
                 </h2>
-                <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
+                <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed max-w-prose">
                   Gulir untuk menelusuri kartu proyek yang bertumpuk lembut, lalu klik kartu
                   mana saja untuk membuka studi kasus penuh.
                 </p>
-                <div className="pt-4 border-t border-champagne/15 font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
+                <div className="pt-4 border-t border-champagne/15 text-[10px] font-mono uppercase tracking-[0.15em] whitespace-nowrap text-taupe">
                   KLIK KARTU UNTUK TRANSISI DOSSIER →
                 </div>
               </aside>
@@ -163,8 +163,8 @@ export const ProjectsPage: React.FC = () => {
                     containerRef={stackRef}
                     index={idx}
                     total={filteredProjects.length}
-                    baseTopPx={112}
-                    offsetStepPx={18}
+                    baseTopPx={96}
+                    offsetStepPx={14}
                   >
                     <Link
                       to={`/projects/${project.slug}`}

@@ -53,11 +53,11 @@ export const AchievementsPage: React.FC = () => {
       <section className="bg-espresso text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15">
-            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
+            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-champagne">
               <Award className="size-4" aria-hidden="true" />
-              BAB 08 · PENCAPAIAN &amp; SERTIFIKASI
+              BAB 08 / PENCAPAIAN &amp; SERTIFIKASI
             </span>
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
               100% CATATAN TERVERIFIKASI
             </span>
           </Reveal>
@@ -99,9 +99,15 @@ export const AchievementsPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-ivory text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
+      <section
+        aria-labelledby="achievements-list-heading"
+        className="bg-ivory text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12"
+      >
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 lg:block gap-0 md:gap-4 lg:gap-0 divide-y md:divide-y-0 lg:divide-y divide-espresso/15 border-y md:border-y-0 lg:border-y border-espresso/15">
+            <h2 id="achievements-list-heading" className="sr-only">
+              Daftar Kredensial, Publikasi &amp; Pengalaman Terverifikasi
+            </h2>
             {filteredEntries.map((entry, idx) => {
               const isSelected = activeEntry?.id === entry.id;
               const isOrphanOnTablet =
@@ -111,7 +117,7 @@ export const AchievementsPage: React.FC = () => {
                   key={entry.id}
                   type="button"
                   onClick={() => setActiveId(entry.id)}
-                  className={`w-full text-left py-6 px-4 sm:px-6 md:border md:border-espresso/15 lg:border-0 active:scale-[0.99] transition-all duration-300 ${
+                  className={`w-full text-left py-6 px-4 sm:px-6 md:border md:border-espresso/15 lg:border-0 active:scale-[0.99] transition-all duration-300 cursor-pointer ${
                     isOrphanOnTablet ? 'md:col-span-2' : ''
                   } ${
                     isSelected
@@ -121,17 +127,17 @@ export const AchievementsPage: React.FC = () => {
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                     <span
-                      className={`font-mono text-[10px] tracking-[0.24em] uppercase ${
-                        isSelected ? 'text-champagne' : 'text-mocha'
+                      className={`text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium ${
+                        isSelected ? 'text-champagne' : 'text-[#8A6D4B]'
                       }`}
                     >
                       {entry.code} · {entry.category}
                     </span>
                     <span
-                      className={`inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.16em] uppercase px-2.5 py-0.5 border ${
+                      className={`inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-[0.15em] whitespace-nowrap px-2.5 py-0.5 border ${
                         isSelected
                           ? 'border-champagne/40 text-champagne'
-                          : 'border-mocha/35 text-mocha bg-offwhite'
+                          : 'border-[#8A6D4B]/35 text-[#8A6D4B] bg-offwhite'
                       }`}
                     >
                       <CheckCircle2 className="size-3" aria-hidden="true" />
@@ -139,23 +145,23 @@ export const AchievementsPage: React.FC = () => {
                     </span>
                   </div>
 
-                  <h2 className="font-serif text-xl sm:text-2xl md:text-2xl lg:text-3xl font-light leading-snug">
+                  <span className="block font-serif text-xl sm:text-2xl font-light leading-snug">
                     {entry.title}
-                  </h2>
+                  </span>
 
                   <div
-                    className={`mt-2 flex flex-wrap items-center justify-between gap-2 text-sm lg:text-xs ${
-                      isSelected ? 'text-ivory/75' : 'text-charcoal/70'
+                    className={`mt-2 flex flex-wrap items-center justify-between gap-2 text-xs ${
+                      isSelected ? 'text-ivory/75' : 'text-espresso/70'
                     }`}
                   >
                     <span>{entry.issuer}</span>
-                    <span className="font-mono text-[10px] tracking-[0.16em] uppercase">
+                    <span className="font-mono text-[10px] tracking-[0.15em] uppercase whitespace-nowrap">
                       {entry.dateLabel}
                     </span>
                   </div>
 
                   {isSelected && (
-                    <div className="md:hidden mt-4 pt-4 border-t border-champagne/20 space-y-2.5 text-[15px] text-ivory/85 leading-relaxed">
+                    <div className="md:hidden mt-4 pt-4 border-t border-champagne/20 space-y-2.5 text-sm text-ivory/85 leading-relaxed">
                       <p>{entry.summary}</p>
                       <p className="text-champagne/90">{entry.details}</p>
                     </div>
@@ -166,29 +172,29 @@ export const AchievementsPage: React.FC = () => {
           </div>
 
           {activeEntry && (
-            <aside className="hidden md:block lg:col-span-5 lg:sticky lg:top-28 bg-obsidian text-ivory border border-champagne/25 p-7 sm:p-9 shadow-2xl space-y-6">
+            <aside className="hidden md:block lg:col-span-5 lg:sticky lg:top-24 bg-obsidian text-ivory border border-champagne/25 p-7 sm:p-9 shadow-2xl space-y-6">
               <div className="flex items-center justify-between pb-5 border-b border-champagne/15">
-                <span className="font-mono text-[11px] tracking-[0.24em] uppercase text-champagne">
+                <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
                   DOSSIER CATATAN · {activeEntry.code}
                 </span>
-                <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-taupe">
+                <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-taupe">
                   {activeEntry.dateLabel}
                 </span>
               </div>
 
               <div className="space-y-3">
-                <span className="inline-block font-mono text-[10px] tracking-[0.2em] uppercase px-3 py-1 border border-champagne/30 text-champagne">
+                <span className="inline-block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap px-3 py-1 border border-champagne/30 text-champagne">
                   {activeEntry.status}
                 </span>
-                <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light leading-tight text-ivory">
+                <h3 className="font-serif text-2xl sm:text-3xl font-light tracking-tight leading-tight text-ivory/95">
                   {activeEntry.title}
                 </h3>
-                <p className="font-mono text-xs tracking-[0.16em] uppercase text-taupe">
+                <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-taupe">
                   {activeEntry.issuer}
                 </p>
               </div>
 
-              <div className="space-y-4 pt-3 border-t border-champagne/15 text-[15px] lg:text-sm leading-relaxed text-ivory/80">
+              <div className="space-y-4 pt-3 border-t border-champagne/15 text-sm md:text-base leading-relaxed text-ivory/80 max-w-prose">
                 <p>{activeEntry.summary}</p>
                 <p>{activeEntry.details}</p>
               </div>

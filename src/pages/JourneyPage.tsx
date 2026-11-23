@@ -86,10 +86,10 @@ export const JourneyPage: React.FC = () => {
             variant="up"
             className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15"
           >
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
-              BAB 03 · PERJALANAN &amp; LINIMASA
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-champagne">
+              BAB 03 / PERJALANAN &amp; LINIMASA
             </span>
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
               REKAM JEJAK AKADEMIK &amp; PROFESIONAL
             </span>
           </Reveal>
@@ -130,25 +130,25 @@ export const JourneyPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-ivory text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
+      <section className="relative bg-ivory text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           {/* Pinned Editorial Category Heading & Chapter Controls */}
-          <aside className="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
+          <aside className="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
             <div className="space-y-3 pb-6 border-b border-espresso/15">
-              <p className="font-mono text-[10px] tracking-[0.26em] uppercase text-mocha">
+              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-[#8A6D4B]">
                 KATEGORI AKTIF · {String(filteredMilestones.length).padStart(2, '0')} BAB
               </p>
-              <h2 className="font-serif text-3xl sm:text-4xl font-light leading-[1.08] text-espresso">
+              <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight leading-[1.08] text-espresso/90">
                 {selectedCategory === 'Semua' ? (
                   <>
-                    Kronologi <span className="italic text-mocha">Lengkap</span>
+                    Kronologi <span className="italic text-[#8A6D4B]">Lengkap</span>
                   </>
                 ) : (
-                  <span className="italic text-mocha">{selectedCategory}</span>
+                  <span className="italic text-[#8A6D4B]">{selectedCategory}</span>
                 )}
               </h2>
               {activeMilestone && (
-                <p className="font-sans text-sm text-charcoal/80 leading-relaxed">
+                <p className="font-sans text-sm text-espresso/80 leading-relaxed">
                   Bab aktif:{' '}
                   <span className="font-medium text-espresso">
                     {activeMilestone.chapter} · {activeMilestone.periodLabel}
@@ -250,23 +250,34 @@ export const JourneyPage: React.FC = () => {
                 containerRef={stackRef}
                 index={idx}
                 total={filteredMilestones.length}
-                baseTopPx={112}
-                offsetStepPx={18}
+                baseTopPx={96}
+                offsetStepPx={14}
               >
                 <motion.article
                   onViewportEnter={() => setActiveId(item.id)}
                   viewport={{ amount: 0.45 }}
-                  className="bg-obsidian text-ivory border border-champagne/25 p-6 sm:p-10 lg:p-12 shadow-[0_24px_70px_rgba(23,22,21,0.35)]"
+                  className="bg-obsidian text-ivory border border-champagne/25 p-6 sm:p-9 lg:p-10 shadow-[0_24px_70px_rgba(23,22,21,0.35)]"
                 >
-                  <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15">
+                  <div className="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-champagne/15">
                     <div className="flex items-center gap-3.5">
-                      <span className="font-serif italic text-4xl text-champagne leading-none">
+                      <span className="font-serif italic text-3xl sm:text-4xl text-champagne leading-none">
                         {item.chapter}
                       </span>
                       <div>
-                        <span className="block font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
-                          {item.category}
-                        </span>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
+                            {item.category}
+                          </span>
+                          {item.isActive && (
+                            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-champagne/15 border border-champagne/40 text-[10px] font-mono uppercase tracking-[0.14em] whitespace-nowrap text-champagne">
+                              <span
+                                aria-hidden="true"
+                                className="size-1.5 rounded-full bg-champagne"
+                              />
+                              Aktif
+                            </span>
+                          )}
+                        </div>
                         <span className="block font-mono text-xs text-taupe mt-0.5">
                           {item.periodLabel}
                         </span>

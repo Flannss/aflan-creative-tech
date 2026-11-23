@@ -109,17 +109,17 @@ export const HomePage: React.FC = () => {
       ====================================================================== */}
       <section
         ref={heroRef}
-        className="relative min-h-[85svh] lg:min-h-svh bg-obsidian text-ivory flex flex-col justify-between pt-24 sm:pt-28 pb-10 sm:pb-12 px-4 sm:px-6 lg:px-12 overflow-hidden"
+        className="relative bg-obsidian text-ivory flex flex-col justify-between pt-24 sm:pt-28 pb-10 sm:pb-12 px-4 sm:px-6 lg:px-12 overflow-hidden"
       >
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 studio-vignette" />
         <motion.div
           aria-hidden="true"
           style={{ y: haloY }}
-          className="pointer-events-none absolute inset-x-0 top-12 h-[78vh] studio-warm-halo will-change-transform"
+          className="pointer-events-none absolute inset-x-0 top-12 h-[72vh] studio-warm-halo will-change-transform"
         />
 
         {/* Top Editorial Meta Strip */}
-        <div className="relative z-20 max-w-[1440px] w-full mx-auto flex flex-wrap items-center justify-between gap-4 border-b border-champagne/15 pb-4">
+        <div className="relative z-20 max-w-[1440px] w-full mx-auto flex flex-wrap items-center justify-between gap-4 border-b border-champagne/15 pb-3.5">
           <div className="flex items-center gap-3">
             <span className="inline-block size-2 rounded-full bg-champagne" aria-hidden="true" />
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.22em] uppercase text-champagne">
@@ -134,31 +134,34 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Center Layered Composition: Full Name Editorial Lockup + Parallax Portrait */}
-        <div className="relative z-10 max-w-[1440px] w-full mx-auto my-auto py-6 sm:py-10 lg:py-12 flex flex-col items-center justify-center">
+        {/* Center Layered Composition: Restrained Editorial Lockup + Separated Arch Portrait */}
+        <div className="relative z-10 max-w-[1440px] w-full mx-auto py-6 sm:py-8 lg:py-9 flex flex-col items-center justify-center">
           <motion.div
             style={{ y: wordmarkY, opacity: wordmarkOpacity }}
-            initial={disableMotion ? false : { opacity: 0, y: 28 }}
+            initial={disableMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: MOTION_DURATION, ease: EASE_LUXURY }}
-            className="relative z-20 w-full text-center select-none pointer-events-none mb-5 sm:mb-7 md:mb-8 lg:-mb-10 will-change-transform"
+            className="relative z-20 w-full text-center select-none mb-6 sm:mb-8 will-change-transform"
           >
             <h1
-              aria-label="Aflan Mu'afa Dzulfiqar"
-              className="font-serif font-light uppercase tracking-[0.14em] leading-[0.86] text-[clamp(3.35rem,15vw,5.4rem)] md:text-[clamp(5.8rem,15vw,8.8rem)] lg:text-[clamp(4.4rem,16.5vw,14.2rem)] text-ivory/95 drop-shadow-[0_12px_32px_rgba(23,22,21,0.85)]"
+              aria-label="AFLAN · Aflan Mu'afa Dzulfiqar"
+              className="font-serif font-light uppercase tracking-tight leading-[1.04] text-5xl md:text-6xl text-ivory/95"
             >
-              <span aria-hidden="true">AFLAN</span>
+              AFLAN
             </h1>
+            <p className="mt-2 font-mono text-[10px] sm:text-[11px] tracking-[0.26em] uppercase text-champagne/80">
+              {personalData.fullName} · {personalData.monogram}
+            </p>
           </motion.div>
 
-          <div className="relative w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 items-end gap-8 lg:gap-6 z-10">
+          <div className="relative w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 items-end gap-7 lg:gap-6 z-10">
             {/* Left Floating Identity Dossier */}
             <motion.aside
               style={{ y: dossierY }}
               initial={disableMotion ? false : { opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: MOTION_DURATION, delay: 0.22, ease: EASE_LUXURY }}
-              className="order-2 md:col-span-1 lg:order-1 lg:col-span-4 lg:pb-8 will-change-transform"
+              className="order-2 md:col-span-1 lg:order-1 lg:col-span-4 lg:pb-4 will-change-transform"
             >
               <div className="border border-champagne/20 bg-espresso/70 backdrop-blur-md p-5 sm:p-6 max-w-md md:max-w-none lg:max-w-md">
                 <div className="flex items-center justify-between gap-2 pb-3 mb-4 border-b border-champagne/15">
@@ -172,33 +175,66 @@ export const HomePage: React.FC = () => {
 
                 <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3.5 text-sm lg:text-xs">
                   <div>
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-taupe">
+                    <dt
+                      id="hero-dossier-fullname"
+                      className="font-mono text-[10px] uppercase tracking-[0.18em] text-taupe"
+                    >
                       Nama Lengkap
                     </dt>
-                    <dd className="text-ivory mt-0.5 font-medium">
+                    <dd
+                      aria-labelledby="hero-dossier-fullname"
+                      className="text-ivory mt-0.5 font-medium"
+                    >
                       {personalData.fullName}
                     </dd>
                   </div>
                   <div>
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-taupe">
+                    <dt
+                      id="hero-dossier-age"
+                      className="font-mono text-[10px] uppercase tracking-[0.18em] text-taupe"
+                    >
                       Usia Aktual
                     </dt>
-                    <dd className="text-champagne mt-0.5 font-medium">
-                      {ageInfo.age} Tahun
+                    <dd
+                      aria-labelledby="hero-dossier-age"
+                      className="text-champagne mt-0.5 font-medium"
+                    >
+                      {ageInfo.age}{' '}Tahun
                     </dd>
                   </div>
                   <div>
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-taupe">
+                    <dt
+                      id="hero-dossier-university"
+                      className="font-mono text-[10px] uppercase tracking-[0.18em] text-taupe"
+                    >
                       Universitas
                     </dt>
-                    <dd className="text-ivory/90 mt-0.5">{personalData.university}</dd>
+                    <dd
+                      aria-labelledby="hero-dossier-university"
+                      className="text-ivory/90 mt-0.5"
+                    >
+                      {personalData.university}
+                    </dd>
                   </div>
                   <div>
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-taupe">
+                    <dt
+                      id="hero-dossier-internship"
+                      className="font-mono text-[10px] uppercase tracking-[0.18em] text-taupe"
+                    >
                       Pengalaman Magang
                     </dt>
-                    <dd className="text-ivory/90 mt-0.5">
-                      {personalData.internship.company}
+                    <dd
+                      aria-labelledby="hero-dossier-internship"
+                      className="text-ivory/90 mt-0.5"
+                    >
+                      <span>{personalData.internship.company}</span>
+                      <span className="mt-1 inline-flex items-center gap-1.5 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne">
+                        <span
+                          aria-hidden="true"
+                          className="size-1.5 rounded-full bg-emerald-400"
+                        />
+                        Aktif · {personalData.internship.period}
+                      </span>
                     </dd>
                   </div>
                 </dl>
@@ -220,7 +256,7 @@ export const HomePage: React.FC = () => {
                 onPointerLeave={resetArchHover}
                 onPointerUp={resetArchHover}
                 whileTap={disableMotion ? undefined : { scale: 0.985 }}
-                className="group relative z-10 w-full max-w-[295px] sm:max-w-[335px] lg:max-w-[345px] xl:max-w-[385px] aspect-[3/4] rounded-t-full rounded-b-lg p-2 border border-champagne/25 bg-espresso/30 shadow-[0_36px_100px_rgba(0,0,0,0.78)] transition-colors duration-500 hover:border-champagne/50"
+                className="group relative z-10 w-full max-w-[265px] sm:max-w-[300px] lg:max-w-[310px] xl:max-w-[340px] aspect-[3/4] rounded-t-full rounded-b-lg p-2 border border-champagne/25 bg-espresso/30 shadow-[0_32px_90px_rgba(0,0,0,0.75)] transition-colors duration-500 hover:border-champagne/50"
               >
                 <div className="relative w-full h-full rounded-t-full rounded-b-md overflow-hidden bg-obsidian">
                   <motion.div
@@ -277,7 +313,7 @@ export const HomePage: React.FC = () => {
               initial={disableMotion ? false : { opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: MOTION_DURATION, delay: 0.28, ease: EASE_LUXURY }}
-              className="order-3 md:col-span-1 lg:col-span-4 lg:pb-8 flex flex-col lg:items-end lg:text-right gap-5 lg:gap-6 will-change-transform"
+              className="order-3 md:col-span-1 lg:col-span-4 lg:pb-4 flex flex-col lg:items-end lg:text-right gap-4 lg:gap-5 will-change-transform"
             >
               <p
                 aria-label="Membangun pengalaman web yang jernih dengan ketelitian kode dan kepekaan editorial."
@@ -295,14 +331,14 @@ export const HomePage: React.FC = () => {
               <div className="flex flex-wrap lg:justify-end gap-3 pt-1">
                 <Link
                   to="/projects"
-                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all duration-300"
+                  className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all duration-300"
                 >
                   Karya Terpilih
                   <ArrowUpRight className="size-4" aria-hidden="true" />
                 </Link>
                 <Link
                   to="/about"
-                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full border border-champagne/40 bg-obsidian/50 text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:border-champagne hover:bg-espresso active:scale-[0.97] active:bg-espresso transition-all duration-300"
+                  className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full border border-champagne/40 bg-obsidian/50 text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:border-champagne hover:bg-espresso active:scale-[0.97] active:bg-espresso transition-all duration-300"
                 >
                   Tentang Aflan
                   <ArrowRight className="size-4" aria-hidden="true" />
@@ -314,11 +350,11 @@ export const HomePage: React.FC = () => {
                   href={contactData.githubHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Profil GitHub Flannss"
+                  aria-label={`Profil GitHub ${contactData.githubHandle}`}
                   className="inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.18em] uppercase text-ivory/80 hover:text-champagne transition-colors"
                 >
                   <Github className="size-3.5" aria-hidden="true" />
-                  <span>GitHub · Flannss</span>
+                  <span>GitHub · {contactData.githubHandle}</span>
                   <ArrowUpRight className="size-3.5" aria-hidden="true" />
                 </a>
               </div>
@@ -356,7 +392,7 @@ export const HomePage: React.FC = () => {
       <section
         ref={philosophyRef}
         aria-labelledby="monogram-philosophy-heading"
-        className="relative bg-obsidian text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b border-champagne/10 overflow-hidden"
+        className="relative bg-obsidian text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12 border-b border-champagne/10 overflow-hidden"
       >
         <div
           aria-hidden="true"
@@ -369,7 +405,7 @@ export const HomePage: React.FC = () => {
             className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-12 lg:mb-16 border-b border-champagne/15"
           >
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
-              THE IDENTITY — MONOGRAM PHILOSOPHY
+              THE IDENTITY / MONOGRAM PHILOSOPHY
             </span>
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.22em] uppercase text-taupe">
               ANATOMI LAMBANG · AFLAN / AMDZ
@@ -506,9 +542,9 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* =====================================================================
-          BAND 03 — LIGHT IVORY EDITORIAL DOSSIER (BAB 01 — IDENTITAS)
+          BAND 03 — LIGHT IVORY EDITORIAL DOSSIER (BAB 01 / IDENTITAS)
       ====================================================================== */}
-      <section className="relative bg-ivory text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b border-espresso/10">
+      <section className="relative bg-ivory text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12 border-b border-espresso/10">
         <div className="max-w-[1440px] mx-auto space-y-8">
           {/* Compact Dossier Chapter Header */}
           <Reveal
@@ -516,8 +552,8 @@ export const HomePage: React.FC = () => {
             className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-espresso/15"
           >
             <div className="space-y-2">
-              <p className="font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-mocha font-medium">
-                BAB 01 · IDENTITAS
+              <p className="font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-bronze font-medium">
+                BAB 01 / IDENTITAS
               </p>
               <div className="flex items-center gap-3.5">
                 <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight text-espresso/90">
@@ -526,7 +562,7 @@ export const HomePage: React.FC = () => {
                 <MonogramMark size={30} className="text-mocha/85 shrink-0" />
               </div>
             </div>
-            <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-espresso/60">
+            <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
               {personalData.status} · {personalData.studyProgram}
             </p>
           </Reveal>
@@ -566,38 +602,70 @@ export const HomePage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
               <div className="bg-offwhite border border-espresso/15 p-5 sm:p-7 space-y-4">
-                <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.18em] font-medium text-mocha">
+                <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.18em] font-medium text-bronze">
                   RINGKASAN TERVERIFIKASI
                 </p>
                 <dl className="divide-y divide-espresso/10">
                   <div className="py-3 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
-                    <dt className="text-xs text-espresso/60">Tempat Lahir</dt>
-                    <dd className="text-sm font-medium text-espresso sm:text-right">
+                    <dt id="summary-birthplace" className="text-xs text-bronze">
+                      Tempat Lahir
+                    </dt>
+                    <dd
+                      aria-labelledby="summary-birthplace"
+                      className="text-sm font-medium text-espresso sm:text-right"
+                    >
                       {personalData.birthplace}
                     </dd>
                   </div>
                   <div className="py-3 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
-                    <dt className="text-xs text-espresso/60">Domisili</dt>
-                    <dd className="text-sm font-medium text-espresso sm:text-right">
+                    <dt id="summary-domicile" className="text-xs text-bronze">
+                      Domisili
+                    </dt>
+                    <dd
+                      aria-labelledby="summary-domicile"
+                      className="text-sm font-medium text-espresso sm:text-right"
+                    >
                       {personalData.currentLocation}
                     </dd>
                   </div>
                   <div className="py-3 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
-                    <dt className="text-xs text-espresso/60">Usia (Real-Time)</dt>
-                    <dd className="text-sm font-medium text-mocha sm:text-right">
-                      {ageInfo.age} Tahun · 2 Des 2005
+                    <dt id="summary-age" className="text-xs text-bronze">
+                      Usia (Real-Time)
+                    </dt>
+                    <dd
+                      aria-labelledby="summary-age"
+                      className="text-sm font-medium text-mocha sm:text-right"
+                    >
+                      {ageInfo.age}{' '}Tahun · 2 Des 2005
                     </dd>
                   </div>
                   <div className="py-3 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
-                    <dt className="text-xs text-espresso/60">Universitas</dt>
-                    <dd className="text-sm font-medium text-espresso sm:text-right">
+                    <dt id="summary-university" className="text-xs text-bronze">
+                      Universitas
+                    </dt>
+                    <dd
+                      aria-labelledby="summary-university"
+                      className="text-sm font-medium text-espresso sm:text-right"
+                    >
                       {personalData.university}
                     </dd>
                   </div>
                   <div className="py-3 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
-                    <dt className="text-xs text-espresso/60">Magang</dt>
-                    <dd className="text-sm font-medium text-espresso sm:text-right">
-                      PT Puskomedia Indonesia Kreatif (Sep 2026 – Jan 2027)
+                    <dt id="summary-internship" className="text-xs text-bronze">
+                      Magang Aktif
+                    </dt>
+                    <dd
+                      aria-labelledby="summary-internship"
+                      className="text-sm font-medium text-espresso sm:text-right space-y-1"
+                    >
+                      <span className="block">{personalData.internship.company}</span>
+                      <span className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.14em] uppercase text-bronze">
+                        <span
+                          aria-hidden="true"
+                          className="size-1.5 rounded-full bg-emerald-600"
+                        />
+                        {personalData.internship.period}
+                      </span>
                     </dd>
                   </div>
                 </dl>
@@ -610,12 +678,12 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 04 — DARK ESPRESSO SELECTED WORK & EVALUATION ARCHIVE
       ====================================================================== */}
-      <section className="relative bg-espresso text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
+      <section className="relative bg-espresso text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 sm:mb-16 lg:mb-20">
             <div className="space-y-4">
               <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
-                BAB 02 · KARYA TERPILIH &amp; SOFTWARE QA
+                BAB 02 / KARYA TERPILIH &amp; SOFTWARE QA
               </p>
               <TextReveal
                 as="h2"
@@ -652,12 +720,12 @@ export const HomePage: React.FC = () => {
       {/* =====================================================================
           BAND 05 — OFF-WHITE ASYMMETRIC EXPLORATION DOORS
       ====================================================================== */}
-      <section className="relative bg-offwhite text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12">
+      <section className="relative bg-offwhite text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 lg:mb-14">
             <div>
-              <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-mocha mb-3">
-                BAB 03 — EKSPLORASI LANJUTAN
+              <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-bronze mb-3">
+                BAB 03 / EKSPLORASI LANJUTAN
               </p>
               <TextReveal
                 as="h2"
@@ -669,7 +737,7 @@ export const HomePage: React.FC = () => {
                 ]}
               />
             </div>
-            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-espresso/60">
+            <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-bronze">
               SEMBILAN BAB TERHUBUNG
             </p>
           </div>
@@ -735,8 +803,9 @@ export const HomePage: React.FC = () => {
                       Linimasa &amp; <span className="italic">Pengalaman</span>
                     </h3>
                     <p className="mt-2.5 font-sans text-sm md:text-base text-espresso/80 leading-relaxed">
-                      Dari studi Teknologi Informasi di Universitas Amikom Purwokerto hingga
-                      magang Programmer Intern di PT Puskomedia Indonesia Kreatif.
+                      Dari PKL hardware di GT Computer Purwokerto dan studi S1 Teknologi
+                      Informasi Amikom Purwokerto hingga magang aktif di PT Puskomedia
+                      Indonesia Kreatif.
                     </p>
                   </div>
                 </Link>
@@ -783,7 +852,7 @@ export const HomePage: React.FC = () => {
                         Hierarki Stack
                       </h3>
                       <p className="mt-1.5 text-sm lg:text-xs text-charcoal/75">
-                        Web, Mobile, UI/UX &amp; Software QA terkurasi.
+                        Web, Mobile, UI/UX, Software QA &amp; AI Orchestration.
                       </p>
                     </div>
                   </Link>
