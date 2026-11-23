@@ -145,7 +145,7 @@ export const HomePage: React.FC = () => {
           >
             <h1
               aria-label="AFLAN · Aflan Mu'afa Dzulfiqar"
-              className="font-serif font-normal uppercase tracking-[0.14em] leading-[0.95] text-5xl sm:text-6xl md:text-7xl lg:text-[5.25rem] text-ivory drop-shadow-[0_8px_24px_rgba(23,22,21,0.65)]"
+              className="font-serif font-light uppercase tracking-[0.24em] sm:tracking-[0.28em] pl-[0.24em] sm:pl-[0.28em] leading-[0.95] text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] text-ivory drop-shadow-[0_8px_28px_rgba(23,22,21,0.7)]"
             >
               AFLAN
             </h1>
@@ -282,17 +282,17 @@ export const HomePage: React.FC = () => {
                   />
 
                   {/* Integrated Editorial Dossier Plate inside Arch Portrait Frame */}
-                  <div className="absolute inset-x-0 bottom-0 z-20 px-5 sm:px-6 pb-5 pt-12 flex flex-col items-center text-center">
+                  <div className="absolute inset-x-0 bottom-0 z-20 px-4 sm:px-5 pb-4 sm:pb-5 pt-10 sm:pt-12 flex flex-col items-center text-center">
                     <div className="w-full flex items-center justify-between text-[10px] font-mono tracking-[0.22em] uppercase text-champagne/75 pb-2.5 mb-2.5 border-b border-champagne/15">
                       <span>POTRET · I</span>
                       <span>AMDZ</span>
                     </div>
                     <p
                       aria-hidden="true"
-                      className="select-none flex flex-wrap items-baseline justify-center gap-x-2 sm:gap-x-2.5 font-serif italic font-light uppercase tracking-[0.09em] leading-none text-[clamp(1.2rem,4.5vw,1.8rem)] sm:text-[1.7rem] lg:text-[clamp(1.4rem,2vw,1.95rem)]"
+                      className="select-none flex items-baseline justify-center gap-x-2 whitespace-nowrap text-lg sm:text-xl md:text-2xl tracking-[0.06em] leading-none"
                     >
-                      <span className="text-champagne">MU&apos;AFA</span>{' '}
-                      <span className="editorial-outline-strong">DZULFIQAR</span>
+                      <span className="font-serif italic font-light text-ivory/85">MU&apos;AFA</span>{' '}
+                      <span className="font-serif italic font-semibold text-ivory">DZULFIQAR</span>
                     </p>
                   </div>
                 </div>
