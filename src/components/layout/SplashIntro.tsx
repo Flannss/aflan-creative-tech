@@ -188,21 +188,12 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           >
             PORTFOLIO
           </span>
-          <div
+          <span
             aria-hidden="true"
-            className="flex items-center justify-center gap-2.5 sm:gap-3.5 mt-2.5 sm:mt-3 text-2xl sm:text-3xl md:text-4xl font-serif italic font-light tracking-[0.12em] leading-none"
+            className="block font-serif italic font-medium uppercase tracking-[0.14em] text-engraved-champagne text-2xl sm:text-3xl md:text-4xl mt-2 md:mt-3 leading-none select-none"
           >
-            <span className="w-6 sm:w-8 h-px bg-champagne/30" />
-            <span className="inline-flex items-baseline gap-1.5 sm:gap-2">
-              <span className="text-[0.75em] tracking-[0.18em] text-champagne/70">
-                by
-              </span>
-              <span className="font-light italic text-ivory/95">
-                AMDZ
-              </span>
-            </span>
-            <span className="w-6 sm:w-8 h-px bg-champagne/30" />
-          </div>
+            BY AMDZ
+          </span>
         </motion.h1>
 
         <motion.span

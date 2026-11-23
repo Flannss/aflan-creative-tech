@@ -141,11 +141,11 @@ export const HomePage: React.FC = () => {
             initial={disableMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: MOTION_DURATION, ease: EASE_LUXURY }}
-            className="relative z-20 w-full text-center select-none mb-5 md:mb-6 will-change-transform"
+            className="relative z-20 w-full text-center select-none mb-5 md:mb-7 will-change-transform"
           >
             <h1
               aria-label="AFLAN · Aflan Mu'afa Dzulfiqar"
-              className="font-serif font-light uppercase tracking-[0.24em] sm:tracking-[0.28em] pl-[0.24em] sm:pl-[0.28em] leading-[0.95] text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] text-ivory drop-shadow-[0_8px_28px_rgba(23,22,21,0.7)]"
+              className="font-display font-['Bodoni_Moda',Georgia,serif] font-normal uppercase text-ivory leading-[0.88] text-center select-none text-[3.25rem] sm:text-7xl md:text-[5.25rem] lg:text-[6.25rem] xl:text-[7rem] tracking-[0.22em] pl-[0.22em] sm:tracking-[0.28em] sm:pl-[0.28em] lg:tracking-[0.36em] lg:pl-[0.36em] drop-shadow-[0_10px_30px_rgba(23,22,21,0.75)]"
             >
               AFLAN
             </h1>
@@ -282,17 +282,17 @@ export const HomePage: React.FC = () => {
                   />
 
                   {/* Integrated Editorial Dossier Plate inside Arch Portrait Frame */}
-                  <div className="absolute inset-x-0 bottom-0 z-20 px-4 sm:px-5 pb-4 sm:pb-5 pt-10 sm:pt-12 flex flex-col items-center text-center">
+                  <div className="absolute inset-x-0 bottom-0 z-20 px-4 sm:px-5 pb-4 sm:pb-5 pt-10 sm:pt-12 flex flex-col items-center text-center bg-linear-to-t from-obsidian/95 via-obsidian/75 to-transparent">
                     <div className="w-full flex items-center justify-between text-[10px] font-mono tracking-[0.22em] uppercase text-champagne/75 pb-2.5 mb-2.5 border-b border-champagne/15">
                       <span>POTRET · I</span>
                       <span>AMDZ</span>
                     </div>
                     <p
                       aria-hidden="true"
-                      className="select-none flex items-baseline justify-center gap-x-2 whitespace-nowrap text-lg sm:text-xl md:text-2xl tracking-[0.06em] leading-none"
+                      className="select-none flex items-baseline justify-center gap-x-2 whitespace-nowrap text-lg sm:text-xl md:text-[1.45rem] tracking-[0.06em] leading-none font-serif italic font-medium"
                     >
-                      <span className="font-serif italic font-light text-ivory/85">MU&apos;AFA</span>{' '}
-                      <span className="font-serif italic font-semibold text-ivory">DZULFIQAR</span>
+                      <span className="text-engraved-brown">MU&apos;AFA</span>{' '}
+                      <span className="text-engraved-ivory">DZULFIQAR</span>
                     </p>
                   </div>
                 </div>
