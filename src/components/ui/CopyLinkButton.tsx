@@ -72,7 +72,7 @@ export const CopyLinkButton: React.FC<CopyLinkButtonProps> = ({
         : 'border-champagne/30 bg-espresso/60 text-champagne hover:border-champagne hover:text-ivory'
       : copied
         ? 'border-espresso bg-espresso text-ivory font-medium'
-        : 'border-espresso/25 bg-offwhite text-espresso hover:border-[#8A6D4B] hover:text-[#8A6D4B]';
+        : 'border-espresso/25 bg-offwhite text-espresso hover:border-bronze hover:text-cognac';
 
   return (
     <motion.button

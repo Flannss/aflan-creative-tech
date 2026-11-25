@@ -29,9 +29,9 @@ export const TypographicDossierPlate: React.FC<TypographicDossierPlateProps> = (
     <div
       style={{
         background:
-          'linear-gradient(140deg, #2C2019 0%, #3A271D 48%, #1E1612 100%)',
+          'linear-gradient(140deg, #3A2A21 0%, #4A3428 48%, #261C17 100%)',
       }}
-      className={`relative flex flex-col justify-between text-ivory border border-champagne/25 overflow-hidden ${
+      className={`relative flex flex-col justify-between text-ivory border border-champagne/30 overflow-hidden ${
         compact ? 'p-5 sm:p-6' : 'p-7 sm:p-11'
       } ${className}`}
     >
@@ -40,16 +40,16 @@ export const TypographicDossierPlate: React.FC<TypographicDossierPlateProps> = (
         viewBox="0 0 420 260"
         preserveAspectRatio="xMidYMid slice"
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 w-full h-full opacity-25"
+        className="pointer-events-none absolute inset-0 w-full h-full opacity-30"
       >
-        <rect x="28" y="32" width="364" height="196" rx="4" fill="none" stroke="#DFC9A8" strokeWidth="0.8" />
-        <line x1="28" y1="58" x2="392" y2="58" stroke="#DFC9A8" strokeWidth="0.7" />
-        <circle cx="42" cy="45" r="2.2" fill="#B0875E" />
-        <circle cx="52" cy="45" r="2.2" fill="#B0875E" />
-        <rect x="44" y="74" width="116" height="138" fill="none" stroke="#B0875E" strokeWidth="0.75" strokeDasharray="3 4" />
-        <rect x="174" y="74" width="202" height="62" fill="none" stroke="#DFC9A8" strokeWidth="0.75" />
-        <rect x="174" y="150" width="94" height="62" fill="none" stroke="#B0875E" strokeWidth="0.75" />
-        <rect x="282" y="150" width="94" height="62" fill="none" stroke="#B0875E" strokeWidth="0.75" />
+        <rect x="28" y="32" width="364" height="196" rx="4" fill="none" stroke="#DFC8A6" strokeWidth="0.8" />
+        <line x1="28" y1="58" x2="392" y2="58" stroke="#DFC8A6" strokeWidth="0.7" />
+        <circle cx="42" cy="45" r="2.2" fill="#B98D61" />
+        <circle cx="52" cy="45" r="2.2" fill="#B98D61" />
+        <rect x="44" y="74" width="116" height="138" fill="none" stroke="#B98D61" strokeWidth="0.75" strokeDasharray="3 4" />
+        <rect x="174" y="74" width="202" height="62" fill="none" stroke="#DFC8A6" strokeWidth="0.75" />
+        <rect x="174" y="150" width="94" height="62" fill="none" stroke="#B98D61" strokeWidth="0.75" />
+        <rect x="282" y="150" width="94" height="62" fill="none" stroke="#B98D61" strokeWidth="0.75" />
       </svg>
 
       <div className="relative z-10 flex items-center justify-between gap-3 border-b border-champagne/20 pb-3">

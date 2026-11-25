@@ -46,15 +46,15 @@ export const EditorialAccordion: React.FC<EditorialAccordionProps> = ({
   const borderClass =
     surface === 'dark' ? 'border-champagne/20' : 'border-espresso/15';
   const eyebrowClass =
-    surface === 'dark' ? 'text-champagne/80' : 'text-[#8A6D4B]';
+    surface === 'dark' ? 'text-champagne/80' : 'text-cognac';
   const titleClass =
-    surface === 'dark' ? 'text-ivory group-hover:text-champagne' : 'text-espresso group-hover:text-[#8A6D4B]';
+    surface === 'dark' ? 'text-ivory group-hover:text-champagne' : 'text-espresso group-hover:text-cognac';
   const bodyClass =
     surface === 'dark' ? 'text-ivory/80' : 'text-espresso/80';
   const iconWrapClass =
     surface === 'dark'
       ? 'border-champagne/25 text-champagne group-hover:border-champagne'
-      : 'border-espresso/20 text-[#8A6D4B] group-hover:border-[#8A6D4B]';
+      : 'border-espresso/20 text-cognac group-hover:border-bronze';
 
   return (
     <div className={`divide-y border-y ${borderClass} ${className}`}>

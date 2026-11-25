@@ -255,10 +255,10 @@ export const CustomCursor: React.FC = () => {
       >
         {/* Architectural corner reticle brackets shown on interactive hover */}
         <span className="opacity-0 in-data-[mode=interactive]:opacity-100 transition-opacity duration-200">
-          <span className="absolute -top-px -left-px size-2 border-t-[1.5px] border-l-[1.5px] border-[#F4EFE6]" />
-          <span className="absolute -top-px -right-px size-2 border-t-[1.5px] border-r-[1.5px] border-[#F4EFE6]" />
-          <span className="absolute -bottom-px -left-px size-2 border-b-[1.5px] border-l-[1.5px] border-[#F4EFE6]" />
-          <span className="absolute -bottom-px -right-px size-2 border-b-[1.5px] border-r-[1.5px] border-[#F4EFE6]" />
+          <span className="absolute -top-px -left-px size-2 border-t-[1.5px] border-l-[1.5px] border-[#F6F1E9]" />
+          <span className="absolute -top-px -right-px size-2 border-t-[1.5px] border-r-[1.5px] border-[#F6F1E9]" />
+          <span className="absolute -bottom-px -left-px size-2 border-b-[1.5px] border-l-[1.5px] border-[#F6F1E9]" />
+          <span className="absolute -bottom-px -right-px size-2 border-b-[1.5px] border-r-[1.5px] border-[#F6F1E9]" />
         </span>
       </div>
 
@@ -268,7 +268,7 @@ export const CustomCursor: React.FC = () => {
         aria-hidden="true"
         data-visible="false"
         style={{ opacity: 0 }}
-        className="pointer-events-none fixed top-0 left-0 z-[9999] inline-flex items-center justify-center rounded-full bg-[#F4EFE6] text-[#171615] px-4 py-1.5 shadow-[0_14px_34px_rgba(0,0,0,0.45)] ring-1 ring-[#D8C3A5]/60 transition-opacity duration-150 will-change-transform"
+        className="pointer-events-none fixed top-0 left-0 z-[9999] inline-flex items-center justify-center rounded-full bg-[#F6F1E9] text-[#211814] px-4 py-1.5 shadow-[0_14px_34px_rgba(0,0,0,0.45)] ring-1 ring-[#DFC8A6]/65 transition-opacity duration-150 will-change-transform"
       >
         <span
           ref={labelRef}

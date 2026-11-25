@@ -364,7 +364,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               ease: EASE_LUXURY,
             }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-xl rounded-2xl border border-champagne/20 bg-[#1A1412] text-ivory shadow-[0_32px_90px_rgba(0,0,0,0.78)] overflow-hidden flex flex-col max-h-[78dvh]"
+            className="w-full max-w-xl rounded-2xl border border-champagne/28 bg-[#211814] text-ivory shadow-[0_32px_90px_rgba(0,0,0,0.78)] overflow-hidden flex flex-col max-h-[78dvh]"
           >
             {/* Search Input Header */}
             <div className="flex items-center gap-3 px-4 sm:px-5 py-3.5 border-b border-champagne/15 focus-within:border-champagne/40 transition-colors shrink-0">
@@ -428,7 +428,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               {groupedSections.length > 0 ? (
                 groupedSections.map((section) => (
                   <div key={section.group} className="pb-1">
-                    <p className="px-4 sm:px-5 pt-2.5 pb-1.5 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-[#8A6D4B]">
+                    <p className="px-4 sm:px-5 pt-2.5 pb-1.5 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne/80">
                       {section.group}
                     </p>
                     <div className="space-y-0.5">
@@ -464,7 +464,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                                 transition={
                                   prefersReducedMotion ? { duration: 0 } : SPRING_SILK
                                 }
-                                className="pointer-events-none absolute inset-0 bg-[#211A17] border-l-2 border-champagne"
+                                className="pointer-events-none absolute inset-0 bg-[#2A1E18] border-l-2 border-champagne"
                               />
                             )}
                             <div className="relative z-10 flex items-baseline gap-3 min-w-0 flex-1">

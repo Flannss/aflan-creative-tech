@@ -89,7 +89,7 @@ export const BackToTop: React.FC = () => {
               cy="24"
               r="21.5"
               fill="none"
-              stroke="#D8C3A5"
+              stroke="#DFC8A6"
               strokeWidth="1.5"
               strokeLinecap="round"
               style={{

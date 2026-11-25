@@ -685,7 +685,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                         {activeRouteContext.highlights.map((chip) => (
                           <span
                             key={chip}
-                            className="px-2.5 py-1 border border-champagne/25 bg-[#1A1412]/65 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne"
+                            className="px-2.5 py-1 border border-champagne/30 bg-obsidian/70 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne"
                           >
                             {chip}
                           </span>

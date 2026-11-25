@@ -89,7 +89,7 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
             {project.previewImage ? (
               <div
                 className="w-full h-full"
-                style={{ backgroundColor: project.previewBg ?? '#2B1D17' }}
+                style={{ backgroundColor: project.previewBg ?? '#33241C' }}
               >
                 <img
                   src={project.previewImage}

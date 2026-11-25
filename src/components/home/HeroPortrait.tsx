@@ -30,7 +30,7 @@ const TILT_SPRING = { stiffness: 145, damping: 24, mass: 0.65 };
  * Center-Stage Sculpted Atelier Double-Contour Portrait Frame:
  * - Sculpted dome outer hairline silhouette (`rounded-t-[170px] rounded-b-[22px]`) paired with
  *   a floating inner Caramel Bronze rim and micro registration pips.
- * - Progressive 4-side edge opacity fade dissolving smoothly into `#1B1512`, anchored by
+ * - Progressive 4-side edge opacity fade dissolving smoothly into `#211814`, anchored by
  *   the dual-tone engraved 1-line `MU'AFA DZULFIQAR` signature.
  * - Desktop (`canHoverFine`): 3D perspective tilt, counter-parallax, opposite signature drift,
  *   and specular studio rim-light; Tablet/Mobile: smooth scroll parallax + ambient diagonal sheen.
@@ -138,7 +138,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
         className="pointer-events-none absolute -inset-6 max-w-[430px] mx-auto"
         style={{
           background:
-            'radial-gradient(ellipse 68% 68% at 50% 48%, rgba(176,135,94,0.18) 0%, rgba(58,39,29,0.22) 48%, transparent 74%)',
+            'radial-gradient(ellipse 68% 68% at 50% 48%, rgba(185,141,97,0.22) 0%, rgba(110,79,58,0.22) 48%, transparent 74%)',
         }}
       />
 
@@ -159,12 +159,12 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         data-cursor-label="DOSSIER"
-        className="group relative z-10 w-full max-w-[270px] sm:max-w-[310px] lg:max-w-[345px] xl:max-w-[380px] aspect-[4/5] rounded-t-[170px] rounded-b-[22px] border border-champagne/30 hover:border-champagne/60 bg-[#1B1512]/80 p-3 sm:p-3.5 transition-colors duration-500 overflow-hidden will-change-transform shadow-[0_24px_64px_rgba(0,0,0,0.42)]"
+        className="group relative z-10 w-full max-w-[270px] sm:max-w-[310px] lg:max-w-[345px] xl:max-w-[380px] aspect-[4/5] rounded-t-[170px] rounded-b-[22px] border border-champagne/38 hover:border-champagne/68 bg-[#211814]/75 p-3 sm:p-3.5 transition-colors duration-500 overflow-hidden will-change-transform shadow-[0_24px_64px_rgba(0,0,0,0.42)]"
       >
         {/* Floating Inner Contour Rim + Apex & Corner Registration Pips */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-[7px] z-20 rounded-t-[162px] rounded-b-[16px] border border-brass/25 group-hover:border-champagne/45 transition-colors duration-500"
+          className="pointer-events-none absolute inset-[7px] z-20 rounded-t-[162px] rounded-b-[16px] border border-brass/32 group-hover:border-champagne/55 transition-colors duration-500"
         />
         <span
           aria-hidden="true"
@@ -252,10 +252,10 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
             </motion.div>
           </motion.div>
 
-          {/* Soft Bottom Studio Dissolve into #1B1512 Warm Espresso */}
+          {/* Soft Bottom Studio Dissolve into #211814 Warm Espresso */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-[#1B1512] via-[#1B1512]/60 to-transparent"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-[#211814] via-[#211814]/55 to-transparent"
           />
         </div>
 

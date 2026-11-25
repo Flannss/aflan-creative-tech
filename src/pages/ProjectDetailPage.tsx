@@ -67,7 +67,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
         <>
           <p>{project.contributionScope}</p>
           {project.verificationNotice && (
-            <p className="text-[#8A6D4B] font-medium">{project.verificationNotice}</p>
+            <p className="text-cognac font-medium">{project.verificationNotice}</p>
           )}
         </>
       ),
@@ -108,7 +108,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
           </p>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-[#8A6D4B] hover:text-espresso border-b border-[#8A6D4B] pb-0.5 transition-colors"
+            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-cognac hover:text-espresso border-b border-bronze pb-0.5 transition-colors"
           >
             <span>Buka Halaman Contact</span>
             <ArrowUpRight className="size-3.5" aria-hidden="true" />
@@ -252,7 +252,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                 >
                   <div
                     className="w-full h-full flex items-center justify-center"
-                    style={{ backgroundColor: project.previewBg ?? '#2B1D17' }}
+                    style={{ backgroundColor: project.previewBg ?? '#33241C' }}
                   >
                     <img
                       src={project.previewImage}

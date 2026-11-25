@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-obsidian: #1B1512;
-  --color-umber: #241A15;
-  --color-espresso: #2B1D17;
-  --color-chocolate: #3A271D;
-  --color-cognac: #5C3E2D;
-  --color-mocha: #6E4F3A;
-  --color-bronze: #856343;
-  --color-taupe: #B59C84;
-  --color-brass: #B0875E;
-  --color-champagne: #DFC9A8;
+  --color-obsidian: #211814;
+  --color-umber: #2A1E18;
+  --color-espresso: #33241C;
+  --color-chocolate: #432F24;
+  --color-cognac: #6E4F3A;
+  --color-mocha: #7B5A42;
+  --color-bronze: #8E6B4B;
+  --color-taupe: #C2AA91;
+  --color-brass: #B98D61;
+  --color-champagne: #DFC8A6;
   --color-linen: #EAE0D0;
-  --color-ivory: #F5F0E8;
-  --color-offwhite: #EDE5D7;
-  --color-charcoal: #2A201B;
+  --color-ivory: #F6F1E9;
+  --color-offwhite: #F3ECE1;
+  --color-charcoal: #352820;
 
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-display: "Bodoni Moda", Georgia, "Times New Roman", serif;
@@ -25,8 +25,8 @@
 
 @layer base {
   html {
-    background-color: #1B1512;
-    color: #F5F0E8;
+    background-color: #211814;
+    color: #F6F1E9;
     font-family: var(--font-sans);
     scroll-behavior: smooth;
     overflow-x: clip;
@@ -41,8 +41,8 @@
   body {
     margin: 0;
     min-height: 100vh;
-    background-color: #1B1512;
-    color: #F5F0E8;
+    background-color: #211814;
+    color: #F6F1E9;
     overflow-x: clip;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -50,13 +50,13 @@
   }
 
   :focus-visible {
-    outline: 2px solid #DFC9A8;
+    outline: 2px solid #DFC8A6;
     outline-offset: 3px;
   }
 
   ::selection {
-    background-color: #5C3E2D;
-    color: #F5F0E8;
+    background-color: #6E4F3A;
+    color: #F6F1E9;
   }
 }
 
@@ -112,49 +112,54 @@
   font-family: var(--font-masthead);
 }
 
-/* Calm 10-Step Lab Lighting Echoing Portrait Chiaroscuro */
+/* Luminous Warm Luxury 10-Step Lighting Echoing Portrait Chiaroscuro */
 .studio-vignette {
   background: radial-gradient(
-    64% 56% at 50% 42%,
-    rgba(176, 135, 94, 0.14) 0%,
-    rgba(58, 39, 29, 0.44) 44%,
-    rgba(27, 21, 18, 0.96) 100%
+    66% 58% at 50% 40%,
+    rgba(185, 141, 97, 0.20) 0%,
+    rgba(110, 79, 58, 0.34) 44%,
+    rgba(33, 24, 20, 0.92) 100%
   );
 }
 
 .studio-warm-halo {
   background: radial-gradient(
     circle at 50% 38%,
-    rgba(223, 201, 168, 0.14) 0%,
-    rgba(176, 135, 94, 0.11) 38%,
-    rgba(27, 21, 18, 0) 72%
+    rgba(223, 200, 166, 0.18) 0%,
+    rgba(185, 141, 97, 0.14) 38%,
+    rgba(33, 24, 20, 0) 72%
   );
 }
 
 .bg-warm-atelier {
   background: radial-gradient(
-    ellipse 85% 65% at 50% 18%,
-    rgba(58, 39, 29, 0.54) 0%,
-    rgba(43, 29, 23, 0.86) 52%,
-    #1B1512 100%
+    ellipse 88% 68% at 50% 16%,
+    rgba(142, 107, 75, 0.30) 0%,
+    rgba(110, 79, 58, 0.32) 30%,
+    rgba(42, 30, 24, 0.88) 64%,
+    #211814 100%
   );
 }
 
 .bg-warm-walnut-wash {
   background: radial-gradient(
-    ellipse 80% 60% at 50% 0%,
-    rgba(92, 62, 45, 0.26) 0%,
-    rgba(43, 29, 23, 0.96) 58%,
-    #241A15 100%
+    ellipse 82% 62% at 50% 0%,
+    rgba(142, 107, 75, 0.26) 0%,
+    rgba(51, 36, 28, 0.95) 56%,
+    #2A1E18 100%
   );
 }
 
+.bg-warm-almond {
+  background: linear-gradient(180deg, #F3ECE1 0%, #EAE0D0 100%);
+}
+
 .bg-warm-closing {
-  background: linear-gradient(155deg, #2B1D17 0%, #3A271D 48%, #201713 100%);
+  background: linear-gradient(155deg, #EAE0D0 0%, #F3ECE1 55%, #E7DCCA 100%);
 }
 
 .bg-warm-paper {
-  background: linear-gradient(180deg, #EFE7DA 0%, #E6DAC8 100%);
+  background: linear-gradient(180deg, #F6F1E9 0%, #EAE0D0 100%);
 }
 
 /* Seamless Marquee Track */
@@ -436,7 +441,7 @@
     background-image: none;
     -webkit-background-clip: initial;
     background-clip: initial;
-    color: #f5f0e8;
+    color: #F6F1E9;
   }
 }
 
@@ -457,16 +462,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #1B1512;
+  background: #211814;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3A271D;
+  background: #432F24;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #856343;
+  background: #B98D61;
 }
 
 /* Lenis Smooth Scroll Compatibility */

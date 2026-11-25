@@ -54,7 +54,7 @@ const BRAND_PILLARS: readonly BrandPillar[] = [
 
 /**
  * Interactive `AMDZ` Monogram Atelier & Philosophy Spread:
- * - Calm Warm Walnut surface (`#2B1D17 -> #241A15`) keeping visual continuity without jarring glare.
+ * - Warm Walnut gradient wash (`#33241C -> #2A1E18`) balancing contrast between light Almond Cream blocks.
  * - Soft rounded stage cards (`rounded-2xl`) and dynamic SVG construction geometry.
  */
 export const AmdzBrandPhilosophy: React.FC = () => {
@@ -99,7 +99,7 @@ export const AmdzBrandPhilosophy: React.FC = () => {
             onMouseEnter={() => setPlateHovered(true)}
             onMouseLeave={() => setPlateHovered(false)}
             aria-label="Ganti diagram filosofi monogram AMDZ"
-            className="group relative w-full text-left text-ivory rounded-2xl border border-champagne/25 hover:border-champagne/55 bg-linear-to-br from-[#2B1D17] via-[#3A271D] to-[#1B1512] p-6 sm:p-8 transition-colors duration-500 overflow-hidden cursor-pointer shadow-[0_24px_60px_rgba(0,0,0,0.28)] focus-visible:outline-2 focus-visible:outline-champagne"
+            className="group relative w-full text-left text-ivory rounded-2xl border border-champagne/30 hover:border-champagne/65 bg-linear-to-br from-[#33241C] via-[#432F24] to-[#211814] p-6 sm:p-8 transition-colors duration-500 overflow-hidden cursor-pointer shadow-[0_24px_60px_rgba(0,0,0,0.28)] focus-visible:outline-2 focus-visible:outline-champagne"
           >
             {enableSpotlight && (
               <motion.div
@@ -138,11 +138,11 @@ export const AmdzBrandPhilosophy: React.FC = () => {
                   className="transition-opacity duration-500"
                   style={{ opacity: activeId === 'A' ? 0.92 : 0.22 }}
                 >
-                  <line x1="140" y1="8" x2="140" y2="202" stroke="#DFC9A8" strokeWidth="1" strokeDasharray="3 4" />
-                  <line x1="16" y1="105" x2="264" y2="105" stroke="#DFC9A8" strokeWidth="1" strokeDasharray="3 4" />
-                  <rect x="64" y="34" width="152" height="142" rx="6" fill="none" stroke="#B0875E" strokeWidth="1" strokeOpacity="0.65" />
-                  <line x1="64" y1="70" x2="216" y2="70" stroke="#DFC9A8" strokeWidth="0.6" strokeOpacity="0.5" />
-                  <line x1="64" y1="140" x2="216" y2="140" stroke="#DFC9A8" strokeWidth="0.6" strokeOpacity="0.5" />
+                  <line x1="140" y1="8" x2="140" y2="202" stroke="#DFC8A6" strokeWidth="1" strokeDasharray="3 4" />
+                  <line x1="16" y1="105" x2="264" y2="105" stroke="#DFC8A6" strokeWidth="1" strokeDasharray="3 4" />
+                  <rect x="64" y="34" width="152" height="142" rx="6" fill="none" stroke="#B98D61" strokeWidth="1" strokeOpacity="0.68" />
+                  <line x1="64" y1="70" x2="216" y2="70" stroke="#DFC8A6" strokeWidth="0.6" strokeOpacity="0.5" />
+                  <line x1="64" y1="140" x2="216" y2="140" stroke="#DFC8A6" strokeWidth="0.6" strokeOpacity="0.5" />
                 </g>
 
                 {/* Mode M: Kinetic Orbital Curves */}
@@ -150,11 +150,11 @@ export const AmdzBrandPhilosophy: React.FC = () => {
                   className="transition-opacity duration-500"
                   style={{ opacity: activeId === 'M' ? 0.95 : 0.2 }}
                 >
-                  <circle cx="140" cy="105" r="76" fill="none" stroke="#DFC9A8" strokeWidth="1" strokeDasharray="4 6" />
-                  <circle cx="140" cy="105" r="54" fill="none" stroke="#B0875E" strokeWidth="1.2" />
-                  <path d="M 32 145 Q 140 22 248 68" fill="none" stroke="#DFC9A8" strokeWidth="0.9" strokeOpacity="0.7" />
-                  <circle cx="140" cy="29" r="3" fill="#DFC9A8" />
-                  <circle cx="194" cy="105" r="2.5" fill="#B0875E" />
+                  <circle cx="140" cy="105" r="76" fill="none" stroke="#DFC8A6" strokeWidth="1" strokeDasharray="4 6" />
+                  <circle cx="140" cy="105" r="54" fill="none" stroke="#B98D61" strokeWidth="1.2" />
+                  <path d="M 32 145 Q 140 22 248 68" fill="none" stroke="#DFC8A6" strokeWidth="0.9" strokeOpacity="0.7" />
+                  <circle cx="140" cy="29" r="3" fill="#DFC8A6" />
+                  <circle cx="194" cy="105" r="2.5" fill="#B98D61" />
                 </g>
 
                 {/* Mode DZ: Precision Calibration Corner Brackets */}
@@ -162,14 +162,14 @@ export const AmdzBrandPhilosophy: React.FC = () => {
                   className="transition-opacity duration-500"
                   style={{ opacity: activeId === 'DZ' ? 0.95 : 0.22 }}
                 >
-                  <path d="M 44 48 L 44 26 L 68 26" fill="none" stroke="#DFC9A8" strokeWidth="1.4" />
-                  <path d="M 236 48 L 236 26 L 212 26" fill="none" stroke="#DFC9A8" strokeWidth="1.4" />
-                  <path d="M 44 162 L 44 184 L 68 184" fill="none" stroke="#DFC9A8" strokeWidth="1.4" />
-                  <path d="M 236 162 L 236 184 L 212 184" fill="none" stroke="#DFC9A8" strokeWidth="1.4" />
-                  <circle cx="44" cy="26" r="2" fill="#B0875E" />
-                  <circle cx="236" cy="26" r="2" fill="#B0875E" />
-                  <circle cx="44" cy="184" r="2" fill="#B0875E" />
-                  <circle cx="236" cy="184" r="2" fill="#B0875E" />
+                  <path d="M 44 48 L 44 26 L 68 26" fill="none" stroke="#DFC8A6" strokeWidth="1.4" />
+                  <path d="M 236 48 L 236 26 L 212 26" fill="none" stroke="#DFC8A6" strokeWidth="1.4" />
+                  <path d="M 44 162 L 44 184 L 68 184" fill="none" stroke="#DFC8A6" strokeWidth="1.4" />
+                  <path d="M 236 162 L 236 184 L 212 184" fill="none" stroke="#DFC8A6" strokeWidth="1.4" />
+                  <circle cx="44" cy="26" r="2" fill="#B98D61" />
+                  <circle cx="236" cy="26" r="2" fill="#B98D61" />
+                  <circle cx="44" cy="184" r="2" fill="#B98D61" />
+                  <circle cx="236" cy="184" r="2" fill="#B98D61" />
                 </g>
               </svg>
 
@@ -233,8 +233,8 @@ export const AmdzBrandPhilosophy: React.FC = () => {
                   key={pillar.id}
                   className={`rounded-xl border transition-colors duration-300 ${
                     active
-                      ? 'bg-obsidian/60 border-champagne/30'
-                      : 'bg-obsidian/20 border-champagne/10 hover:bg-obsidian/40 hover:border-champagne/20'
+                      ? 'bg-espresso/75 border-champagne/40'
+                      : 'bg-umber/45 border-champagne/18 hover:bg-espresso/50 hover:border-champagne/30'
                   }`}
                 >
                   <button

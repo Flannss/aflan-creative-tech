@@ -64,13 +64,13 @@ const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
   };
 
   return (
-    <footer className="relative bg-obsidian text-ivory border-t border-champagne/15 overflow-hidden">
+    <footer className="relative bg-obsidian text-ivory border-t border-champagne/20 overflow-hidden">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[440px] rounded-full opacity-40"
+        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[440px] rounded-full opacity-45"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(169,132,94,0.28) 0%, rgba(46,34,28,0.24) 48%, rgba(26,20,18,0) 75%)',
+            'radial-gradient(ellipse at center, rgba(185,141,97,0.32) 0%, rgba(110,79,58,0.24) 48%, rgba(33,24,20,0) 75%)',
         }}
       />
 

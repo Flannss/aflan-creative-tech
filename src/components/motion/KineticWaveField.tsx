@@ -8,11 +8,11 @@ interface KineticWaveFieldProps {
 }
 
 const WAVE_STYLES = [
-  { amp: 20, freq: 1.55, speed: 0.42, stroke: 'rgba(223, 201, 168, 0.14)', width: 1.0 },
-  { amp: 26, freq: 1.9, speed: 0.55, stroke: 'rgba(176, 135, 94, 0.16)', width: 1.1 },
-  { amp: 16, freq: 2.2, speed: 0.36, stroke: 'rgba(110, 79, 58, 0.22)', width: 0.9 },
-  { amp: 24, freq: 1.45, speed: 0.48, stroke: 'rgba(223, 201, 168, 0.11)', width: 0.85 },
-  { amp: 18, freq: 2.05, speed: 0.62, stroke: 'rgba(176, 135, 94, 0.12)', width: 0.95 },
+  { amp: 20, freq: 1.55, speed: 0.42, stroke: 'rgba(223, 200, 166, 0.18)', width: 1.0 },
+  { amp: 26, freq: 1.9, speed: 0.55, stroke: 'rgba(185, 141, 97, 0.20)', width: 1.1 },
+  { amp: 16, freq: 2.2, speed: 0.36, stroke: 'rgba(142, 107, 75, 0.24)', width: 0.9 },
+  { amp: 24, freq: 1.45, speed: 0.48, stroke: 'rgba(223, 200, 166, 0.14)', width: 0.85 },
+  { amp: 18, freq: 2.05, speed: 0.62, stroke: 'rgba(185, 141, 97, 0.16)', width: 0.95 },
 ] as const;
 
 /**

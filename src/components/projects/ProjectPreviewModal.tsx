@@ -110,10 +110,10 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
               ease: EASE_LUXURY,
             }}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden rounded-2xl border border-champagne/20 bg-[#1A1412]/98 text-ivory shadow-[0_32px_100px_rgba(0,0,0,0.85)] will-change-[transform,opacity]"
+            className="relative w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden rounded-2xl border border-champagne/28 bg-[#211814]/98 text-ivory shadow-[0_32px_100px_rgba(0,0,0,0.85)] will-change-[transform,opacity]"
           >
             {/* Pinned Header Bar */}
-            <div className="shrink-0 flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-b border-champagne/15 bg-[#1A1412]/95">
+            <div className="shrink-0 flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-b border-champagne/20 bg-[#211814]/95">
               <div className="flex flex-wrap items-center gap-2.5 min-w-0">
                 <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne truncate">
                   DOSSIER {project.index} · {project.category}
@@ -143,7 +143,7 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
                 {project.previewImage ? (
                   <div
                     className="w-full h-full flex items-center justify-center"
-                    style={{ backgroundColor: project.previewBg ?? '#2B1D17' }}
+                    style={{ backgroundColor: project.previewBg ?? '#33241C' }}
                   >
                     <img
                       src={project.previewImage}
@@ -195,7 +195,7 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
               )}
 
               <div className="space-y-2.5 pt-1">
-                <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-[#8A6D4B]">
+                <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne">
                   VERIFIED OUTCOMES
                 </p>
                 <ul className="space-y-2">

@@ -49,11 +49,11 @@ const TONAL_FILTERS: Record<
 };
 
 const PALETTE_BARS = [
-  { name: 'Espresso', hex: '#1B1512' },
-  { name: 'Mocha', hex: '#241A15' },
-  { name: 'Walnut', hex: '#2B1D17' },
-  { name: 'Champagne', hex: '#DFC9A8' },
-  { name: 'Ivory', hex: '#F5F0E8' },
+  { name: 'Espresso', hex: '#211814' },
+  { name: 'Mocha', hex: '#2A1E18' },
+  { name: 'Walnut', hex: '#33241C' },
+  { name: 'Champagne', hex: '#DFC8A6' },
+  { name: 'Ivory', hex: '#F6F1E9' },
 ] as const;
 
 const OPTICAL_GRAIN_STYLE = {
@@ -177,7 +177,7 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
           <div className="my-auto py-3.5 space-y-3">
             <div className="flex flex-col gap-1.5">
               {PALETTE_BARS.map((bar) => {
-                const isLightSwatch = bar.hex === '#F5F0E8' || bar.hex === '#DFC9A8';
+                const isLightSwatch = bar.hex === '#F6F1E9' || bar.hex === '#DFC8A6';
                 return (
                   <div
                     key={bar.hex}
@@ -213,7 +213,7 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
           </div>
 
           <div className="flex items-center justify-between font-mono text-[9px] tracking-[0.18em] uppercase text-taupe border-t border-champagne/15 pt-2.5">
-            <span>#1B1512 → #F5F0E8</span>
+            <span>#211814 → #F6F1E9</span>
             <span>CHIAROSCURO</span>
           </div>
         </div>
@@ -754,7 +754,7 @@ export const GalleryPage: React.FC = () => {
                     ease: EASE_LUXURY,
                   }}
                   onClick={(e) => e.stopPropagation()}
-                  className="relative w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden rounded-2xl border border-champagne/20 bg-[#1A1412]/96 text-ivory shadow-[0_32px_100px_rgba(0,0,0,0.9)]"
+                  className="relative w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden rounded-2xl border border-champagne/28 bg-[#211814]/96 text-ivory shadow-[0_32px_100px_rgba(0,0,0,0.9)]"
                 >
                   {/* Top Toolbar */}
                   <div className="shrink-0 flex flex-wrap items-center justify-between gap-2.5 px-4 sm:px-6 py-3.5 border-b border-champagne/15">

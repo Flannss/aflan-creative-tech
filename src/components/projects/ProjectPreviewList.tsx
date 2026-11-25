@@ -225,7 +225,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                       {project.previewImage ? (
                         <div
                           className="relative w-full h-full overflow-hidden"
-                          style={{ backgroundColor: project.previewBg ?? '#2B1D17' }}
+                          style={{ backgroundColor: project.previewBg ?? '#33241C' }}
                         >
                           <img
                             src={project.previewImage}

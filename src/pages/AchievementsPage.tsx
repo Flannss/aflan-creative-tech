@@ -130,7 +130,7 @@ export const AchievementsPage: React.FC = () => {
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                     <span
                       className={`text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium ${
-                        isSelected ? 'text-champagne' : 'text-[#8A6D4B]'
+                        isSelected ? 'text-champagne' : 'text-cognac'
                       }`}
                     >
                       {entry.code} · {entry.category}
@@ -139,7 +139,7 @@ export const AchievementsPage: React.FC = () => {
                       className={`inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-[0.15em] whitespace-nowrap px-2.5 py-0.5 border ${
                         isSelected
                           ? 'border-champagne/40 text-champagne'
-                          : 'border-[#8A6D4B]/35 text-[#8A6D4B] bg-offwhite'
+                          : 'border-bronze/40 text-cognac bg-offwhite'
                       }`}
                     >
                       <CheckCircle2 className="size-3" aria-hidden="true" />

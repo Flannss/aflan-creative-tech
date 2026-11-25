@@ -46,7 +46,7 @@ export const BookmarkButton: React.FC<BookmarkButtonProps> = ({
         : 'border-champagne/30 bg-obsidian/80 text-champagne/85 hover:border-champagne hover:text-ivory hover:bg-espresso/85'
       : saved
         ? 'border-espresso bg-espresso text-champagne shadow-xs'
-        : 'border-espresso/25 bg-offwhite text-espresso hover:border-[#8A6D4B] hover:text-[#8A6D4B]';
+        : 'border-espresso/25 bg-offwhite text-espresso hover:border-bronze hover:text-cognac';
 
   if (variant === 'pill') {
     return (

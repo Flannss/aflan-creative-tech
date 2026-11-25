@@ -23,16 +23,16 @@ import { useToast } from '@/hooks/useToast';
 import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 
 const PALETTE_SWATCHES = [
-  { name: 'Warm Espresso', hex: '#1B1512' },
-  { name: 'Velvet Mocha', hex: '#241A15' },
-  { name: 'Warm Walnut', hex: '#2B1D17' },
-  { name: 'Warm Chestnut', hex: '#3A271D' },
-  { name: 'Warm Cognac', hex: '#5C3E2D' },
-  { name: 'Luxury Brown', hex: '#856343' },
-  { name: 'Caramel Bronze', hex: '#B0875E' },
-  { name: 'Champagne', hex: '#DFC9A8' },
+  { name: 'Warm Espresso', hex: '#211814' },
+  { name: 'Velvet Mocha', hex: '#2A1E18' },
+  { name: 'Warm Walnut', hex: '#33241C' },
+  { name: 'Warm Chestnut', hex: '#432F24' },
+  { name: 'Warm Cognac', hex: '#6E4F3A' },
+  { name: 'Luxury Brown', hex: '#8E6B4B' },
+  { name: 'Caramel Bronze', hex: '#B98D61' },
+  { name: 'Champagne', hex: '#DFC8A6' },
   { name: 'Almond Cream', hex: '#EAE0D0' },
-  { name: 'Warm Ivory', hex: '#F5F0E8' },
+  { name: 'Warm Ivory', hex: '#F6F1E9' },
 ] as const;
 
 const EASING_PRESETS = [
@@ -569,7 +569,7 @@ const ChiaroscuroCanvas: React.FC = () => {
       tone: string;
     }
 
-    const tones = ['#D8C3A5', '#A58B76', '#765641', '#F5F0E8'];
+    const tones = ['#DFC8A6', '#C2AA91', '#8E6B4B', '#F6F1E9'];
     let particles: Particle[] = [];
 
     const resize = () => {
@@ -596,7 +596,7 @@ const ChiaroscuroCanvas: React.FC = () => {
 
     const drawFrame = () => {
       rafId = 0;
-      ctx.fillStyle = '#1B1512';
+      ctx.fillStyle = '#211814';
       ctx.fillRect(0, 0, width, height);
 
       const lightX = pointerRef.current.active ? pointerRef.current.x : width * 0.52;
@@ -610,9 +610,9 @@ const ChiaroscuroCanvas: React.FC = () => {
         lightY,
         Math.max(width, height) * 0.62,
       );
-      grad.addColorStop(0, 'rgba(223, 201, 168, 0.22)');
-      grad.addColorStop(0.38, 'rgba(176, 135, 94, 0.16)');
-      grad.addColorStop(1, 'rgba(27, 21, 18, 0)');
+      grad.addColorStop(0, 'rgba(223, 200, 166, 0.24)');
+      grad.addColorStop(0.38, 'rgba(185, 141, 97, 0.18)');
+      grad.addColorStop(1, 'rgba(33, 24, 20, 0)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
 
@@ -1080,7 +1080,7 @@ const MotionEasingWorkbench: React.FC = () => {
                     <path
                       d={curve.svgPath}
                       fill="none"
-                      stroke={curve.isSignature ? '#D8C3A5' : 'rgba(165,139,118,0.8)'}
+                      stroke={curve.isSignature ? '#DFC8A6' : 'rgba(194,170,145,0.8)'}
                       strokeWidth={curve.isSignature ? '2.6' : '2'}
                       strokeLinecap="round"
                     />
@@ -1090,7 +1090,7 @@ const MotionEasingWorkbench: React.FC = () => {
                       y1="92"
                       x2={curve.handles[0].x}
                       y2={curve.handles[0].y}
-                      stroke="rgba(138,109,75,0.55)"
+                      stroke="rgba(142,107,75,0.65)"
                       strokeWidth="1"
                     />
                     <line
@@ -1098,22 +1098,22 @@ const MotionEasingWorkbench: React.FC = () => {
                       y1="8"
                       x2={curve.handles[1].x}
                       y2={curve.handles[1].y}
-                      stroke="rgba(138,109,75,0.55)"
+                      stroke="rgba(142,107,75,0.65)"
                       strokeWidth="1"
                     />
-                    <circle cx="8" cy="92" r="2.8" fill="#8A6D4B" />
-                    <circle cx="92" cy="8" r="2.8" fill="#D8C3A5" />
+                    <circle cx="8" cy="92" r="2.8" fill="#8E6B4B" />
+                    <circle cx="92" cy="8" r="2.8" fill="#DFC8A6" />
                     <circle
                       cx={curve.handles[0].x}
                       cy={curve.handles[0].y}
                       r="2.2"
-                      fill="#D8C3A5"
+                      fill="#DFC8A6"
                     />
                     <circle
                       cx={curve.handles[1].x}
                       cy={curve.handles[1].y}
                       r="2.2"
-                      fill="#D8C3A5"
+                      fill="#DFC8A6"
                     />
                   </svg>
                 </div>
@@ -1166,7 +1166,7 @@ const MotionEasingWorkbench: React.FC = () => {
                     <span
                       aria-hidden="true"
                       className={`size-2 rounded-xs ${
-                        curve.isSignature ? 'bg-champagne' : 'bg-[#8A6D4B]'
+                        curve.isSignature ? 'bg-champagne' : 'bg-[#8E6B4B]'
                       }`}
                     />
                   </motion.div>
@@ -1190,28 +1190,28 @@ const MotionEasingWorkbench: React.FC = () => {
 const CORE_DESIGN_TOKENS = [
   {
     name: 'Warm Espresso',
-    hex: '#1B1512',
+    hex: '#211814',
     role: 'Primary Canvas & Editorial Veil',
     lightText: true,
-    note: 'Dasar coklat mewah hangat dengan kedalaman tinggi dan tenang.',
+    note: 'Dasar coklat mewah hangat yang bercahaya lembut, tenang, dan nyaman dipandang.',
   },
   {
     name: 'Warm Walnut',
-    hex: '#2B1D17',
+    hex: '#33241C',
     role: 'Core Calm Walnut Surface',
     lightText: true,
     note: 'Permukaan kakao hangat untuk panggung karya dan blok editorial.',
   },
   {
     name: 'Caramel Bronze',
-    hex: '#B0875E',
+    hex: '#B98D61',
     role: 'Warm Metallic Accent & Borders',
     lightText: true,
     note: 'Sorotan hangat, garis kontur arsitektural, dan indikator aktif.',
   },
   {
     name: 'Warm Ivory',
-    hex: '#F5F0E8',
+    hex: '#F6F1E9',
     role: 'Editorial Contrast & Ink',
     lightText: false,
     note: 'Permukaan teks terang lembut yang menyatu dengan Almond Cream.',
@@ -1401,8 +1401,8 @@ export const CreativeLabPage: React.FC = () => {
     return () => window.removeEventListener('resize', measure);
   }, []);
 
-  const [bgHex, setBgHex] = useState<string>('#2B1D17');
-  const [fgHex, setFgHex] = useState<string>('#F5F0E8');
+  const [bgHex, setBgHex] = useState<string>('#33241C');
+  const [fgHex, setFgHex] = useState<string>('#F6F1E9');
 
   const contrastRatio = useMemo(() => getContrastRatio(bgHex, fgHex), [bgHex, fgHex]);
   const contrastGrade = useMemo(() => {

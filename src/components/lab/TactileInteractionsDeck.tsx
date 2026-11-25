@@ -42,14 +42,14 @@ const MINI_ACCORDION_ITEMS: EditorialAccordionItem[] = [
 ];
 
 const BURST_PARTICLES = [
-  { angle: -90, distance: 34, tone: '#D8C3A5', kind: 'line' },
-  { angle: -45, distance: 30, tone: '#F4EFE6', kind: 'dot' },
-  { angle: 0, distance: 34, tone: '#D8C3A5', kind: 'line' },
-  { angle: 45, distance: 30, tone: '#8A6D4B', kind: 'dot' },
-  { angle: 90, distance: 34, tone: '#D8C3A5', kind: 'line' },
-  { angle: 135, distance: 30, tone: '#F4EFE6', kind: 'dot' },
-  { angle: 180, distance: 34, tone: '#D8C3A5', kind: 'line' },
-  { angle: -135, distance: 30, tone: '#8A6D4B', kind: 'dot' },
+  { angle: -90, distance: 34, tone: '#DFC8A6', kind: 'line' },
+  { angle: -45, distance: 30, tone: '#F6F1E9', kind: 'dot' },
+  { angle: 0, distance: 34, tone: '#DFC8A6', kind: 'line' },
+  { angle: 45, distance: 30, tone: '#8E6B4B', kind: 'dot' },
+  { angle: 90, distance: 34, tone: '#DFC8A6', kind: 'line' },
+  { angle: 135, distance: 30, tone: '#F6F1E9', kind: 'dot' },
+  { angle: 180, distance: 34, tone: '#DFC8A6', kind: 'line' },
+  { angle: -135, distance: 30, tone: '#8E6B4B', kind: 'dot' },
 ] as const;
 
 const STEPPER_MIN = 0;

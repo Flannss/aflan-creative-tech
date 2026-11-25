@@ -143,7 +143,7 @@ export const galleryItems: GalleryItem[] = [
       medium: 'Sistem Desain & Warna',
       treatment: '5 Nada Inti · Cormorant Garamond',
       composition: 'Kolom Vertikal Proporsional',
-      palette: '#1A1412 · #2B1D17 · #765641 · #D8C3A5 · #F5F0E8',
+      palette: '#211814 · #33241C · #8E6B4B · #DFC8A6 · #F6F1E9',
     },
     caption:
       'Pemetaan lima nada inti identitas AFLAN berdampingan dengan spesimen huruf Cormorant Garamond untuk merayakan kontras gelap-hangat.',

@@ -273,10 +273,10 @@ export const ContactPage: React.FC = () => {
             variant="up"
             className="flex flex-wrap items-center justify-between gap-4"
           >
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-[#8A6D4B]">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-cognac">
               GET IN TOUCH
             </span>
-            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-[#8A6D4B]">
+            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-cognac">
               <Clock className="size-3.5" aria-hidden="true" />
               PURWOKERTO · {localTime} WIB
             </span>
@@ -292,7 +292,7 @@ export const ContactPage: React.FC = () => {
                 lines={[
                   <>Mari mulai</>,
                   <>
-                    <span className="italic text-[#8A6D4B]">Direct Correspondence</span>.
+                    <span className="italic text-bronze">Direct Correspondence</span>.
                   </>,
                 ]}
               />
@@ -555,7 +555,7 @@ export const ContactPage: React.FC = () => {
           <Reveal variant="up" delay={0.1} className="lg:col-span-7 min-w-0">
             <div className="w-full max-w-full min-w-0 overflow-hidden bg-ivory text-espresso border border-champagne/25 p-5 sm:p-10 lg:p-12 shadow-2xl">
               <div className="pb-6 mb-8 border-b border-espresso/15 space-y-2">
-                <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-[#8A6D4B]">
+                <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-cognac">
                   DIRECT INBOX DISPATCH
                 </p>
                 <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-espresso/95">
@@ -585,7 +585,7 @@ export const ContactPage: React.FC = () => {
                   <motion.div animate={nameShake} className="min-w-0 will-change-transform">
                     <label
                       htmlFor="contact-name"
-                      className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-[#8A6D4B] mb-2"
+                      className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-cognac mb-2"
                     >
                       NAMA LENGKAP *
                     </label>
@@ -605,7 +605,7 @@ export const ContactPage: React.FC = () => {
                       aria-invalid={Boolean(errors.name)}
                       aria-describedby={errors.name ? 'contact-name-error' : undefined}
                       placeholder="Nama lengkap Anda"
-                      className={`w-full px-4 py-3 bg-offwhite border text-espresso text-sm md:text-base placeholder:text-espresso/45 focus:border-[#8A6D4B] focus:ring-2 focus:ring-champagne/60 focus:outline-hidden transition-all ${
+                      className={`w-full px-4 py-3 bg-offwhite border text-espresso text-sm md:text-base placeholder:text-espresso/45 focus:border-bronze focus:ring-2 focus:ring-champagne/60 focus:outline-hidden transition-all ${
                         errors.name ? 'border-mocha' : 'border-espresso/20'
                       }`}
                     />
@@ -623,7 +623,7 @@ export const ContactPage: React.FC = () => {
                   <motion.div animate={emailShake} className="min-w-0 will-change-transform">
                     <label
                       htmlFor="contact-email"
-                      className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-[#8A6D4B] mb-2"
+                      className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-cognac mb-2"
                     >
                       ALAMAT EMAIL *
                     </label>
@@ -643,7 +643,7 @@ export const ContactPage: React.FC = () => {
                       aria-invalid={Boolean(errors.email)}
                       aria-describedby={errors.email ? 'contact-email-error' : undefined}
                       placeholder="nama@domain.com"
-                      className={`w-full px-4 py-3 bg-offwhite border text-espresso text-sm md:text-base placeholder:text-espresso/45 focus:border-[#8A6D4B] focus:ring-2 focus:ring-champagne/60 focus:outline-hidden transition-all ${
+                      className={`w-full px-4 py-3 bg-offwhite border text-espresso text-sm md:text-base placeholder:text-espresso/45 focus:border-bronze focus:ring-2 focus:ring-champagne/60 focus:outline-hidden transition-all ${
                         errors.email ? 'border-mocha' : 'border-espresso/20'
                       }`}
                     />
@@ -665,7 +665,7 @@ export const ContactPage: React.FC = () => {
                 >
                   <label
                     htmlFor="contact-subject"
-                    className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-[#8A6D4B]"
+                    className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-cognac"
                   >
                     SUBJEK / TOPIK *
                   </label>
@@ -686,7 +686,7 @@ export const ContactPage: React.FC = () => {
                           className={`shrink-0 px-3.5 py-2 rounded-full text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap border transition-colors cursor-pointer ${
                             active
                               ? 'bg-espresso text-ivory border-espresso font-medium'
-                              : 'bg-offwhite text-espresso/80 border-espresso/20 hover:border-[#8A6D4B]'
+                              : 'bg-offwhite text-espresso/80 border-espresso/20 hover:border-bronze'
                           }`}
                         >
                           {preset}
@@ -708,7 +708,7 @@ export const ContactPage: React.FC = () => {
                     aria-invalid={Boolean(errors.subject)}
                     aria-describedby={errors.subject ? 'contact-subject-error' : undefined}
                     placeholder="Tulis subjek atau pilih preset di atas"
-                    className={`w-full px-4 py-3 bg-offwhite border text-espresso text-sm md:text-base placeholder:text-espresso/45 focus:border-[#8A6D4B] focus:ring-2 focus:ring-champagne/60 focus:outline-hidden transition-all ${
+                    className={`w-full px-4 py-3 bg-offwhite border text-espresso text-sm md:text-base placeholder:text-espresso/45 focus:border-bronze focus:ring-2 focus:ring-champagne/60 focus:outline-hidden transition-all ${
                       errors.subject ? 'border-mocha' : 'border-espresso/20'
                     }`}
                   />
@@ -726,7 +726,7 @@ export const ContactPage: React.FC = () => {
                 <motion.div animate={messageShake} className="will-change-transform">
                   <label
                     htmlFor="contact-message"
-                    className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-[#8A6D4B] mb-2"
+                    className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-cognac mb-2"
                   >
                     PESAN *
                   </label>
@@ -749,7 +749,7 @@ export const ContactPage: React.FC = () => {
                       errors.message ? 'contact-message-error' : undefined
                     }
                     placeholder="Ceritakan kebutuhan proyek, ruang lingkup kolaborasi, atau pertanyaan Anda..."
-                    className={`w-full px-4 py-3 bg-offwhite border text-espresso text-sm md:text-base placeholder:text-espresso/45 focus:border-[#8A6D4B] focus:ring-2 focus:ring-champagne/60 focus:outline-hidden resize-y transition-all ${
+                    className={`w-full px-4 py-3 bg-offwhite border text-espresso text-sm md:text-base placeholder:text-espresso/45 focus:border-bronze focus:ring-2 focus:ring-champagne/60 focus:outline-hidden resize-y transition-all ${
                       errors.message ? 'border-mocha' : 'border-espresso/20'
                     }`}
                   />
@@ -775,8 +775,8 @@ export const ContactPage: React.FC = () => {
                       aria-busy={submitPhase === 'loading'}
                       className={`group inline-flex items-center justify-center text-center gap-2.5 w-full sm:w-auto max-w-full sm:min-w-[240px] min-h-[48px] px-5 sm:px-7 py-3.5 rounded-full text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium active:scale-[0.97] transition-all duration-300 cursor-pointer disabled:opacity-75 disabled:cursor-wait ${
                         submitPhase === 'success'
-                          ? 'bg-[#8A6D4B] text-ivory'
-                          : 'bg-espresso text-ivory hover:bg-[#8A6D4B]'
+                          ? 'bg-bronze text-ivory'
+                          : 'bg-espresso text-ivory hover:bg-bronze'
                       }`}
                     >
                       <AnimatePresence mode="wait" initial={false}>

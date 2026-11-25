@@ -213,16 +213,16 @@ export const JourneyPage: React.FC = () => {
           {/* Pinned Editorial Category Heading & Chapter Controls */}
           <aside className="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
             <div className="space-y-3 pb-6 border-b border-espresso/15">
-              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-[#8A6D4B]">
+              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-cognac">
                 TIMELINE · {String(filteredMilestones.length).padStart(2, '0')} ENTRIES
               </p>
               <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight leading-[1.08] text-espresso/90">
                 {selectedCategory === 'Semua' ? (
                   <>
-                    Kronologi <span className="italic text-[#8A6D4B]">Lengkap</span>
+                    Kronologi <span className="italic text-bronze">Lengkap</span>
                   </>
                 ) : (
-                  <span className="italic text-[#8A6D4B]">{selectedCategory}</span>
+                  <span className="italic text-bronze">{selectedCategory}</span>
                 )}
               </h2>
               {activeMilestone && (

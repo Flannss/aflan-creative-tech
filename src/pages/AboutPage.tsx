@@ -251,11 +251,11 @@ export const AboutPage: React.FC = () => {
                   {personalData.traits.map((trait, index) => (
                     <StaggerItem
                       key={trait}
-                      className="group relative overflow-hidden flex items-center justify-between p-4 sm:px-5 sm:py-4 bg-offwhite hover:bg-ivory border border-espresso/15 hover:border-[#8A6D4B]/55 transition-colors duration-300"
+                      className="group relative overflow-hidden flex items-center justify-between p-4 sm:px-5 sm:py-4 bg-offwhite hover:bg-ivory border border-espresso/15 hover:border-bronze/60 transition-colors duration-300"
                     >
                       <span
                         aria-hidden="true"
-                        className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-[#8A6D4B] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:hidden"
+                        className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-bronze origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:hidden"
                       />
                       <span className="font-serif text-lg sm:text-xl text-espresso group-hover:text-mocha transition-colors">
                         {trait}
