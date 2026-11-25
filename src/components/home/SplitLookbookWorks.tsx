@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
@@ -15,9 +15,11 @@ interface SplitLookbookWorksProps {
 
 /**
  * Signature Home Selected Works showcase:
- * - Desktop (>=1024px): Editorial Split Lookbook Stage — left typographic index rows
- *   control a sticky framed right showcase stage with silky crossfade & counter-scale.
- * - Tablet & Mobile (<1024px): crisp editorial cards showing visuals directly without hover dependency.
+ * - Desktop (>=1024px): Editorial Split Lookbook Stage with spotlight focus dimming
+ *   on left index rows and smooth aperture reveal + zoom settle (`scale: 1.05 -> 1`).
+ * - Tablet (768px–1023px): Featured Lead Card (`md:col-span-2`) + symmetric 2-col grid.
+ * - Mobile (<768px): Tactile Horizontal Lookbook Swipe Deck (`~84vw` card width with peek,
+ *   snap physics, live `01 / 04` counter, and Champagne scroll-progress hairline).
  */
 export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
   projects,
@@ -26,7 +28,10 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
   const [activeSlug, setActiveSlug] = useState<string>(
     () => projects[0]?.slug ?? '',
   );
+  const [isListHovered, setIsListHovered] = useState(false);
+  const [mobileActiveIdx, setMobileActiveIdx] = useState(0);
   const [previewProject, setPreviewProject] = useState<ProjectEntry | null>(null);
+  const mobileTrackRef = useRef<HTMLDivElement | null>(null);
 
   const activeProject =
     projects.find((p) => p.slug === activeSlug) ?? projects[0] ?? null;
@@ -42,16 +47,41 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
     setPreviewProject(project);
   };
 
+  const handleMobileScroll = () => {
+    const track = mobileTrackRef.current;
+    if (!track || projects.length === 0) return;
+    const firstCard = track.firstElementChild as HTMLElement | null;
+    const cardStride = (firstCard?.offsetWidth ?? track.clientWidth * 0.84) + 16;
+    const nextIdx = Math.max(
+      0,
+      Math.min(projects.length - 1, Math.round(track.scrollLeft / cardStride)),
+    );
+    if (nextIdx !== mobileActiveIdx) {
+      setMobileActiveIdx(nextIdx);
+    }
+  };
+
   if (!activeProject) return null;
+
+  const totalStr = String(projects.length).padStart(2, '0');
+  const activeMobileStr = String(mobileActiveIdx + 1).padStart(2, '0');
+  const mobileProgressRatio =
+    projects.length > 0 ? (mobileActiveIdx + 1) / projects.length : 1;
 
   return (
     <>
       {/* DESKTOP SPLIT LOOKBOOK STAGE (>= 1024px) */}
       <div className="hidden lg:grid lg:grid-cols-12 gap-12 xl:gap-16 items-start">
-        {/* Left: Minimalist Monumental Project Index */}
-        <div className="lg:col-span-6 divide-y divide-champagne/15 border-y border-champagne/15">
+        {/* Left: Minimalist Monumental Project Index with Spotlight Focus */}
+        <div
+          onMouseEnter={() => setIsListHovered(true)}
+          onMouseLeave={() => setIsListHovered(false)}
+          className="lg:col-span-6 divide-y divide-champagne/15 border-y border-champagne/15"
+        >
           {projects.map((project) => {
             const isActive = activeProject.slug === project.slug;
+            const dimInactive = isListHovered && !isActive;
+
             return (
               <Link
                 key={project.slug}
@@ -60,9 +90,9 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
                 onClick={(e) => handleOpen(e, project)}
                 onMouseEnter={() => setActiveSlug(project.slug)}
                 onFocus={() => setActiveSlug(project.slug)}
-                className={`relative group flex items-center justify-between gap-6 py-8 pl-5 pr-3 transition-colors duration-300 ${
-                  isActive ? 'bg-obsidian/35' : 'hover:bg-obsidian/20'
-                }`}
+                className={`relative group flex items-center justify-between gap-6 py-8 pl-5 pr-3 transition-[background-color,opacity] duration-300 ${
+                  isActive ? 'bg-obsidian/40' : 'hover:bg-obsidian/20'
+                } ${dimInactive ? 'opacity-45 hover:opacity-100' : 'opacity-100'}`}
               >
                 {isActive && (
                   <motion.span
@@ -82,7 +112,7 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
                       className={`transition-colors duration-300 ${
                         isActive
                           ? 'text-champagne font-medium'
-                          : 'text-champagne/60 group-hover:text-champagne'
+                          : 'text-champagne/65 group-hover:text-champagne'
                       }`}
                     >
                       {project.index}
@@ -132,19 +162,27 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
                   initial={
                     prefersReducedMotion
                       ? { opacity: 0 }
-                      : { opacity: 0, scale: 1.035 }
+                      : {
+                          opacity: 0,
+                          scale: 1.05,
+                          clipPath: 'inset(4% 0% 4% 0%)',
+                        }
                   }
-                  animate={{ opacity: 1, scale: 1 }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    clipPath: 'inset(0% 0% 0% 0%)',
+                  }}
                   exit={
                     prefersReducedMotion
                       ? { opacity: 0 }
                       : { opacity: 0, scale: 0.985 }
                   }
                   transition={{
-                    duration: prefersReducedMotion ? 0.14 : 0.44,
+                    duration: prefersReducedMotion ? 0.14 : 0.48,
                     ease: EASE_LUXURY,
                   }}
-                  className="w-full h-full will-change-[transform,opacity]"
+                  className="w-full h-full will-change-[transform,opacity,clip-path]"
                 >
                   {activeProject.previewImage ? (
                     <div
@@ -224,8 +262,132 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
         </div>
       </div>
 
-      {/* TABLET & MOBILE EDITORIAL LOOKBOOK CARDS (< 1024px) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:hidden">
+      {/* MOBILE TACTILE HORIZONTAL LOOKBOOK SWIPE DECK (< 768px) */}
+      <div className="md:hidden space-y-4">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-champagne tabular-nums shrink-0">
+              {activeMobileStr} / {totalStr}
+            </span>
+            <span className="relative h-px flex-1 bg-champagne/20 overflow-hidden">
+              <span
+                style={{ transform: `scaleX(${mobileProgressRatio})` }}
+                className="block h-full w-full bg-champagne origin-left transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              />
+            </span>
+          </div>
+          <span className="font-mono text-[9px] tracking-[0.24em] uppercase text-taupe shrink-0">
+            SWIPE DECK
+          </span>
+        </div>
+
+        <div
+          ref={mobileTrackRef}
+          onScroll={handleMobileScroll}
+          aria-label="Galeri geser proyek pilihan"
+          className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-4 px-4 pb-2 scroll-pl-4"
+        >
+          {projects.map((project, idx) => (
+            <motion.article
+              key={project.slug}
+              whileTap={prefersReducedMotion ? undefined : { scale: 0.985 }}
+              className="w-[84vw] max-w-[332px] shrink-0 snap-start flex flex-col bg-obsidian border border-champagne/25 overflow-hidden"
+            >
+              <Link
+                to={`/projects/${project.slug}`}
+                onClick={(e) => handleOpen(e, project)}
+                aria-label={`Buka studi kasus ${project.title}`}
+                className="block focus-visible:outline-2 focus-visible:outline-champagne"
+              >
+                <ApertureFrame className="aspect-[16/10] border-b border-champagne/15">
+                  {project.previewImage ? (
+                    <div
+                      className="w-full h-full"
+                      style={{ backgroundColor: project.previewBg ?? '#2B1D17' }}
+                    >
+                      <img
+                        src={project.previewImage}
+                        alt={project.previewCaption}
+                        loading="lazy"
+                        decoding="async"
+                        style={{
+                          objectPosition:
+                            project.previewObjectPosition ?? 'center',
+                        }}
+                        className={`w-full h-full ${
+                          project.previewImageFit === 'contain'
+                            ? 'object-contain p-5'
+                            : 'object-cover'
+                        }`}
+                      />
+                    </div>
+                  ) : (
+                    <TypographicDossierPlate
+                      project={project}
+                      compact
+                      className="w-full h-full border-0"
+                    />
+                  )}
+                </ApertureFrame>
+              </Link>
+
+              <div className="flex-1 p-5 flex flex-col justify-between gap-4">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-2 font-mono text-[10px] tracking-[0.18em] uppercase">
+                    <span className="inline-flex items-center gap-2 text-champagne">
+                      <span>
+                        {project.index} · {project.category}
+                      </span>
+                      {idx === 0 && (
+                        <span className="px-1.5 py-0.5 border border-champagne/35 bg-champagne/10 text-[9px] tracking-[0.16em]">
+                          FEATURED
+                        </span>
+                      )}
+                    </span>
+                    <span className="text-taupe">{project.yearLabel}</span>
+                  </div>
+
+                  <Link
+                    to={`/projects/${project.slug}`}
+                    onClick={(e) => handleOpen(e, project)}
+                    className="block"
+                  >
+                    <h3 className="font-serif text-2xl font-light text-ivory leading-snug">
+                      {project.title}
+                    </h3>
+                  </Link>
+
+                  <p className="font-sans text-xs text-ivory/75 line-clamp-2 leading-relaxed">
+                    {project.summary}
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-champagne/15 flex items-center justify-between gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setPreviewProject(project)}
+                    className="inline-flex items-center min-h-[44px] pr-2 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne active:text-ivory transition-colors cursor-pointer"
+                  >
+                    Quick Preview
+                  </button>
+
+                  <Link
+                    to={`/projects/${project.slug}`}
+                    onClick={(e) => handleOpen(e, project)}
+                    className="inline-flex items-center gap-1.5 min-h-[44px] px-4 py-2 rounded-full border border-champagne/35 bg-espresso/75 font-mono text-[10px] tracking-[0.16em] uppercase text-ivory active:bg-champagne active:text-obsidian transition-colors shrink-0"
+                  >
+                    <span>Case Study</span>
+                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                  </Link>
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+
+      {/* TABLET EDITORIAL LEAD + 2-COL LOOKBOOK GRID (768px–1023px) */}
+      <div className="hidden md:grid md:grid-cols-2 gap-6 lg:hidden">
         {projects.map((project, idx) => {
           const isLead = idx === 0;
           const isOrphanTail =
@@ -235,8 +397,9 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
           const spanFullOnTablet = isLead || isOrphanTail;
 
           return (
-            <article
+            <motion.article
               key={project.slug}
+              whileTap={prefersReducedMotion ? undefined : { scale: 0.985 }}
               className={`group flex flex-col bg-obsidian border border-champagne/20 hover:border-champagne/55 transition-colors overflow-hidden ${
                 spanFullOnTablet ? 'md:col-span-2' : ''
               }`}
@@ -268,7 +431,7 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
                         }}
                         className={`w-full h-full ${
                           project.previewImageFit === 'contain'
-                            ? 'object-contain p-5 sm:p-6'
+                            ? 'object-contain p-6'
                             : 'object-cover'
                         }`}
                       />
@@ -283,7 +446,7 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
                 </ApertureFrame>
               </Link>
 
-              <div className="flex-1 p-5 sm:p-6 flex flex-col justify-between gap-4">
+              <div className="flex-1 p-6 flex flex-col justify-between gap-4">
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-between gap-2 font-mono text-[10px] tracking-[0.18em] uppercase">
                     <span className="inline-flex items-center gap-2 text-champagne">
@@ -306,7 +469,7 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
                   >
                     <h3
                       className={`font-serif font-light text-ivory group-hover:text-champagne transition-colors ${
-                        isLead ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'
+                        isLead ? 'text-3xl' : 'text-2xl'
                       }`}
                     >
                       {project.title}
@@ -337,7 +500,7 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
                   </Link>
                 </div>
               </div>
-            </article>
+            </motion.article>
           );
         })}
       </div>

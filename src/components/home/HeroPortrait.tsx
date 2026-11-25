@@ -172,6 +172,22 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
           />
         )}
 
+        {/* Mobile & Tablet Subtle Diagonal Ambient Rim-Light Sheen */}
+        {!canHoverFine && !disableMotion && (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-20 overflow-hidden"
+          >
+            <div
+              className="aflan-portrait-sheen h-full w-1/2"
+              style={{
+                background:
+                  'linear-gradient(90deg, transparent 0%, rgba(244,239,230,0.11) 50%, transparent 100%)',
+              }}
+            />
+          </div>
+        )}
+
         {/* Progressive 4-Side Edge Opacity Fading Portrait (strictly 2D inner mask clip) */}
         <div
           className="relative w-full h-full rounded-[14px] overflow-hidden"

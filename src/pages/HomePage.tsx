@@ -18,6 +18,7 @@ import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 import { useCanHoverFine, useMediaQuery } from '@/hooks/useMediaQuery';
 import { HeroPortrait } from '@/components/home/HeroPortrait';
 import { KineticDisplayWord } from '@/components/home/KineticDisplayWord';
+import { KineticScrollBand } from '@/components/home/KineticScrollBand';
 import { ScrollRevealStatement } from '@/components/home/ScrollRevealStatement';
 import { SplitLookbookWorks } from '@/components/home/SplitLookbookWorks';
 import { KineticCursorField } from '@/components/motion/KineticCursorField';
@@ -278,23 +279,26 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                 system hingga implementasi frontend.
               </p>
 
-              {/* Interactive Persona Lens Switcher */}
+              {/* Interactive Persona Lens Switcher — Tactile Pills on Mobile / Hairline Tabs on sm+ */}
               <div
                 role="tablist"
                 aria-label="Fokus Persona Portofolio"
-                className="flex flex-wrap items-center gap-2 sm:gap-5 border-b border-champagne/20 pb-1"
+                className="flex flex-wrap items-center gap-2 sm:gap-5 sm:border-b sm:border-champagne/20 pb-1"
               >
                 {PERSONA_LENSES.map((lens) => {
                   const active = lens.id === activeLens.id;
                   return (
-                    <button
+                    <motion.button
                       key={lens.id}
                       type="button"
                       role="tab"
                       aria-selected={active}
+                      whileTap={disableMotion ? undefined : { scale: 0.97 }}
                       onClick={() => setPersonaMode(lens.id)}
-                      className={`relative min-h-[44px] px-1 py-2 font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase transition-colors cursor-pointer whitespace-nowrap focus-visible:outline-2 focus-visible:outline-champagne ${
-                        active ? 'text-champagne' : 'text-taupe hover:text-ivory'
+                      className={`relative min-h-[44px] px-3.5 sm:px-1 py-2 rounded-full sm:rounded-none border sm:border-0 font-mono text-[10px] sm:text-[11px] tracking-[0.16em] sm:tracking-[0.2em] uppercase transition-colors cursor-pointer whitespace-nowrap focus-visible:outline-2 focus-visible:outline-champagne ${
+                        active
+                          ? 'bg-champagne text-obsidian border-champagne font-medium sm:bg-transparent sm:text-champagne sm:font-normal'
+                          : 'bg-espresso/60 border-champagne/20 text-ivory/80 hover:border-champagne/50 sm:bg-transparent sm:text-taupe sm:hover:text-ivory'
                       }`}
                     >
                       <span>{lens.tabLabel}</span>
@@ -306,10 +310,10 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                             duration: disableMotion ? 0 : 0.34,
                             ease: EASE_LUXURY,
                           }}
-                          className="absolute inset-x-0 -bottom-[1px] h-[2px] bg-champagne"
+                          className="hidden sm:block absolute inset-x-0 -bottom-[1px] h-[2px] bg-champagne"
                         />
                       )}
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
@@ -445,12 +449,17 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
       </div>
 
       {/* =====================================================================
-          INTERACTIVE SCROLL-SCRUBBED EDITORIAL THESIS
+          SPREAD 02 — FULL-BLEED WARM IVORY CENTERPIECE SPREAD
       ====================================================================== */}
       <ScrollRevealStatement />
 
       {/* =====================================================================
-          SPREAD 02 — SIGNATURE SPLIT LOOKBOOK STAGE: SELECTED WORKS
+          SCROLL-LINKED DUAL-AXIS KINETIC TYPOGRAPHY BAND
+      ====================================================================== */}
+      <KineticScrollBand />
+
+      {/* =====================================================================
+          SPREAD 03 — DRAMATIC SPLIT LOOKBOOK STAGE & MOBILE SWIPE DECK
       ====================================================================== */}
       <section
         ref={worksSectionRef}
@@ -494,33 +503,33 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
       </section>
 
       {/* =====================================================================
-          SPREAD 03 — ASYMMETRIC EDITORIAL MONOGRAPH GRID
+          SPREAD 04 — MODULAR ARCHITECTURAL PROOF BENTO (3-DEVICE PARITY)
       ====================================================================== */}
       <section
         ref={monographSectionRef}
-        className="relative bg-ivory text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12 border-t border-espresso/10 overflow-x-clip"
+        className="relative bg-obsidian text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12 border-t border-champagne/15 overflow-x-clip"
       >
-        <div className="max-w-[1440px] mx-auto space-y-12">
+        <div className="max-w-[1440px] mx-auto space-y-10 sm:space-y-12">
           <Reveal
             variant="up"
-            className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-espresso/15"
+            className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-champagne/15"
           >
             <motion.div
               style={{ x: monographHeadingDrift }}
               className="space-y-3 will-change-transform"
             >
-              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] font-medium text-bronze">
-                CORE ARCHITECTURE
+              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] font-medium text-champagne">
+                ARCHITECTURAL PROOF &amp; RECORD
               </p>
-              <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-[1.08] text-espresso">
+              <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-[1.08] text-ivory">
                 Crafted with Discipline,{' '}
-                <span className="italic text-mocha">Verified in Production.</span>
+                <span className="italic text-champagne/90">Verified in Production.</span>
               </h2>
             </motion.div>
 
             <Link
               to="/about"
-              className="group inline-flex items-center gap-2 font-mono text-xs tracking-[0.18em] uppercase text-espresso border-b border-espresso pb-1 hover:text-mocha hover:border-mocha transition-colors self-start sm:self-auto"
+              className="group inline-flex items-center gap-2 min-h-[44px] font-mono text-xs tracking-[0.18em] uppercase text-champagne border-b border-champagne/50 pb-1 hover:text-ivory hover:border-ivory transition-colors self-start sm:self-auto"
             >
               <span>Personal Dossier</span>
               <ArrowRight
@@ -530,154 +539,171 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
             </Link>
           </Reveal>
 
-          {/* Architectural Proof & Credentials Bento: 2-Col Tablet / 7+5 + 5+7 Desktop */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 md:gap-6 lg:gap-7">
-            <Reveal variant="up" className="lg:col-span-7">
-              <Link
-                to="/skills"
-                className="group relative flex flex-col justify-between min-h-[280px] sm:min-h-[320px] p-6 sm:p-8 lg:p-10 bg-[#1A1412] hover:bg-[#211A17] text-ivory border border-champagne/15 hover:border-champagne/40 transition-colors duration-300 overflow-hidden"
+          {/* Asymmetric Bento: Wide + 2-Col Compact + Wide on Mobile / 2-Col Tablet / 7+5 + 5+7 Desktop */}
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-12 gap-3.5 sm:gap-5 lg:gap-7">
+            <Reveal variant="up" className="col-span-2 md:col-span-1 lg:col-span-7">
+              <motion.div
+                whileTap={disableMotion ? undefined : { scale: 0.985 }}
+                className="h-full"
               >
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                />
-                <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne">
-                  <span>01 · FRONTEND &amp; UI/UX ARCHITECTURE</span>
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </div>
-                <div className="pt-8 sm:pt-10 space-y-4">
-                  <h3 className="font-serif text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-light text-ivory group-hover:text-champagne transition-colors">
-                    Modular React Systems &amp; Creative Lab
-                  </h3>
-                  <p className="font-sans text-sm md:text-base text-ivory/75 max-w-xl leading-relaxed">
-                    Implementasi React.js, TypeScript, Tailwind CSS, dan Framer Motion yang
-                    mengutamakan keterbacaan tipografi, aksesibilitas 3 breakpoint, serta
-                    interaksi 60fps.
-                  </p>
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {['React 19 · TypeScript', 'Tailwind v4', 'Creative Lab 01–09'].map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2.5 py-1 border border-champagne/20 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne/85"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                <Link
+                  to="/projects/satu-ruang-creative"
+                  className="group relative flex flex-col justify-between h-full min-h-[250px] sm:min-h-[300px] p-6 sm:p-8 lg:p-10 bg-[#211A17] hover:bg-[#261E1A] text-ivory border border-champagne/20 hover:border-champagne/55 transition-colors duration-300 overflow-hidden"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                  />
+                  <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.2em] uppercase text-champagne">
+                    <span>01 · SATURUANGCREATIVE STUDIO</span>
+                    <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
                   </div>
-                </div>
-              </Link>
+                  <div className="pt-8 space-y-3.5">
+                    <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-light text-ivory group-hover:text-champagne transition-colors italic">
+                      &ldquo;Satu Ruang, Banyak Ide, Satu Cerita.&rdquo;
+                    </h3>
+                    <p className="font-sans text-sm md:text-base text-ivory/75 max-w-xl leading-relaxed">
+                      Co-Founder &amp; Web Developer — merancang arsitektur UI/UX dan platform
+                      RuangHijau Nusantara bersama tim kreatif mahasiswa.
+                    </p>
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {['Co-Founder & Web Dev', 'RuangHijau Nusantara'].map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-1 border border-champagne/25 bg-obsidian/55 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne/90"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             </Reveal>
 
-            <Reveal variant="up" delay={0.06} className="lg:col-span-5">
-              <Link
-                to="/projects/satu-ruang-creative"
-                className="group relative flex flex-col justify-between min-h-[280px] sm:min-h-[320px] p-6 sm:p-8 lg:p-10 bg-offwhite hover:bg-ivory text-espresso border border-espresso/15 hover:border-mocha transition-colors duration-300 overflow-hidden"
+            <Reveal variant="up" delay={0.05} className="col-span-1 md:col-span-1 lg:col-span-5">
+              <motion.div
+                whileTap={disableMotion ? undefined : { scale: 0.98 }}
+                className="h-full"
               >
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-mocha origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                />
-                <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-bronze">
-                  <span>02 · SATURUANGCREATIVE STUDIO</span>
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </div>
-                <div className="pt-8 sm:pt-10 space-y-4">
-                  <h3 className="font-serif text-2xl sm:text-3xl font-light text-espresso group-hover:text-mocha transition-colors italic">
-                    &ldquo;Satu Ruang, Banyak Ide, Satu Cerita.&rdquo;
-                  </h3>
-                  <p className="font-sans text-sm md:text-base text-espresso/80 leading-relaxed">
-                    Co-Founder &amp; Web Developer — merancang arsitektur UI/UX dan platform
-                    RuangHijau Nusantara bersama tim kreatif mahasiswa.
-                  </p>
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {['Co-Founder & Web Dev', 'RuangHijau Nusantara'].map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2.5 py-1 border border-espresso/20 font-mono text-[9px] tracking-[0.16em] uppercase text-bronze"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                <Link
+                  to="/journey"
+                  className="group relative flex flex-col justify-between h-full min-h-[210px] sm:min-h-[300px] p-4 sm:p-8 lg:p-10 bg-[#211A17] hover:bg-[#261E1A] text-ivory border border-champagne/20 hover:border-champagne/55 transition-colors duration-300 overflow-hidden"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                  />
+                  <div className="flex items-center justify-between gap-2 font-mono text-[9px] sm:text-[10px] tracking-[0.16em] sm:tracking-[0.2em] uppercase text-champagne">
+                    <span className="truncate">02 · PUSKOMEDIA QA</span>
+                    <ArrowUpRight className="size-3.5 sm:size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
                   </div>
-                </div>
-              </Link>
+                  <div className="pt-5 sm:pt-8 space-y-2.5 sm:space-y-3.5">
+                    <h3 className="font-serif text-lg sm:text-3xl font-light text-ivory group-hover:text-champagne transition-colors leading-snug">
+                      ASIS Builder (NDA) Evaluation
+                    </h3>
+                    <p className="font-sans text-xs sm:text-base text-ivory/75 leading-relaxed line-clamp-3 sm:line-clamp-none">
+                      Programmer Intern QA — functional testing &amp; requirement analysis pada sistem internal PT Puskomedia Indonesia Kreatif.
+                    </p>
+                    <div className="hidden sm:flex flex-wrap gap-2 pt-1">
+                      {['Functional QA', 'PT Puskomedia'].map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-1 border border-champagne/25 bg-obsidian/55 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne/90"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             </Reveal>
 
-            <Reveal variant="up" delay={0.1} className="lg:col-span-5">
-              <Link
-                to="/journey"
-                className="group relative flex flex-col justify-between min-h-[280px] p-6 sm:p-8 lg:p-10 bg-offwhite hover:bg-ivory text-espresso border border-espresso/15 hover:border-mocha transition-colors duration-300 overflow-hidden"
+            <Reveal variant="up" delay={0.09} className="col-span-1 md:col-span-1 lg:col-span-5">
+              <motion.div
+                whileTap={disableMotion ? undefined : { scale: 0.98 }}
+                className="h-full"
               >
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-mocha origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                />
-                <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-bronze">
-                  <span>03 · SOFTWARE QA &amp; CCNA DISCIPLINE</span>
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </div>
-                <div className="pt-8 sm:pt-10 space-y-4">
-                  <h3 className="font-serif text-2xl sm:text-3xl font-light text-espresso group-hover:text-mocha transition-colors">
-                    PT Puskomedia · ASIS Builder (NDA) &amp; GT Computer
-                  </h3>
-                  <p className="font-sans text-sm md:text-base text-espresso/80 leading-relaxed">
-                    Berawal dari PKL hardware SMK Wiworotomo di GT Computer hingga Programmer
-                    Intern QA &amp; Cisco CCNA (Jul 2026).
-                  </p>
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {['ASIS Functional QA', 'Cisco CCNA · Jul 2026'].map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2.5 py-1 border border-espresso/20 font-mono text-[9px] tracking-[0.16em] uppercase text-bronze"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                <Link
+                  to="/skills"
+                  className="group relative flex flex-col justify-between h-full min-h-[210px] sm:min-h-[285px] p-4 sm:p-8 lg:p-10 bg-[#211A17] hover:bg-[#261E1A] text-ivory border border-champagne/20 hover:border-champagne/55 transition-colors duration-300 overflow-hidden"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                  />
+                  <div className="flex items-center justify-between gap-2 font-mono text-[9px] sm:text-[10px] tracking-[0.16em] sm:tracking-[0.2em] uppercase text-champagne">
+                    <span className="truncate">03 · CCNA &amp; SYSTEMS</span>
+                    <ArrowUpRight className="size-3.5 sm:size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
                   </div>
-                </div>
-              </Link>
+                  <div className="pt-5 sm:pt-8 space-y-2.5 sm:space-y-3.5">
+                    <h3 className="font-serif text-lg sm:text-3xl font-light text-ivory group-hover:text-champagne transition-colors leading-snug">
+                      Cisco CCNA &amp; GT Computer
+                    </h3>
+                    <p className="font-sans text-xs sm:text-base text-ivory/75 leading-relaxed line-clamp-3 sm:line-clamp-none">
+                      Fondasi PKL hardware SMK Wiworotomo di GT Computer berpadu sertifikasi jaringan Cisco CCNA (Jul 2026).
+                    </p>
+                    <div className="hidden sm:flex flex-wrap gap-2 pt-1">
+                      {['Cisco CCNA · Jul 2026', 'GT Computer PKL'].map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-1 border border-champagne/25 bg-obsidian/55 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne/90"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             </Reveal>
 
-            <Reveal variant="up" delay={0.14} className="lg:col-span-7">
-              <Link
-                to="/achievements"
-                className="group relative flex flex-col justify-between min-h-[280px] p-6 sm:p-8 lg:p-10 bg-[#1A1412] hover:bg-[#211A17] text-ivory border border-champagne/15 hover:border-champagne/40 transition-colors duration-300 overflow-hidden"
+            <Reveal variant="up" delay={0.13} className="col-span-2 md:col-span-1 lg:col-span-7">
+              <motion.div
+                whileTap={disableMotion ? undefined : { scale: 0.985 }}
+                className="h-full"
               >
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                />
-                <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne">
-                  <span>04 · JPMBA PUBLICATION &amp; VISUAL ARCHIVE</span>
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </div>
-                <div className="pt-8 sm:pt-10 space-y-4">
-                  <h3 className="font-serif text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-light text-ivory group-hover:text-champagne transition-colors">
-                    JPMBA Garuda (Okt 2026) &amp; S1 TI24A Amikom
-                  </h3>
-                  <p className="font-sans text-sm md:text-base text-ivory/75 max-w-xl leading-relaxed">
-                    Publikasi Jurnal Pengabdian Masyarakat Bangsa terindeks Garuda,
-                    aplikasi kampus SOMASII, serta arsip visual monograf di Galeri.
-                  </p>
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {['JPMBA Garuda · Okt 2026', 'SOMASII · Flutter', 'Visual Monograph'].map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2.5 py-1 border border-champagne/20 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne/85"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                <Link
+                  to="/achievements"
+                  className="group relative flex flex-col justify-between h-full min-h-[220px] sm:min-h-[285px] p-6 sm:p-8 lg:p-10 bg-[#211A17] hover:bg-[#261E1A] text-ivory border border-champagne/20 hover:border-champagne/55 transition-colors duration-300 overflow-hidden"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                  />
+                  <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.2em] uppercase text-champagne">
+                    <span>04 · JPMBA PUBLICATION &amp; SOMASII</span>
+                    <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
                   </div>
-                </div>
-              </Link>
+                  <div className="pt-7 sm:pt-8 space-y-3.5">
+                    <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-light text-ivory group-hover:text-champagne transition-colors">
+                      JPMBA Garuda (Okt 2026) &amp; S1 TI24A Amikom
+                    </h3>
+                    <p className="font-sans text-sm md:text-base text-ivory/75 max-w-xl leading-relaxed">
+                      Publikasi Jurnal Pengabdian Masyarakat Bangsa terindeks Garuda,
+                      pengembangan aplikasi kampus SOMASII (Flutter &amp; Firebase), serta arsip visual monograf di Galeri.
+                    </p>
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {['JPMBA Garuda · Okt 2026', 'SOMASII · Flutter', 'Visual Archive'].map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-1 border border-champagne/25 bg-obsidian/55 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne/90"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             </Reveal>
           </div>
         </div>
       </section>
 
       {/* =====================================================================
-          SPREAD 04 — ARCHITECTURAL CLOSING SPREAD
+          SPREAD 05 — ARCHITECTURAL CLOSING SPREAD
       ====================================================================== */}
       <section className="relative bg-obsidian text-ivory py-20 md:py-28 px-4 sm:px-6 lg:px-12 border-t border-champagne/15">
         <div className="max-w-[1440px] mx-auto space-y-10">

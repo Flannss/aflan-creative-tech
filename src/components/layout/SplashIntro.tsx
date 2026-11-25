@@ -210,7 +210,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
 
         {/* Center Orbital Compass Hairline + Typography + Magnetic ENTER Seal */}
         <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto px-2">
-          {/* Architectural Compass Orbital Rings */}
+          {/* Dual Counter-Rotating Architectural Compass SVG */}
           <motion.div
             aria-hidden="true"
             initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.92 }}
@@ -224,74 +224,121 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                     transition: { duration: 0.38, ease: EASE_LUXURY },
                   }
             }
-            transition={{ duration: 0.7, ease: EASE_LUXURY }}
+            transition={{ duration: 0.65, ease: EASE_LUXURY }}
             style={
               canHoverFine && !prefersReducedMotion
                 ? { rotate: compassRotate }
                 : undefined
             }
-            className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[280px] sm:size-[390px] md:size-[460px] rounded-full border border-champagne/14 flex items-center justify-center will-change-transform"
+            className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[290px] sm:size-[400px] md:size-[460px] flex items-center justify-center will-change-transform"
           >
-            <div className="size-[82%] rounded-full border border-dashed border-champagne/10" />
-            <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-px h-2.5 bg-champagne/35" />
-            <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-px h-2.5 bg-champagne/35" />
-            <span className="absolute top-1/2 -left-1 -translate-y-1/2 h-px w-2.5 bg-champagne/35" />
-            <span className="absolute top-1/2 -right-1 -translate-y-1/2 h-px w-2.5 bg-champagne/35" />
+            <svg
+              viewBox="0 0 460 460"
+              className="w-full h-full overflow-visible"
+              aria-hidden="true"
+            >
+              <g className="aflan-ring-cw origin-center">
+                <circle
+                  cx="230"
+                  cy="230"
+                  r="224"
+                  stroke="rgba(216,195,165,0.16)"
+                  strokeWidth="1"
+                  fill="none"
+                />
+                <line x1="230" y1="0" x2="230" y2="12" stroke="rgba(216,195,165,0.38)" strokeWidth="1" />
+                <line x1="230" y1="448" x2="230" y2="460" stroke="rgba(216,195,165,0.38)" strokeWidth="1" />
+                <line x1="0" y1="230" x2="12" y2="230" stroke="rgba(216,195,165,0.38)" strokeWidth="1" />
+                <line x1="448" y1="230" x2="460" y2="230" stroke="rgba(216,195,165,0.38)" strokeWidth="1" />
+                <circle cx="230" cy="6" r="2" fill="rgba(216,195,165,0.45)" />
+                <circle cx="230" cy="454" r="2" fill="rgba(216,195,165,0.45)" />
+                <circle cx="6" cy="230" r="2" fill="rgba(216,195,165,0.45)" />
+                <circle cx="454" cy="230" r="2" fill="rgba(216,195,165,0.45)" />
+              </g>
+              <g className="aflan-ring-ccw origin-center">
+                <circle
+                  cx="230"
+                  cy="230"
+                  r="184"
+                  stroke="rgba(216,195,165,0.11)"
+                  strokeWidth="1"
+                  strokeDasharray="4 7"
+                  fill="none"
+                />
+                <circle cx="100" cy="100" r="1.5" fill="rgba(216,195,165,0.35)" />
+                <circle cx="360" cy="100" r="1.5" fill="rgba(216,195,165,0.35)" />
+                <circle cx="100" cy="360" r="1.5" fill="rgba(216,195,165,0.35)" />
+                <circle cx="360" cy="360" r="1.5" fill="rgba(216,195,165,0.35)" />
+              </g>
+            </svg>
           </motion.div>
 
           <motion.span
             aria-hidden="true"
             initial={prefersReducedMotion ? false : { scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.08, ease: EASE_LUXURY }}
+            transition={{ duration: 0.46, delay: 0.06, ease: EASE_LUXURY }}
             className="block w-10 h-px bg-champagne/45 mb-6 origin-center"
           />
 
-          <motion.h1
+          <h1
             aria-label="Portfolio by AMDZ"
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.52, delay: 0.12, ease: EASE_LUXURY }}
             className="relative z-10 flex flex-col items-center"
           >
-            <span
-              aria-hidden="true"
-              className="block font-serif font-light uppercase text-[2.75rem] sm:text-6xl md:text-7xl tracking-[0.08em] leading-none text-ivory"
-            >
-              PORTFOLIO
+            <span className="block overflow-hidden">
+              <motion.span
+                aria-hidden="true"
+                initial={prefersReducedMotion ? false : { y: '100%' }}
+                animate={{ y: '0%' }}
+                transition={{ duration: 0.56, delay: 0.1, ease: EASE_LUXURY }}
+                className="block font-serif font-light uppercase text-[2.75rem] sm:text-6xl md:text-7xl tracking-[0.08em] leading-none aflan-title-shimmer will-change-transform"
+              >
+                PORTFOLIO
+              </motion.span>
             </span>
-            <span
-              aria-hidden="true"
-              className="block font-serif italic font-medium uppercase tracking-[0.14em] text-engraved-champagne text-xl sm:text-3xl md:text-4xl mt-2.5 md:mt-3 leading-none select-none"
-            >
-              BY AMDZ
+            <span className="block overflow-hidden mt-2.5 md:mt-3">
+              <motion.span
+                aria-hidden="true"
+                initial={prefersReducedMotion ? false : { y: '100%' }}
+                animate={{ y: '0%' }}
+                transition={{ duration: 0.54, delay: 0.18, ease: EASE_LUXURY }}
+                className="block font-serif italic font-medium uppercase tracking-[0.14em] text-engraved-champagne text-xl sm:text-3xl md:text-4xl leading-none select-none will-change-transform"
+              >
+                BY AMDZ
+              </motion.span>
             </span>
-          </motion.h1>
+          </h1>
 
           <motion.div
             initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.48, delay: 0.22, ease: EASE_LUXURY }}
+            transition={{ duration: 0.46, delay: 0.24, ease: EASE_LUXURY }}
             className="relative z-10 mt-9 sm:mt-11"
           >
             <MagneticButton maxPull={8}>
-              <button
-                type="button"
-                onClick={triggerEnter}
-                autoFocus
-                data-cursor-label="ENTER"
-                className="group relative overflow-hidden inline-flex items-center justify-center gap-3 min-h-[48px] px-9 py-3.5 rounded-full border border-champagne/45 bg-[#211A17]/80 text-ivory font-mono text-xs uppercase tracking-[0.24em] hover:bg-champagne hover:border-champagne hover:text-obsidian active:scale-[0.96] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne"
-              >
+              <div className="relative inline-flex items-center justify-center">
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] bg-gradient-to-r from-transparent via-ivory/20 to-transparent motion-reduce:hidden"
+                  className="pointer-events-none absolute -inset-1.5 rounded-full border border-champagne/30 aflan-breath-halo"
                 />
-                <KineticLabel className="relative z-10">ENTER</KineticLabel>
-                <ArrowUpRight
-                  className="relative z-10 size-4 text-champagne transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-obsidian group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
-                  aria-hidden="true"
-                />
-              </button>
+                <button
+                  type="button"
+                  onClick={triggerEnter}
+                  autoFocus
+                  data-cursor-label="ENTER"
+                  className="group relative overflow-hidden inline-flex items-center justify-center gap-3 min-h-[48px] px-9 py-3.5 rounded-full border border-champagne/45 bg-[#211A17]/80 text-ivory font-mono text-xs uppercase tracking-[0.24em] hover:bg-champagne hover:border-champagne hover:text-obsidian active:scale-[0.96] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] bg-gradient-to-r from-transparent via-ivory/20 to-transparent motion-reduce:hidden"
+                  />
+                  <KineticLabel className="relative z-10">ENTER</KineticLabel>
+                  <ArrowUpRight
+                    className="relative z-10 size-4 text-champagne transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-obsidian group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+                    aria-hidden="true"
+                  />
+                </button>
+              </div>
             </MagneticButton>
           </motion.div>
         </div>
