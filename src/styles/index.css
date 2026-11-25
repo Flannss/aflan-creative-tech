@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-obsidian: #0F0C0A;
-  --color-umber: #1B1512;
-  --color-espresso: #241C17;
-  --color-chocolate: #2E231C;
-  --color-cognac: #8C5638;
-  --color-mocha: #8C5638;
+  --color-obsidian: #1A1412;
+  --color-umber: #241B17;
+  --color-espresso: #2E221C;
+  --color-chocolate: #3A2921;
+  --color-cognac: #6E4F3A;
+  --color-mocha: #6E4F3A;
   --color-bronze: #8A6D4B;
-  --color-taupe: #A58B76;
-  --color-brass: #C9A97C;
+  --color-taupe: #B39A82;
+  --color-brass: #A9845E;
   --color-champagne: #D8C3A5;
-  --color-linen: #EAE2D5;
-  --color-ivory: #F6F1E9;
-  --color-offwhite: #F6F1E9;
-  --color-charcoal: #26201C;
+  --color-linen: #EFE7DA;
+  --color-ivory: #F4EFE6;
+  --color-offwhite: #F4EFE6;
+  --color-charcoal: #2A201B;
 
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-display: "Bodoni Moda", Georgia, "Times New Roman", serif;
@@ -25,8 +25,8 @@
 
 @layer base {
   html {
-    background-color: #0F0C0A;
-    color: #F6F1E9;
+    background-color: #1A1412;
+    color: #F4EFE6;
     font-family: var(--font-sans);
     scroll-behavior: smooth;
     overflow-x: clip;
@@ -41,8 +41,8 @@
   body {
     margin: 0;
     min-height: 100vh;
-    background-color: #0F0C0A;
-    color: #F6F1E9;
+    background-color: #1A1412;
+    color: #F4EFE6;
     overflow-x: clip;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -50,13 +50,13 @@
   }
 
   :focus-visible {
-    outline: 2px solid #C9A97C;
+    outline: 2px solid #D8C3A5;
     outline-offset: 3px;
   }
 
   ::selection {
-    background-color: #8C5638;
-    color: #F6F1E9;
+    background-color: #6E4F3A;
+    color: #F4EFE6;
   }
 }
 
@@ -112,22 +112,22 @@
   font-family: var(--font-masthead);
 }
 
-/* Sartorial Studio Lighting Echoing Portrait Chiaroscuro */
+/* Warm Luxury Espresso Lighting Echoing Portrait Chiaroscuro */
 .studio-vignette {
   background: radial-gradient(
-    62% 54% at 50% 42%,
-    rgba(140, 86, 56, 0.20) 0%,
-    rgba(27, 21, 18, 0.62) 48%,
-    rgba(15, 12, 10, 0.98) 100%
+    64% 56% at 50% 42%,
+    rgba(169, 132, 94, 0.16) 0%,
+    rgba(46, 34, 28, 0.52) 48%,
+    rgba(26, 20, 18, 0.96) 100%
   );
 }
 
 .studio-warm-halo {
   background: radial-gradient(
     circle at 50% 38%,
-    rgba(201, 169, 124, 0.16) 0%,
-    rgba(140, 86, 56, 0.12) 38%,
-    rgba(15, 12, 10, 0) 72%
+    rgba(216, 195, 165, 0.16) 0%,
+    rgba(169, 132, 94, 0.12) 38%,
+    rgba(26, 20, 18, 0) 72%
   );
 }
 
@@ -256,23 +256,23 @@
 }
 
 .aflan-ring-cw {
-  animation: aflan-spin-cw 50s linear infinite;
+  animation: aflan-spin-cw 55s linear infinite;
 }
 
 .aflan-ring-ccw {
-  animation: aflan-spin-ccw 70s linear infinite;
+  animation: aflan-spin-ccw 80s linear infinite;
 }
 
 .aflan-title-shimmer {
   background-image: linear-gradient(
     108deg,
-    #f6f1e9 0%,
-    #f6f1e9 38%,
-    #c9a97c 48%,
-    #fffdf9 52%,
-    #c9a97c 56%,
-    #f6f1e9 66%,
-    #f6f1e9 100%
+    #f4efe6 0%,
+    #f4efe6 38%,
+    #d8c3a5 48%,
+    #fffdf8 52%,
+    #d8c3a5 56%,
+    #f4efe6 66%,
+    #f4efe6 100%
   );
   background-size: 260% 100%;
   -webkit-background-clip: text;
@@ -286,7 +286,7 @@
 }
 
 .aflan-stroke-champagne {
-  -webkit-text-stroke: 1px rgba(216, 195, 165, 0.52);
+  -webkit-text-stroke: 1px rgba(216, 195, 165, 0.56);
   color: transparent;
 }
 
@@ -294,25 +294,92 @@
   animation: aflan-sheen-glide 7.5s ease-in-out infinite;
 }
 
-@keyframes aflan-lapel-drift {
+@keyframes aflan-aurora-drift-a {
   0%,
   100% {
     transform: translate3d(-4%, -3%, 0) scale(1);
     opacity: 0.72;
   }
   50% {
-    transform: translate3d(4%, 3%, 0) scale(1.06);
-    opacity: 0.95;
+    transform: translate3d(5%, 3%, 0) scale(1.08);
+    opacity: 0.94;
   }
 }
 
-.aflan-lapel-glow {
-  animation: aflan-lapel-drift 11s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+@keyframes aflan-aurora-drift-b {
+  0%,
+  100% {
+    transform: translate3d(4%, 3%, 0) scale(1.05);
+    opacity: 0.65;
+  }
+  50% {
+    transform: translate3d(-5%, -2%, 0) scale(0.98);
+    opacity: 0.9;
+  }
+}
+
+@keyframes aflan-enter-periodic {
+  0%,
+  65% {
+    transform: translateX(-140%) skewX(-18deg);
+    opacity: 0;
+  }
+  80% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateX(240%) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+@keyframes aflan-marquee-rev {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+.aflan-aurora-a {
+  animation: aflan-aurora-drift-a 14s ease-in-out infinite;
+}
+
+.aflan-aurora-b {
+  animation: aflan-aurora-drift-b 18s ease-in-out infinite;
+}
+
+.aflan-enter-shimmer {
+  animation: aflan-enter-periodic 5.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.aflan-marquee-left {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: aflan-marquee 34s linear infinite;
+}
+
+.aflan-marquee-right {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: aflan-marquee-rev 42s linear infinite;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .aflan-marquee-group:hover .aflan-marquee-left,
+  .aflan-marquee-group:hover .aflan-marquee-right {
+    animation-play-state: paused;
+  }
 }
 
 /* Accessibility: Honor explicit OS reduced-motion preference only (keep motion active on mobile/tablet touchscreens) */
 @media (prefers-reduced-motion: reduce) {
-  .aflan-marquee-track {
+  .aflan-marquee-track,
+  .aflan-marquee-left,
+  .aflan-marquee-right {
     animation: none;
     transform: none;
     will-change: auto;
@@ -325,15 +392,20 @@
   .aflan-ring-ccw,
   .aflan-breath-halo,
   .aflan-portrait-sheen,
-  .aflan-lapel-glow {
+  .aflan-aurora-a,
+  .aflan-aurora-b,
+  .aflan-enter-shimmer {
     animation: none;
+  }
+  .aflan-enter-shimmer {
+    opacity: 0;
   }
   .aflan-title-shimmer {
     animation: none;
     background-image: none;
     -webkit-background-clip: initial;
     background-clip: initial;
-    color: #f6f1e9;
+    color: #f4efe6;
   }
 }
 
@@ -354,16 +426,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0F0C0A;
+  background: #1A1412;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2E231C;
+  background: #3A2921;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #8C5638;
+  background: #8A6D4B;
 }
 
 /* Lenis Smooth Scroll Compatibility */

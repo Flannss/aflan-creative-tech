@@ -68,7 +68,7 @@ const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
         className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[440px] rounded-full opacity-40"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(140,86,56,0.34) 0%, rgba(27,21,18,0.22) 48%, rgba(15,12,10,0) 75%)',
+            'radial-gradient(ellipse at center, rgba(169,132,94,0.28) 0%, rgba(46,34,28,0.24) 48%, rgba(26,20,18,0) 75%)',
         }}
       />
 

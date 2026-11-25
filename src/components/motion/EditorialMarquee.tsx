@@ -1,0 +1,132 @@
+import React, { useRef } from 'react';
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from 'framer-motion';
+
+const TOP_TRACK_ITEMS = [
+  'AFLAN DOSSIER',
+  'FRONTEND ARCHITECTURE',
+  'UI/UX ENGINEERING',
+  'CREATIVE TECHNOLOGY',
+  'SATURUANG CREATIVE',
+] as const;
+
+const BOTTOM_TRACK_ITEMS = [
+  'PRECISION SYSTEMS',
+  'SOFTWARE QA',
+  'EDITORIAL MOTION',
+  'CCNA DISCIPLINE',
+  'PURWOKERTO, ID',
+] as const;
+
+/**
+ * Variative Dual-Track Kinetic Running Text Band:
+ * - Opposing CSS GPU marquee tracks (`aflan-marquee-left` & `aflan-marquee-right`)
+ *   paired with subtle Lenis scroll-linked horizontal velocity drift.
+ * - Top track contrasts solid Warm Ivory and italic Champagne editorial serif (`✦` dividers).
+ * - Bottom track alternates architectural Champagne outline stroke and warm bronze mono-serif.
+ * - Contained inside `overflow-x-clip` so zero page-level horizontal scroll can occur.
+ */
+export const EditorialMarquee: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const scrollShiftTop = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [0, 0] : [18, -22],
+  );
+  const scrollShiftBottom = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [0, 0] : [-20, 18],
+  );
+
+  return (
+    <section
+      ref={sectionRef}
+      aria-label="Ringkasan disiplin inti"
+      className="aflan-marquee-group relative w-full bg-umber border-y border-champagne/18 py-5 sm:py-6 overflow-x-clip select-none"
+    >
+      <div className="space-y-3 overflow-hidden">
+        {/* Top Track: Leftward Large Serif Alternating Ivory & Italic Champagne */}
+        <motion.div
+          style={{ x: scrollShiftTop }}
+          className="aflan-marquee-wrapper overflow-hidden will-change-transform"
+        >
+          <div className="aflan-marquee-left">
+            {[false, true].map((hidden, dupIdx) => (
+              <div
+                key={`top-${dupIdx}`}
+                aria-hidden={hidden}
+                className="flex items-center shrink-0 gap-6 sm:gap-9 pr-6 sm:pr-9"
+              >
+                {TOP_TRACK_ITEMS.map((item, idx) => (
+                  <React.Fragment key={`${dupIdx}-${item}`}>
+                    <span
+                      className={`font-serif text-[1.45rem] sm:text-3xl lg:text-[2.15rem] tracking-[0.05em] uppercase whitespace-nowrap leading-none ${
+                        idx % 2 === 1
+                          ? 'italic font-light text-champagne'
+                          : 'font-light text-ivory/95'
+                      }`}
+                    >
+                      {item}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className="text-xs sm:text-sm text-brass/80 shrink-0"
+                    >
+                      ✦
+                    </span>
+                  </React.Fragment>
+                ))}
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Bottom Track: Rightward Architectural Outline & Monospace Mix */}
+        <motion.div
+          style={{ x: scrollShiftBottom }}
+          className="aflan-marquee-wrapper overflow-hidden will-change-transform"
+        >
+          <div className="aflan-marquee-right">
+            {[false, true].map((hidden, dupIdx) => (
+              <div
+                key={`bot-${dupIdx}`}
+                aria-hidden={hidden}
+                className="flex items-center shrink-0 gap-6 sm:gap-8 pr-6 sm:pr-8"
+              >
+                {BOTTOM_TRACK_ITEMS.map((item, idx) => (
+                  <React.Fragment key={`${dupIdx}-${item}`}>
+                    <span
+                      className={
+                        idx % 2 === 0
+                          ? 'font-serif italic font-light uppercase tracking-[0.08em] text-lg sm:text-2xl aflan-stroke-champagne whitespace-nowrap leading-none'
+                          : 'font-mono text-[11px] sm:text-xs tracking-[0.26em] uppercase text-champagne/80 whitespace-nowrap'
+                      }
+                    >
+                      {item}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className="size-1 rounded-full bg-bronze shrink-0"
+                    />
+                  </React.Fragment>
+                ))}
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};

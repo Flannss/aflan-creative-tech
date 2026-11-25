@@ -28,9 +28,9 @@ const TILT_SPRING = { stiffness: 145, damping: 24, mass: 0.65 };
 
 /**
  * Editorial Portrait Plate:
- * - Proportioned for balanced harmony across Mobile (`max-w-[235px]`), Tablet (`max-w-[290px]`),
- *   and Desktop (`max-w-[375px]`–`405px`).
- * - Single Aged Brass hairline border framing a 4-side edge-faded studio dissolve into `#0F0C0A`,
+ * - Proportioned for balanced harmony across Mobile (`max-w-[280px]`), Tablet (`max-w-[335px]`),
+ *   and Desktop (`max-w-[385px]`–`415px`).
+ * - Single Champagne/Bronze hairline border framing a 4-side edge-faded studio dissolve into `#1A1412`,
  *   anchored by 1-line dual-tone engraved `MU'AFA DZULFIQAR`.
  * - Desktop (`canHoverFine`): 3D tilt, counter-parallax photo, opposite signature shift, and specular rim-light.
  * - Tablet & Mobile: smooth scroll parallax drift and subtle diagonal ambient sheen.
@@ -130,7 +130,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
     <div
       ref={frameRef}
       style={enablePointerParallax ? { perspective: 1100 } : undefined}
-      className="relative w-full flex items-center justify-center md:justify-end"
+      className="relative w-full flex items-center justify-center lg:justify-end"
     >
       <motion.div
         style={{
@@ -149,15 +149,15 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         data-cursor-label="DOSSIER"
-        className="group relative z-10 w-full max-w-[235px] sm:max-w-[265px] md:max-w-[290px] lg:max-w-[375px] xl:max-w-[405px] aspect-[4/5] rounded-[22px] border border-brass/25 hover:border-brass/55 bg-[#0F0C0A]/75 p-2.5 sm:p-3.5 lg:p-4 transition-colors duration-500 overflow-hidden will-change-transform"
+        className="group relative z-10 w-full max-w-[280px] sm:max-w-[325px] md:max-w-[335px] lg:max-w-[385px] xl:max-w-[415px] aspect-[4/5] rounded-[22px] border border-champagne/25 hover:border-champagne/55 bg-[#1A1412]/75 p-3 sm:p-3.5 lg:p-4 transition-colors duration-500 overflow-hidden will-change-transform"
       >
-        {/* Warm Studio Cognac & Brass Ambient Backlight */}
+        {/* Warm Studio Caramel Bronze & Champagne Ambient Backlight */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 opacity-85 transition-opacity duration-700 group-hover:opacity-100"
           style={{
             background:
-              'radial-gradient(ellipse 68% 62% at 50% 42%, rgba(201,169,124,0.12) 0%, rgba(140,86,56,0.08) 48%, transparent 76%)',
+              'radial-gradient(ellipse 68% 62% at 50% 42%, rgba(216,195,165,0.13) 0%, rgba(169,132,94,0.08) 48%, transparent 76%)',
           }}
         />
 
@@ -224,10 +224,10 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
             </motion.div>
           </motion.div>
 
-          {/* Soft Bottom Studio Dissolve into #0F0C0A Obsidian Espresso */}
+          {/* Soft Bottom Studio Dissolve into #1A1412 Warm Espresso */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-[#0F0C0A] via-[#0F0C0A]/60 to-transparent"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-[#1A1412] via-[#1A1412]/58 to-transparent"
           />
         </div>
 

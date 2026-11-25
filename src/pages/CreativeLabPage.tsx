@@ -23,16 +23,16 @@ import { useToast } from '@/hooks/useToast';
 import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 
 const PALETTE_SWATCHES = [
-  { name: 'Obsidian Espresso', hex: '#0F0C0A' },
-  { name: 'Smoked Umber', hex: '#1B1512' },
-  { name: 'Warm Espresso', hex: '#241C17' },
-  { name: 'Dark Chocolate', hex: '#2E231C' },
-  { name: 'Burnished Cognac', hex: '#8C5638' },
+  { name: 'Warm Espresso', hex: '#1A1412' },
+  { name: 'Velvet Mocha', hex: '#241B17' },
+  { name: 'Warm Walnut', hex: '#2E221C' },
+  { name: 'Deep Cocoa', hex: '#3A2921' },
+  { name: 'Warm Chestnut', hex: '#6E4F3A' },
   { name: 'Luxury Brown', hex: '#8A6D4B' },
-  { name: 'Aged Brass', hex: '#C9A97C' },
+  { name: 'Caramel Bronze', hex: '#A9845E' },
   { name: 'Champagne', hex: '#D8C3A5' },
-  { name: 'Warm Linen', hex: '#EAE2D5' },
-  { name: 'Alabaster Ivory', hex: '#F6F1E9' },
+  { name: 'Soft Cream', hex: '#EFE7DA' },
+  { name: 'Warm Ivory', hex: '#F4EFE6' },
 ] as const;
 
 const EASING_PRESETS = [
@@ -596,7 +596,7 @@ const ChiaroscuroCanvas: React.FC = () => {
 
     const drawFrame = () => {
       rafId = 0;
-      ctx.fillStyle = '#0F0C0A';
+      ctx.fillStyle = '#1A1412';
       ctx.fillRect(0, 0, width, height);
 
       const lightX = pointerRef.current.active ? pointerRef.current.x : width * 0.52;
@@ -610,9 +610,9 @@ const ChiaroscuroCanvas: React.FC = () => {
         lightY,
         Math.max(width, height) * 0.62,
       );
-      grad.addColorStop(0, 'rgba(201, 169, 124, 0.22)');
-      grad.addColorStop(0.38, 'rgba(140, 86, 56, 0.16)');
-      grad.addColorStop(1, 'rgba(15, 12, 10, 0)');
+      grad.addColorStop(0, 'rgba(216, 195, 165, 0.22)');
+      grad.addColorStop(0.38, 'rgba(169, 132, 94, 0.16)');
+      grad.addColorStop(1, 'rgba(26, 20, 18, 0)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
 
@@ -1189,32 +1189,32 @@ const MotionEasingWorkbench: React.FC = () => {
 ============================================================================ */
 const CORE_DESIGN_TOKENS = [
   {
-    name: 'Obsidian Espresso',
-    hex: '#0F0C0A',
-    role: 'Primary Deep Canvas & Veil',
+    name: 'Warm Espresso',
+    hex: '#1A1412',
+    role: 'Primary Canvas & Editorial Veil',
     lightText: true,
-    note: 'Dasar ruang gelap editorial dengan kedalaman tinggi dan tenang.',
+    note: 'Dasar coklat mewah hangat dengan kedalaman tinggi dan tenang.',
   },
   {
-    name: 'Smoked Umber',
-    hex: '#1B1512',
-    role: 'Elevated Dark Surface',
+    name: 'Velvet Mocha',
+    hex: '#241B17',
+    role: 'Elevated Mocha Surface',
     lightText: true,
-    note: 'Permukaan bertingkat hangat untuk panggung visual dan panel konteks.',
+    note: 'Permukaan kakao lembut untuk kartu arsitektural dan panel konteks.',
   },
   {
-    name: 'Aged Brass',
-    hex: '#C9A97C',
-    role: 'Hairline Precision & Active Focus',
+    name: 'Champagne',
+    hex: '#D8C3A5',
+    role: 'Primary Gold-Warmth & Focus',
     lightText: false,
-    note: 'Penanda fokus interaktif, garis lipatan presisi, dan indikator progres.',
+    note: 'Penanda fokus interaktif, garis hairline presisi, dan sorotan aktif.',
   },
   {
-    name: 'Warm Linen',
-    hex: '#EAE2D5',
-    role: 'Editorial Contrast & Closing Ink',
+    name: 'Warm Ivory',
+    hex: '#F4EFE6',
+    role: 'Editorial Contrast & Ink',
     lightText: false,
-    note: 'Latar kontras kertas editorial dengan tinta utama #0F0C0A.',
+    note: 'Latar kontras hangat dan tinta utama yang nyaman dibaca.',
   },
 ] as const;
 

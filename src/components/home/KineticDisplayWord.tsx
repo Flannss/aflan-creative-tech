@@ -29,9 +29,9 @@ export const KineticDisplayWord: React.FC<KineticDisplayWordProps> = ({
   const enableInteractiveLetters = canHoverFine && !disableMotion;
 
   const letters = word.split('');
-  const alignText = align === 'left' ? 'text-center md:text-left' : 'text-center';
+  const alignText = align === 'left' ? 'text-center lg:text-left' : 'text-center';
   const alignFlex =
-    align === 'left' ? 'justify-center md:justify-start' : 'justify-center';
+    align === 'left' ? 'justify-center lg:justify-start' : 'justify-center';
 
   return (
     <h1

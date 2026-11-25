@@ -26,8 +26,8 @@ const ROUTE_CONTEXT_MAP: Record<string, RouteContextSpec> = {
   '/': {
     tag: 'EDITORIAL COVER',
     summary:
-      'Halaman pembuka 3-babak: masthead Cinzel, Editorial Portrait Plate, Selected Works berbasis Lenis, dan Quiet Closing Spread.',
-    highlights: ['Cinzel Masthead', 'Lenis Selected Works', 'Quiet Closing'],
+      'Halaman utama Warm Luxury Espresso: masthead Cinzel, Dual-Track Marquee, filosofi monogram AMDZ, dan Selected Works Lenis.',
+    highlights: ['Cinzel Masthead', 'AMDZ Philosophy', 'Dual-Track Marquee'],
     motif: 'compass',
   },
   '/about': {
