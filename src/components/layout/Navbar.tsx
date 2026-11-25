@@ -133,7 +133,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
           <nav
             aria-label="Navigasi utama"
-            className={`hidden xl:flex items-center gap-1 px-2.5 py-1.5 rounded-full backdrop-blur-md border ${
+            className={`hidden xl:flex items-center gap-0.5 2xl:gap-1 px-2 2xl:px-2.5 py-1.5 rounded-full backdrop-blur-md border ${
               isLightHeaderRoute
                 ? 'bg-offwhite/90 border-espresso/15'
                 : 'bg-espresso/55 border-champagne/15'
@@ -152,13 +152,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                   className={({ isActive }) => {
                     const active = isActive || isProjectDetail;
                     if (isLightHeaderRoute) {
-                      return `relative px-3.5 py-1.5 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-300 ${
+                      return `relative px-2.5 2xl:px-3.5 py-1.5 rounded-full font-mono text-[10px] 2xl:text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300 ${
                         active
                           ? 'text-ivory font-medium'
                           : 'text-espresso/80 hover:text-mocha'
                       }`;
                     }
-                    return `relative px-3.5 py-1.5 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase transition-colors duration-300 ${
+                    return `relative px-2.5 2xl:px-3.5 py-1.5 rounded-full font-mono text-[10px] 2xl:text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300 ${
                       active
                         ? 'text-obsidian font-medium'
                         : 'text-ivory/80 hover:text-champagne'
@@ -191,27 +191,51 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
           </nav>
 
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex xl:hidden items-center gap-2 mr-1">
+            <div className="hidden md:flex xl:hidden items-center gap-1.5 mr-1">
               {['/about', '/projects', '/lab', '/contact'].map((path) => {
                 const route = navigationRoutes.find((r) => r.path === path);
                 if (!route) return null;
+                const isProjectDetail =
+                  route.path === '/projects' &&
+                  location.pathname.startsWith('/projects/');
                 return (
                   <NavLink
                     key={route.path}
                     to={route.path}
-                    className={({ isActive }) =>
-                      `px-2.5 py-2 font-mono text-[11px] tracking-[0.18em] uppercase transition-colors ${
+                    className={({ isActive }) => {
+                      const active = isActive || isProjectDetail;
+                      return `relative px-2.5 py-2 font-mono text-[11px] tracking-[0.15em] uppercase whitespace-nowrap transition-colors ${
                         isLightHeaderRoute
-                          ? isActive
+                          ? active
                             ? 'text-mocha font-medium'
                             : 'text-espresso/75 hover:text-mocha'
-                          : isActive
+                          : active
                             ? 'text-champagne'
                             : 'text-ivory/75 hover:text-champagne'
-                      }`
-                    }
+                      }`;
+                    }}
                   >
-                    {route.shortLabel}
+                    {({ isActive }) => {
+                      const active = isActive || isProjectDetail;
+                      return (
+                        <>
+                          {route.shortLabel}
+                          {active && (
+                            <motion.span
+                              layoutId="aflan-tablet-nav-underline"
+                              aria-hidden="true"
+                              transition={{
+                                duration: prefersReducedMotion ? 0 : 0.42,
+                                ease: EASE_LUXURY,
+                              }}
+                              className={`absolute inset-x-2.5 bottom-1 h-[1.5px] ${
+                                isLightHeaderRoute ? 'bg-mocha' : 'bg-champagne'
+                              }`}
+                            />
+                          )}
+                        </>
+                      );
+                    }}
                   </NavLink>
                 );
               })}
@@ -286,7 +310,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                         onOpenCommandPalette();
                       }}
                       aria-label="Buka indeks cepat Command Palette"
-                      className="inline-flex items-center gap-1.5 min-h-[44px] lg:min-h-0 px-3 sm:px-3.5 py-2.5 lg:py-2 rounded-full border border-champagne/25 bg-espresso/70 text-champagne hover:border-champagne hover:bg-espresso transition-colors shrink-0 cursor-pointer font-mono text-[10px] sm:text-[11px] tracking-[0.15em] uppercase"
+                      className="inline-flex items-center gap-1.5 min-h-[44px] lg:min-h-0 px-3 sm:px-3.5 py-2.5 lg:py-2 rounded-full border border-champagne/20 bg-espresso/70 text-champagne hover:border-champagne hover:bg-espresso transition-colors shrink-0 cursor-pointer font-mono text-[10px] sm:text-[11px] tracking-[0.15em] uppercase"
                     >
                       <Search className="size-3.5" aria-hidden="true" />
                       <span className="sm:hidden">⌘K</span>

@@ -17,7 +17,8 @@ import {
   type GalleryItem,
 } from '@/data/gallery';
 import { MonogramMark } from '@/components/brand/Monogram';
-import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
+import { ApertureFrame } from '@/components/motion/ApertureFrame';
+import { HairlineRule, Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { EASE_LUXURY } from '@/utils/motion';
@@ -120,7 +121,7 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
             objectPosition: item.objectPosition ?? 'center',
             filter: combinedFilter,
           }}
-          className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05] ${
+          className={`w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] motion-reduce:transform-none ${
             item.imageScaleClass ?? ''
           }`}
         />
@@ -373,15 +374,16 @@ export const GalleryPage: React.FC = () => {
         <div className="max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
-            className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-espresso/10"
+            className="flex flex-wrap items-center justify-between gap-4"
           >
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
-              BAB 07 / GALERI PERSONAL · {String(filteredItems.length).padStart(2, '0')} PELAT
+              BAB 07 · GALERI · {String(filteredItems.length).padStart(2, '0')} PELAT
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
               POTRET PERSONAL &amp; STUDI TIPOGRAFI AFLAN
             </span>
           </Reveal>
+          <HairlineRule tone="espresso" immediate className="mt-6" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-7">
@@ -497,11 +499,13 @@ export const GalleryPage: React.FC = () => {
                           aria-label={`Buka ${item.title} pada lightbox layar penuh`}
                           className="block w-full h-full text-left focus-visible:outline-2 focus-visible:outline-champagne"
                         >
-                          <PlateVisual
-                            item={item}
-                            tonalMode={tonalMode}
-                            filmGrain={filmGrainEnabled}
-                          />
+                          <ApertureFrame className="w-full h-full">
+                            <PlateVisual
+                              item={item}
+                              tonalMode={tonalMode}
+                              filmGrain={filmGrainEnabled}
+                            />
+                          </ApertureFrame>
                         </button>
 
                         <div className="absolute top-3.5 left-3.5 right-3.5 z-30 flex items-center justify-between gap-2 pointer-events-none">
@@ -636,11 +640,13 @@ export const GalleryPage: React.FC = () => {
                           className="group relative block w-full text-left border border-champagne/20 bg-espresso/60 p-3 sm:p-5 shadow-[0_32px_90px_rgba(0,0,0,0.65)] active:scale-[0.99] transition-transform focus-visible:outline-2 focus-visible:outline-champagne"
                         >
                           <div className={`relative ${item.aspectClass} overflow-hidden`}>
-                            <PlateVisual
-                              item={item}
-                              tonalMode={tonalMode}
-                              filmGrain={filmGrainEnabled}
-                            />
+                            <ApertureFrame className="w-full h-full">
+                              <PlateVisual
+                                item={item}
+                                tonalMode={tonalMode}
+                                filmGrain={filmGrainEnabled}
+                              />
+                            </ApertureFrame>
                             <span className="absolute top-4 right-4 size-10 rounded-full bg-obsidian/80 border border-champagne/35 flex items-center justify-center text-champagne group-hover:bg-champagne group-hover:text-obsidian transition-colors">
                               <Maximize2 className="size-4" aria-hidden="true" />
                             </span>

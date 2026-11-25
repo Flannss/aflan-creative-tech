@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { contactData } from '@/data/contact';
 import { personalData } from '@/data/personal';
-import { Reveal } from '@/components/motion/Reveal';
+import { HairlineRule, Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { useToast } from '@/hooks/useToast';
 import { EASE_LUXURY } from '@/utils/motion';
@@ -271,16 +271,17 @@ export const ContactPage: React.FC = () => {
         <div className="max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
-            className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-espresso/15"
+            className="flex flex-wrap items-center justify-between gap-4"
           >
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-[#8A6D4B]">
-              BAB 09 / KONTAK &amp; KORESPONDENSI
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-[#8A6D4B]">
+              BAB 09 · KONTAK
             </span>
             <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-[#8A6D4B]">
               <Clock className="size-3.5" aria-hidden="true" />
               PURWOKERTO · {localTime} WIB
             </span>
           </Reveal>
+          <HairlineRule tone="espresso" immediate className="mt-6" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-7">

@@ -138,3 +138,50 @@ export const StaggerItem: React.FC<StaggerItemProps> = ({
     </motion.div>
   );
 };
+
+interface HairlineRuleProps {
+  className?: string;
+  tone?: 'champagne' | 'espresso';
+  origin?: 'left' | 'center';
+  delay?: number;
+  immediate?: boolean;
+}
+
+/**
+ * Architectural 1px hairline divider that draws itself smoothly along scaleX (0 -> 1).
+ */
+export const HairlineRule: React.FC<HairlineRuleProps> = ({
+  className = '',
+  tone = 'champagne',
+  origin = 'left',
+  delay = 0,
+  immediate = false,
+}) => {
+  const prefersReducedMotion = useReducedMotion();
+  const colorClass = tone === 'espresso' ? 'bg-espresso/15' : 'bg-champagne/20';
+  const originClass = origin === 'center' ? 'origin-center' : 'origin-left';
+
+  if (prefersReducedMotion) {
+    return (
+      <div
+        aria-hidden="true"
+        className={`h-px w-full ${colorClass} ${className}`}
+      />
+    );
+  }
+
+  return (
+    <motion.div
+      aria-hidden="true"
+      initial={{ scaleX: 0 }}
+      {...(immediate
+        ? { animate: { scaleX: 1 } }
+        : {
+            whileInView: { scaleX: 1 },
+            viewport: { once: true, amount: 'some' },
+          })}
+      transition={{ duration: 0.72, delay, ease: EASE_LUXURY }}
+      className={`h-px w-full will-change-transform ${originClass} ${colorClass} ${className}`}
+    />
+  );
+};

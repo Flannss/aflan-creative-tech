@@ -15,7 +15,8 @@ import { calculateExactAge } from '@/utils/age';
 import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { EditorialMarquee } from '@/components/ui/EditorialMarquee';
-import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
+import { KineticLabel } from '@/components/motion/KineticLabel';
+import { HairlineRule, Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { ProjectPreviewList } from '@/components/projects/ProjectPreviewList';
 import { MonogramMark } from '@/components/brand/Monogram';
@@ -668,10 +669,11 @@ export const HomePage: React.FC = () => {
       ====================================================================== */}
       <section className="relative bg-espresso text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
+          <HairlineRule tone="champagne" className="mb-10 sm:mb-12" />
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 sm:mb-16 lg:mb-20">
             <div className="space-y-4">
-              <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
-                BAB 02 / KARYA TERPILIH &amp; SOFTWARE QA
+              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
+                BAB 02 · KARYA TERPILIH &amp; SOFTWARE QA
               </p>
               <TextReveal
                 as="h2"
@@ -693,10 +695,17 @@ export const HomePage: React.FC = () => {
               <Link
                 to="/projects"
                 data-cursor="ARSIP"
-                className="inline-flex items-center gap-2 font-mono text-xs tracking-[0.2em] uppercase text-champagne hover:text-ivory transition-colors"
+                className="group relative inline-flex items-center gap-2 pb-1 font-mono text-xs tracking-[0.2em] uppercase text-champagne hover:text-ivory transition-colors"
               >
-                Jelajahi Seluruh Proyek
-                <ArrowUpRight className="size-4" aria-hidden="true" />
+                <KineticLabel>Jelajahi Seluruh Proyek</KineticLabel>
+                <ArrowUpRight
+                  className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+                  aria-hidden="true"
+                />
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:hidden"
+                />
               </Link>
             </Reveal>
           </div>
@@ -710,10 +719,11 @@ export const HomePage: React.FC = () => {
       ====================================================================== */}
       <section className="relative bg-offwhite text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto">
+          <HairlineRule tone="espresso" className="mb-10 sm:mb-12" />
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 lg:mb-14">
             <div>
-              <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-bronze mb-3">
-                BAB 03 / EKSPLORASI LANJUTAN
+              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze mb-3">
+                BAB 03 · EKSPLORASI LANJUTAN
               </p>
               <TextReveal
                 as="h2"

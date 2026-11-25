@@ -12,7 +12,8 @@ import {
   Sliders,
   Sparkles,
 } from 'lucide-react';
-import { Reveal } from '@/components/motion/Reveal';
+import { KineticLabel } from '@/components/motion/KineticLabel';
+import { HairlineRule, Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { MonogramMark } from '@/components/brand/Monogram';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
@@ -766,7 +767,7 @@ const WORKBENCH_CURVES = [
     id: 'aflan-luxury',
     shortCode: 'LUXURY',
     name: 'AFLAN Luxury Editorial',
-    badge: 'SIGNATURE · UTAMA',
+    badge: 'SIGNATURE · AFLAN',
     isSignature: true,
     css: 'cubic-bezier(0.22, 1, 0.36, 1)',
     bezier: EASE_LUXURY,
@@ -781,7 +782,7 @@ const WORKBENCH_CURVES = [
     id: 'standard-linear',
     shortCode: 'LINEAR',
     name: 'Linear Standard',
-    badge: 'STANDAR · KONSTAN',
+    badge: 'STANDAR · LINEAR',
     isSignature: false,
     css: 'cubic-bezier(0, 0, 1, 1)',
     bezier: [0, 0, 1, 1] as [number, number, number, number],
@@ -790,7 +791,7 @@ const WORKBENCH_CURVES = [
       { x: 8, y: 92 },
       { x: 92, y: 8 },
     ],
-    summary: 'Kecepatan konstan dari awal hingga akhir; terasa kaku untuk elemen editorial.',
+    summary: 'Kecepatan konstan dari awal hingga akhir; terasa mekanis untuk elemen editorial.',
   },
   {
     id: 'standard-ease-in-out',
@@ -874,7 +875,7 @@ const MotionEasingWorkbench: React.FC = () => {
     try {
       await navigator.clipboard.writeText(cssValue);
       setCopiedCurveId(curveId);
-      showToast('Kurva Easing Tersalin', cssValue);
+      showToast('Nilai Kurva Tersalin', cssValue);
       if (copyTimerRef.current !== null) {
         window.clearTimeout(copyTimerRef.current);
       }
@@ -927,10 +928,13 @@ const MotionEasingWorkbench: React.FC = () => {
             type="button"
             onClick={() => setRunId((r) => r + 1)}
             disabled={Boolean(prefersReducedMotion)}
-            className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-champagne text-obsidian font-mono text-[10px] sm:text-[11px] tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all cursor-pointer disabled:opacity-45 disabled:cursor-not-allowed"
+            className="group inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-champagne text-obsidian font-mono text-[10px] sm:text-[11px] tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all cursor-pointer disabled:opacity-45 disabled:cursor-not-allowed"
           >
-            <RotateCcw className="size-3.5" aria-hidden="true" />
-            <span>Putar Perbandingan</span>
+            <RotateCcw
+              className="size-3.5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-rotate-45 motion-reduce:transform-none"
+              aria-hidden="true"
+            />
+            <KineticLabel>Putar Perbandingan</KineticLabel>
           </button>
         </div>
       </div>
@@ -938,8 +942,7 @@ const MotionEasingWorkbench: React.FC = () => {
       {/* Reduced Motion Accessibility Notice */}
       {prefersReducedMotion && (
         <div className="rounded-xl border border-champagne/25 bg-espresso/60 px-4 py-3 text-xs sm:text-sm text-champagne/90 leading-relaxed">
-          Mode <span className="font-mono">prefers-reduced-motion</span> terdeteksi aktif.
-          Kartu pembanding ditampilkan tenang pada posisi akhir (<span className="font-mono">1.00</span>) demi kenyamanan visual, sementara grafik kurva SVG dan token CSS tetap dapat disalin.
+          Preferensi gerak terbatas (<span className="font-mono">prefers-reduced-motion</span>) aktif · Kartu ditampilkan tenang pada titik akhir (<span className="font-mono">1.00</span>), sementara grafik kurva SVG dan nilai CSS tetap dapat disalin.
         </div>
       )}
 
@@ -1204,16 +1207,17 @@ export const CreativeLabPage: React.FC = () => {
         <div className="relative z-10 max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
-            className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15"
+            className="flex flex-wrap items-center justify-between gap-4"
           >
-            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-champagne">
+            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
               <Sparkles className="size-3.5" aria-hidden="true" />
-              BAB 06 / CREATIVE LAB
+              BAB 06 · CREATIVE LAB
             </span>
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-espresso/85 border border-champagne/35 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
-              AREA EKSPERIMEN VISUAL · NON-EDITORIAL
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-espresso/85 border border-champagne/25 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
+              EKSPERIMEN INTERAKTIF · NON-PRODUKSI
             </span>
           </Reveal>
+          <HairlineRule tone="champagne" immediate className="mt-6" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-7">
@@ -1234,7 +1238,8 @@ export const CreativeLabPage: React.FC = () => {
                 Etalase interaktif Creative-Tech &amp; Interactive UI Implementation yang
                 menampilkan <span className="text-champagne">Dynamic Spotlight Masking</span>,{' '}
                 <span className="text-champagne">Magnetic Cursor UI</span>, kompositor tipografi
-                editorial, kanvas cahaya chiaroscuro, koreografi motion, dan matriks kontras WCAG.
+                editorial, kanvas cahaya chiaroscuro, koreografi motion, matriks kontras WCAG,
+                serta <span className="text-champagne">Motion &amp; Easing Workbench</span>.
               </p>
             </Reveal>
           </div>
@@ -1655,20 +1660,21 @@ export const CreativeLabPage: React.FC = () => {
         className="relative bg-[#1A1412] text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-t border-champagne/15"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
+          <HairlineRule tone="champagne" className="mb-2" />
           <Reveal variant="up" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
             <div className="lg:col-span-7">
               <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
                 <Sliders className="size-3.5" aria-hidden="true" />
-                LAB 07 · MOTION &amp; CRAFT WORKBENCH
+                LAB 07 · MOTION &amp; EASING WORKBENCH
               </span>
               <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light tracking-tight mt-2">
                 Motion &amp; Easing Workbench
               </h2>
             </div>
             <p className="lg:col-span-5 font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-              Perbandingan paralel kurva signature AFLAN Luxury Editorial melawan kurva standar{' '}
-              <span className="font-mono text-champagne/90">linear</span> dan{' '}
-              <span className="font-mono text-champagne/90">ease-in-out</span> secara serentak pada lintasan arsitektural.
+              Bandingkan ritme kurva signature AFLAN Luxury Editorial secara paralel melawan
+              kurva standar <span className="font-mono text-champagne/90">linear</span> dan{' '}
+              <span className="font-mono text-champagne/90">ease-in-out</span> pada lintasan presisi.
             </p>
           </Reveal>
 

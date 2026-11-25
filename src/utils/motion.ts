@@ -6,6 +6,11 @@ import type { Transition, Variants } from 'framer-motion';
 export const EASE_LUXURY: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 /**
+ * Architectural veil curtain easing curve: cubic-bezier(0.76, 0, 0.24, 1).
+ */
+export const EASE_VEIL: [number, number, number, number] = [0.76, 0, 0.24, 1];
+
+/**
  * Unified editorial reveal duration for calm, cohesive pacing across all pages.
  */
 export const MOTION_DURATION = 0.8;
@@ -18,14 +23,14 @@ export const LUXURY_TRANSITION: Transition = {
 export const pageContentVariants: Variants = {
   initial: {
     opacity: 0,
-    y: 10,
+    y: 12,
   },
   animate: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.28,
-      delay: 0,
+      duration: 0.44,
+      delay: 0.1,
       ease: EASE_LUXURY,
     },
   },

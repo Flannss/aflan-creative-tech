@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { useReducedMotion } from 'framer-motion';
 import type { ProjectEntry } from '@/data/projects';
+import { ApertureFrame } from '@/components/motion/ApertureFrame';
 import { TypographicDossierPlate } from '@/components/projects/TypographicDossierPlate';
 import { ProjectTransitionPortal } from '@/components/projects/ProjectClickTransition';
 import { useProjectTransition } from '@/hooks/useProjectTransition';
@@ -136,12 +137,16 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                 canHover && transitioningSlug === null && setActiveProject(project)
               }
               onBlur={() => canHover && setActiveProject(null)}
-              className={`group block md:flex md:flex-col md:h-full lg:block lg:h-auto py-8 sm:py-10 md:p-6 lg:py-10 lg:px-5 px-2 sm:px-4 md:mx-0 lg:-mx-5 md:border md:border-champagne/20 md:bg-obsidian/45 md:hover:border-champagne/55 md:active:border-champagne lg:border-0 lg:bg-transparent transition-all duration-300 hover:bg-espresso/45 active:bg-espresso/60 active:scale-[0.99] lg:active:scale-100 ${
+              className={`relative group block md:flex md:flex-col md:h-full lg:block lg:h-auto py-8 sm:py-10 md:p-6 lg:py-10 lg:px-5 px-2 sm:px-4 md:mx-0 lg:-mx-5 md:border md:border-champagne/20 md:bg-obsidian/45 md:hover:border-champagne/55 md:active:border-champagne lg:border-0 lg:bg-transparent transition-all duration-300 hover:bg-espresso/45 active:bg-espresso/60 active:scale-[0.99] lg:active:scale-100 ${
                 isOrphanOnTablet ? 'md:col-span-2' : ''
               } ${isDimmed ? 'opacity-30' : ''} ${
                 isSelected ? 'bg-espresso/65' : ''
               }`}
             >
+              <span
+                aria-hidden="true"
+                className="hidden lg:block pointer-events-none absolute inset-x-5 bottom-0 h-px bg-champagne/65 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:hidden"
+              />
               <div className="grid grid-cols-1 md:flex md:flex-col md:flex-1 lg:grid lg:grid-cols-12 gap-5 lg:gap-8 items-center md:items-stretch lg:items-center">
                 <div className="lg:col-span-2 flex items-center lg:flex-col lg:items-start justify-between gap-2">
                   <span className="font-mono text-xs tracking-[0.26em] text-champagne">
@@ -180,7 +185,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                   </div>
                   <span className="shrink-0 size-11 rounded-full border border-champagne/30 flex items-center justify-center text-champagne group-hover:bg-champagne group-hover:text-obsidian transition-all duration-300">
                     <ArrowUpRight
-                      className="size-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                      className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
                       aria-hidden="true"
                     />
                   </span>
@@ -193,30 +198,32 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                     isSelected ? 'scale-[1.03]' : ''
                   }`}
                 >
-                  {project.previewImage ? (
-                    <div
-                      className="relative aspect-video overflow-hidden border border-champagne/20"
-                      style={{ backgroundColor: project.previewBg ?? '#2B1D17' }}
-                    >
-                      <img
-                        src={project.previewImage}
-                        alt={project.previewCaption}
-                        loading="lazy"
-                        style={{ objectPosition: project.previewObjectPosition ?? 'center' }}
-                        className={`w-full h-full ${
-                          project.previewImageFit === 'contain'
-                            ? 'object-contain p-5'
-                            : 'object-cover'
-                        }`}
+                  <ApertureFrame className="aspect-video border border-champagne/20">
+                    {project.previewImage ? (
+                      <div
+                        className="relative w-full h-full overflow-hidden"
+                        style={{ backgroundColor: project.previewBg ?? '#2B1D17' }}
+                      >
+                        <img
+                          src={project.previewImage}
+                          alt={project.previewCaption}
+                          loading="lazy"
+                          style={{ objectPosition: project.previewObjectPosition ?? 'center' }}
+                          className={`w-full h-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] motion-reduce:transform-none ${
+                            project.previewImageFit === 'contain'
+                              ? 'object-contain p-5'
+                              : 'object-cover'
+                          }`}
+                        />
+                      </div>
+                    ) : (
+                      <TypographicDossierPlate
+                        project={project}
+                        compact
+                        className="w-full h-full border-0"
                       />
-                    </div>
-                  ) : (
-                    <TypographicDossierPlate
-                      project={project}
-                      compact
-                      className="aspect-video"
-                    />
-                  )}
+                    )}
+                  </ApertureFrame>
                 </div>
               </div>
             </Link>

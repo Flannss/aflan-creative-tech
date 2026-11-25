@@ -15,7 +15,9 @@ import {
   type ProjectEntry,
 } from '@/data/projects';
 import { TypographicDossierPlate } from '@/components/projects/TypographicDossierPlate';
-import { Reveal } from '@/components/motion/Reveal';
+import { ApertureFrame } from '@/components/motion/ApertureFrame';
+import { KineticLabel } from '@/components/motion/KineticLabel';
+import { HairlineRule, Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { ParallaxFrame } from '@/components/motion/ParallaxFrame';
 
@@ -59,18 +61,22 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
       )}
       <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
         <div className="max-w-[1440px] mx-auto">
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15">
+          <div className="flex flex-wrap items-center justify-between gap-4">
             <Link
               to="/projects"
-              className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne hover:text-ivory transition-colors"
+              className="group inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne hover:text-ivory transition-colors"
             >
-              <ArrowLeft className="size-3.5" aria-hidden="true" />
-              Kembali ke Arsip Proyek
+              <ArrowLeft
+                className="size-3.5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-1 motion-reduce:transform-none"
+                aria-hidden="true"
+              />
+              <KineticLabel>Kembali ke Arsip Proyek</KineticLabel>
             </Link>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
               ENTRI {project.index} · {project.category}
             </span>
           </div>
+          <HairlineRule tone="champagne" immediate className="mt-6" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-8 space-y-5">
@@ -100,12 +106,15 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 max-w-full min-w-0 overflow-hidden px-4 xl:px-5 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-[11px] xl:text-xs tracking-[0.12em] xl:tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
+                    className="group inline-flex items-center justify-center gap-2 max-w-full min-w-0 overflow-hidden px-4 xl:px-5 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-[11px] xl:text-xs tracking-[0.12em] xl:tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
                   >
-                    <span className="truncate text-ellipsis">
+                    <KineticLabel className="truncate text-ellipsis">
                       {project.liveUrlLabel ?? 'Kunjungi Situs Live'}
-                    </span>
-                    <ExternalLink className="size-3.5 shrink-0" aria-hidden="true" />
+                    </KineticLabel>
+                    <ExternalLink
+                      className="size-3.5 shrink-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+                      aria-hidden="true"
+                    />
                   </a>
                 </div>
               )}
@@ -114,10 +123,13 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                 <div className="pt-2">
                   <Link
                     to={project.liveRoute}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory transition-colors"
+                    className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
                   >
-                    Buka Creative Lab
-                    <ArrowUpRight className="size-4" aria-hidden="true" />
+                    <KineticLabel>Buka Creative Lab</KineticLabel>
+                    <ArrowUpRight
+                      className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+                      aria-hidden="true"
+                    />
                   </Link>
                 </div>
               )}
@@ -144,8 +156,8 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
 
       <section className="bg-ivory text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12">
         <div className="max-w-[1440px] mx-auto space-y-12 sm:space-y-16">
-          <Reveal variant="clip">
-            <figure className="border border-espresso/20 bg-obsidian overflow-hidden shadow-2xl">
+          <figure className="border border-espresso/20 bg-obsidian overflow-hidden shadow-2xl">
+            <ApertureFrame>
               {project.previewImage ? (
                 <ParallaxFrame
                   className="aspect-video max-h-[600px] w-full flex items-center justify-center"
@@ -172,12 +184,12 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                   className="min-h-[300px] sm:min-h-[440px] border-0"
                 />
               )}
-              <figcaption className="px-5 sm:px-6 py-4 bg-obsidian text-champagne/85 font-mono text-[11px] tracking-[0.18em] uppercase border-t border-champagne/15 flex flex-wrap justify-between gap-2">
-                <span>{project.previewCaption}</span>
-                <span>ARSIP AMDZ</span>
-              </figcaption>
-            </figure>
-          </Reveal>
+            </ApertureFrame>
+            <figcaption className="px-5 sm:px-6 py-4 bg-obsidian text-champagne/85 font-mono text-[11px] tracking-[0.18em] uppercase border-t border-champagne/15 flex flex-wrap justify-between gap-2">
+              <span>{project.previewCaption}</span>
+              <span>ARSIP AMDZ</span>
+            </figcaption>
+          </figure>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14 items-start">
             <Reveal variant="up" className="md:col-span-5 lg:col-span-4 space-y-6">
@@ -242,10 +254,13 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase text-espresso border-b border-espresso pb-1 hover:text-mocha hover:border-mocha transition-colors"
+                      className="group inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase text-espresso border-b border-espresso pb-1 hover:text-mocha hover:border-mocha transition-colors"
                     >
-                      Buka Tautan Live
-                      <ExternalLink className="size-3.5" aria-hidden="true" />
+                      <KineticLabel>Buka Tautan Live</KineticLabel>
+                      <ExternalLink
+                        className="size-3.5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+                        aria-hidden="true"
+                      />
                     </a>
                   </div>
                 )}

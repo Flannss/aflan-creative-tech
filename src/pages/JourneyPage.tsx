@@ -164,8 +164,8 @@ export const JourneyPage: React.FC = () => {
             variant="up"
             className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15"
           >
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-champagne">
-              BAB 03 / PERJALANAN &amp; LINIMASA
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
+              BAB 03 · PERJALANAN
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
               REKAM JEJAK AKADEMIK &amp; PROFESIONAL

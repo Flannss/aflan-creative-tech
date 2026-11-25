@@ -15,7 +15,8 @@ import { personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
 import { getProjectBySlug } from '@/data/projects';
 import { calculateExactAge } from '@/utils/age';
-import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
+import { KineticLabel } from '@/components/motion/KineticLabel';
+import { HairlineRule, Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { ParallaxFrame } from '@/components/motion/ParallaxFrame';
 import { MonogramMark } from '@/components/brand/Monogram';
@@ -68,14 +69,15 @@ export const AboutPage: React.FC = () => {
     <div className="w-full overflow-x-clip">
       <section className="relative bg-ivory text-espresso pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-24 px-4 sm:px-6 lg:px-12 border-b border-espresso/15">
         <div className="max-w-[1440px] mx-auto">
-          <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-espresso/15">
+          <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4">
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
-              BAB 02 / TENTANG AFLAN
+              BAB 02 · TENTANG
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
               {personalData.positioning}
             </span>
           </Reveal>
+          <HairlineRule tone="espresso" immediate className="mt-6" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pt-10 lg:pt-12 items-start">
             <div className="lg:col-span-8">
@@ -373,17 +375,23 @@ export const AboutPage: React.FC = () => {
             <div className="flex flex-wrap gap-3 pt-2">
               <Link
                 to="/journey"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-espresso text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:bg-mocha active:scale-[0.97] transition-all"
+                className="group inline-flex items-center gap-2 px-5 py-3 rounded-full bg-espresso text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:bg-mocha active:scale-[0.97] transition-all"
               >
-                Jelajahi Perjalanan
-                <ArrowRight className="size-4" aria-hidden="true" />
+                <KineticLabel>Jelajahi Perjalanan</KineticLabel>
+                <ArrowRight
+                  className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 motion-reduce:transform-none"
+                  aria-hidden="true"
+                />
               </Link>
               <Link
                 to="/achievements"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-espresso/30 text-espresso font-mono text-xs tracking-[0.18em] uppercase hover:border-espresso hover:bg-ivory active:scale-[0.97] transition-all"
+                className="group inline-flex items-center gap-2 px-5 py-3 rounded-full border border-espresso/30 text-espresso font-mono text-xs tracking-[0.18em] uppercase hover:border-espresso hover:bg-ivory active:scale-[0.97] transition-all"
               >
-                Pencapaian &amp; Sertifikasi
-                <ArrowUpRight className="size-4" aria-hidden="true" />
+                <KineticLabel>Pencapaian &amp; Sertifikasi</KineticLabel>
+                <ArrowUpRight
+                  className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+                  aria-hidden="true"
+                />
               </Link>
             </div>
 

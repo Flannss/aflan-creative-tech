@@ -15,7 +15,7 @@ import { contactData } from '@/data/contact';
 import { useToast } from '@/hooks/useToast';
 import { EASE_LUXURY } from '@/utils/motion';
 
-type CommandGroup = 'HALAMAN' | 'PROYEK' | 'AKSI CEPAT';
+type CommandGroup = 'INDEKS BAB · 01–09' | 'STUDI KASUS · PROYEK' | 'AKSI CEPAT';
 
 interface CommandItem {
   id: string;
@@ -36,7 +36,23 @@ interface CommandPaletteProps {
   disabled?: boolean;
 }
 
-const GROUP_ORDER: readonly CommandGroup[] = ['HALAMAN', 'PROYEK', 'AKSI CEPAT'];
+const GROUP_ORDER: readonly CommandGroup[] = [
+  'INDEKS BAB · 01–09',
+  'STUDI KASUS · PROYEK',
+  'AKSI CEPAT',
+];
+
+const ROUTE_ENGLISH_ALIASES: Record<string, string> = {
+  '/': 'home beranda utama',
+  '/about': 'about profil biodata',
+  '/journey': 'journey experience linimasa riwayat',
+  '/skills': 'skills keahlian stack',
+  '/projects': 'projects karya arsip',
+  '/lab': 'lab creative-lab workbench motion eksperimen',
+  '/gallery': 'gallery potret monograf',
+  '/achievements': 'honors achievements sertifikasi ccna jpmba',
+  '/contact': 'contact hubungi email whatsapp',
+};
 
 export const CommandPalette: React.FC<CommandPaletteProps> = ({
   open,
@@ -94,16 +110,15 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       const isCurrent =
         location.pathname === route.path ||
         (route.path === '/projects' && location.pathname.startsWith('/projects/'));
-      const extraKeywords =
-        route.path === '/lab' ? 'creative-lab creative lab workbench motion' : '';
+      const extraKeywords = ROUTE_ENGLISH_ALIASES[route.path] ?? '';
 
       return {
         id: `page-${route.path}`,
-        group: 'HALAMAN',
+        group: 'INDEKS BAB · 01–09',
         index: route.index,
         title: route.label,
         subtitle: route.subtitle,
-        badge: isCurrent ? 'AKTIF' : route.shortLabel,
+        badge: isCurrent ? 'AKTIF' : `BAB ${route.index}`,
         keywords: `${route.shortLabel} ${route.path} ${extraKeywords}`,
         isCurrent,
         onSelect: () => {
@@ -115,7 +130,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
     const projectItems: CommandItem[] = projectsData.map((project) => ({
       id: `project-${project.slug}`,
-      group: 'PROYEK',
+      group: 'STUDI KASUS · PROYEK',
       index: project.index,
       title: project.title,
       subtitle: project.subtitle,
@@ -134,7 +149,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         group: 'AKSI CEPAT',
         title: 'Salin Email Resmi',
         subtitle: contactData.email,
-        badge: 'CLIPBOARD',
+        badge: 'SALIN',
         keywords: `email mail kontak hubungi salin copy ${contactData.email}`,
         onSelect: () => {
           closePalette(false);
@@ -150,7 +165,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         group: 'AKSI CEPAT',
         title: 'Salin URL Portofolio',
         subtitle: personalData.siteUrl,
-        badge: 'CLIPBOARD',
+        badge: 'SALIN',
         keywords: `url link share bagikan salin copy domain ${personalData.siteDomain}`,
         onSelect: () => {
           closePalette(false);
@@ -160,9 +175,9 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       {
         id: 'action-open-github',
         group: 'AKSI CEPAT',
-        title: `Buka GitHub (${contactData.githubHandle})`,
+        title: `Buka GitHub · ${contactData.githubHandle}`,
         subtitle: contactData.githubHref,
-        badge: 'EKSTERNAL',
+        badge: 'TAUTAN',
         keywords: `github kode repositori source code ${contactData.githubHandle}`,
         external: true,
         onSelect: () => {
@@ -351,8 +366,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     ? `cmd-opt-${filteredItems[safeActiveIndex].id}`
                     : undefined
                 }
-                aria-label="Cari halaman, proyek, atau aksi cepat"
-                placeholder="Cari bab, proyek, atau aksi cepat..."
+                aria-label="Cari bab, studi kasus, atau aksi cepat"
+                placeholder="Cari bab, studi kasus, atau aksi cepat..."
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
@@ -483,10 +498,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               ) : (
                 <div className="px-5 py-10 text-center space-y-3">
                   <p className="font-serif text-xl font-light text-ivory/90">
-                    Tidak ada hasil untuk &ldquo;{query.trim()}&rdquo;
+                    Tidak ditemukan entri untuk &ldquo;{query.trim()}&rdquo;
                   </p>
                   <p className="font-sans text-xs text-taupe">
-                    Coba kata kunci seperti Beranda, SOMASII, ASIS, Lab, atau Email.
+                    Coba cari Beranda, SOMASII, ASIS Builder, Lab, atau Email.
                   </p>
                   <button
                     type="button"
@@ -497,7 +512,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     }}
                     className="inline-flex items-center px-4 py-2 rounded-full border border-champagne/30 text-[10px] font-mono uppercase tracking-[0.15em] text-champagne hover:bg-champagne hover:text-obsidian transition-colors cursor-pointer"
                   >
-                    Tampilkan Semua Indeks
+                    Reset Pencarian
                   </button>
                 </div>
               )}
@@ -505,8 +520,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
             {/* Footer Keybind Legend */}
             <div className="border-t border-champagne/15 px-4 sm:px-5 py-2.5 bg-obsidian/50 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono uppercase tracking-[0.15em] text-taupe shrink-0">
-              <span>↑↓ Navigasi · ↵ Buka · ESC Tutup</span>
-              <span className="text-champagne/75">AFLAN DOSSIER</span>
+              <span>↑↓ Pilih · ↵ Buka · ESC Tutup</span>
+              <span className="text-champagne/75">AFLAN DOSSIER · ⌘K</span>
             </div>
           </motion.div>
         </motion.div>

@@ -10,7 +10,9 @@ import { ProjectPreviewList } from '@/components/projects/ProjectPreviewList';
 import { TypographicDossierPlate } from '@/components/projects/TypographicDossierPlate';
 import { ProjectTransitionPortal } from '@/components/projects/ProjectClickTransition';
 import { useProjectTransition } from '@/hooks/useProjectTransition';
-import { Reveal } from '@/components/motion/Reveal';
+import { ApertureFrame } from '@/components/motion/ApertureFrame';
+import { KineticLabel } from '@/components/motion/KineticLabel';
+import { Reveal, HairlineRule } from '@/components/motion/Reveal';
 import { StackingCard } from '@/components/motion/StackingCard';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
@@ -55,15 +57,16 @@ export const ProjectsPage: React.FC = () => {
         <div className="relative z-10 max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
-            className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15"
+            className="flex flex-wrap items-center justify-between gap-4"
           >
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-champagne">
-              BAB 05 / PROYEK &amp; ARSIP KERJA
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
+              BAB 05 · PROYEK
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
               {filteredProjects.length} ENTRI DITAMPILKAN
             </span>
           </Reveal>
+          <HairlineRule tone="champagne" immediate className="mt-6" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-7">
@@ -184,36 +187,38 @@ export const ProjectsPage: React.FC = () => {
                         data-project-preview
                         className="relative aspect-video overflow-hidden border-b border-champagne/15"
                       >
-                        {project.previewImage ? (
-                          <div
-                            className="w-full h-full"
-                            style={{ backgroundColor: project.previewBg ?? '#2B1D17' }}
-                          >
-                            <img
-                              src={project.previewImage}
-                              alt={project.previewCaption}
-                              loading="lazy"
-                              style={{
-                                objectPosition: project.previewObjectPosition ?? 'center',
-                              }}
-                              className={`w-full h-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                                transitioningSlug === project.slug
-                                  ? 'scale-[1.08]'
-                                  : 'group-hover:scale-[1.04]'
-                              } ${
-                                project.previewImageFit === 'contain'
-                                  ? 'object-contain p-8'
-                                  : 'object-cover'
-                              }`}
+                        <ApertureFrame className="w-full h-full">
+                          {project.previewImage ? (
+                            <div
+                              className="w-full h-full"
+                              style={{ backgroundColor: project.previewBg ?? '#2B1D17' }}
+                            >
+                              <img
+                                src={project.previewImage}
+                                alt={project.previewCaption}
+                                loading="lazy"
+                                style={{
+                                  objectPosition: project.previewObjectPosition ?? 'center',
+                                }}
+                                className={`w-full h-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transform-none ${
+                                  transitioningSlug === project.slug
+                                    ? 'scale-[1.08]'
+                                    : 'group-hover:scale-[1.03]'
+                                } ${
+                                  project.previewImageFit === 'contain'
+                                    ? 'object-contain p-8'
+                                    : 'object-cover'
+                                }`}
+                              />
+                            </div>
+                          ) : (
+                            <TypographicDossierPlate
+                              project={project}
+                              compact
+                              className="w-full h-full border-0"
                             />
-                          </div>
-                        ) : (
-                          <TypographicDossierPlate
-                            project={project}
-                            compact
-                            className="w-full h-full border-0"
-                          />
-                        )}
+                          )}
+                        </ApertureFrame>
                       </div>
 
                       <div className="p-6 sm:p-8 flex flex-col justify-between gap-5">
@@ -236,9 +241,12 @@ export const ProjectsPage: React.FC = () => {
                           <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-taupe truncate">
                             {project.role}
                           </span>
-                          <span className="inline-flex items-center gap-1 font-mono text-[11px] tracking-[0.18em] uppercase text-champagne shrink-0">
-                            Buka Dossier
-                            <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                          <span className="inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.18em] uppercase text-champagne shrink-0">
+                            <KineticLabel>Buka Dossier</KineticLabel>
+                            <ArrowUpRight
+                              className="size-3.5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+                              aria-hidden="true"
+                            />
                           </span>
                         </div>
                       </div>

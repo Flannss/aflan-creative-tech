@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Check, Copy, Github, Search } from 'lucide-react';
 import { BrandSignature } from '@/components/brand/Monogram';
+import { KineticLabel } from '@/components/motion/KineticLabel';
 import { navigationRoutes, personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
 import { useToast } from '@/hooks/useToast';
@@ -65,10 +66,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
             <Link
               to="/contact"
               data-cursor="KONTAK"
-              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
+              className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
             >
-              Mulai Percakapan
-              <ArrowUpRight className="size-4" aria-hidden="true" />
+              <KineticLabel>Mulai Percakapan</KineticLabel>
+              <ArrowUpRight
+                className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+                aria-hidden="true"
+              />
             </Link>
             <button
               type="button"
@@ -106,7 +110,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`GitHub ${contactData.githubHandle}`}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/25 bg-espresso/50 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-ivory/90 hover:border-champagne hover:text-champagne active:scale-[0.97] transition-all"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/20 bg-espresso/50 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-ivory/90 hover:border-champagne hover:text-champagne active:scale-[0.97] transition-all"
               >
                 <Github className="size-3.5" aria-hidden="true" />
                 <span>GitHub · {contactData.githubHandle}</span>
@@ -117,7 +121,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
                   type="button"
                   onClick={onOpenCommandPalette}
                   aria-label="Buka indeks cepat Command Palette"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/25 bg-espresso/50 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne/90 hover:border-champagne hover:text-ivory active:scale-[0.97] transition-all cursor-pointer"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/20 bg-espresso/50 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne/90 hover:border-champagne hover:text-ivory active:scale-[0.97] transition-all cursor-pointer"
                 >
                   <Search className="size-3.5" aria-hidden="true" />
                   <span>⌘K · Cari Cepat</span>
@@ -137,10 +141,16 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
                     to={route.path}
                     className="group inline-flex items-baseline gap-2.5 py-0.5 text-[15px] md:text-sm text-ivory/75 hover:text-champagne transition-colors"
                   >
-                    <span className="font-mono text-[10px] text-taupe group-hover:text-champagne">
+                    <span className="font-mono text-[10px] text-taupe group-hover:text-champagne transition-colors">
                       {route.index}
                     </span>{' '}
-                    <span>{route.label}</span>
+                    <span className="relative">
+                      {route.label}
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute left-0 right-0 -bottom-0.5 h-px bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:hidden"
+                      />
+                    </span>
                   </Link>
                 </li>
               ))}

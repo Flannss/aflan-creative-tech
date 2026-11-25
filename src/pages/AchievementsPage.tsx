@@ -6,7 +6,7 @@ import {
   type AchievementCategory,
   type AchievementEntry,
 } from '@/data/achievements';
-import { Reveal } from '@/components/motion/Reveal';
+import { HairlineRule, Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 
@@ -52,15 +52,16 @@ export const AchievementsPage: React.FC = () => {
     <div className="w-full overflow-x-clip">
       <section className="bg-espresso text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
         <div className="max-w-[1440px] mx-auto">
-          <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15">
-            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-champagne">
+          <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4">
+            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
               <Award className="size-4" aria-hidden="true" />
-              BAB 08 / PENCAPAIAN &amp; SERTIFIKASI
+              BAB 08 · PENCAPAIAN
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
               100% CATATAN TERVERIFIKASI
             </span>
           </Reveal>
+          <HairlineRule tone="champagne" immediate className="mt-6" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-7">

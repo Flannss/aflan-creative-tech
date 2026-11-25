@@ -6,7 +6,7 @@ import {
   skillTiers,
   type SkillTier,
 } from '@/data/skills';
-import { Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
+import { HairlineRule, Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 
@@ -102,14 +102,15 @@ export const SkillsPage: React.FC = () => {
     <div className="w-full overflow-x-clip">
       <section className="relative bg-espresso text-ivory pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-24 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
         <div className="max-w-[1440px] mx-auto">
-          <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15">
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-champagne">
-              BAB 04 / KEAHLIAN TEKNIS &amp; AI ORCHESTRATION
+          <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
+              BAB 04 · KEAHLIAN
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
               PEMETAAN KOMPETENSI · {totalDomainsLabel} DOMAIN UTAMA
             </span>
           </Reveal>
+          <HairlineRule tone="champagne" immediate className="mt-6" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-7">
