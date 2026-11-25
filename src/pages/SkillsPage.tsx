@@ -104,10 +104,10 @@ export const SkillsPage: React.FC = () => {
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4">
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
-              BAB 04 · KEAHLIAN
+              BAB 04 · CORE CAPABILITIES
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
-              PEMETAAN KOMPETENSI · {totalDomainsLabel} DOMAIN UTAMA
+              TECHNICAL STACK · {totalDomainsLabel} CORE DOMAINS
             </span>
           </Reveal>
           <HairlineRule tone="champagne" immediate className="mt-6" />
@@ -342,11 +342,11 @@ export const SkillsPage: React.FC = () => {
           <Reveal variant="up" className="lg:col-span-6 space-y-5">
             <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
               <Layers className="size-4" aria-hidden="true" />
-              SINERGI ENGINEERING, QA &amp; AI ORCHESTRATION
+              ENGINEERING, QA &amp; AI ORCHESTRATION
             </span>
             <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-[1.08] text-ivory">
               Membangun antarmuka dengan{' '}
-              <span className="italic text-champagne/90">ketelitian seorang tester</span>.
+              <span className="italic text-champagne/90">ketelitian QA engineer</span>.
             </h2>
             <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed max-w-xl">
               Praktik langsung Software Testing dan Requirement Analysis di PT Puskomedia

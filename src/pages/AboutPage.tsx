@@ -71,7 +71,7 @@ export const AboutPage: React.FC = () => {
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4">
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
-              BAB 02 · TENTANG
+              BAB 02 · PERSONAL DOSSIER
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
               {personalData.positioning}
@@ -86,10 +86,9 @@ export const AboutPage: React.FC = () => {
                 immediate
                 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-espresso/90"
                 lines={[
-                  <>Merancang Web Software dengan</>,
+                  <>Editorial Craft &amp;</>,
                   <>
-                    <span className="italic text-mocha">kepekaan editorial</span> &amp;
-                    disiplin QA.
+                    <span className="italic text-mocha">Frontend Engineering</span>.
                   </>,
                 ]}
               />
@@ -97,8 +96,8 @@ export const AboutPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-4 lg:pt-2 space-y-5">
               <p className="font-sans text-sm md:text-base leading-relaxed text-espresso/80">
-                Berfokus pada High-Performance Web Development, pengembangan aplikasi lintas
-                platform, dan evaluasi kualitas perangkat lunak yang terstruktur.
+                Merancang pengalaman web dengan presisi frontend engineering, aplikasi lintas
+                platform, dan evaluasi software quality yang terstruktur.
               </p>
               <div className="flex flex-wrap gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-mocha">
                 <span className="inline-flex items-center gap-1.5">
@@ -124,6 +123,7 @@ export const AboutPage: React.FC = () => {
                   <img
                     src={personalData.portraitPath}
                     alt="Studi potret editorial Aflan Mu'afa Dzulfiqar"
+                    decoding="async"
                     className="w-full h-full object-cover object-[50%_14%] sepia-[22%] contrast-105 group-hover:sepia-0 group-hover:contrast-100 transition-all duration-700"
                   />
                   <div
@@ -238,7 +238,7 @@ export const AboutPage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 pb-10 sm:pb-14 lg:pb-16 border-b border-champagne/15 items-end">
             <div className="lg:col-span-7">
               <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-champagne mb-4">
-                PRINSIP PENGEMBANGAN
+                BEHIND THE BUILD · PRINSIP KERJA
               </p>
               <TextReveal
                 as="h2"
@@ -295,10 +295,10 @@ export const AboutPage: React.FC = () => {
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 items-start">
           <Reveal variant="up" className="lg:col-span-7">
             <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-bronze font-medium mb-3">
-              DOSSIER TERVERIFIKASI
+              VERIFIED DOSSIER
             </p>
             <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight text-espresso/90 mb-8 sm:mb-10">
-              Spesifikasi <span className="italic text-mocha">Identitas</span>
+              Identity <span className="italic text-mocha">Specifications</span>
             </h2>
 
             <dl className="divide-y divide-espresso/15 border-y border-espresso/15">

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { MonogramMark } from '@/components/brand/Monogram';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 
 interface SplashIntroProps {
@@ -47,10 +48,12 @@ const FILM_GRAIN_DATA_URI =
  */
 export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
   const prefersReducedMotion = useReducedMotion();
+  const { pauseScroll, resumeScroll } = useSmoothScroll();
 
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    pauseScroll();
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -62,9 +65,10 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       document.body.style.overflow = prevOverflow;
+      resumeScroll();
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [onEnter]);
+  }, [onEnter, pauseScroll, resumeScroll]);
 
   return (
     <motion.div

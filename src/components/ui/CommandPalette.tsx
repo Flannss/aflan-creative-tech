@@ -13,9 +13,10 @@ import { navigationRoutes, personalData } from '@/data/personal';
 import { projectsData } from '@/data/projects';
 import { contactData } from '@/data/contact';
 import { useToast } from '@/hooks/useToast';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import { EASE_LUXURY } from '@/utils/motion';
 
-type CommandGroup = 'INDEKS BAB · 01–09' | 'STUDI KASUS · PROYEK' | 'AKSI CEPAT';
+type CommandGroup = 'SITE INDEX · 01–09' | 'SELECTED WORKS · CASE STUDIES' | 'QUICK ACTIONS';
 
 interface CommandItem {
   id: string;
@@ -37,9 +38,9 @@ interface CommandPaletteProps {
 }
 
 const GROUP_ORDER: readonly CommandGroup[] = [
-  'INDEKS BAB · 01–09',
-  'STUDI KASUS · PROYEK',
-  'AKSI CEPAT',
+  'SITE INDEX · 01–09',
+  'SELECTED WORKS · CASE STUDIES',
+  'QUICK ACTIONS',
 ];
 
 const ROUTE_ENGLISH_ALIASES: Record<string, string> = {
@@ -62,6 +63,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const { showToast } = useToast();
+  const { pauseScroll, resumeScroll } = useSmoothScroll();
   const prefersReducedMotion = useReducedMotion();
 
   const [query, setQuery] = useState('');
@@ -114,7 +116,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
       return {
         id: `page-${route.path}`,
-        group: 'INDEKS BAB · 01–09',
+        group: 'SITE INDEX · 01–09',
         index: route.index,
         title: route.label,
         subtitle: route.subtitle,
@@ -130,7 +132,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
     const projectItems: CommandItem[] = projectsData.map((project) => ({
       id: `project-${project.slug}`,
-      group: 'STUDI KASUS · PROYEK',
+      group: 'SELECTED WORKS · CASE STUDIES',
       index: project.index,
       title: project.title,
       subtitle: project.subtitle,
@@ -146,10 +148,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     const quickActionItems: CommandItem[] = [
       {
         id: 'action-copy-email',
-        group: 'AKSI CEPAT',
+        group: 'QUICK ACTIONS',
         title: 'Salin Email Resmi',
         subtitle: contactData.email,
-        badge: 'SALIN',
+        badge: 'COPY',
         keywords: `email mail kontak hubungi salin copy ${contactData.email}`,
         onSelect: () => {
           closePalette(false);
@@ -162,10 +164,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       },
       {
         id: 'action-copy-url',
-        group: 'AKSI CEPAT',
+        group: 'QUICK ACTIONS',
         title: 'Salin URL Portofolio',
         subtitle: personalData.siteUrl,
-        badge: 'SALIN',
+        badge: 'COPY',
         keywords: `url link share bagikan salin copy domain ${personalData.siteDomain}`,
         onSelect: () => {
           closePalette(false);
@@ -174,10 +176,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       },
       {
         id: 'action-open-github',
-        group: 'AKSI CEPAT',
+        group: 'QUICK ACTIONS',
         title: `Buka GitHub · ${contactData.githubHandle}`,
         subtitle: contactData.githubHref,
-        badge: 'TAUTAN',
+        badge: 'OPEN',
         keywords: `github kode repositori source code ${contactData.githubHandle}`,
         external: true,
         onSelect: () => {
@@ -285,6 +287,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    pauseScroll();
 
     const rafId = window.requestAnimationFrame(() => {
       inputRef.current?.focus();
@@ -293,6 +296,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     return () => {
       window.cancelAnimationFrame(rafId);
       document.body.style.overflow = prevOverflow;
+      resumeScroll();
       if (
         !skipRestoreFocusRef.current &&
         previousFocusRef.current &&
@@ -301,7 +305,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         previousFocusRef.current.focus();
       }
     };
-  }, [open]);
+  }, [open, pauseScroll, resumeScroll]);
 
   // Keep active keyboard-selected item scrolled into view
   useEffect(() => {
@@ -366,8 +370,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     ? `cmd-opt-${filteredItems[safeActiveIndex].id}`
                     : undefined
                 }
-                aria-label="Cari bab, studi kasus, atau aksi cepat"
-                placeholder="Cari bab, studi kasus, atau aksi cepat..."
+                aria-label="Cari halaman, case study, atau quick action"
+                placeholder="Cari halaman, case study, atau quick action..."
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
@@ -405,6 +409,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               id="aflan-command-listbox"
               role="listbox"
               aria-label="Hasil indeks cepat"
+              data-lenis-prevent
               className="flex-1 overflow-y-auto overscroll-contain py-2"
             >
               {groupedSections.length > 0 ? (
@@ -520,7 +525,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
             {/* Footer Keybind Legend */}
             <div className="border-t border-champagne/15 px-4 sm:px-5 py-2.5 bg-obsidian/50 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono uppercase tracking-[0.15em] text-taupe shrink-0">
-              <span>↑↓ Pilih · ↵ Buka · ESC Tutup</span>
+              <span>↑↓ Navigasi · ↵ Buka · ESC Tutup</span>
               <span className="text-champagne/75">AFLAN DOSSIER · ⌘K</span>
             </div>
           </motion.div>

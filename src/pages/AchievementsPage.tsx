@@ -55,10 +55,10 @@ export const AchievementsPage: React.FC = () => {
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4">
             <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
               <Award className="size-4" aria-hidden="true" />
-              BAB 08 · PENCAPAIAN
+              BAB 08 · VERIFIED HONORS
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
-              100% CATATAN TERVERIFIKASI
+              100% VERIFIED CREDENTIALS
             </span>
           </Reveal>
           <HairlineRule tone="champagne" immediate className="mt-6" />
@@ -72,7 +72,7 @@ export const AchievementsPage: React.FC = () => {
                 lines={[
                   <>Sertifikasi, Publikasi &amp;</>,
                   <>
-                    <span className="italic text-champagne/90">Rekam Jejak Resmi</span>
+                    <span className="italic text-champagne/90">Official Track Record</span>
                   </>,
                 ]}
               />

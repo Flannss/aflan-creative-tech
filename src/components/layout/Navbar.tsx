@@ -6,6 +6,7 @@ import { BrandSignature, MonogramMark } from '@/components/brand/Monogram';
 import { navigationRoutes, personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
 import { calculateExactAge } from '@/utils/age';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import { EASE_LUXURY, SPRING_SILK } from '@/utils/motion';
 
 interface NavbarProps {
@@ -19,6 +20,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   const [overDarkSurface, setOverDarkSurface] = useState(false);
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
   const prefersReducedMotion = useReducedMotion();
+  const { pauseScroll, resumeScroll } = useSmoothScroll();
   const triggerRef = useRef<HTMLButtonElement | null>(null);
 
   const menuOpen = menuOpenPath === location.pathname;
@@ -75,6 +77,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
     if (!menuOpen) return;
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    pauseScroll();
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -86,9 +89,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
     return () => {
       document.body.style.overflow = prevOverflow;
+      resumeScroll();
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [menuOpen]);
+  }, [menuOpen, pauseScroll, resumeScroll]);
 
   const activePreviewRoute =
     navigationRoutes.find((r) => r.path === hoveredPath) ??
@@ -284,7 +288,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                 : { opacity: 0, y: -12 }
             }
             transition={{ duration: prefersReducedMotion ? 0.16 : 0.32, ease: EASE_LUXURY }}
-            className="fixed inset-0 z-65 bg-obsidian text-ivory overflow-y-auto will-change-[transform,opacity]"
+            data-lenis-prevent
+            className="fixed inset-0 z-65 bg-obsidian text-ivory overflow-y-auto overscroll-contain will-change-[transform,opacity]"
           >
             <div className="studio-vignette min-h-dvh flex flex-col justify-between px-4 sm:px-6 lg:px-12 py-6">
               <div className="max-w-[1440px] w-full mx-auto flex items-center justify-between gap-2.5 sm:gap-3 pb-5 sm:pb-6 border-b border-champagne/15">
@@ -304,7 +309,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                     >
                       <Search className="size-3.5" aria-hidden="true" />
                       <span className="sm:hidden">⌘K</span>
-                      <span className="hidden sm:inline">⌘K · Cari Cepat</span>
+                      <span className="hidden sm:inline">⌘K · Quick Index</span>
                     </button>
                   )}
                   <button

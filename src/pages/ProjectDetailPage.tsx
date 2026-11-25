@@ -73,7 +73,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
               <KineticLabel>Kembali ke Arsip Proyek</KineticLabel>
             </Link>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
-              ENTRI {project.index} · {project.category}
+              CASE STUDY · ENTRI {project.index} · {project.category}
             </span>
           </div>
           <HairlineRule tone="champagne" immediate className="mt-6" />
@@ -170,6 +170,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                     <img
                       src={project.previewImage}
                       alt={project.previewCaption}
+                      decoding="async"
                       style={{ objectPosition: project.previewObjectPosition ?? 'center' }}
                       className={`w-full h-full ${project.previewImageFit === 'contain'
                         ? 'object-contain p-8 sm:p-16'
@@ -234,7 +235,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
 
                 <div className="pt-5 border-t border-espresso/15">
                   <p className="font-mono text-[10px] tracking-[0.24em] uppercase text-mocha mb-3">
-                    STACK &amp; METODE
+                    STACK &amp; METHODOLOGY
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {project.stack.map((tech) => (
@@ -270,7 +271,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
             <Reveal variant="up" delay={0.1} className="md:col-span-7 lg:col-span-8 space-y-12">
               <div className="space-y-5">
                 <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha">
-                  TINJAUAN PROYEK
+                  PROJECT OVERVIEW
                 </p>
                 <div className="space-y-4 font-sans text-sm md:text-base leading-relaxed text-espresso/80">
                   {project.overview.map((p, idx) => (
@@ -281,7 +282,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
 
               <div className="pt-8 border-t border-espresso/15 space-y-5">
                 <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha">
-                  HASIL &amp; CATATAN TERVERIFIKASI
+                  VERIFIED OUTCOMES
                 </p>
                 <ul className="space-y-4">
                   {project.outcomes.map((outcome) => (
@@ -322,7 +323,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                   className="size-3.5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-1.5 motion-reduce:transform-none"
                   aria-hidden="true"
                 />
-                Proyek Sebelumnya
+                Previous Case Study
               </span>
               <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-taupe">
                 ENTRI {prevProject.index} · {prevProject.category}
@@ -343,7 +344,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
             />
             <div className="space-y-1.5 md:flex md:flex-col md:items-end">
               <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-champagne">
-                Proyek Berikutnya
+                Next Case Study
                 <ArrowRight
                   className="size-3.5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1.5 motion-reduce:transform-none"
                   aria-hidden="true"

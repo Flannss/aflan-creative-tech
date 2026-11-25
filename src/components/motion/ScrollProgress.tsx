@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 export const ScrollProgress: React.FC = () => {
   const { pathname } = useLocation();
   const isProjectDetail = pathname.startsWith('/projects/');
+  const { scrollTo } = useSmoothScroll();
   const { scrollYProgress } = useScroll();
   const prefersReducedMotion = useReducedMotion();
   const scaleX = useSpring(scrollYProgress, {
@@ -26,9 +28,9 @@ export const ScrollProgress: React.FC = () => {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    scrollTo(0, {
+      duration: 0.9,
+      immediate: Boolean(prefersReducedMotion),
     });
   };
 

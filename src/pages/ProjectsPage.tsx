@@ -5,11 +5,11 @@ import {
   projectCategories,
   projectsData,
   type ProjectCategory,
+  type ProjectEntry,
 } from '@/data/projects';
 import { ProjectPreviewList } from '@/components/projects/ProjectPreviewList';
+import { ProjectPreviewModal } from '@/components/projects/ProjectPreviewModal';
 import { TypographicDossierPlate } from '@/components/projects/TypographicDossierPlate';
-import { ProjectTransitionPortal } from '@/components/projects/ProjectClickTransition';
-import { useProjectTransition } from '@/hooks/useProjectTransition';
 import { ApertureFrame } from '@/components/motion/ApertureFrame';
 import { KineticLabel } from '@/components/motion/KineticLabel';
 import { Reveal, HairlineRule } from '@/components/motion/Reveal';
@@ -20,9 +20,8 @@ import { SegmentedControl } from '@/components/ui/SegmentedControl';
 export const ProjectsPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'All' | ProjectCategory>('All');
   const [viewMode, setViewMode] = useState<'index' | 'spread'>('index');
+  const [previewProject, setPreviewProject] = useState<ProjectEntry | null>(null);
   const stackRef = useRef<HTMLDivElement | null>(null);
-  const { transitionState, transitioningSlug, triggerProjectTransition } =
-    useProjectTransition();
 
   const filteredProjects = useMemo(() => {
     if (selectedCategory === 'All') return projectsData;
@@ -41,8 +40,8 @@ export const ProjectsPage: React.FC = () => {
   const viewOptions = useMemo(
     () =>
       [
-        { value: 'index', label: 'Indeks Editorial' },
-        { value: 'spread', label: 'Kartu Bertumpuk' },
+        { value: 'index', label: 'Editorial Index' },
+        { value: 'spread', label: 'Stacked Cards' },
       ] as const,
     [],
   );
@@ -60,7 +59,7 @@ export const ProjectsPage: React.FC = () => {
             className="flex flex-wrap items-center justify-between gap-4"
           >
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
-              BAB 05 · PROYEK
+              BAB 05 · SELECTED WORKS
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
               {filteredProjects.length} ENTRI DITAMPILKAN
@@ -75,9 +74,9 @@ export const ProjectsPage: React.FC = () => {
                 immediate
                 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-ivory/95"
                 lines={[
-                  <>Karya Terpilih &amp;</>,
+                  <>Selected Works &amp;</>,
                   <>
-                    <span className="italic text-champagne/90">Evaluasi Sistem</span>
+                    <span className="italic text-champagne/90">System Evaluation</span>
                   </>,
                 ]}
               />
@@ -85,9 +84,9 @@ export const ProjectsPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5 space-y-4">
               <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                Mencakup inisiatif studio mahasiswa SatuRuangCreative, aplikasi mobile
-                SOMASII, evaluasi QA pada ASIS Builder (NDA), serta identitas digital AFLAN,
-                disajikan transparan dengan ruang lingkup yang terukur.
+                Eksplorasi case study pilihan dari SatuRuangCreative, aplikasi mobile
+                SOMASII, evaluasi QA pada ASIS Builder (NDA), hingga identitas digital AFLAN —
+                disajikan transparan dengan ruang lingkup terukur.
               </p>
               <div className="flex items-start gap-2.5 p-4 bg-espresso/75 border border-champagne/20 text-sm lg:text-xs text-champagne/90 leading-relaxed">
                 <ShieldCheck className="size-4 shrink-0 mt-0.5" aria-hidden="true" />
@@ -151,7 +150,7 @@ export const ProjectsPage: React.FC = () => {
                   mana saja untuk membuka studi kasus penuh.
                 </p>
                 <div className="pt-4 border-t border-champagne/15 text-[10px] font-mono uppercase tracking-[0.15em] whitespace-nowrap text-taupe">
-                  KLIK KARTU UNTUK TRANSISI DOSSIER →
+                  KLIK KARTU UNTUK QUICK PREVIEW →
                 </div>
               </aside>
 
@@ -172,14 +171,21 @@ export const ProjectsPage: React.FC = () => {
                     <Link
                       to={`/projects/${project.slug}`}
                       onClick={(e) => {
-                        const previewEl = e.currentTarget.querySelector<HTMLElement>(
-                          '[data-project-preview]',
-                        );
-                        triggerProjectTransition(e, project, previewEl);
+                        if (
+                          e.metaKey ||
+                          e.ctrlKey ||
+                          e.shiftKey ||
+                          e.altKey ||
+                          e.button !== 0
+                        ) {
+                          return;
+                        }
+                        e.preventDefault();
+                        setPreviewProject(project);
                       }}
                       className={`group flex flex-col bg-obsidian border border-champagne/25 hover:border-champagne/65 active:border-champagne transition-all duration-300 overflow-hidden shadow-[0_28px_80px_rgba(0,0,0,0.55)] ${
-                        transitioningSlug !== null && transitioningSlug !== project.slug
-                          ? 'opacity-30'
+                        previewProject?.slug === project.slug
+                          ? 'border-champagne/75'
                           : ''
                       }`}
                     >
@@ -197,14 +203,11 @@ export const ProjectsPage: React.FC = () => {
                                 src={project.previewImage}
                                 alt={project.previewCaption}
                                 loading="lazy"
+                                decoding="async"
                                 style={{
                                   objectPosition: project.previewObjectPosition ?? 'center',
                                 }}
-                                className={`w-full h-full transition-transform duration-700 ease-out motion-reduce:transform-none ${
-                                  transitioningSlug === project.slug
-                                    ? 'scale-[1.05]'
-                                    : 'group-hover:scale-[1.03]'
-                                } ${
+                                className={`w-full h-full transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transform-none ${
                                   project.previewImageFit === 'contain'
                                     ? 'object-contain p-8'
                                     : 'object-cover'
@@ -242,7 +245,7 @@ export const ProjectsPage: React.FC = () => {
                             {project.role}
                           </span>
                           <span className="inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.18em] uppercase text-champagne shrink-0">
-                            <KineticLabel>Buka Dossier</KineticLabel>
+                            <KineticLabel>Preview Dossier</KineticLabel>
                             <ArrowUpRight
                               className="size-3.5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
                               aria-hidden="true"
@@ -258,7 +261,10 @@ export const ProjectsPage: React.FC = () => {
           )}
         </div>
       </section>
-      <ProjectTransitionPortal state={transitionState} />
+      <ProjectPreviewModal
+        project={previewProject}
+        onClose={() => setPreviewProject(null)}
+      />
     </div>
   );
 };

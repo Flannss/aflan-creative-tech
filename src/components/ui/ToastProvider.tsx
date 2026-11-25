@@ -59,7 +59,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
             aria-live="polite"
             aria-atomic="true"
             aria-label="Notifikasi sistem"
-            className="pointer-events-none fixed inset-x-0 top-20 sm:top-24 z-[95] flex justify-center px-4 sm:px-6"
+            className="pointer-events-none fixed inset-x-0 top-20 sm:top-24 z-[110] flex justify-center px-4 sm:px-6"
           >
             <AnimatePresence mode="wait">
               {toast && (

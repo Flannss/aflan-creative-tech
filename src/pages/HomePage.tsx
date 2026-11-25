@@ -398,7 +398,7 @@ export const HomePage: React.FC = () => {
             className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-12 lg:mb-16 border-b border-champagne/15"
           >
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne">
-              FILOSOFI IDENTITAS · MONOGRAM AMDZ
+              IDENTITY PHILOSOPHY · MONOGRAM AMDZ
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-taupe">
               ANATOMI LAMBANG · AFLAN / AMDZ
@@ -546,11 +546,11 @@ export const HomePage: React.FC = () => {
           >
             <div className="space-y-2">
               <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-bronze font-medium">
-                BAB 01 · IDENTITAS
+                BAB 01 · PERSONAL DOSSIER
               </p>
               <div className="flex items-center gap-3.5">
                 <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight text-espresso/90">
-                  Profil &amp; <span className="italic text-mocha">Ringkasan</span>
+                  Profil &amp; <span className="italic text-mocha">Identity Summary</span>
                 </h2>
                 <MonogramMark size={30} className="text-mocha/85 shrink-0" />
               </div>
@@ -673,14 +673,14 @@ export const HomePage: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 sm:mb-16 lg:mb-20">
             <div className="space-y-4">
               <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
-                BAB 02 · KARYA TERPILIH &amp; SOFTWARE QA
+                BAB 02 · SELECTED WORKS &amp; SOFTWARE QA
               </p>
               <TextReveal
                 as="h2"
                 className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-[1.08] text-ivory"
                 lines={[
                   <>
-                    Indeks <span className="italic text-champagne/90">Terkurasi</span>
+                    Selected <span className="italic text-champagne/90">Works</span>
                   </>,
                 ]}
               />
@@ -688,16 +688,15 @@ export const HomePage: React.FC = () => {
 
             <Reveal variant="up" delay={0.1} className="max-w-md space-y-4">
               <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                Kumpulan karya pengembangan web, aplikasi mobile kampus, serta evaluasi
-                kualitas perangkat lunak yang disajikan transparan sesuai peran dan
-                kontribusi aktual.
+                Eksplorasi case study pilihan dari pengembangan web, aplikasi mobile kampus,
+                hingga evaluasi software quality — disajikan transparan sesuai peran aktual.
               </p>
               <Link
                 to="/projects"
                 data-cursor="ARSIP"
                 className="group relative inline-flex items-center gap-2 pb-1 font-mono text-xs tracking-[0.2em] uppercase text-champagne hover:text-ivory transition-colors"
               >
-                <KineticLabel>Jelajahi Seluruh Proyek</KineticLabel>
+                <KineticLabel>Explore All Projects</KineticLabel>
                 <ArrowUpRight
                   className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
                   aria-hidden="true"
@@ -723,20 +722,20 @@ export const HomePage: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 lg:mb-14">
             <div>
               <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze mb-3">
-                BAB 03 · EKSPLORASI LANJUTAN
+                BAB 03 · ARCHIVE EXPLORATION
               </p>
               <TextReveal
                 as="h2"
                 className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-tight text-espresso/90"
                 lines={[
                   <>
-                    Masuk ke Dalam <span className="italic text-mocha">Arsip</span>
+                    Masuk ke <span className="italic text-mocha">Digital Archive</span>
                   </>,
                 ]}
               />
             </div>
             <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-bronze">
-              SEMBILAN BAB TERHUBUNG
+              NINE INTERCONNECTED CHAPTERS
             </p>
           </div>
 
@@ -763,17 +762,17 @@ export const HomePage: React.FC = () => {
 
                 <div className="relative z-10 mt-auto pt-12 sm:pt-14 space-y-4">
                   <h3
-                    aria-label="Sistem Visual Interaktif"
+                    aria-label="Interactive Visual Systems"
                     className="font-serif italic text-3xl md:text-5xl leading-[1.04] font-light tracking-tight text-champagne/90"
                   >
                     <span aria-hidden="true">
-                      {'Sistem Visual '}
-                      <span className="block not-italic text-ivory">Interaktif</span>
+                      {'Interactive '}
+                      <span className="block not-italic text-ivory">Visual Systems</span>
                     </span>
                   </h3>
                   <p className="font-sans text-sm md:text-base text-ivory/80 max-w-lg leading-relaxed">
-                    Jelajahi kompositor tipografi editorial, kanvas chiaroscuro interaktif,
-                    koreografi kurva motion, serta matriks kontras warna WCAG secara langsung.
+                    Eksplorasi langsung kompositor tipografi editorial, chiaroscuro canvas,
+                    koreografi kurva motion, matriks kontras WCAG, serta Motion Workbench.
                   </p>
                 </div>
               </Link>
@@ -798,7 +797,7 @@ export const HomePage: React.FC = () => {
                   </div>
                   <div className="pt-8">
                     <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-espresso group-hover:text-mocha transition-colors">
-                      Linimasa &amp; <span className="italic">Pengalaman</span>
+                      Timeline &amp; <span className="italic">Experience</span>
                     </h3>
                     <p className="mt-2.5 font-sans text-sm md:text-base text-espresso/80 leading-relaxed">
                       Dari PKL hardware di GT Computer Purwokerto dan studi S1 Teknologi
@@ -824,10 +823,10 @@ export const HomePage: React.FC = () => {
                     </div>
                     <div className="pt-7">
                       <h3 className="font-serif text-2xl font-light text-ivory">
-                        Edisi Monograf
+                        Visual Archive
                       </h3>
                       <p className="mt-1.5 text-sm lg:text-xs text-ivory/80">
-                        Potret studio, studi tonal &amp; lightbox.
+                        Studio portraits, tonal studies &amp; monograph lightbox.
                       </p>
                     </div>
                   </Link>
@@ -847,7 +846,7 @@ export const HomePage: React.FC = () => {
                     </div>
                     <div className="pt-7">
                       <h3 className="font-serif text-2xl font-light text-espresso">
-                        Hierarki Stack
+                        Core Capabilities
                       </h3>
                       <p className="mt-1.5 text-sm lg:text-xs text-charcoal/75">
                         Web, Mobile, UI/UX, Software QA &amp; AI Orchestration.

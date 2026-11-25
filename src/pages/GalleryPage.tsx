@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
   ChevronLeft,
@@ -21,6 +22,7 @@ import { ApertureFrame } from '@/components/motion/ApertureFrame';
 import { HairlineRule, Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import { EASE_LUXURY } from '@/utils/motion';
 
 type TonalTreatment = 'original' | 'sepia' | 'monochrome';
@@ -82,13 +84,14 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
 
   if (inLightbox && item.kind === 'photo' && item.src) {
     return (
-      <div className="relative inline-flex items-center justify-center max-w-full max-h-[82vh] overflow-hidden">
+      <div className="relative inline-flex items-center justify-center max-w-full max-h-full overflow-hidden rounded-lg">
         <img
           src={item.src}
           alt={item.title}
           loading="eager"
+          decoding="async"
           style={{ filter: combinedFilter }}
-          className="block max-w-full max-h-[82vh] w-auto h-auto object-contain mx-auto"
+          className="block max-h-[60vh] sm:max-h-[68vh] max-w-full w-auto h-auto object-contain select-none"
         />
         {filmGrain && (
           <div
@@ -108,7 +111,7 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
     <div
       className={`relative overflow-hidden bg-obsidian ${
         inLightbox
-          ? `w-[min(84vw,540px)] max-h-[76vh] ${item.aspectClass} mx-auto`
+          ? `w-[min(82vw,460px)] max-h-[58vh] sm:max-h-[66vh] ${item.aspectClass} mx-auto rounded-lg`
           : 'w-full h-full'
       }`}
     >
@@ -117,6 +120,7 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
           src={item.src}
           alt={item.title}
           loading="lazy"
+          decoding="async"
           style={{
             objectPosition: item.objectPosition ?? 'center',
             filter: combinedFilter,
@@ -268,6 +272,7 @@ export const GalleryPage: React.FC = () => {
   const [lightboxId, setLightboxId] = useState<string | null>(null);
   const [showCaptions, setShowCaptions] = useState(true);
   const prefersReducedMotion = useReducedMotion();
+  const { pauseScroll, resumeScroll } = useSmoothScroll();
 
   const filteredItems = useMemo(() => {
     if (selectedCategory === 'Semua') return galleryItems;
@@ -321,6 +326,7 @@ export const GalleryPage: React.FC = () => {
     const prevHeaderTheme = document.documentElement.dataset.headerTheme;
 
     document.body.style.overflow = 'hidden';
+    pauseScroll();
     document.documentElement.dataset.headerTheme = 'dark';
     window.dispatchEvent(new Event('aflan-nav-theme-sync'));
 
@@ -340,6 +346,7 @@ export const GalleryPage: React.FC = () => {
     window.addEventListener('keydown', onKeyDown);
     return () => {
       document.body.style.overflow = prevOverflow;
+      resumeScroll();
       if (prevHeaderTheme === undefined) {
         delete document.documentElement.dataset.headerTheme;
       } else {
@@ -348,7 +355,7 @@ export const GalleryPage: React.FC = () => {
       window.dispatchEvent(new Event('aflan-nav-theme-sync'));
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [lightboxIndex, hasMultiplePlates, filteredItems]);
+  }, [lightboxIndex, hasMultiplePlates, filteredItems, pauseScroll, resumeScroll]);
 
   const stepLightbox = (delta: number) => {
     if (lightboxIndex === null || filteredItems.length === 0) return;
@@ -377,10 +384,10 @@ export const GalleryPage: React.FC = () => {
             className="flex flex-wrap items-center justify-between gap-4"
           >
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
-              BAB 07 · GALERI · {String(filteredItems.length).padStart(2, '0')} PELAT
+              BAB 07 · VISUAL ARCHIVE · {String(filteredItems.length).padStart(2, '0')} PELAT
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
-              POTRET PERSONAL &amp; STUDI TIPOGRAFI AFLAN
+              PERSONAL PORTRAITS &amp; TYPOGRAPHIC STUDIES
             </span>
           </Reveal>
           <HairlineRule tone="espresso" immediate className="mt-6" />
@@ -392,9 +399,9 @@ export const GalleryPage: React.FC = () => {
                 immediate
                 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-espresso/90"
                 lines={[
-                  <>Edisi Monograf</>,
+                  <>Visual Archive &amp;</>,
                   <>
-                    <span className="italic text-mocha">Potret &amp; Abstrak Personal</span>
+                    <span className="italic text-mocha">Monograph Plates</span>
                   </>,
                 ]}
               />
@@ -719,160 +726,177 @@ export const GalleryPage: React.FC = () => {
         </div>
       </section>
 
-      {/* FULL-SCREEN LIGHTBOX — MOBILE-SAFE OBJECT-CONTAIN & GENEROUS TOUCH PADDING */}
-      <AnimatePresence>
-        {activeItem && lightboxIndex !== null && (
-          <motion.div
-            role="dialog"
-            aria-modal="true"
-            aria-label={`Penampil Lightbox: ${activeItem.title}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0.15 : 0.3, ease: EASE_LUXURY }}
-            onClick={() => setLightboxId(null)}
-            className="fixed inset-0 z-80 bg-obsidian/96 backdrop-blur-lg flex flex-col justify-between p-4 sm:p-6 md:p-8 overflow-y-auto"
-          >
-            {/* Top Toolbar */}
-            <div
-              onClick={(e) => e.stopPropagation()}
-              className="max-w-[1360px] w-full mx-auto flex flex-wrap items-center justify-between gap-3 pb-3.5 border-b border-champagne/15 shrink-0"
-            >
-              <span className="font-mono text-xs tracking-[0.22em] uppercase text-champagne">
-                {String(lightboxIndex + 1).padStart(2, '0')} /{' '}
-                {String(filteredItems.length).padStart(2, '0')} · {activeItem.plateNumber}
-              </span>
-
-              <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
-                <button
-                  type="button"
-                  onClick={() => setFilmGrainEnabled((prev) => !prev)}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-champagne/30 text-champagne font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne active:scale-95 transition-all"
-                >
-                  <Sparkles className="size-3.5" aria-hidden="true" />
-                  Grain: {filmGrainEnabled ? 'ON' : 'OFF'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowCaptions((prev) => !prev)}
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/30 text-ivory font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne active:scale-95 transition-all"
-                >
-                  {showCaptions ? (
-                    <>
-                      <EyeOff className="size-3.5" aria-hidden="true" />
-                      <span className="hidden sm:inline">Sembunyikan Teks</span>
-                      <span className="sm:hidden">Teks</span>
-                    </>
-                  ) : (
-                    <>
-                      <Eye className="size-3.5" aria-hidden="true" />
-                      <span className="hidden sm:inline">Tampilkan Teks</span>
-                      <span className="sm:hidden">Teks</span>
-                    </>
-                  )}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setLightboxId(null)}
-                  aria-label="Tutup lightbox"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-champagne text-obsidian font-mono text-[10px] tracking-[0.2em] uppercase font-medium hover:bg-ivory active:scale-95 transition-all"
-                >
-                  Tutup
-                  <X className="size-4" aria-hidden="true" />
-                </button>
-              </div>
-            </div>
-
-            {/* Center Media Viewport — Never Cropped on Mobile or Desktop */}
-            <div
-              onClick={(e) => e.stopPropagation()}
-              className="max-w-[1280px] w-full mx-auto my-auto py-4 sm:py-6 flex items-center justify-center sm:justify-between gap-4"
-            >
-              {hasMultiplePlates && (
-                <button
-                  type="button"
-                  onClick={() => stepLightbox(-1)}
-                  aria-label="Pelat sebelumnya"
-                  className="hidden sm:flex shrink-0 size-11 rounded-full border border-champagne/35 bg-espresso/75 items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-all"
-                >
-                  <ChevronLeft className="size-5" aria-hidden="true" />
-                </button>
-              )}
-
+      {/* FULL-SCREEN LIGHTBOX PORTAL — LOCKED BORDER CONTAINMENT ON ALL VIEWPORTS */}
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {activeItem && lightboxIndex !== null && (
               <motion.div
-                key={activeItem.id}
-                initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.32, ease: EASE_LUXURY }}
-                className="flex-1 w-full flex items-center justify-center p-4 sm:p-6"
+                key="aflan-gallery-lightbox"
+                role="dialog"
+                aria-modal="true"
+                aria-label={`Penampil Lightbox: ${activeItem.title}`}
+                data-lenis-prevent
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: prefersReducedMotion ? 0.14 : 0.25, ease: EASE_LUXURY }}
+                onClick={() => setLightboxId(null)}
+                className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 md:p-10 bg-obsidian/92 backdrop-blur-lg overflow-hidden overscroll-none"
               >
-                <div className="max-w-full max-h-[84vh] flex items-center justify-center border border-champagne/25 bg-espresso/40 p-2 sm:p-3 shadow-2xl">
-                  <PlateVisual
-                    item={activeItem}
-                    tonalMode={tonalMode}
-                    filmGrain={filmGrainEnabled}
-                    inLightbox
-                  />
-                </div>
-              </motion.div>
-
-              {hasMultiplePlates && (
-                <button
-                  type="button"
-                  onClick={() => stepLightbox(1)}
-                  aria-label="Pelat berikutnya"
-                  className="hidden sm:flex shrink-0 size-11 rounded-full border border-champagne/35 bg-espresso/75 items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-all"
+                <motion.div
+                  initial={
+                    prefersReducedMotion
+                      ? { opacity: 0 }
+                      : { opacity: 0, scale: 0.98, y: 12 }
+                  }
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={
+                    prefersReducedMotion
+                      ? { opacity: 0 }
+                      : { opacity: 0, scale: 0.985, y: 8 }
+                  }
+                  transition={{
+                    duration: prefersReducedMotion ? 0.14 : 0.3,
+                    ease: EASE_LUXURY,
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="relative w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden rounded-2xl border border-champagne/20 bg-[#1A1412]/96 text-ivory shadow-[0_32px_100px_rgba(0,0,0,0.9)]"
                 >
-                  <ChevronRight className="size-5" aria-hidden="true" />
-                </button>
-              )}
-            </div>
+                  {/* Top Toolbar */}
+                  <div className="shrink-0 flex flex-wrap items-center justify-between gap-2.5 px-4 sm:px-6 py-3.5 border-b border-champagne/15">
+                    <span className="font-mono text-xs tracking-[0.22em] uppercase text-champagne">
+                      {String(lightboxIndex + 1).padStart(2, '0')} /{' '}
+                      {String(filteredItems.length).padStart(2, '0')} · {activeItem.plateNumber}
+                    </span>
 
-            {/* Mobile Touch Navigation + Caption Footer */}
-            <div
-              onClick={(e) => e.stopPropagation()}
-              className="max-w-[1000px] w-full mx-auto pt-3.5 border-t border-champagne/15 text-center shrink-0 space-y-3"
-            >
-              {hasMultiplePlates && (
-                <div className="flex sm:hidden items-center justify-center gap-4">
-                  <button
-                    type="button"
-                    onClick={() => stepLightbox(-1)}
-                    aria-label="Pelat sebelumnya"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-champagne/35 bg-espresso/75 text-champagne font-mono text-[10px] tracking-[0.18em] uppercase active:scale-95 transition-all"
-                  >
-                    <ChevronLeft className="size-4" aria-hidden="true" />
-                    Sebelumnya
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => stepLightbox(1)}
-                    aria-label="Pelat berikutnya"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-champagne/35 bg-espresso/75 text-champagne font-mono text-[10px] tracking-[0.18em] uppercase active:scale-95 transition-all"
-                  >
-                    Berikutnya
-                    <ChevronRight className="size-4" aria-hidden="true" />
-                  </button>
-                </div>
-              )}
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+                      <button
+                        type="button"
+                        onClick={() => setFilmGrainEnabled((prev) => !prev)}
+                        className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-full border border-champagne/25 text-champagne font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne active:scale-95 transition-all cursor-pointer"
+                      >
+                        <Sparkles className="size-3.5" aria-hidden="true" />
+                        Grain: {filmGrainEnabled ? 'ON' : 'OFF'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setShowCaptions((prev) => !prev)}
+                        className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-full border border-champagne/25 text-ivory font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne active:scale-95 transition-all cursor-pointer"
+                      >
+                        {showCaptions ? (
+                          <>
+                            <EyeOff className="size-3.5" aria-hidden="true" />
+                            <span className="hidden sm:inline">Sembunyikan Teks</span>
+                            <span className="sm:hidden">Teks</span>
+                          </>
+                        ) : (
+                          <>
+                            <Eye className="size-3.5" aria-hidden="true" />
+                            <span className="hidden sm:inline">Tampilkan Teks</span>
+                            <span className="sm:hidden">Teks</span>
+                          </>
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setLightboxId(null)}
+                        aria-label="Tutup lightbox"
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-champagne text-obsidian font-mono text-[10px] tracking-[0.2em] uppercase font-medium hover:bg-ivory active:scale-95 transition-all cursor-pointer"
+                      >
+                        Tutup
+                        <X className="size-4" aria-hidden="true" />
+                      </button>
+                    </div>
+                  </div>
 
-              {showCaptions && (
-                <div className="space-y-1">
-                  <h3 className="font-serif text-xl sm:text-3xl font-light text-ivory">
-                    {activeItem.title}
-                  </h3>
-                  <p className="font-sans text-sm text-ivory/75 max-w-2xl mx-auto">
-                    {activeItem.caption}
-                  </p>
-                  <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-taupe pt-0.5">
-                    {activeItem.meta.medium} · {activeItem.meta.treatment}
-                  </p>
-                </div>
-              )}
-            </div>
-          </motion.div>
+                  {/* Center Media Viewport — Strictly Contained Inside Frame Border */}
+                  <div className="flex-1 min-h-0 flex items-center justify-center gap-3 sm:gap-5 overflow-hidden p-3 sm:p-5">
+                    {hasMultiplePlates && (
+                      <button
+                        type="button"
+                        onClick={() => stepLightbox(-1)}
+                        aria-label="Pelat sebelumnya"
+                        className="hidden sm:flex shrink-0 size-11 rounded-full border border-champagne/30 bg-espresso/75 items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-all cursor-pointer"
+                      >
+                        <ChevronLeft className="size-5" aria-hidden="true" />
+                      </button>
+                    )}
+
+                    <motion.div
+                      key={activeItem.id}
+                      initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.97 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.28, ease: EASE_LUXURY }}
+                      className="flex-1 min-w-0 min-h-0 h-full flex items-center justify-center overflow-hidden"
+                    >
+                      <PlateVisual
+                        item={activeItem}
+                        tonalMode={tonalMode}
+                        filmGrain={filmGrainEnabled}
+                        inLightbox
+                      />
+                    </motion.div>
+
+                    {hasMultiplePlates && (
+                      <button
+                        type="button"
+                        onClick={() => stepLightbox(1)}
+                        aria-label="Pelat berikutnya"
+                        className="hidden sm:flex shrink-0 size-11 rounded-full border border-champagne/30 bg-espresso/75 items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-all cursor-pointer"
+                      >
+                        <ChevronRight className="size-5" aria-hidden="true" />
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Mobile Touch Navigation + Caption Footer */}
+                  {(hasMultiplePlates || showCaptions) && (
+                    <div className="shrink-0 px-4 sm:px-6 py-3.5 border-t border-champagne/15 bg-obsidian/55 text-center space-y-2.5">
+                      {hasMultiplePlates && (
+                        <div className="flex sm:hidden items-center justify-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => stepLightbox(-1)}
+                            aria-label="Pelat sebelumnya"
+                            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-champagne/30 bg-espresso/75 text-champagne font-mono text-[10px] tracking-[0.18em] uppercase active:scale-95 transition-all"
+                          >
+                            <ChevronLeft className="size-4" aria-hidden="true" />
+                            Sebelumnya
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => stepLightbox(1)}
+                            aria-label="Pelat berikutnya"
+                            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-champagne/30 bg-espresso/75 text-champagne font-mono text-[10px] tracking-[0.18em] uppercase active:scale-95 transition-all"
+                          >
+                            Berikutnya
+                            <ChevronRight className="size-4" aria-hidden="true" />
+                          </button>
+                        </div>
+                      )}
+
+                      {showCaptions && (
+                        <div className="space-y-1">
+                          <h3 className="font-serif text-lg sm:text-2xl font-light text-ivory leading-tight">
+                            {activeItem.title}
+                          </h3>
+                          <p className="font-sans text-xs sm:text-sm text-ivory/75 max-w-2xl mx-auto line-clamp-2">
+                            {activeItem.caption}
+                          </p>
+                          <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-taupe pt-0.5 truncate">
+                            {activeItem.meta.medium} · {activeItem.meta.treatment}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
     </div>
   );
 };

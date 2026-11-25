@@ -12,6 +12,7 @@ import { StackingCard } from '@/components/motion/StackingCard';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 export const JourneyPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'Semua' | JourneyCategory>('Semua');
@@ -22,6 +23,7 @@ export const JourneyPage: React.FC = () => {
   const navTimeoutRef = useRef<number | null>(null);
   const prefersReducedMotion = useReducedMotion();
   const isTabletOrDesktop = useMediaQuery('(min-width: 768px)');
+  const { scrollTo } = useSmoothScroll();
 
   const filteredMilestones = useMemo(() => {
     if (selectedCategory === 'Semua') return journeyMilestones;
@@ -66,9 +68,9 @@ export const JourneyPage: React.FC = () => {
       const topOffset = isTabletOrDesktop ? stickyTop : 80;
       const targetTop = Math.max(0, elementDocTop - topOffset);
 
-      window.scrollTo({
-        top: targetTop,
-        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      scrollTo(targetTop, {
+        duration: 0.85,
+        immediate: Boolean(prefersReducedMotion),
       });
     }
 
@@ -135,9 +137,9 @@ export const JourneyPage: React.FC = () => {
       if (firstAnchor) {
         const elementDocTop = firstAnchor.getBoundingClientRect().top + window.scrollY;
         const topOffset = isTabletOrDesktop ? 96 : 80;
-        window.scrollTo({
-          top: Math.max(0, elementDocTop - topOffset),
-          behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        scrollTo(Math.max(0, elementDocTop - topOffset), {
+          duration: 0.8,
+          immediate: Boolean(prefersReducedMotion),
         });
       }
     }
@@ -165,10 +167,10 @@ export const JourneyPage: React.FC = () => {
             className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15"
           >
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
-              BAB 03 · PERJALANAN
+              BAB 03 · EXPERIENCE &amp; TIMELINE
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
-              REKAM JEJAK AKADEMIK &amp; PROFESIONAL
+              ACADEMIC &amp; PROFESSIONAL RECORD
             </span>
           </Reveal>
 

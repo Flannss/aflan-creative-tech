@@ -11,7 +11,9 @@ import { Layout } from '@/components/layout/Layout';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
 import { SplashIntro } from '@/components/layout/SplashIntro';
 import { ToastProvider } from '@/components/ui/ToastProvider';
+import { SmoothScrollProvider } from '@/components/motion/SmoothScrollProvider';
 import { PageTransition } from '@/components/motion/PageTransition';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import { HomePage } from '@/pages/HomePage';
 import { AboutPage } from '@/pages/AboutPage';
 import { JourneyPage } from '@/pages/JourneyPage';
@@ -26,13 +28,14 @@ import { NotFoundPage } from '@/pages/NotFoundPage';
 
 const AppRoutes: React.FC = () => {
   const location = useLocation();
+  const { scrollTo } = useSmoothScroll();
 
   return (
     <AnimatePresence
       mode="wait"
       initial={false}
       onExitComplete={() => {
-        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        scrollTo(0, { immediate: true });
       }}
     >
       <PageTransition key={location.pathname}>
@@ -80,24 +83,26 @@ export const App: React.FC = () => {
 
   return (
     <MotionConfig reducedMotion="user">
-      <ToastProvider>
-        <AnimatePresence mode="wait">
-          {showSplash && (
-            <SplashIntro
-              key="aflan-splash-intro"
-              onEnter={handleEnterPortfolio}
-            />
-          )}
-        </AnimatePresence>
+      <SmoothScrollProvider>
+        <ToastProvider>
+          <AnimatePresence mode="wait">
+            {showSplash && (
+              <SplashIntro
+                key="aflan-splash-intro"
+                onEnter={handleEnterPortfolio}
+              />
+            )}
+          </AnimatePresence>
 
-        <BrowserRouter>
-          <Layout splashActive={showSplash}>
-            <ErrorBoundary>
-              <AppRoutes />
-            </ErrorBoundary>
-          </Layout>
-        </BrowserRouter>
-      </ToastProvider>
+          <BrowserRouter>
+            <Layout splashActive={showSplash}>
+              <ErrorBoundary>
+                <AppRoutes />
+              </ErrorBoundary>
+            </Layout>
+          </BrowserRouter>
+        </ToastProvider>
+      </SmoothScrollProvider>
     </MotionConfig>
   );
 };

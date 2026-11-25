@@ -4,9 +4,8 @@ import { ArrowUpRight } from 'lucide-react';
 import { useReducedMotion } from 'framer-motion';
 import type { ProjectEntry } from '@/data/projects';
 import { ApertureFrame } from '@/components/motion/ApertureFrame';
+import { ProjectPreviewModal } from '@/components/projects/ProjectPreviewModal';
 import { TypographicDossierPlate } from '@/components/projects/TypographicDossierPlate';
-import { ProjectTransitionPortal } from '@/components/projects/ProjectClickTransition';
-import { useProjectTransition } from '@/hooks/useProjectTransition';
 import { useCanHoverFine, useMediaQuery } from '@/hooks/useMediaQuery';
 
 interface ProjectPreviewListProps {
@@ -17,17 +16,15 @@ interface ProjectPreviewListProps {
  * Editorial project index rows featuring:
  * - Wide desktop (>= 1280px, fine pointer): smooth RAF-interpolated floating visual preview positioned outside text columns.
  * - Mobile / tablet: crisp inline responsive visual card inside each row.
- * - Cinematic click/tap preview expansion before route navigation.
+ * - Silky editorial preview modal on primary click while preserving Ctrl/Cmd+Click to open new tab.
  */
 export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects }) => {
   const [activeProject, setActiveProject] = useState<ProjectEntry | null>(null);
+  const [previewProject, setPreviewProject] = useState<ProjectEntry | null>(null);
   const canHoverFine = useCanHoverFine();
   const isWideDesktop = useMediaQuery('(min-width: 1280px)');
   const prefersReducedMotion = useReducedMotion();
   const canHover = canHoverFine && isWideDesktop && !prefersReducedMotion;
-
-  const { transitionState, transitioningSlug, triggerProjectTransition } =
-    useProjectTransition();
 
   const previewRef = useRef<HTMLDivElement | null>(null);
   const pointerTarget = useRef({ x: 0, y: 0 });
@@ -35,7 +32,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
   const isInsideList = useRef(false);
 
   const isPreviewVisible =
-    canHover && activeProject !== null && transitioningSlug === null;
+    canHover && activeProject !== null && previewProject === null;
 
   useEffect(() => {
     if (!isPreviewVisible) return;
@@ -98,18 +95,12 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
     e: React.MouseEvent<HTMLAnchorElement>,
     project: ProjectEntry,
   ) => {
-    const inlinePreview = e.currentTarget.querySelector<HTMLElement>(
-      '[data-project-preview]',
-    );
-    const floatingEl =
-      isPreviewVisible && previewRef.current ? previewRef.current : null;
-    const inlineRect = inlinePreview?.getBoundingClientRect();
-    const hasVisibleInlinePreview =
-      Boolean(inlineRect && inlineRect.width > 24 && inlineRect.height > 24);
-
-    const originEl = hasVisibleInlinePreview ? inlinePreview : floatingEl;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
+      return;
+    }
+    e.preventDefault();
     setActiveProject(null);
-    triggerProjectTransition(e, project, originEl);
+    setPreviewProject(project);
   };
 
   return (
@@ -122,8 +113,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
         {projects.map((project, idx) => {
           const isOrphanOnTablet =
             projects.length % 2 === 1 && idx === projects.length - 1;
-          const isSelected = transitioningSlug === project.slug;
-          const isDimmed = transitioningSlug !== null && !isSelected;
+          const isSelected = previewProject?.slug === project.slug;
 
           return (
             <Link
@@ -131,17 +121,15 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
               to={`/projects/${project.slug}`}
               onClick={(e) => handleRowClick(e, project)}
               onMouseEnter={() =>
-                canHover && transitioningSlug === null && setActiveProject(project)
+                canHover && previewProject === null && setActiveProject(project)
               }
               onFocus={() =>
-                canHover && transitioningSlug === null && setActiveProject(project)
+                canHover && previewProject === null && setActiveProject(project)
               }
               onBlur={() => canHover && setActiveProject(null)}
               className={`relative group block md:flex md:flex-col md:h-full lg:block lg:h-auto py-8 sm:py-10 md:p-6 lg:py-10 lg:px-5 px-2 sm:px-4 md:mx-0 lg:-mx-5 md:border md:border-champagne/20 md:bg-obsidian/45 md:hover:border-champagne/55 md:active:border-champagne lg:border-0 lg:bg-transparent transition-all duration-300 hover:bg-espresso/45 active:bg-espresso/60 active:scale-[0.99] lg:active:scale-100 ${
                 isOrphanOnTablet ? 'md:col-span-2' : ''
-              } ${isDimmed ? 'opacity-30' : ''} ${
-                isSelected ? 'bg-espresso/65' : ''
-              }`}
+              } ${isSelected ? 'bg-espresso/65' : ''}`}
             >
               <span
                 aria-hidden="true"
@@ -208,6 +196,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                           src={project.previewImage}
                           alt={project.previewCaption}
                           loading="lazy"
+                          decoding="async"
                           style={{ objectPosition: project.previewObjectPosition ?? 'center' }}
                           className={`w-full h-full transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transform-none ${
                             project.previewImageFit === 'contain'
@@ -267,14 +256,17 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                 {activeProject.platform}
               </span>
               <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-taupe shrink-0">
-                Buka Dossier →
+                Preview Dossier →
               </span>
             </div>
           </div>
         </div>
       )}
 
-      <ProjectTransitionPortal state={transitionState} />
+      <ProjectPreviewModal
+        project={previewProject}
+        onClose={() => setPreviewProject(null)}
+      />
     </div>
   );
 };

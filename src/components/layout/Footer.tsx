@@ -54,7 +54,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 sm:pb-14 border-b border-champagne/15 items-end">
           <div className="lg:col-span-7">
             <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne mb-3">
-              KORESPONDENSI &amp; KOLABORASI
+              START A CONVERSATION · COLLABORATION
             </p>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-ivory/95">
               Punya ide menarik untuk{' '}
@@ -124,7 +124,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
                   className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/20 bg-espresso/50 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne/90 hover:border-champagne hover:text-ivory active:scale-[0.97] transition-all cursor-pointer"
                 >
                   <Search className="size-3.5" aria-hidden="true" />
-                  <span>⌘K · Cari Cepat</span>
+                  <span>⌘K · Quick Index</span>
                 </button>
               )}
             </div>
@@ -132,7 +132,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
 
           <div className="md:col-span-1 lg:col-span-4">
             <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne mb-5">
-              INDEKS HALAMAN (01 – 09)
+              SITE INDEX · 01–09
             </p>
             <ul className="grid grid-cols-2 gap-x-6 gap-y-3 md:gap-y-2.5">
               {navigationRoutes.map((route) => (
@@ -159,7 +159,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
 
           <div className="md:col-span-1 lg:col-span-4">
             <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne mb-5">
-              KANAL RESMI
+              OFFICIAL CHANNELS
             </p>
             <ul className="space-y-3.5">
               {contactData.channels.map((ch) => (

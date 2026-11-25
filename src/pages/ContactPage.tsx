@@ -274,7 +274,7 @@ export const ContactPage: React.FC = () => {
             className="flex flex-wrap items-center justify-between gap-4"
           >
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-[#8A6D4B]">
-              BAB 09 · KONTAK
+              BAB 09 · START A CONVERSATION
             </span>
             <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-[#8A6D4B]">
               <Clock className="size-3.5" aria-hidden="true" />
@@ -292,7 +292,7 @@ export const ContactPage: React.FC = () => {
                 lines={[
                   <>Mari mulai</>,
                   <>
-                    <span className="italic text-[#8A6D4B]">Korespondensi Langsung</span>.
+                    <span className="italic text-[#8A6D4B]">Direct Correspondence</span>.
                   </>,
                 ]}
               />
@@ -346,10 +346,10 @@ export const ContactPage: React.FC = () => {
             <div className="space-y-4 pt-2">
               <div className="flex items-center justify-between gap-3">
                 <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-champagne">
-                  KONTAK CEPAT
+                  DIRECT CHANNELS
                 </p>
                 <span className="text-[10px] font-mono uppercase tracking-[0.15em] whitespace-nowrap text-taupe">
-                  SALIN &amp; TAUTAN LANGSUNG
+                  COPY &amp; DIRECT LINKS
                 </span>
               </div>
 
@@ -526,7 +526,7 @@ export const ContactPage: React.FC = () => {
             <div className="w-full max-w-full min-w-0 overflow-hidden bg-ivory text-espresso border border-champagne/25 p-5 sm:p-10 lg:p-12 shadow-2xl">
               <div className="pb-6 mb-8 border-b border-espresso/15 space-y-2">
                 <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-[#8A6D4B]">
-                  KIRIM PESAN LANGSUNG
+                  DIRECT INBOX DISPATCH
                 </p>
                 <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight text-espresso/95">
                   Langsung ke Inbox Aflan

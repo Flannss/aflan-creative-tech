@@ -1214,7 +1214,7 @@ export const CreativeLabPage: React.FC = () => {
               BAB 06 · CREATIVE LAB
             </span>
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-espresso/85 border border-champagne/25 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
-              EKSPERIMEN INTERAKTIF · NON-PRODUKSI
+              INTERACTIVE UI IMPLEMENTATION · PLAYGROUND
             </span>
           </Reveal>
           <HairlineRule tone="champagne" immediate className="mt-6" />
@@ -1226,9 +1226,9 @@ export const CreativeLabPage: React.FC = () => {
                 immediate
                 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-ivory/95"
                 lines={[
-                  <>Sistem Visual</>,
+                  <>Interactive</>,
                   <>
-                    <span className="italic editorial-outline-strong">Interaktif</span>
+                    <span className="italic editorial-outline-strong">Visual Systems</span>
                   </>,
                 ]}
               />
