@@ -30,7 +30,7 @@ const TILT_SPRING = { stiffness: 145, damping: 24, mass: 0.65 };
  * Center-Stage Sculpted Atelier Double-Contour Portrait Frame:
  * - Sculpted dome outer hairline silhouette (`rounded-t-[170px] rounded-b-[22px]`) paired with
  *   a floating inner Caramel Bronze rim and micro registration pips.
- * - Progressive 4-side edge opacity fade dissolving smoothly into `#191310`, anchored by
+ * - Progressive 4-side edge opacity fade dissolving smoothly into `#1B1512`, anchored by
  *   the dual-tone engraved 1-line `MU'AFA DZULFIQAR` signature.
  * - Desktop (`canHoverFine`): 3D perspective tilt, counter-parallax, opposite signature drift,
  *   and specular studio rim-light; Tablet/Mobile: smooth scroll parallax + ambient diagonal sheen.
@@ -159,7 +159,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         data-cursor-label="DOSSIER"
-        className="group relative z-10 w-full max-w-[270px] sm:max-w-[310px] lg:max-w-[345px] xl:max-w-[380px] aspect-[4/5] rounded-t-[170px] rounded-b-[22px] border border-champagne/30 hover:border-champagne/60 bg-[#191310]/80 p-3 sm:p-3.5 transition-colors duration-500 overflow-hidden will-change-transform shadow-[0_24px_64px_rgba(0,0,0,0.42)]"
+        className="group relative z-10 w-full max-w-[270px] sm:max-w-[310px] lg:max-w-[345px] xl:max-w-[380px] aspect-[4/5] rounded-t-[170px] rounded-b-[22px] border border-champagne/30 hover:border-champagne/60 bg-[#1B1512]/80 p-3 sm:p-3.5 transition-colors duration-500 overflow-hidden will-change-transform shadow-[0_24px_64px_rgba(0,0,0,0.42)]"
       >
         {/* Floating Inner Contour Rim + Apex & Corner Registration Pips */}
         <div
@@ -252,10 +252,10 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
             </motion.div>
           </motion.div>
 
-          {/* Soft Bottom Studio Dissolve into #191310 Warm Espresso */}
+          {/* Soft Bottom Studio Dissolve into #1B1512 Warm Espresso */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-[#191310] via-[#191310]/60 to-transparent"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-[#1B1512] via-[#1B1512]/60 to-transparent"
           />
         </div>
 

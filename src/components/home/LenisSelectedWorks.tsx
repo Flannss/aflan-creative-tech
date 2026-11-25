@@ -53,7 +53,7 @@ const FeaturedWorkSpread: React.FC<FeaturedWorkSpreadProps> = ({
         onFocus={() => prefetchRoute(targetSlug)}
         onTouchStart={() => prefetchRoute(targetSlug)}
         aria-label={`Buka studi kasus ${project.title}`}
-        className="relative block border border-champagne/25 hover:border-champagne/60 bg-obsidian overflow-hidden transition-colors duration-500 shadow-[0_24px_70px_rgba(0,0,0,0.34)]"
+        className="relative block rounded-2xl border border-champagne/22 hover:border-champagne/55 bg-obsidian overflow-hidden hover:-translate-y-1 transition-[border-color,transform] duration-500 shadow-[0_24px_70px_rgba(0,0,0,0.3)]"
       >
         <span
           aria-hidden="true"
@@ -68,7 +68,7 @@ const FeaturedWorkSpread: React.FC<FeaturedWorkSpreadProps> = ({
             {project.previewImage ? (
               <div
                 className="w-full h-full relative"
-                style={{ backgroundColor: project.previewBg ?? '#251B16' }}
+                style={{ backgroundColor: project.previewBg ?? '#241A15' }}
               >
                 <img
                   src={project.previewImage}
@@ -104,7 +104,7 @@ const FeaturedWorkSpread: React.FC<FeaturedWorkSpreadProps> = ({
             <p className="font-sans text-sm text-ivory/75">{project.role}</p>
           </div>
 
-          <span className="inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-full bg-linear-to-r from-[#DFC9A8] to-[#B0875E] text-[#191310] font-mono text-xs tracking-[0.16em] uppercase font-medium group-hover:brightness-110 transition-all shrink-0">
+          <span className="inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-full bg-linear-to-r from-[#DFC9A8] to-[#B0875E] text-[#1B1512] font-mono text-xs tracking-[0.16em] uppercase font-medium group-hover:brightness-110 transition-all shrink-0">
             <span>Case Study</span>
             <ArrowUpRight
               className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -159,7 +159,7 @@ const SecondaryWorkCard: React.FC<SecondaryWorkCardProps> = ({
         onFocus={() => prefetchRoute(targetSlug)}
         onTouchStart={() => prefetchRoute(targetSlug)}
         aria-label={`Buka studi kasus ${project.title}`}
-        className="group relative block border border-champagne/25 hover:border-champagne/60 bg-obsidian overflow-hidden transition-colors duration-500 shadow-[0_20px_56px_rgba(0,0,0,0.3)]"
+        className="group relative block rounded-2xl border border-champagne/22 hover:border-champagne/55 bg-obsidian overflow-hidden hover:-translate-y-1 transition-[border-color,transform] duration-500 shadow-[0_20px_56px_rgba(0,0,0,0.28)]"
       >
         <span
           aria-hidden="true"
@@ -174,7 +174,7 @@ const SecondaryWorkCard: React.FC<SecondaryWorkCardProps> = ({
             {project.previewImage ? (
               <div
                 className="relative w-full h-full"
-                style={{ backgroundColor: project.previewBg ?? '#251B16' }}
+                style={{ backgroundColor: project.previewBg ?? '#241A15' }}
               >
                 <img
                   src={project.previewImage}
@@ -190,14 +190,14 @@ const SecondaryWorkCard: React.FC<SecondaryWorkCardProps> = ({
                       : 'object-cover'
                   }`}
                 />
-                {/* Warm Espresso tonal veil at rest, clearing smoothly on hover */}
+                {/* Calm Warm Walnut tonal veil at rest, clearing smoothly on hover */}
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-[#251B16]/35 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500"
+                  className="pointer-events-none absolute inset-0 bg-[#2B1D17]/38 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500"
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-linear-to-t from-[#191310]/70 via-transparent to-transparent group-hover:opacity-35 transition-opacity duration-500"
+                  className="pointer-events-none absolute inset-0 bg-linear-to-t from-[#1B1512]/70 via-transparent to-transparent group-hover:opacity-35 transition-opacity duration-500"
                 />
               </div>
             ) : (
@@ -243,9 +243,9 @@ const SecondaryWorkCard: React.FC<SecondaryWorkCardProps> = ({
 };
 
 /**
- * Variative Editorial Showcase (anti-uniform zig-zag):
+ * Variative Editorial Showcase:
  * - Desktop & Tablet (>=768px): Lead full-span editorial spread (#01 SatuRuangCreative)
- *   above an asymmetric 7:5 offset pair (#02 SOMASII with warm espresso veil & #03 ASIS wireframe).
+ *   above an asymmetric 7:5 offset pair (#02 SOMASII & #03 ASIS Builder) in soft rounded frames.
  * - Mobile (<768px): Tactile Horizontal Lookbook Swipe Deck with live progress bar.
  */
 export const LenisSelectedWorks: React.FC<LenisSelectedWorksProps> = ({
@@ -343,7 +343,7 @@ export const LenisSelectedWorks: React.FC<LenisSelectedWorksProps> = ({
                 key={project.slug}
                 whileTap={prefersReducedMotion ? undefined : { scale: 0.985 }}
                 transition={{ duration: 0.2, ease: EASE_LUXURY }}
-                className="w-[84vw] max-w-[332px] shrink-0 snap-start flex flex-col bg-obsidian border border-champagne/25 overflow-hidden shadow-[0_14px_40px_rgba(0,0,0,0.3)]"
+                className="w-[84vw] max-w-[332px] shrink-0 snap-start rounded-2xl flex flex-col bg-obsidian border border-champagne/25 overflow-hidden shadow-[0_14px_40px_rgba(0,0,0,0.3)]"
               >
                 <Link
                   to={targetSlug}
@@ -355,7 +355,7 @@ export const LenisSelectedWorks: React.FC<LenisSelectedWorksProps> = ({
                     {project.previewImage ? (
                       <div
                         className="relative w-full h-full"
-                        style={{ backgroundColor: project.previewBg ?? '#251B16' }}
+                        style={{ backgroundColor: project.previewBg ?? '#241A15' }}
                       >
                         <img
                           src={project.previewImage}
@@ -374,7 +374,7 @@ export const LenisSelectedWorks: React.FC<LenisSelectedWorksProps> = ({
                         />
                         <div
                           aria-hidden="true"
-                          className="pointer-events-none absolute inset-0 bg-[#251B16]/25 mix-blend-multiply"
+                          className="pointer-events-none absolute inset-0 bg-[#2B1D17]/28 mix-blend-multiply"
                         />
                       </div>
                     ) : (

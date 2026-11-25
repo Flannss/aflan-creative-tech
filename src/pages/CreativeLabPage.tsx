@@ -23,16 +23,16 @@ import { useToast } from '@/hooks/useToast';
 import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 
 const PALETTE_SWATCHES = [
-  { name: 'Warm Espresso', hex: '#191310' },
-  { name: 'Velvet Mocha', hex: '#251B16' },
-  { name: 'Warm Walnut', hex: '#30221B' },
+  { name: 'Warm Espresso', hex: '#1B1512' },
+  { name: 'Velvet Mocha', hex: '#241A15' },
+  { name: 'Warm Walnut', hex: '#2B1D17' },
   { name: 'Warm Chestnut', hex: '#3A271D' },
-  { name: 'Warm Cognac', hex: '#6E4F3A' },
+  { name: 'Warm Cognac', hex: '#5C3E2D' },
   { name: 'Luxury Brown', hex: '#856343' },
   { name: 'Caramel Bronze', hex: '#B0875E' },
   { name: 'Champagne', hex: '#DFC9A8' },
   { name: 'Almond Cream', hex: '#EAE0D0' },
-  { name: 'Warm Ivory', hex: '#F4EEE4' },
+  { name: 'Warm Ivory', hex: '#F5F0E8' },
 ] as const;
 
 const EASING_PRESETS = [
@@ -596,7 +596,7 @@ const ChiaroscuroCanvas: React.FC = () => {
 
     const drawFrame = () => {
       rafId = 0;
-      ctx.fillStyle = '#191310';
+      ctx.fillStyle = '#1B1512';
       ctx.fillRect(0, 0, width, height);
 
       const lightX = pointerRef.current.active ? pointerRef.current.x : width * 0.52;
@@ -612,7 +612,7 @@ const ChiaroscuroCanvas: React.FC = () => {
       );
       grad.addColorStop(0, 'rgba(223, 201, 168, 0.22)');
       grad.addColorStop(0.38, 'rgba(176, 135, 94, 0.16)');
-      grad.addColorStop(1, 'rgba(25, 19, 16, 0)');
+      grad.addColorStop(1, 'rgba(27, 21, 18, 0)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
 
@@ -1190,17 +1190,17 @@ const MotionEasingWorkbench: React.FC = () => {
 const CORE_DESIGN_TOKENS = [
   {
     name: 'Warm Espresso',
-    hex: '#191310',
+    hex: '#1B1512',
     role: 'Primary Canvas & Editorial Veil',
     lightText: true,
     note: 'Dasar coklat mewah hangat dengan kedalaman tinggi dan tenang.',
   },
   {
-    name: 'Velvet Mocha',
-    hex: '#251B16',
-    role: 'Elevated Mocha Surface',
+    name: 'Warm Walnut',
+    hex: '#2B1D17',
+    role: 'Core Calm Walnut Surface',
     lightText: true,
-    note: 'Permukaan kakao lembut untuk kartu arsitektural dan panggung karya.',
+    note: 'Permukaan kakao hangat untuk panggung karya dan blok editorial.',
   },
   {
     name: 'Caramel Bronze',
@@ -1211,10 +1211,10 @@ const CORE_DESIGN_TOKENS = [
   },
   {
     name: 'Warm Ivory',
-    hex: '#F4EEE4',
+    hex: '#F5F0E8',
     role: 'Editorial Contrast & Ink',
     lightText: false,
-    note: 'Permukaan kertas terang hangat yang menyatu dengan Almond Cream.',
+    note: 'Permukaan teks terang lembut yang menyatu dengan Almond Cream.',
   },
 ] as const;
 
@@ -1913,8 +1913,8 @@ export const CreativeLabPage: React.FC = () => {
               </h2>
             </div>
             <p className="lg:col-span-5 font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-              Referensi langsung empat token warna inti Espresso–Champagne–Ivory dan tiga
-              hirarki tipografi utama; klik swatch mana saja untuk menyalin kode hex ke clipboard.
+              Referensi langsung empat token warna inti Espresso, Champagne, dan Ivory beserta tiga
+              hirarki tipografi utama. Klik swatch mana saja untuk menyalin kode hex ke clipboard.
             </p>
           </Reveal>
 
@@ -1940,8 +1940,8 @@ export const CreativeLabPage: React.FC = () => {
               </h2>
             </div>
             <p className="lg:col-span-5 font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-              Enam modul interaksi harian—mulai dari saklar spring, checklist strikethrough,
-              stepper odometer, panel akordeon, copy morph hingga apresiasi Champagne—yang seluruhnya
+              Enam modul interaksi harian, mulai dari saklar spring, checklist strikethrough,
+              stepper odometer, panel akordeon, copy morph hingga apresiasi Champagne. Seluruhnya
               menghormati kurva editorial dan mode reduced-motion.
             </p>
           </Reveal>

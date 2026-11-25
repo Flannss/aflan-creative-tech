@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  --color-obsidian: #191310;
-  --color-umber: #251B16;
-  --color-espresso: #30221B;
+  --color-obsidian: #1B1512;
+  --color-umber: #241A15;
+  --color-espresso: #2B1D17;
   --color-chocolate: #3A271D;
-  --color-cognac: #6E4F3A;
+  --color-cognac: #5C3E2D;
   --color-mocha: #6E4F3A;
   --color-bronze: #856343;
   --color-taupe: #B59C84;
   --color-brass: #B0875E;
   --color-champagne: #DFC9A8;
   --color-linen: #EAE0D0;
-  --color-ivory: #F4EEE4;
-  --color-offwhite: #F4EEE4;
+  --color-ivory: #F5F0E8;
+  --color-offwhite: #EDE5D7;
   --color-charcoal: #2A201B;
 
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
@@ -25,8 +25,8 @@
 
 @layer base {
   html {
-    background-color: #191310;
-    color: #F4EEE4;
+    background-color: #1B1512;
+    color: #F5F0E8;
     font-family: var(--font-sans);
     scroll-behavior: smooth;
     overflow-x: clip;
@@ -41,8 +41,8 @@
   body {
     margin: 0;
     min-height: 100vh;
-    background-color: #191310;
-    color: #F4EEE4;
+    background-color: #1B1512;
+    color: #F5F0E8;
     overflow-x: clip;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -55,8 +55,8 @@
   }
 
   ::selection {
-    background-color: #6E4F3A;
-    color: #F4EEE4;
+    background-color: #5C3E2D;
+    color: #F5F0E8;
   }
 }
 
@@ -112,36 +112,49 @@
   font-family: var(--font-masthead);
 }
 
-/* Warm Luxury Espresso Lighting Echoing Portrait Chiaroscuro */
+/* Calm 10-Step Lab Lighting Echoing Portrait Chiaroscuro */
 .studio-vignette {
   background: radial-gradient(
     64% 56% at 50% 42%,
-    rgba(176, 135, 94, 0.16) 0%,
-    rgba(58, 39, 29, 0.48) 44%,
-    rgba(25, 19, 16, 0.96) 100%
+    rgba(176, 135, 94, 0.14) 0%,
+    rgba(58, 39, 29, 0.44) 44%,
+    rgba(27, 21, 18, 0.96) 100%
   );
 }
 
 .studio-warm-halo {
   background: radial-gradient(
     circle at 50% 38%,
-    rgba(223, 201, 168, 0.16) 0%,
-    rgba(176, 135, 94, 0.12) 38%,
-    rgba(25, 19, 16, 0) 72%
+    rgba(223, 201, 168, 0.14) 0%,
+    rgba(176, 135, 94, 0.11) 38%,
+    rgba(27, 21, 18, 0) 72%
   );
 }
 
 .bg-warm-atelier {
   background: radial-gradient(
     ellipse 85% 65% at 50% 18%,
-    rgba(58, 39, 29, 0.56) 0%,
-    rgba(37, 27, 22, 0.88) 52%,
-    #191310 100%
+    rgba(58, 39, 29, 0.54) 0%,
+    rgba(43, 29, 23, 0.86) 52%,
+    #1B1512 100%
   );
 }
 
+.bg-warm-walnut-wash {
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    rgba(92, 62, 45, 0.26) 0%,
+    rgba(43, 29, 23, 0.96) 58%,
+    #241A15 100%
+  );
+}
+
+.bg-warm-closing {
+  background: linear-gradient(155deg, #2B1D17 0%, #3A271D 48%, #201713 100%);
+}
+
 .bg-warm-paper {
-  background: linear-gradient(180deg, #F4EEE4 0%, #EAE0D0 100%);
+  background: linear-gradient(180deg, #EFE7DA 0%, #E6DAC8 100%);
 }
 
 /* Seamless Marquee Track */
@@ -423,7 +436,7 @@
     background-image: none;
     -webkit-background-clip: initial;
     background-clip: initial;
-    color: #f4eee4;
+    color: #f5f0e8;
   }
 }
 
@@ -444,7 +457,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #191310;
+  background: #1B1512;
 }
 
 ::-webkit-scrollbar-thumb {

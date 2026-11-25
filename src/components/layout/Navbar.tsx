@@ -33,7 +33,7 @@ const ROUTE_CONTEXT_MAP: Record<string, RouteContextSpec> = {
   '/about': {
     tag: 'PERSONAL DOSSIER',
     summary:
-      'Profil lengkap Aflan Mu\'afa Dzulfiqar — S1 Teknologi Informasi (TI24A) Amikom, alumni SMK Wiworotomo, dan Programmer Intern PT Puskomedia.',
+      'Profil lengkap Aflan Mu\'afa Dzulfiqar, mahasiswa S1 Teknologi Informasi (TI24A) Amikom, alumni SMK Wiworotomo, dan Programmer Intern PT Puskomedia.',
     highlights: ['S1 TI24A Amikom', 'PT Puskomedia QA', 'Purwokerto · ID'],
     motif: 'layers',
   },
@@ -68,7 +68,7 @@ const ROUTE_CONTEXT_MAP: Record<string, RouteContextSpec> = {
   '/gallery': {
     tag: 'VISUAL MONOGRAPH',
     summary:
-      'Kurasi studi potret studio dan komposisi visual bernuansa Espresso–Champagne–Ivory lengkap dengan Lightbox presisi.',
+      'Kurasi studi potret studio dan komposisi visual bernuansa Espresso, Champagne, dan Ivory lengkap dengan Lightbox presisi.',
     highlights: ['Studio Plates', 'Locked Lightbox', 'Tonal Studies'],
     motif: 'grid',
   },

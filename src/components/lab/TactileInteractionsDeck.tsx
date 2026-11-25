@@ -377,7 +377,7 @@ export const TactileInteractionsDeck: React.FC = () => {
             Ledakan Partikel Champagne
           </h3>
           <p className="font-sans text-xs sm:text-sm text-ivory/75 leading-relaxed">
-            Simpul apresiasi geometris dengan pancaran garis tipis Champagne–Ivory dan penghitung sesi lokal.
+            Simpul apresiasi geometris dengan pancaran garis tipis Champagne dan Ivory, lengkap dengan penghitung sesi lokal.
           </p>
         </div>
 

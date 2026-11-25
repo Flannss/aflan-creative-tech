@@ -18,6 +18,7 @@ import { KineticDisplayWord } from '@/components/home/KineticDisplayWord';
 import { LenisSelectedWorks } from '@/components/home/LenisSelectedWorks';
 import { EditorialMarquee } from '@/components/motion/EditorialMarquee';
 import { KineticLabel } from '@/components/motion/KineticLabel';
+import { KineticWaveField } from '@/components/motion/KineticWaveField';
 import { MagneticButton } from '@/components/motion/MagneticButton';
 import { HairlineRule } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
@@ -32,6 +33,30 @@ const FLAGSHIP_SLUGS = [
   'satu-ruang-creative',
   'somasii-lost-and-found',
   'asis-builder-page-generator',
+] as const;
+
+const EDITORIAL_FOCUS_ITEMS = [
+  {
+    code: '01',
+    title: 'Interactive Lab',
+    summary: 'Sembilan modul eksperimen motion, spotlight, dan token warna.',
+    to: '/lab',
+    tag: 'WORKBENCH',
+  },
+  {
+    code: '02',
+    title: 'Visual Archive',
+    summary: 'Kurasi potret studio dan pelat monograf dalam lightbox presisi.',
+    to: '/gallery',
+    tag: 'GALLERY',
+  },
+  {
+    code: '03',
+    title: 'Career Journey',
+    summary: 'Linimasa studi Amikom, PKL GT Computer, dan magang PT Puskomedia.',
+    to: '/journey',
+    tag: 'TIMELINE',
+  },
 ] as const;
 
 export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
@@ -79,7 +104,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
   return (
     <div className="w-full overflow-x-clip">
       {/* =====================================================================
-          SECTION 1 — CENTER-STAGE 3-COLUMN EDITORIAL COVER
+          SECTION 1 — CENTER-STAGE 3-COLUMN COVER + FLOWING SILK WAVE CURRENT
       ====================================================================== */}
       <section
         ref={heroRef}
@@ -89,6 +114,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 studio-vignette"
         />
+        <KineticWaveField active={introReady} className="z-[2]" />
 
         {/* Subtle Top Editorial Folio */}
         <div className="relative z-20 max-w-[1440px] w-full mx-auto flex items-center justify-between gap-4 border-b border-champagne/20 pb-3.5 font-mono text-[10px] sm:text-[11px] tracking-[0.22em] uppercase">
@@ -96,7 +122,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
           <span className="text-taupe">AFLAN · DOSSIER</span>
         </div>
 
-        {/* Cover Stage: Monumental Centered Masthead + 3-Column Flanking Layout */}
+        {/* Cover Stage: Monumental Centered Masthead + Subtle Identity + 3-Column Flanking */}
         <motion.div
           initial={disableMotion ? false : { scale: 1.03, opacity: 0.94 }}
           animate={
@@ -107,21 +133,24 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
           transition={{ duration: disableMotion ? 0 : 0.7, ease: EASE_LUXURY }}
           className="relative z-10 max-w-[1440px] w-full mx-auto my-auto py-7 sm:py-9 lg:py-10 will-change-transform"
         >
-          {/* Monumental Centered Playfair Display Masthead */}
+          {/* Monumental Centered Playfair Display Masthead + Understated Identity Strip */}
           <motion.div
             style={{ y: wordmarkY }}
-            className="w-full text-center mb-7 sm:mb-9 lg:mb-10 will-change-transform"
+            className="w-full text-center mb-7 sm:mb-9 lg:mb-10 space-y-3 will-change-transform"
           >
             <KineticDisplayWord
               word="AFLAN"
               ariaLabel="AFLAN · Aflan Mu'afa Dzulfiqar"
               introReady={introReady}
             />
+            <p className="font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase text-champagne/85 px-2">
+              {personalData.fullName} · {personalData.university} · Teknologi Informasi
+            </p>
           </motion.div>
 
           {/* 3-Column Center-Stage Grid: Left Action | Center Sculpted Portrait | Right Dossier */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-7 sm:gap-8 lg:gap-8 xl:gap-10 items-center">
-            {/* CENTER ANCHOR: Sculpted Atelier Double-Contour Portrait (Center on lg, Top on Mobile/Tablet) */}
+            {/* CENTER ANCHOR: Sculpted Atelier Double-Contour Portrait */}
             <div className="col-span-1 sm:col-span-2 lg:col-span-4 order-1 lg:order-2 flex justify-center">
               <HeroPortrait
                 portraitY={portraitY}
@@ -130,7 +159,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
               />
             </div>
 
-            {/* LEFT COLUMN: Discipline Identity, Concise Statement & Primary Explore Works CTA */}
+            {/* LEFT COLUMN: Discipline Identity, Crisp Copy & Primary Explore Works CTA */}
             <motion.div
               style={{ y: sideColumnY }}
               initial={disableMotion ? false : { opacity: 0, y: 14 }}
@@ -148,7 +177,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
               </span>
 
               <p className="font-serif text-lg sm:text-xl lg:text-[1.35rem] italic text-champagne leading-snug max-w-sm">
-                Merancang antarmuka web yang presisi, cepat, dan terstruktur—dari sistem visual hingga evaluasi QA.
+                Merancang antarmuka web yang presisi, cepat, dan terstruktur, mulai dari sistem visual hingga evaluasi QA.
               </p>
 
               <div className="pt-1">
@@ -158,7 +187,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                     onMouseEnter={() => prefetchRoute('/projects')}
                     onFocus={() => prefetchRoute('/projects')}
                     onTouchStart={() => prefetchRoute('/projects')}
-                    className="group inline-flex items-center gap-2.5 min-h-[48px] px-7 py-3.5 rounded-full bg-linear-to-r from-[#DFC9A8] to-[#B0875E] text-[#191310] font-mono text-xs tracking-[0.16em] uppercase font-medium hover:brightness-110 active:scale-[0.97] transition-all duration-300 shadow-[0_12px_32px_rgba(25,19,16,0.35)]"
+                    className="group inline-flex items-center gap-2.5 min-h-[48px] px-7 py-3.5 rounded-full bg-linear-to-r from-[#DFC9A8] to-[#B0875E] text-[#1B1512] font-mono text-xs tracking-[0.16em] uppercase font-medium hover:brightness-110 active:scale-[0.97] transition-all duration-300 shadow-[0_12px_32px_rgba(27,21,18,0.38)]"
                   >
                     <KineticLabel>Explore Works</KineticLabel>
                     <ArrowUpRight
@@ -170,7 +199,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
               </div>
             </motion.div>
 
-            {/* RIGHT COLUMN: Compact Print-Dossier Credentials & Read Dossier CTA */}
+            {/* RIGHT COLUMN: Compact Dossier Credentials & Read Dossier CTA */}
             <motion.div
               style={{ y: sideColumnY }}
               initial={disableMotion ? false : { opacity: 0, y: 14 }}
@@ -184,16 +213,16 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
             >
               <dl className="w-full max-w-xs space-y-2.5 border-y border-champagne/18 py-3.5 font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
                 <div className="flex items-center justify-between sm:justify-end gap-3">
+                  <dt className="text-taupe">PRODI</dt>
+                  <dd className="text-ivory">TI24A · AMIKOM PURWOKERTO</dd>
+                </div>
+                <div className="flex items-center justify-between sm:justify-end gap-3">
                   <dt className="text-taupe">STUDIO</dt>
-                  <dd className="text-ivory">SATURUANG CREATIVE · CO-FOUNDER</dd>
+                  <dd className="text-champagne">SATURUANG CREATIVE</dd>
                 </div>
                 <div className="flex items-center justify-between sm:justify-end gap-3">
                   <dt className="text-taupe">ROLE</dt>
-                  <dd className="text-champagne">SOFTWARE QA · PUSKOMEDIA</dd>
-                </div>
-                <div className="flex items-center justify-between sm:justify-end gap-3">
-                  <dt className="text-taupe">BASIS</dt>
-                  <dd className="text-ivory">PURWOKERTO · ID</dd>
+                  <dd className="text-ivory">SOFTWARE QA · PUSKOMEDIA</dd>
                 </div>
               </dl>
 
@@ -234,19 +263,19 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
       </section>
 
       {/* =====================================================================
-          SECTION 2 — VARIATIVE DUAL-TRACK KINETIC MARQUEE (PAUSED IN INTRO)
+          SECTION 2 — VARIATIVE DUAL-TRACK KINETIC MARQUEE
       ====================================================================== */}
       <EditorialMarquee active={introReady} />
 
       {/* =====================================================================
-          SECTION 3 — INTERACTIVE AMDZ MONOGRAM ATELIER (WARM PAPER CONTRAST)
+          SECTION 3 — INTERACTIVE AMDZ MONOGRAM ATELIER (CALM WARM WALNUT)
       ====================================================================== */}
       <AmdzBrandPhilosophy />
 
       {/* =====================================================================
           SECTION 4 — VARIATIVE EDITORIAL SELECTED WORKS (LENIS PARALLAX)
       ====================================================================== */}
-      <section className="relative bg-umber text-ivory py-20 md:py-28 lg:py-32 px-5 md:px-8 lg:px-12 border-t border-champagne/18 overflow-x-clip">
+      <section className="relative bg-umber text-ivory py-20 md:py-28 lg:py-32 px-5 md:px-8 lg:px-12 border-t border-champagne/15 overflow-x-clip">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 opacity-60"
@@ -295,24 +324,66 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
       </section>
 
       {/* =====================================================================
-          SECTION 5 — SINGLE AUTHORITATIVE WARM EDITORIAL CLOSING SPREAD
+          SECTION 5 — COMPACT EDITORIAL FOCUS STRIP (FLUID EXPLORATION JUMP)
       ====================================================================== */}
-      <section className="bg-warm-paper relative text-obsidian py-20 sm:py-28 lg:py-32 px-5 md:px-8 lg:px-12 border-t border-bronze/25 overflow-x-clip">
+      <section className="relative bg-obsidian text-ivory py-14 sm:py-18 px-5 md:px-8 lg:px-12 border-t border-champagne/12 overflow-x-clip">
+        <div className="max-w-[1440px] mx-auto space-y-7">
+          <div className="flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.22em] uppercase">
+            <span className="text-brass">EXPLORE FURTHER</span>
+            <span className="text-taupe">CURATED ROUTES</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5">
+            {EDITORIAL_FOCUS_ITEMS.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                onMouseEnter={() => prefetchRoute(item.to)}
+                onFocus={() => prefetchRoute(item.to)}
+                onTouchStart={() => prefetchRoute(item.to)}
+                className="group rounded-2xl border border-champagne/18 hover:border-champagne/50 bg-umber/75 hover:bg-espresso/90 p-5 sm:p-6 flex flex-col justify-between gap-4 min-h-[128px] hover:-translate-y-1 transition-all duration-300"
+              >
+                <div className="flex items-center justify-between gap-3 font-mono text-[10px] tracking-[0.2em] uppercase">
+                  <span className="text-champagne">{item.code} · {item.tag}</span>
+                  <ArrowUpRight
+                    className="size-4 text-brass transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-champagne"
+                    aria-hidden="true"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <h3 className="font-serif text-2xl font-light text-ivory group-hover:text-champagne transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="font-sans text-xs sm:text-sm text-ivory/75 leading-relaxed">
+                    {item.summary}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SECTION 6 — CALM WARM CLOSING SPREAD (ZERO CTA DUPLICATION)
+      ====================================================================== */}
+      <section className="bg-warm-closing relative text-ivory py-20 sm:py-24 lg:py-28 px-5 md:px-8 lg:px-12 border-t border-champagne/18 overflow-x-clip">
         <div className="max-w-[1440px] mx-auto space-y-10 sm:space-y-12">
-          <HairlineRule tone="espresso" />
+          <HairlineRule tone="champagne" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end pt-2">
             <div className="lg:col-span-8 space-y-4">
-              <p className="font-mono text-[10px] sm:text-xs tracking-[0.22em] uppercase text-bronze font-medium">
+              <p className="font-mono text-[10px] sm:text-xs tracking-[0.22em] uppercase text-champagne">
                 CORRESPONDENCE
               </p>
               <TextReveal
                 as="h2"
-                className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight leading-[1.1] text-obsidian"
+                className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight leading-[1.1] text-ivory"
                 lines={[
                   <>Tersedia untuk pengembangan web frontend,</>,
                   <>
-                    <span className="italic text-mocha">
+                    <span className="italic text-champagne">
                       sistem antarmuka, dan evaluasi Software QA.
                     </span>
                   </>,
@@ -327,7 +398,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                   onMouseEnter={() => prefetchRoute('/contact')}
                   onFocus={() => prefetchRoute('/contact')}
                   onTouchStart={() => prefetchRoute('/contact')}
-                  className="group inline-flex items-center gap-2.5 min-h-[48px] px-6 py-3 rounded-full bg-obsidian text-ivory font-mono text-xs tracking-[0.16em] uppercase font-medium hover:bg-mocha active:scale-[0.97] transition-all duration-300"
+                  className="group inline-flex items-center gap-2.5 min-h-[48px] px-6 py-3 rounded-full bg-linear-to-r from-[#DFC9A8] to-[#B0875E] text-[#1B1512] font-mono text-xs tracking-[0.16em] uppercase font-medium hover:brightness-110 active:scale-[0.97] transition-all duration-300"
                 >
                   <KineticLabel>Start a Conversation</KineticLabel>
                   <ArrowUpRight
@@ -342,7 +413,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                 label="Copy Email"
                 copiedLabel="Email Copied"
                 toastTitle="Email Tersalin"
-                surface="light"
+                surface="dark"
                 size="md"
               />
             </div>

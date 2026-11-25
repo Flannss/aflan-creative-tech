@@ -30,7 +30,7 @@ const BRAND_PILLARS: readonly BrandPillar[] = [
     tag: 'SYSTEM STRUCTURE',
     diagramLabel: 'ORTHOGONAL STRUCTURAL GRID',
     description:
-      'Struktur kode yang bersih, terukur, dan skalabel dari fondasi hingga antarmuka—menjaga modularitas React, TypeScript, dan skema komponen agar tetap ringan dirawat.',
+      'Struktur kode yang bersih, terukur, dan skalabel dari fondasi hingga antarmuka. Menjaga modularitas React, TypeScript, dan skema komponen agar tetap ringan dirawat.',
   },
   {
     id: 'M',
@@ -39,7 +39,7 @@ const BRAND_PILLARS: readonly BrandPillar[] = [
     tag: 'EDITORIAL KINEMATICS',
     diagramLabel: 'HARMONIC ORBITAL CURVES',
     description:
-      'Kehalusan detail visual, ritme tipografi serif–mono, serta interaksi GPU 60fps yang terasa manusiawi tanpa mengorbankan kejelasan membaca.',
+      'Kehalusan detail visual, ritme tipografi serif dan mono, serta interaksi GPU 60fps yang terasa alami dan nyaman dibaca.',
   },
   {
     id: 'DZ',
@@ -54,12 +54,8 @@ const BRAND_PILLARS: readonly BrandPillar[] = [
 
 /**
  * Interactive `AMDZ` Monogram Atelier & Philosophy Spread:
- * - Warm paper linear blend (`#F4EEE4 -> #EAE0D0`) for gentle editorial light contrast.
- * - Left living architectural diagram transforms dynamically depending on active pillar:
- *   - `A`: structural grid lines illuminate,
- *   - `M`: kinetic orbital curves & dots illuminate,
- *   - `DZ`: calibration corner brackets & precision crosshair illuminate.
- * - Desktop cursor spotlight illuminates the Velvet Mocha–Chestnut stage without heavy blur.
+ * - Calm Warm Walnut surface (`#2B1D17 -> #241A15`) keeping visual continuity without jarring glare.
+ * - Soft rounded stage cards (`rounded-2xl`) and dynamic SVG construction geometry.
  */
 export const AmdzBrandPhilosophy: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
@@ -73,7 +69,7 @@ export const AmdzBrandPhilosophy: React.FC = () => {
   const pctY = useMotionValue(50);
   const smoothX = useSpring(pctX, { stiffness: 150, damping: 24 });
   const smoothY = useSpring(pctY, { stiffness: 150, damping: 24 });
-  const stageSpotlight = useMotionTemplate`radial-gradient(280px circle at ${smoothX}% ${smoothY}%, rgba(223,201,168,0.18) 0%, rgba(176,135,94,0.08) 46%, transparent 74%)`;
+  const stageSpotlight = useMotionTemplate`radial-gradient(280px circle at ${smoothX}% ${smoothY}%, rgba(223,201,168,0.16) 0%, rgba(176,135,94,0.08) 46%, transparent 74%)`;
 
   const activePillar =
     BRAND_PILLARS.find((p) => p.id === activeId) ?? BRAND_PILLARS[0];
@@ -88,7 +84,7 @@ export const AmdzBrandPhilosophy: React.FC = () => {
   return (
     <section
       aria-label="Filosofi Logo Brand AMDZ"
-      className="bg-warm-paper relative text-obsidian py-16 sm:py-24 lg:py-28 px-5 md:px-8 lg:px-12 border-y border-bronze/25 overflow-x-clip"
+      className="bg-warm-walnut-wash relative text-ivory py-16 sm:py-24 lg:py-28 px-5 md:px-8 lg:px-12 border-y border-champagne/15 overflow-x-clip"
     >
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
         {/* Interactive `AMDZ` Monogram Atelier Stage */}
@@ -103,11 +99,7 @@ export const AmdzBrandPhilosophy: React.FC = () => {
             onMouseEnter={() => setPlateHovered(true)}
             onMouseLeave={() => setPlateHovered(false)}
             aria-label="Ganti diagram filosofi monogram AMDZ"
-            style={{
-              background:
-                'linear-gradient(145deg, #2A1E18 0%, #3A271D 52%, #1D1511 100%)',
-            }}
-            className="group relative w-full text-left text-ivory border border-brass/40 hover:border-champagne/75 p-6 sm:p-8 lg:p-9 transition-colors duration-500 overflow-hidden cursor-pointer shadow-[0_24px_60px_rgba(25,19,16,0.22)] focus-visible:outline-2 focus-visible:outline-bronze"
+            className="group relative w-full text-left text-ivory rounded-2xl border border-champagne/25 hover:border-champagne/55 bg-linear-to-br from-[#2B1D17] via-[#3A271D] to-[#1B1512] p-6 sm:p-8 transition-colors duration-500 overflow-hidden cursor-pointer shadow-[0_24px_60px_rgba(0,0,0,0.28)] focus-visible:outline-2 focus-visible:outline-champagne"
           >
             {enableSpotlight && (
               <motion.div
@@ -128,8 +120,7 @@ export const AmdzBrandPhilosophy: React.FC = () => {
             </div>
 
             {/* Reactive Blueprint & Geometric Stage */}
-            <div className="relative z-20 my-7 sm:my-9 aspect-4/3 flex items-center justify-center border border-champagne/20 bg-obsidian/55 overflow-hidden">
-              {/* Giant Subtle Engraved Watermark behind Monogram */}
+            <div className="relative z-20 my-7 sm:my-8 aspect-4/3 rounded-xl flex items-center justify-center border border-champagne/20 bg-obsidian/55 overflow-hidden">
               <span
                 aria-hidden="true"
                 className="pointer-events-none absolute font-masthead text-[5.5rem] sm:text-[6.5rem] tracking-[0.1em] leading-none text-champagne/[0.045] select-none"
@@ -137,7 +128,6 @@ export const AmdzBrandPhilosophy: React.FC = () => {
                 AMDZ
               </span>
 
-              {/* Dynamic SVG Construction Geometry */}
               <svg
                 viewBox="0 0 280 210"
                 className="pointer-events-none absolute inset-0 w-full h-full"
@@ -150,7 +140,7 @@ export const AmdzBrandPhilosophy: React.FC = () => {
                 >
                   <line x1="140" y1="8" x2="140" y2="202" stroke="#DFC9A8" strokeWidth="1" strokeDasharray="3 4" />
                   <line x1="16" y1="105" x2="264" y2="105" stroke="#DFC9A8" strokeWidth="1" strokeDasharray="3 4" />
-                  <rect x="64" y="34" width="152" height="142" fill="none" stroke="#B0875E" strokeWidth="1" strokeOpacity="0.65" />
+                  <rect x="64" y="34" width="152" height="142" rx="6" fill="none" stroke="#B0875E" strokeWidth="1" strokeOpacity="0.65" />
                   <line x1="64" y1="70" x2="216" y2="70" stroke="#DFC9A8" strokeWidth="0.6" strokeOpacity="0.5" />
                   <line x1="64" y1="140" x2="216" y2="140" stroke="#DFC9A8" strokeWidth="0.6" strokeOpacity="0.5" />
                 </g>
@@ -194,7 +184,7 @@ export const AmdzBrandPhilosophy: React.FC = () => {
               >
                 <MonogramMark
                   size={112}
-                  className="text-champagne drop-shadow-[0_10px_28px_rgba(25,19,16,0.65)] transition-transform duration-500 group-hover:scale-105"
+                  className="text-champagne drop-shadow-[0_10px_28px_rgba(27,21,18,0.65)] transition-transform duration-500 group-hover:scale-105"
                 />
               </motion.div>
             </div>
@@ -210,23 +200,23 @@ export const AmdzBrandPhilosophy: React.FC = () => {
         </Reveal>
 
         {/* Right Interactive Philosophy Breakdown */}
-        <div className="lg:col-span-7 space-y-8">
+        <div className="lg:col-span-7 space-y-7">
           <div className="space-y-4">
-            <p className="font-mono text-[10px] sm:text-xs tracking-[0.22em] uppercase font-medium text-bronze">
+            <p className="font-mono text-[10px] sm:text-xs tracking-[0.22em] uppercase font-medium text-brass">
               BRAND PHILOSOPHY · IDENTITY MARK
             </p>
             <TextReveal
               as="h2"
-              className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight leading-[1.08] text-obsidian"
+              className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight leading-[1.08] text-ivory"
               lines={[
                 <>
-                  Makna Monogram <span className="italic text-mocha">AMDZ</span>
+                  Makna Monogram <span className="italic text-champagne">AMDZ</span>
                 </>,
               ]}
             />
-            <p className="font-sans text-sm sm:text-base text-obsidian/80 leading-relaxed max-w-2xl">
-              Lahir dari inisial <strong className="font-medium text-obsidian">Aflan Mu&apos;afa Dzulfiqar</strong>,
-              monogram <span className="font-mono text-xs tracking-widest uppercase text-mocha">AMDZ</span>{' '}
+            <p className="font-sans text-sm sm:text-base text-ivory/80 leading-relaxed max-w-2xl">
+              Lahir dari inisial <strong className="font-medium text-ivory">Aflan Mu&apos;afa Dzulfiqar</strong>,
+              monogram <span className="font-mono text-xs tracking-widest uppercase text-champagne">AMDZ</span>{' '}
               merangkum standar kerja rekayasa perangkat lunak, kehalusan visual, dan disiplin kualitas yang terukur.
             </p>
           </div>
@@ -234,35 +224,40 @@ export const AmdzBrandPhilosophy: React.FC = () => {
           <div
             role="tablist"
             aria-label="Tiga pilar filosofi brand AMDZ"
-            className="border-y border-bronze/25 divide-y divide-bronze/20"
+            className="space-y-2.5"
           >
             {BRAND_PILLARS.map((pillar) => {
               const active = pillar.id === activeId;
               return (
-                <div key={pillar.id} className="group/pillar">
+                <div
+                  key={pillar.id}
+                  className={`rounded-xl border transition-colors duration-300 ${
+                    active
+                      ? 'bg-obsidian/60 border-champagne/30'
+                      : 'bg-obsidian/20 border-champagne/10 hover:bg-obsidian/40 hover:border-champagne/20'
+                  }`}
+                >
                   <button
                     type="button"
                     role="tab"
                     aria-selected={active}
                     onClick={() => setActiveId(pillar.id)}
                     onMouseEnter={() => setActiveId(pillar.id)}
-                    className={`w-full min-h-[56px] py-4 sm:py-5 px-2 sm:px-3 flex items-center justify-between gap-4 text-left transition-colors cursor-pointer ${
-                      active ? 'bg-ivory/75' : 'hover:bg-ivory/40'
-                    }`}
+                    className="w-full min-h-[56px] py-4 px-4 sm:px-5 flex items-center justify-between gap-4 text-left cursor-pointer"
                   >
                     <div className="flex items-baseline gap-3.5 sm:gap-5 min-w-0">
                       <span
                         className={`font-mono text-[11px] tracking-[0.22em] shrink-0 transition-colors ${
-                          active ? 'text-mocha font-medium' : 'text-bronze'
+                          active ? 'text-champagne font-medium' : 'text-brass'
                         }`}
                       >
                         {pillar.code}
                       </span>
                       <span
-                        className={`font-serif text-xl sm:text-2xl lg:text-[1.75rem] font-light leading-snug transition-all duration-300 ${
+                        className={`font-serif text-xl sm:text-2xl lg:text-[1.7rem] font-light leading-snug transition-all duration-300 ${
                           active
-                            ? 'text-obsidian italic translate-x-1'
-                            : 'text-obsidian/80 group-hover/pillar:text-mocha'
+                            ? 'text-champagne italic translate-x-1'
+                            : 'text-ivory/85'
                         }`}
                       >
                         {pillar.title}
@@ -271,7 +266,7 @@ export const AmdzBrandPhilosophy: React.FC = () => {
 
                     <span
                       className={`font-mono text-[9px] sm:text-[10px] tracking-[0.2em] uppercase shrink-0 ${
-                        active ? 'text-mocha' : 'text-bronze/75'
+                        active ? 'text-champagne' : 'text-taupe'
                       }`}
                     >
                       {pillar.tag}
@@ -298,7 +293,7 @@ export const AmdzBrandPhilosophy: React.FC = () => {
                         }}
                         className="overflow-hidden"
                       >
-                        <p className="pb-5 pt-1 pl-9 sm:pl-12 pr-3 font-sans text-sm sm:text-base text-obsidian/80 leading-relaxed max-w-2xl">
+                        <p className="pb-5 pt-0.5 pl-11 sm:pl-14 pr-5 font-sans text-sm sm:text-base text-ivory/80 leading-relaxed max-w-2xl">
                           {pillar.description}
                         </p>
                       </motion.div>
