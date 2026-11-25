@@ -131,7 +131,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
           />
         </div>
       )}
-      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-5 md:px-8 lg:px-12 border-b border-brass/20">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <Link
@@ -225,7 +225,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
 
           {project.verificationNotice && (
             <Reveal variant="up" delay={0.14} className="mt-10 lg:mt-12">
-              <div className="flex items-start gap-3 p-5 bg-espresso/85 border border-champagne/30 text-[15px] sm:text-base lg:text-sm text-champagne/95">
+              <div className="flex items-start gap-3 p-5 bg-umber/90 border border-brass/30 text-[15px] sm:text-base lg:text-sm text-champagne">
                 <AlertCircle className="size-5 shrink-0 mt-0.5" aria-hidden="true" />
                 <div>
                   <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-champagne mb-1">
@@ -241,7 +241,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
         </div>
       </section>
 
-      <section className="bg-ivory text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12">
+      <section className="bg-ivory text-espresso py-16 md:py-24 px-5 md:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto space-y-12 sm:space-y-16">
           <figure className="border border-espresso/20 bg-obsidian overflow-hidden shadow-2xl">
             <ApertureFrame>

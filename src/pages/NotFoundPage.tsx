@@ -5,7 +5,7 @@ import { KineticLabel } from '@/components/motion/KineticLabel';
 
 export const NotFoundPage: React.FC = () => {
   return (
-    <section className="min-h-[82vh] bg-[#1A1412] text-ivory flex flex-col items-center justify-center px-4 sm:px-6 pt-28 pb-20 text-center">
+    <section className="min-h-[82vh] bg-obsidian text-ivory flex flex-col items-center justify-center px-5 md:px-8 pt-28 pb-20 text-center">
       <div className="max-w-2xl mx-auto space-y-6">
         <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.18em] font-medium text-champagne">
           404 · ARCHIVE NOT FOUND / ARSIP TIDAK DITEMUKAN

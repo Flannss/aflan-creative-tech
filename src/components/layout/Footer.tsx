@@ -65,14 +65,14 @@ const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
     <footer className="relative bg-obsidian text-ivory border-t border-champagne/15 overflow-hidden">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[440px] rounded-full opacity-35"
+        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[440px] rounded-full opacity-40"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(118,86,65,0.45) 0%, rgba(43,29,23,0.18) 48%, rgba(23,22,21,0) 75%)',
+            'radial-gradient(ellipse at center, rgba(140,86,56,0.34) 0%, rgba(27,21,18,0.22) 48%, rgba(15,12,10,0) 75%)',
         }}
       />
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 pt-14 sm:pt-20 lg:pt-24 pb-10 sm:pb-12">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-5 md:px-8 lg:px-12 pt-14 sm:pt-20 lg:pt-24 pb-24 sm:pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 sm:pb-14 border-b border-champagne/15 items-end">
           <div className="lg:col-span-7">
             <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne mb-3">

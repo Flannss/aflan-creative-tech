@@ -156,7 +156,7 @@ export const JourneyPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-5 md:px-8 lg:px-12 border-b border-brass/20">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 studio-vignette opacity-80"
@@ -190,9 +190,7 @@ export const JourneyPage: React.FC = () => {
             </div>
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
               <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                Linimasa interaktif yang mendokumentasikan pengalaman Programmer Intern di PT
-                Puskomedia Indonesia Kreatif, studi Teknologi Informasi di Universitas Amikom
-                Purwokerto, serta pengembangan karya web dan aplikasi mobile.
+                Linimasa akademik dan karier dari PKL GT Computer, S1 TI24A Amikom, hingga Programmer Intern QA PT Puskomedia.
               </p>
             </Reveal>
           </div>
@@ -210,7 +208,7 @@ export const JourneyPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-ivory text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12">
+      <section className="relative bg-ivory text-espresso py-16 md:py-24 px-5 md:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           {/* Pinned Editorial Category Heading & Chapter Controls */}
           <aside className="lg:col-span-4 lg:sticky lg:top-24 space-y-6">

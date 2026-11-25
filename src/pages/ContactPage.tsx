@@ -267,7 +267,7 @@ export const ContactPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="bg-ivory text-espresso pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-24 px-4 sm:px-6 lg:px-12 border-b border-espresso/15">
+      <section className="bg-ivory text-espresso pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-24 px-5 md:px-8 lg:px-12 border-b border-espresso/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
@@ -300,20 +300,19 @@ export const ContactPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.12} className="lg:col-span-5">
               <p className="font-sans text-sm md:text-base text-espresso/80 leading-relaxed max-w-prose">
-                {contactData.availabilityNote} Kirim pesan langsung ke inbox saya lewat
-                formulir ini atau gunakan kanal cepat di bawah.
+                {contactData.availabilityNote} Kirim pesan langsung melalui formulir atau kanal cepat di bawah.
               </p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="bg-obsidian text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12">
+      <section className="bg-obsidian text-ivory py-16 md:py-24 px-5 md:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           {/* KOLOM KIRI: KANAL LANGSUNG, KETERSEDIAAN & KONTAK CEPAT */}
           <Reveal variant="up" className="lg:col-span-5 min-w-0 space-y-6">
             {/* Availability & Location Header Card */}
-            <div className="w-full max-w-full min-w-0 overflow-hidden p-5 sm:p-6 bg-espresso/75 border border-champagne/25 space-y-4">
+            <div className="w-full max-w-full min-w-0 overflow-hidden p-5 sm:p-6 bg-umber/90 border border-brass/25 space-y-4">
               <div className="flex items-center justify-between gap-3 pb-3 border-b border-champagne/15">
                 <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
                   <span

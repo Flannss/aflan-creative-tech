@@ -27,11 +27,13 @@ const PROGRESSIVE_EDGE_MASK = [
 const TILT_SPRING = { stiffness: 145, damping: 24, mass: 0.65 };
 
 /**
- * Architectural Editorial Portrait Frame with multi-layered spatial depth:
- * - Single hairline border (`rounded-[22px] border-champagne/20`) framing a progressive 4-side masked photo.
- * - Desktop (`canHoverFine`): tactile 3D tilt (`rotateX`/`rotateY`), inner photo counter-parallax,
- *   opposite foreground signature shift, and dynamic Ivory-Champagne specular studio rim-light.
- * - Tablet & Mobile: smooth scroll parallax drift with soft ambient corner depth glow.
+ * Editorial Portrait Plate:
+ * - Proportioned for balanced harmony across Mobile (`max-w-[235px]`), Tablet (`max-w-[290px]`),
+ *   and Desktop (`max-w-[375px]`–`405px`).
+ * - Single Aged Brass hairline border framing a 4-side edge-faded studio dissolve into `#0F0C0A`,
+ *   anchored by 1-line dual-tone engraved `MU'AFA DZULFIQAR`.
+ * - Desktop (`canHoverFine`): 3D tilt, counter-parallax photo, opposite signature shift, and specular rim-light.
+ * - Tablet & Mobile: smooth scroll parallax drift and subtle diagonal ambient sheen.
  */
 export const HeroPortrait: React.FC<HeroPortraitProps> = ({
   portraitY,
@@ -46,7 +48,6 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
 
   const [isHovered, setIsHovered] = useState(false);
 
-  // Normalized pointer coordinates [-0.5, 0.5] and percentages [0, 100]
   const normX = useMotionValue(0);
   const normY = useMotionValue(0);
   const pctX = useMotionValue(50);
@@ -57,7 +58,6 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
   const smoothPctX = useSpring(pctX, TILT_SPRING);
   const smoothPctY = useSpring(pctY, TILT_SPRING);
 
-  // Layered spatial transforms for Desktop fine pointer
   const cardRotateX = useTransform(
     smoothNormY,
     [-0.5, 0.5],
@@ -89,7 +89,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
     enablePointerParallax ? [-2.5, 2.5] : [0, 0],
   );
 
-  const specularRimLight = useMotionTemplate`radial-gradient(280px circle at ${smoothPctX}% ${smoothPctY}%, rgba(244,239,230,0.16) 0%, rgba(216,195,165,0.08) 42%, transparent 72%)`;
+  const specularRimLight = useMotionTemplate`radial-gradient(280px circle at ${smoothPctX}% ${smoothPctY}%, rgba(246,241,233,0.16) 0%, rgba(201,169,124,0.09) 42%, transparent 72%)`;
 
   const { scrollYProgress: touchScrollProgress } = useScroll({
     target: frameRef,
@@ -130,7 +130,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
     <div
       ref={frameRef}
       style={enablePointerParallax ? { perspective: 1100 } : undefined}
-      className="relative w-full flex items-center justify-center"
+      className="relative w-full flex items-center justify-center md:justify-end"
     >
       <motion.div
         style={{
@@ -138,30 +138,30 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
           rotateX: cardRotateX,
           rotateY: cardRotateY,
         }}
-        initial={disableMotion ? false : { opacity: 0, y: 18 }}
-        animate={introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
+        initial={disableMotion ? false : { opacity: 0, y: 14 }}
+        animate={introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
         transition={{
           duration: disableMotion ? 0 : MOTION_DURATION,
-          delay: disableMotion ? 0 : 0.14,
+          delay: disableMotion ? 0 : 0.12,
           ease: EASE_LUXURY,
         }}
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         data-cursor-label="DOSSIER"
-        className="group relative z-10 w-full max-w-[290px] sm:max-w-[320px] md:max-w-[335px] lg:max-w-[385px] xl:max-w-[415px] aspect-[4/5] rounded-[22px] border border-champagne/20 hover:border-champagne/45 bg-[#1A1412]/70 p-3 sm:p-4 transition-colors duration-500 overflow-hidden will-change-transform"
+        className="group relative z-10 w-full max-w-[235px] sm:max-w-[265px] md:max-w-[290px] lg:max-w-[375px] xl:max-w-[405px] aspect-[4/5] rounded-[22px] border border-brass/25 hover:border-brass/55 bg-[#0F0C0A]/75 p-2.5 sm:p-3.5 lg:p-4 transition-colors duration-500 overflow-hidden will-change-transform"
       >
-        {/* Warm Studio Ambient Backlight (static & touch screens) */}
+        {/* Warm Studio Cognac & Brass Ambient Backlight */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-80 transition-opacity duration-700 group-hover:opacity-100"
+          className="pointer-events-none absolute inset-0 opacity-85 transition-opacity duration-700 group-hover:opacity-100"
           style={{
             background:
-              'radial-gradient(ellipse 68% 62% at 50% 42%, rgba(216,195,165,0.12) 0%, rgba(138,109,75,0.05) 48%, transparent 76%)',
+              'radial-gradient(ellipse 68% 62% at 50% 42%, rgba(201,169,124,0.12) 0%, rgba(140,86,56,0.08) 48%, transparent 76%)',
           }}
         />
 
-        {/* Desktop Dynamic Ivory-Champagne Specular Studio Rim-Light */}
+        {/* Desktop Dynamic Ivory-Brass Specular Studio Rim-Light */}
         {enablePointerParallax && (
           <motion.div
             aria-hidden="true"
@@ -182,13 +182,13 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
               className="aflan-portrait-sheen h-full w-1/2"
               style={{
                 background:
-                  'linear-gradient(90deg, transparent 0%, rgba(244,239,230,0.11) 50%, transparent 100%)',
+                  'linear-gradient(90deg, transparent 0%, rgba(246,241,233,0.11) 50%, transparent 100%)',
               }}
             />
           </div>
         )}
 
-        {/* Progressive 4-Side Edge Opacity Fading Portrait (strictly 2D inner mask clip) */}
+        {/* Progressive 4-Side Edge Opacity Fading Portrait */}
         <div
           className="relative w-full h-full rounded-[14px] overflow-hidden"
           style={{
@@ -224,25 +224,25 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
             </motion.div>
           </motion.div>
 
-          {/* Soft Bottom Studio Dissolve into #1A1412 */}
+          {/* Soft Bottom Studio Dissolve into #0F0C0A Obsidian Espresso */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-[#1A1412] via-[#1A1412]/55 to-transparent"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-[#0F0C0A] via-[#0F0C0A]/60 to-transparent"
           />
         </div>
 
-        {/* Authoritative 1-Line Dual-Tone Engraved Signature with subtle opposite depth float */}
+        {/* Authoritative 1-Line Dual-Tone Engraved Signature */}
         <motion.div
           style={
             enablePointerParallax
               ? { x: signatureShiftX, y: signatureShiftY }
               : undefined
           }
-          className="pointer-events-none absolute inset-x-0 bottom-4 sm:bottom-5 z-30 px-4 flex justify-center will-change-transform"
+          className="pointer-events-none absolute inset-x-0 bottom-3.5 sm:bottom-4 lg:bottom-5 z-30 px-3 flex justify-center will-change-transform"
         >
           <p
             aria-label="Mu'afa Dzulfiqar"
-            className="select-none flex items-baseline justify-center gap-x-2.5 whitespace-nowrap text-lg sm:text-xl md:text-[1.4rem] tracking-[0.08em] leading-none font-serif italic font-medium"
+            className="select-none flex items-baseline justify-center gap-x-2 whitespace-nowrap text-[0.95rem] sm:text-lg lg:text-[1.35rem] tracking-[0.08em] leading-none font-serif italic font-medium"
           >
             <span className="text-engraved-brown">MU&apos;AFA</span>{' '}
             <span className="text-engraved-ivory">DZULFIQAR</span>

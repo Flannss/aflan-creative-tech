@@ -109,7 +109,7 @@ export const AboutPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-ivory text-espresso pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-24 px-4 sm:px-6 lg:px-12 border-b border-espresso/15">
+      <section className="relative bg-ivory text-espresso pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-24 px-5 md:px-8 lg:px-12 border-b border-espresso/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4">
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
@@ -138,8 +138,7 @@ export const AboutPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-4 lg:pt-2 space-y-5">
               <p className="font-sans text-sm md:text-base leading-relaxed text-espresso/80">
-                Merancang pengalaman web dengan presisi frontend engineering, aplikasi lintas
-                platform, dan evaluasi software quality yang terstruktur.
+                Merancang antarmuka web modern dan menjalankan evaluasi Software QA secara terstruktur.
               </p>
               <div className="flex flex-wrap gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-mocha">
                 <span className="inline-flex items-center gap-1.5">
@@ -173,12 +172,6 @@ export const AboutPage: React.FC = () => {
                     aria-hidden="true"
                     className="pointer-events-none absolute inset-0 bg-linear-to-tr from-obsidian/55 via-transparent to-transparent"
                   />
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute top-4 left-4 font-mono text-[9px] tracking-[0.24em] uppercase px-2.5 py-1 bg-obsidian/75 text-champagne border border-champagne/25"
-                  >
-                    POTRET EDITORIAL · AMDZ
-                  </span>
                 </ParallaxFrame>
                 <figcaption className="pt-4 pb-1 px-1 flex items-center justify-between gap-4 text-ivory">
                   <div>
@@ -207,7 +200,7 @@ export const AboutPage: React.FC = () => {
               </Reveal>
 
               <Reveal variant="up" delay={0.14} className="space-y-4">
-                <div className="bg-[#1A1412] hover:bg-[#211A17] text-ivory p-6 sm:p-7 border border-champagne/15 transition-colors duration-300 space-y-3.5">
+                <div className="bg-obsidian hover:bg-umber text-ivory p-6 sm:p-7 border border-brass/25 transition-colors duration-300 space-y-3.5">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
                       <Briefcase className="size-3.5" aria-hidden="true" />
@@ -281,7 +274,7 @@ export const AboutPage: React.FC = () => {
 
       <section
         data-nav-surface="dark"
-        className="relative bg-espresso text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12"
+        className="relative bg-umber text-ivory py-16 md:py-24 px-5 md:px-8 lg:px-12"
       >
         <div className="max-w-[1440px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 pb-10 sm:pb-14 lg:pb-16 border-b border-champagne/15 items-end">
@@ -340,7 +333,7 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-offwhite text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12">
+      <section className="relative bg-linen text-espresso py-16 md:py-24 px-5 md:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 items-start">
           <Reveal variant="up" className="lg:col-span-7">
             <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-bronze font-medium mb-3">

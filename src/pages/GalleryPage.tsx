@@ -49,11 +49,11 @@ const TONAL_FILTERS: Record<
 };
 
 const PALETTE_BARS = [
-  { name: 'Obsidian', hex: '#1A1412' },
-  { name: 'Espresso', hex: '#2B1D17' },
-  { name: 'Mocha', hex: '#765641' },
-  { name: 'Champagne', hex: '#D8C3A5' },
-  { name: 'Ivory', hex: '#F5F0E8' },
+  { name: 'Obsidian', hex: '#0F0C0A' },
+  { name: 'Umber', hex: '#1B1512' },
+  { name: 'Cognac', hex: '#8C5638' },
+  { name: 'Brass', hex: '#C9A97C' },
+  { name: 'Ivory', hex: '#F6F1E9' },
 ] as const;
 
 const OPTICAL_GRAIN_STYLE = {
@@ -133,7 +133,7 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
 
       {item.kind === 'abstract-monogram' && (
         <div
-          className="w-full h-full bg-[#1A1412] text-ivory p-6 sm:p-8 flex flex-col justify-between relative"
+          className="w-full h-full bg-obsidian text-ivory p-6 sm:p-8 flex flex-col justify-between relative"
           style={{ filter: TONAL_FILTERS[tonalMode].cssFilter || 'none' }}
         >
           <div
@@ -177,7 +177,7 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
           <div className="my-auto py-3.5 space-y-3">
             <div className="flex flex-col gap-1.5">
               {PALETTE_BARS.map((bar) => {
-                const isLightSwatch = bar.hex === '#F5F0E8' || bar.hex === '#D8C3A5';
+                const isLightSwatch = bar.hex === '#F6F1E9' || bar.hex === '#C9A97C';
                 return (
                   <div
                     key={bar.hex}
@@ -213,7 +213,7 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
           </div>
 
           <div className="flex items-center justify-between font-mono text-[9px] tracking-[0.18em] uppercase text-taupe border-t border-champagne/15 pt-2.5">
-            <span>#1A1412 → #F5F0E8</span>
+            <span>#0F0C0A → #F6F1E9</span>
             <span>CHIAROSCURO</span>
           </div>
         </div>
@@ -371,7 +371,7 @@ export const GalleryPage: React.FC = () => {
         />
       )}
 
-      <section className="bg-offwhite text-espresso pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-20 px-4 sm:px-6 lg:px-12 border-b border-espresso/10">
+      <section className="bg-offwhite text-espresso pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-20 px-5 md:px-8 lg:px-12 border-b border-espresso/10">
         <div className="max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
@@ -403,8 +403,7 @@ export const GalleryPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
               <p className="font-sans text-sm md:text-base text-espresso/80 leading-relaxed">
-                Kurasi visual personal AFLAN yang memadukan variasi tonal potret studio bersama
-                pelat abstrak tipografi dan sistem warna, disusun lapang dalam grid Masonry.
+                Kurasi potret studio, pelat abstrak tipografi, serta spektrum warna Sartorial dalam lightbox presisi.
               </p>
             </Reveal>
           </div>
@@ -479,7 +478,7 @@ export const GalleryPage: React.FC = () => {
 
       <section
         data-nav-surface="dark"
-        className="bg-obsidian text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12"
+        className="bg-obsidian text-ivory py-16 md:py-24 px-5 md:px-8 lg:px-12"
       >
         <div className="max-w-[1440px] mx-auto">
           {layoutMode === 'masonry' ? (
@@ -491,7 +490,7 @@ export const GalleryPage: React.FC = () => {
                 const isDetailOpen = revealedCardId === item.id;
                 return (
                   <StaggerItem key={item.id} className="break-inside-avoid">
-                    <article className="group bg-[#211A17]/80 border border-champagne/15 hover:border-champagne/50 active:border-champagne transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-[0_24px_70px_rgba(0,0,0,0.55)]">
+                    <article className="group bg-umber/85 border border-brass/20 hover:border-brass/55 active:border-brass transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-[0_24px_70px_rgba(0,0,0,0.55)]">
                       <div className={`relative ${item.aspectClass} w-full overflow-hidden bg-obsidian`}>
                         <button
                           type="button"

@@ -1,19 +1,23 @@
 import React, { useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { pageContentVariants, reducedPageVariants } from '@/utils/motion';
+import { directionalPageVariants, reducedPageVariants } from '@/utils/motion';
 
 let hasCompletedInitialRender = false;
 
 interface PageTransitionProps {
   children: React.ReactNode;
+  direction?: number;
 }
 
 /**
- * Silk Atmospheric Cross-Glide page wrapper:
- * - Zero delay on very first render and clean fade fallback under `prefers-reduced-motion`.
- * - Pure GPU opacity/transform glide with no blocking overlay curtain.
+ * Directional Silk Route Transition:
+ * - Glides subtly along the route index axis (`±12px`, `0.24s` settle / `0.09s` exit).
+ * - Zero initial delay on first hydration and crisp fade under `prefers-reduced-motion`.
  */
-export const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
+export const PageTransition: React.FC<PageTransitionProps> = ({
+  children,
+  direction = 1,
+}) => {
   const prefersReducedMotion = useReducedMotion();
   const skipInitialEntrance = !hasCompletedInitialRender;
 
@@ -23,7 +27,8 @@ export const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
 
   return (
     <motion.div
-      variants={prefersReducedMotion ? reducedPageVariants : pageContentVariants}
+      custom={direction}
+      variants={prefersReducedMotion ? reducedPageVariants : directionalPageVariants}
       initial={skipInitialEntrance ? false : 'initial'}
       animate="animate"
       exit="exit"

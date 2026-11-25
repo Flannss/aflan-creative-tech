@@ -69,7 +69,7 @@ export const BackToTop: React.FC = () => {
             duration: prefersReducedMotion ? 0.14 : 0.28,
             ease: EASE_LUXURY,
           }}
-          className="group fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 size-12 rounded-full bg-[#1A1412]/90 backdrop-blur-md text-champagne shadow-[0_12px_32px_rgba(0,0,0,0.48)] flex items-center justify-center hover:bg-espresso hover:text-ivory transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne"
+          className="group fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 size-12 rounded-full bg-umber/92 border border-brass/25 backdrop-blur-md text-champagne shadow-[0_12px_32px_rgba(0,0,0,0.52)] flex items-center justify-center hover:bg-espresso hover:text-ivory transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-brass"
         >
           <svg
             aria-hidden="true"
@@ -81,7 +81,7 @@ export const BackToTop: React.FC = () => {
               cy="24"
               r="21.5"
               fill="none"
-              stroke="rgba(216,195,165,0.2)"
+              stroke="rgba(201,169,124,0.2)"
               strokeWidth="1.5"
             />
             <motion.circle
@@ -89,7 +89,7 @@ export const BackToTop: React.FC = () => {
               cy="24"
               r="21.5"
               fill="none"
-              stroke="#D8C3A5"
+              stroke="#C9A97C"
               strokeWidth="1.5"
               strokeLinecap="round"
               style={{

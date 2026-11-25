@@ -28,11 +28,11 @@ export const Reveal: React.FC<RevealProps> = ({
   }
 
   const initialMap = {
-    up: { opacity: 0, y: 16 },
-    left: { opacity: 0, x: -16 },
-    right: { opacity: 0, x: 16 },
+    up: { opacity: 0, y: 14 },
+    left: { opacity: 0, x: -14 },
+    right: { opacity: 0, x: 14 },
     fade: { opacity: 0 },
-    clip: { opacity: 0, y: 16, scale: 0.988 },
+    clip: { opacity: 0, y: 14, scale: 0.99 },
   };
 
   const visibleMap = {
@@ -121,7 +121,7 @@ export const StaggerItem: React.FC<StaggerItemProps> = ({
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 16, scale: 0.99 },
+        hidden: { opacity: 0, y: 12, scale: 0.992 },
         visible: {
           opacity: 1,
           y: 0,

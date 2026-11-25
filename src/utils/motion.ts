@@ -16,13 +16,36 @@ export const SPRING_SILK = {
 };
 
 /**
- * Unified editorial reveal duration for calm, fluid pacing across all pages.
+ * Calibrated editorial reveal duration matching Lenis cadence without "PPT pop".
  */
-export const MOTION_DURATION = 0.56;
+export const MOTION_DURATION = 0.45;
 
 export const LUXURY_TRANSITION: Transition = {
   duration: MOTION_DURATION,
   ease: EASE_LUXURY,
+};
+
+export const directionalPageVariants: Variants = {
+  initial: (direction = 1) => ({
+    opacity: 0,
+    x: direction * 12,
+  }),
+  animate: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.24,
+      ease: EASE_LUXURY,
+    },
+  },
+  exit: (direction = 1) => ({
+    opacity: 0,
+    x: direction * -10,
+    transition: {
+      duration: 0.09,
+      ease: EASE_LUXURY,
+    },
+  }),
 };
 
 export const pageContentVariants: Variants = {
@@ -34,7 +57,7 @@ export const pageContentVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.26,
+      duration: 0.24,
       ease: EASE_LUXURY,
     },
   },

@@ -26,8 +26,8 @@ const ROUTE_CONTEXT_MAP: Record<string, RouteContextSpec> = {
   '/': {
     tag: 'EDITORIAL COVER',
     summary:
-      'Halaman utama berkarakter majalah interaktif: masthead Cinzel, potret reaktif 3D, Warm Ivory centerpiece, dan Selected Works.',
-    highlights: ['Cinzel Masthead', 'Warm Ivory Spread', 'Swipe Lookbook'],
+      'Halaman pembuka 3-babak: masthead Cinzel, Editorial Portrait Plate, Selected Works berbasis Lenis, dan Quiet Closing Spread.',
+    highlights: ['Cinzel Masthead', 'Lenis Selected Works', 'Quiet Closing'],
     motif: 'compass',
   },
   '/about': {
@@ -637,8 +637,8 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                 </nav>
 
                 {/* Live Editorial Context Panel (Tablet & Desktop >= 768px) */}
-                <aside className="hidden md:flex md:col-span-5 min-w-0 flex-col pl-4 lg:pl-8 border-l border-champagne/15">
-                  <div className="relative overflow-hidden border border-champagne/25 bg-[#211A17] p-6 lg:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+                <aside className="hidden md:flex md:col-span-5 min-w-0 flex-col pl-4 lg:pl-8 border-l border-brass/20">
+                  <div className="relative overflow-hidden border border-brass/25 bg-umber p-6 lg:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.45)]">
                     <motion.div
                       key={activePreviewRoute.path}
                       initial={
@@ -649,13 +649,13 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                       className="space-y-5"
                     >
                       <div className="flex items-center justify-between gap-3">
-                        <span className="font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
+                        <span className="font-mono text-[10px] tracking-[0.24em] uppercase text-brass">
                           PAGE {activePreviewRoute.index} · {activeRouteContext.tag}
                         </span>
-                        <MonogramMark size={24} className="text-champagne/80 shrink-0" />
+                        <MonogramMark size={24} className="text-brass/85 shrink-0" />
                       </div>
 
-                      <div className="relative flex items-center justify-between gap-4 py-4 px-5 bg-[#1A1412]/90 border border-champagne/20">
+                      <div className="relative flex items-center justify-between gap-4 py-4 px-5 bg-obsidian/90 border border-brass/20">
                         <div className="min-w-0">
                           <p className="font-serif text-3xl lg:text-4xl font-light text-ivory leading-[1.22] pb-0.5">
                             {activePreviewRoute.label}

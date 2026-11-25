@@ -42,13 +42,30 @@ const AchievementsPage = lazy(loadAchievementsPage);
 const ContactPage = lazy(loadContactPage);
 const NotFoundPage = lazy(loadNotFoundPage);
 
+const ROUTE_ORDER_MAP: Record<string, number> = {
+  '/': 0,
+  '/about': 1,
+  '/journey': 2,
+  '/skills': 3,
+  '/projects': 4,
+  '/lab': 5,
+  '/gallery': 6,
+  '/achievements': 7,
+  '/contact': 8,
+};
+
+function getRouteOrderIndex(pathname: string): number {
+  if (pathname.startsWith('/projects/')) return 4;
+  return ROUTE_ORDER_MAP[pathname] ?? 0;
+}
+
 const RouteFallback: React.FC = () => (
   <div
     aria-live="polite"
-    className="min-h-[70vh] bg-[#1A1412] text-ivory flex flex-col items-center justify-center gap-4 px-6"
+    className="min-h-[70vh] bg-obsidian text-ivory flex flex-col items-center justify-center gap-4 px-5 md:px-8"
   >
-    <span className="block w-14 h-px bg-champagne/45 animate-pulse motion-reduce:animate-none" />
-    <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.24em] text-champagne/80">
+    <span className="block w-14 h-px bg-brass/50 animate-pulse motion-reduce:animate-none" />
+    <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.24em] text-brass/85">
       MEMUAT ARSIP · AMDZ
     </span>
   </div>
@@ -57,16 +74,30 @@ const RouteFallback: React.FC = () => (
 const AppRoutes: React.FC<{ introReady: boolean }> = ({ introReady }) => {
   const location = useLocation();
   const { scrollTo } = useSmoothScroll();
+  const [navTrack, setNavTrack] = useState<{ path: string; dir: number }>({
+    path: location.pathname,
+    dir: 1,
+  });
+
+  if (navTrack.path !== location.pathname) {
+    const prevIdx = getRouteOrderIndex(navTrack.path);
+    const nextIdx = getRouteOrderIndex(location.pathname);
+    setNavTrack({
+      path: location.pathname,
+      dir: nextIdx >= prevIdx ? 1 : -1,
+    });
+  }
 
   return (
     <AnimatePresence
       mode="wait"
       initial={false}
+      custom={navTrack.dir}
       onExitComplete={() => {
         scrollTo(0, { immediate: true });
       }}
     >
-      <PageTransition key={location.pathname}>
+      <PageTransition key={location.pathname} direction={navTrack.dir}>
         <Suspense fallback={<RouteFallback />}>
           <Routes location={location}>
             <Route path="/" element={<HomePage introReady={introReady} />} />

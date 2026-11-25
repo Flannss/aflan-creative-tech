@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   motion,
+  useMotionTemplate,
   useMotionValue,
   useReducedMotion,
   useSpring,
@@ -19,6 +20,7 @@ interface SplashIntroProps {
 }
 
 const PORTFOLIO_LETTERS = 'PORTFOLIO'.split('');
+const LAPEL_EXIT_EASE = [0.76, 0, 0.24, 1] as const;
 
 function getPurwokertoWibTime(): string {
   try {
@@ -36,11 +38,13 @@ function getPurwokertoWibTime(): string {
 }
 
 /**
- * Minimalist Architectural Seal Intro Gate with Dual-Panel Silk Aperture Split:
- * - Top AMDZ crest & Purwokerto live WIB, dual counter-rotating orbital compass rings,
- *   cursor-reactive `PORTFOLIO` (per-letter hover tilt/lift) & engraved `BY AMDZ` parallax depth,
- *   Magnetic `ENTER` CTA with breathing halo, and subtle `PRESS ENTER` cue.
- * - Exit: Dual-Panel Silk Aperture Split (`-102%` / `+102%` + Champagne seam flash) reveals Home cleanly.
+ * The Tailored Lapel Intro Gate:
+ * - Two asymmetric architectural surfaces (Obsidian Espresso #0F0C0A + Smoked Umber #1B1512)
+ *   meeting along a razor-thin diagonal Aged Brass seam, illuminated by Burnished Cognac warmth.
+ * - Clean focal lockup: top AMDZ monogram & live Purwokerto WIB clock, cursor-reactive
+ *   `PORTFOLIO` (per-letter lift/tilt) & `BY AMDZ` (parallax depth + hover glide),
+ *   and a precision Magnetic `ENTER` seal.
+ * - Exit: Asymmetric opposing diagonal lapel parting (`0.68s`, `[0.76, 0, 0.24, 1]`).
  */
 export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -51,25 +55,18 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
   const [wibTime, setWibTime] = useState<string>(() => getPurwokertoWibTime());
   const exitingRef = useRef(false);
 
-  const compassRotRaw = useMotionValue(0);
-  const compassRotate = useSpring(compassRotRaw, {
-    stiffness: 90,
-    damping: 24,
-    mass: 0.7,
-  });
-
+  const pointerPctX = useMotionValue(52);
+  const pointerPctY = useMotionValue(46);
   const subtitleRawX = useMotionValue(0);
   const subtitleRawY = useMotionValue(0);
-  const subtitleX = useSpring(subtitleRawX, {
-    stiffness: 110,
-    damping: 22,
-    mass: 0.7,
-  });
-  const subtitleY = useSpring(subtitleRawY, {
-    stiffness: 110,
-    damping: 22,
-    mass: 0.7,
-  });
+
+  const springCfg = { stiffness: 110, damping: 24, mass: 0.7 };
+  const lightX = useSpring(pointerPctX, springCfg);
+  const lightY = useSpring(pointerPctY, springCfg);
+  const subtitleX = useSpring(subtitleRawX, springCfg);
+  const subtitleY = useSpring(subtitleRawY, springCfg);
+
+  const cognacSpotlight = useMotionTemplate`radial-gradient(520px circle at ${lightX}% ${lightY}%, rgba(140, 86, 56, 0.22) 0%, rgba(201, 169, 124, 0.08) 38%, transparent 72%)`;
 
   const triggerEnter = useCallback(() => {
     if (exitingRef.current) return;
@@ -105,16 +102,18 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!enableCursorFx) return;
-    const relX = e.clientX / Math.max(1, window.innerWidth) - 0.5;
-    const relY = e.clientY / Math.max(1, window.innerHeight) - 0.5;
-    compassRotRaw.set(relX * 10);
-    subtitleRawX.set(relX * 14);
-    subtitleRawY.set(relY * 8);
+    const rx = e.clientX / Math.max(1, window.innerWidth);
+    const ry = e.clientY / Math.max(1, window.innerHeight);
+    pointerPctX.set(rx * 100);
+    pointerPctY.set(ry * 100);
+    subtitleRawX.set((rx - 0.5) * 14);
+    subtitleRawY.set((ry - 0.5) * 8);
   };
 
   const handleMouseLeave = () => {
     if (!enableCursorFx) return;
-    compassRotRaw.set(0);
+    pointerPctX.set(52);
+    pointerPctY.set(46);
     subtitleRawX.set(0);
     subtitleRawY.set(0);
   };
@@ -136,175 +135,129 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         isExiting ? 'pointer-events-none' : ''
       }`}
     >
-      {/* Seamless Dual-Panel Silk Aperture Split Layer */}
+      {/* Tailored Lapel Asymmetric Dual-Panel Architecture */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
+        {/* Left/Upper Fold — Obsidian Espresso (#0F0C0A) */}
         <motion.div
-          initial={{ y: '0%' }}
+          initial={{ x: '0%', y: '0%' }}
           exit={
             prefersReducedMotion
-              ? { opacity: 0, transition: { duration: 0.2 } }
+              ? { opacity: 0, transition: { duration: 0.18 } }
               : {
+                  x: '-64%',
                   y: '-102%',
-                  transition: {
-                    duration: 0.68,
-                    ease: EASE_LUXURY,
-                  },
+                  transition: { duration: 0.68, ease: LAPEL_EXIT_EASE },
                 }
           }
-          className="absolute top-0 inset-x-0 h-1/2 bg-[#1A1412] will-change-transform"
+          style={{ clipPath: 'polygon(0 0, 62.2% 0, 38.2% 100%, 0 100%)' }}
+          className="absolute inset-0 bg-[#0F0C0A] will-change-transform"
         />
+
+        {/* Right/Lower Fold — Smoked Umber (#1B1512) */}
         <motion.div
-          initial={{ y: '0%' }}
+          initial={{ x: '0%', y: '0%' }}
           exit={
             prefersReducedMotion
-              ? { opacity: 0, transition: { duration: 0.2 } }
+              ? { opacity: 0, transition: { duration: 0.18 } }
               : {
+                  x: '64%',
                   y: '102%',
-                  transition: {
-                    duration: 0.68,
-                    ease: EASE_LUXURY,
-                  },
+                  transition: { duration: 0.68, ease: LAPEL_EXIT_EASE },
                 }
           }
-          className="absolute bottom-0 inset-x-0 h-1/2 bg-[#1A1412] will-change-transform"
+          style={{ clipPath: 'polygon(61.8% 0, 100% 0, 100% 100%, 37.8% 100%)' }}
+          className="absolute inset-0 bg-[#1B1512] will-change-transform"
         />
-        <motion.div
-          initial={{ scaleX: 0, opacity: 0 }}
+
+        {/* Razor-Thin Aged Brass Diagonal Lapel Seam + Exit Flare */}
+        <motion.svg
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          initial={{ opacity: 0.45 }}
           exit={
             prefersReducedMotion
               ? { opacity: 0 }
               : {
-                  scaleX: [0, 1, 1],
-                  opacity: [0, 0.9, 0],
-                  transition: {
-                    duration: 0.52,
-                    ease: EASE_LUXURY,
-                  },
+                  opacity: [0.45, 1, 0],
+                  transition: { duration: 0.5, ease: EASE_LUXURY },
                 }
           }
-          className="absolute top-1/2 inset-x-0 -translate-y-1/2 h-px bg-champagne/40 origin-center will-change-[transform,opacity]"
-        />
+          className="absolute inset-0 w-full h-full will-change-[opacity]"
+        >
+          <line
+            x1="62"
+            y1="0"
+            x2="38"
+            y2="100"
+            stroke="rgba(201, 169, 124, 0.36)"
+            strokeWidth="0.16"
+          />
+        </motion.svg>
+
+        {/* Cursor-Reactive Burnished Cognac Lighting (Desktop) / Drift Glow (Touch) */}
+        {enableCursorFx ? (
+          <motion.div
+            style={{ background: cognacSpotlight }}
+            exit={{ opacity: 0, transition: { duration: 0.25 } }}
+            className="absolute inset-0"
+          />
+        ) : (
+          <motion.div
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+            style={{
+              background:
+                'radial-gradient(circle 420px at 50% 48%, rgba(140,86,56,0.20) 0%, rgba(201,169,124,0.06) 44%, transparent 74%)',
+            }}
+            className="absolute inset-0 aflan-lapel-glow"
+          />
+        )}
       </div>
 
-      {/* Foreground Minimalist Seal & Corner Micro-Labels */}
+      {/* Foreground Crisp Typography & Magnetic Seal */}
       <motion.div
-        initial={{ opacity: 1, scale: 1, y: 0 }}
+        initial={{ opacity: 1, scale: 1 }}
         exit={
           prefersReducedMotion
-            ? { opacity: 0, transition: { duration: 0.18 } }
+            ? { opacity: 0, transition: { duration: 0.16 } }
             : {
                 opacity: 0,
-                scale: 0.94,
-                y: -14,
-                transition: { duration: 0.26, ease: EASE_LUXURY },
+                scale: 0.96,
+                transition: { duration: 0.24, ease: EASE_LUXURY },
               }
         }
-        className="relative z-10 h-full w-full flex flex-col items-center justify-between px-6 py-7 sm:px-10 sm:py-10 md:px-14 md:py-12 will-change-[transform,opacity]"
+        className="relative z-10 h-full w-full flex flex-col items-center justify-between px-5 sm:px-8 md:px-12 py-7 sm:py-10 will-change-[transform,opacity]"
       >
-        {/* Warm Studio Ambient Glow */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              'radial-gradient(circle 540px at 50% 48%, rgba(216,195,165,0.09) 0%, rgba(138,109,75,0.04) 44%, transparent 74%)',
-          }}
-        />
-
-        {/* Top Minimalist Micro-Labels */}
+        {/* Top Micro-Header */}
         <motion.div
           initial={prefersReducedMotion ? false : { opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.48, ease: EASE_LUXURY }}
-          className="relative z-10 w-full max-w-[1360px] flex items-center justify-between gap-4 font-mono text-[10px] sm:text-[11px] tracking-[0.26em] uppercase"
+          transition={{ duration: 0.44, ease: EASE_LUXURY }}
+          className="w-full max-w-[1360px] flex items-center justify-between gap-4 font-mono text-[10px] sm:text-[11px] tracking-[0.26em] uppercase"
         >
-          <span className="inline-flex items-center gap-2.5 text-champagne/85">
-            <MonogramMark size={22} className="text-champagne shrink-0" />
+          <span className="inline-flex items-center gap-2.5 text-brass">
+            <MonogramMark size={22} className="text-brass shrink-0" />
             <span>AMDZ</span>
           </span>
           <span className="inline-flex items-center gap-2 text-taupe tabular-nums whitespace-nowrap">
             <span
               aria-hidden="true"
-              className="size-1.5 rounded-full bg-champagne animate-pulse motion-reduce:animate-none"
+              className="size-1.5 rounded-full bg-brass animate-pulse motion-reduce:animate-none"
             />
             <span>PURWOKERTO · {wibTime} WIB</span>
           </span>
         </motion.div>
 
-        {/* Center Orbital Compass Hairline + Typography + Magnetic ENTER Seal */}
-        <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto px-2">
-          {/* Dual Counter-Rotating Architectural Compass SVG */}
-          <motion.div
-            aria-hidden="true"
-            initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={
-              prefersReducedMotion
-                ? undefined
-                : {
-                    scale: 1.18,
-                    opacity: 0,
-                    transition: { duration: 0.38, ease: EASE_LUXURY },
-                  }
-            }
-            transition={{ duration: 0.65, ease: EASE_LUXURY }}
-            style={
-              canHoverFine && !prefersReducedMotion
-                ? { rotate: compassRotate }
-                : undefined
-            }
-            className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[290px] sm:size-[400px] md:size-[460px] flex items-center justify-center will-change-transform"
-          >
-            <svg
-              viewBox="0 0 460 460"
-              className="w-full h-full overflow-visible"
-              aria-hidden="true"
-            >
-              <g className="aflan-ring-cw origin-center">
-                <circle
-                  cx="230"
-                  cy="230"
-                  r="224"
-                  stroke="rgba(216,195,165,0.16)"
-                  strokeWidth="1"
-                  fill="none"
-                />
-                <line x1="230" y1="0" x2="230" y2="12" stroke="rgba(216,195,165,0.38)" strokeWidth="1" />
-                <line x1="230" y1="448" x2="230" y2="460" stroke="rgba(216,195,165,0.38)" strokeWidth="1" />
-                <line x1="0" y1="230" x2="12" y2="230" stroke="rgba(216,195,165,0.38)" strokeWidth="1" />
-                <line x1="448" y1="230" x2="460" y2="230" stroke="rgba(216,195,165,0.38)" strokeWidth="1" />
-                <circle cx="230" cy="6" r="2" fill="rgba(216,195,165,0.45)" />
-                <circle cx="230" cy="454" r="2" fill="rgba(216,195,165,0.45)" />
-                <circle cx="6" cy="230" r="2" fill="rgba(216,195,165,0.45)" />
-                <circle cx="454" cy="230" r="2" fill="rgba(216,195,165,0.45)" />
-              </g>
-              <g className="aflan-ring-ccw origin-center">
-                <circle
-                  cx="230"
-                  cy="230"
-                  r="184"
-                  stroke="rgba(216,195,165,0.11)"
-                  strokeWidth="1"
-                  strokeDasharray="4 7"
-                  fill="none"
-                />
-                <circle cx="100" cy="100" r="1.5" fill="rgba(216,195,165,0.35)" />
-                <circle cx="360" cy="100" r="1.5" fill="rgba(216,195,165,0.35)" />
-                <circle cx="100" cy="360" r="1.5" fill="rgba(216,195,165,0.35)" />
-                <circle cx="360" cy="360" r="1.5" fill="rgba(216,195,165,0.35)" />
-              </g>
-            </svg>
-          </motion.div>
-
+        {/* Centered Focal Seal */}
+        <div className="relative flex flex-col items-center justify-center text-center my-auto px-2">
           <motion.span
             aria-hidden="true"
             initial={prefersReducedMotion ? false : { scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ duration: 0.46, delay: 0.06, ease: EASE_LUXURY }}
-            className="block w-10 h-px bg-champagne/45 mb-6 origin-center"
+            transition={{ duration: 0.42, delay: 0.05, ease: EASE_LUXURY }}
+            className="block w-10 h-px bg-brass/55 mb-6 origin-center"
           />
 
           <h1
@@ -319,7 +272,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                 <motion.span
                   key={`${char}-${idx}`}
                   initial={
-                    prefersReducedMotion ? false : { opacity: 0, y: 16 }
+                    prefersReducedMotion ? false : { opacity: 0, y: 14 }
                   }
                   animate={{ opacity: 1, y: 0 }}
                   whileHover={
@@ -338,13 +291,13 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                       : undefined
                   }
                   transition={{
-                    duration: 0.46,
-                    delay: 0.08 + idx * 0.025,
+                    duration: 0.44,
+                    delay: 0.06 + idx * 0.022,
                     ease: EASE_LUXURY,
                   }}
-                  className={`inline-block font-serif font-light uppercase text-[2.75rem] sm:text-6xl md:text-7xl tracking-[0.08em] leading-[1.15] px-[0.02em] aflan-title-shimmer cursor-default will-change-transform ${
+                  className={`inline-block font-serif font-light uppercase text-[2.7rem] sm:text-6xl md:text-7xl tracking-[0.08em] leading-[1.15] px-[0.02em] aflan-title-shimmer cursor-default will-change-transform ${
                     enableCursorFx
-                      ? 'transition-[filter] duration-300 hover:brightness-125 hover:drop-shadow-[0_6px_16px_rgba(244,239,230,0.3)]'
+                      ? 'transition-[filter] duration-300 hover:brightness-125 hover:drop-shadow-[0_6px_16px_rgba(246,241,233,0.28)]'
                       : ''
                   }`}
                 >
@@ -355,9 +308,9 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
 
             <motion.span
               aria-hidden="true"
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.18, ease: EASE_LUXURY }}
+              transition={{ duration: 0.46, delay: 0.16, ease: EASE_LUXURY }}
               style={
                 enableCursorFx ? { x: subtitleX, y: subtitleY } : undefined
               }
@@ -379,7 +332,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                 }
                 className={`inline-block py-1.5 px-3 -my-1.5 font-serif italic font-medium uppercase tracking-[0.14em] text-engraved-champagne text-xl sm:text-3xl md:text-4xl leading-[1.2] select-none cursor-default will-change-transform ${
                   enableCursorFx
-                    ? 'transition-[filter] duration-300 hover:drop-shadow-[0_0_16px_rgba(216,195,165,0.35)]'
+                    ? 'transition-[filter] duration-300 hover:drop-shadow-[0_0_16px_rgba(201,169,124,0.38)]'
                     : ''
                 }`}
               >
@@ -389,31 +342,31 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           </h1>
 
           <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.46, delay: 0.24, ease: EASE_LUXURY }}
+            transition={{ duration: 0.44, delay: 0.22, ease: EASE_LUXURY }}
             className="relative z-10 mt-9 sm:mt-11"
           >
-            <MagneticButton maxPull={8}>
+            <MagneticButton maxPull={6}>
               <div className="relative inline-flex items-center justify-center">
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute -inset-1.5 rounded-full border border-champagne/30 aflan-breath-halo"
+                  className="pointer-events-none absolute -inset-1.5 rounded-full border border-brass/30 aflan-breath-halo"
                 />
                 <button
                   type="button"
                   onClick={triggerEnter}
                   autoFocus
                   data-cursor-label="ENTER"
-                  className="group relative overflow-hidden inline-flex items-center justify-center gap-3 min-h-[48px] px-9 py-3.5 rounded-full border border-champagne/45 bg-[#211A17]/80 text-ivory font-mono text-xs uppercase tracking-[0.24em] hover:bg-champagne hover:border-champagne hover:text-obsidian active:scale-[0.96] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne"
+                  className="group relative overflow-hidden inline-flex items-center justify-center gap-3 min-h-[48px] px-9 py-3.5 rounded-full border border-brass/50 bg-[#1B1512]/85 text-ivory font-mono text-xs uppercase tracking-[0.24em] hover:bg-brass hover:border-brass hover:text-obsidian active:scale-[0.96] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brass"
                 >
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] bg-gradient-to-r from-transparent via-ivory/20 to-transparent motion-reduce:hidden"
+                    className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] bg-gradient-to-r from-transparent via-ivory/25 to-transparent motion-reduce:hidden"
                   />
                   <KineticLabel className="relative z-10">ENTER</KineticLabel>
                   <ArrowUpRight
-                    className="relative z-10 size-4 text-champagne transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-obsidian group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+                    className="relative z-10 size-4 text-brass transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-obsidian group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
                     aria-hidden="true"
                   />
                 </button>
@@ -422,12 +375,12 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           </motion.div>
         </div>
 
-        {/* Single Minimalist Bottom Cue */}
+        {/* Minimalist Bottom Prompt */}
         <motion.div
           initial={prefersReducedMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.48, delay: 0.28, ease: EASE_LUXURY }}
-          className="relative z-10 font-mono text-[10px] tracking-[0.28em] uppercase text-taupe/75"
+          transition={{ duration: 0.44, delay: 0.26, ease: EASE_LUXURY }}
+          className="font-mono text-[10px] tracking-[0.28em] uppercase text-taupe/75"
         >
           PRESS ENTER
         </motion.div>

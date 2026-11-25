@@ -23,15 +23,16 @@ import { useToast } from '@/hooks/useToast';
 import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 
 const PALETTE_SWATCHES = [
-  { name: 'Obsidian', hex: '#171615' },
-  { name: 'Espresso', hex: '#2B1D17' },
-  { name: 'Dark Chocolate', hex: '#3A2921' },
-  { name: 'Charcoal', hex: '#292725' },
-  { name: 'Mocha', hex: '#765641' },
-  { name: 'Warm Taupe', hex: '#A58B76' },
+  { name: 'Obsidian Espresso', hex: '#0F0C0A' },
+  { name: 'Smoked Umber', hex: '#1B1512' },
+  { name: 'Warm Espresso', hex: '#241C17' },
+  { name: 'Dark Chocolate', hex: '#2E231C' },
+  { name: 'Burnished Cognac', hex: '#8C5638' },
+  { name: 'Luxury Brown', hex: '#8A6D4B' },
+  { name: 'Aged Brass', hex: '#C9A97C' },
   { name: 'Champagne', hex: '#D8C3A5' },
-  { name: 'Ivory', hex: '#F5F0E8' },
-  { name: 'Off White', hex: '#FAF8F4' },
+  { name: 'Warm Linen', hex: '#EAE2D5' },
+  { name: 'Alabaster Ivory', hex: '#F6F1E9' },
 ] as const;
 
 const EASING_PRESETS = [
@@ -595,7 +596,7 @@ const ChiaroscuroCanvas: React.FC = () => {
 
     const drawFrame = () => {
       rafId = 0;
-      ctx.fillStyle = '#171615';
+      ctx.fillStyle = '#0F0C0A';
       ctx.fillRect(0, 0, width, height);
 
       const lightX = pointerRef.current.active ? pointerRef.current.x : width * 0.52;
@@ -609,9 +610,9 @@ const ChiaroscuroCanvas: React.FC = () => {
         lightY,
         Math.max(width, height) * 0.62,
       );
-      grad.addColorStop(0, 'rgba(216, 195, 165, 0.22)');
-      grad.addColorStop(0.38, 'rgba(118, 86, 65, 0.14)');
-      grad.addColorStop(1, 'rgba(23, 22, 21, 0)');
+      grad.addColorStop(0, 'rgba(201, 169, 124, 0.22)');
+      grad.addColorStop(0.38, 'rgba(140, 86, 56, 0.16)');
+      grad.addColorStop(1, 'rgba(15, 12, 10, 0)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
 
@@ -1188,32 +1189,32 @@ const MotionEasingWorkbench: React.FC = () => {
 ============================================================================ */
 const CORE_DESIGN_TOKENS = [
   {
-    name: 'Espresso',
-    hex: '#1A1412',
-    role: 'Primary Canvas & Editorial Veil',
+    name: 'Obsidian Espresso',
+    hex: '#0F0C0A',
+    role: 'Primary Deep Canvas & Veil',
     lightText: true,
-    note: 'Dasar ruang gelap editorial dengan kontras tinggi dan tenang.',
+    note: 'Dasar ruang gelap editorial dengan kedalaman tinggi dan tenang.',
   },
   {
-    name: 'Luxury Brown',
-    hex: '#8A6D4B',
-    role: 'Engraved Accents & Hairline Meta',
+    name: 'Smoked Umber',
+    hex: '#1B1512',
+    role: 'Elevated Dark Surface',
     lightText: true,
-    note: 'Aksen mikro-label dan garis ukiran tipografi serif.',
+    note: 'Permukaan bertingkat hangat untuk panggung visual dan panel konteks.',
   },
   {
-    name: 'Champagne',
-    hex: '#D8C3A5',
-    role: 'Interactive Highlights & Active Rings',
+    name: 'Aged Brass',
+    hex: '#C9A97C',
+    role: 'Hairline Precision & Active Focus',
     lightText: false,
-    note: 'Penanda fokus interaktif, pill aktif, dan indikator progres.',
+    note: 'Penanda fokus interaktif, garis lipatan presisi, dan indikator progres.',
   },
   {
-    name: 'Ivory',
-    hex: '#F4EFE6',
-    role: 'Primary Display Ink & Light Surface',
+    name: 'Warm Linen',
+    hex: '#EAE2D5',
+    role: 'Editorial Contrast & Closing Ink',
     lightText: false,
-    note: 'Tinta display utama dan permukaan arsip terang yang lapang.',
+    note: 'Latar kontras kertas editorial dengan tinta utama #0F0C0A.',
   },
 ] as const;
 
@@ -1413,7 +1414,7 @@ export const CreativeLabPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-5 md:px-8 lg:px-12 border-b border-brass/20">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 studio-warm-halo opacity-60"
@@ -1427,8 +1428,8 @@ export const CreativeLabPage: React.FC = () => {
               <Sparkles className="size-3.5" aria-hidden="true" />
               CREATIVE LAB
             </span>
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-espresso/85 border border-champagne/25 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
-              INTERACTIVE UI IMPLEMENTATION · PLAYGROUND
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-umber border border-brass/30 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
+              INTERACTIVE UI WORKBENCH
             </span>
           </Reveal>
           <HairlineRule tone="champagne" immediate className="mt-6" />
@@ -1449,11 +1450,7 @@ export const CreativeLabPage: React.FC = () => {
             </div>
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
               <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                Etalase interaktif Creative-Tech &amp; Interactive UI Implementation yang
-                menampilkan <span className="text-champagne">Dynamic Spotlight Masking</span>,{' '}
-                <span className="text-champagne">Magnetic Cursor UI</span>, kompositor tipografi
-                editorial, kanvas cahaya chiaroscuro, koreografi motion, matriks kontras WCAG,
-                serta <span className="text-champagne">Motion &amp; Easing Workbench</span>.
+                Playground interaktif untuk menguji Spotlight Masking, Magnetic UI, kurva motion editorial, dan token Sartorial Warmth.
               </p>
             </Reveal>
           </div>
@@ -1873,7 +1870,7 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 07 — MOTION & EASING WORKBENCH */}
       <section
         id="lab-workbench"
-        className="relative bg-[#1A1412] text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-t border-champagne/15"
+        className="relative bg-umber text-ivory py-14 sm:py-20 lg:py-24 px-5 md:px-8 lg:px-12 border-t border-brass/20"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <HairlineRule tone="champagne" className="mb-2" />

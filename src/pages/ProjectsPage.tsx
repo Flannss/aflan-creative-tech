@@ -62,7 +62,7 @@ export const ProjectsPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-5 md:px-8 lg:px-12 border-b border-brass/20">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 studio-vignette opacity-75"
@@ -98,22 +98,18 @@ export const ProjectsPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5 space-y-4">
               <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                Eksplorasi case study pilihan dari SatuRuangCreative, aplikasi mobile
-                SOMASII, evaluasi QA pada ASIS Builder (NDA), hingga identitas digital AFLAN —
-                disajikan transparan dengan ruang lingkup terukur.
+                Studi kasus pilihan dari SatuRuangCreative, SOMASII, ASIS Builder (NDA), hingga AFLAN DOSSIER dengan atribusi peran transparan.
               </p>
-              <div className="flex items-start gap-2.5 p-4 bg-espresso/75 border border-champagne/20 text-sm lg:text-xs text-champagne/90 leading-relaxed">
-                <ShieldCheck className="size-4 shrink-0 mt-0.5" aria-hidden="true" />
+              <div className="flex items-start gap-2.5 p-4 bg-umber/90 border border-brass/30 text-sm lg:text-xs text-champagne leading-relaxed">
+                <ShieldCheck className="size-4 text-brass shrink-0 mt-0.5" aria-hidden="true" />
                 <span>
-                  Atribusi transparan: ASIS Builder disajikan dalam format dossier tipografis
-                  sesuai NDA perusahaan; SOMASII merupakan aplikasi mobile kampus (Academic
-                  Final Project).
+                  ASIS Builder disajikan secara tipografis sesuai NDA; SOMASII merupakan Academic Final Project kampus.
                 </span>
               </div>
             </Reveal>
           </div>
 
-          <div className="mt-8 lg:mt-12 flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4 min-w-0">
+          <div className="mt-8 lg:mt-12 p-3 sm:p-4 border border-brass/25 bg-umber/65 flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4 min-w-0">
             <SegmentedControl
               options={categoryOptions}
               value={selectedCategory}
@@ -139,7 +135,7 @@ export const ProjectsPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-espresso text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12 min-h-[55vh]">
+      <section className="bg-umber text-ivory py-16 md:py-24 px-5 md:px-8 lg:px-12 min-h-[55vh]">
         <div className="max-w-[1440px] mx-auto">
           {filteredProjects.length === 0 ? (
             <div className="max-w-xl mx-auto my-8 p-8 sm:p-10 bg-obsidian/70 border border-champagne/20 text-center space-y-5">

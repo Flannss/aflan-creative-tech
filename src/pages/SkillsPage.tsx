@@ -100,7 +100,7 @@ export const SkillsPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-espresso text-ivory pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-24 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
+      <section className="relative bg-umber text-ivory pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-24 px-5 md:px-8 lg:px-12 border-b border-brass/20">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4">
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
@@ -129,9 +129,7 @@ export const SkillsPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
               <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                Setiap teknologi dipetakan melalui hierarki tipografi editorial yang
-                jernih, membedakan pengalaman praktik langsung, penerapan dalam proyek,
-                hingga fokus pendalaman saat ini.
+                Pemetaan kapabilitas yang membedakan pengalaman praktik langsung, penggunaan aktif proyek, dan fokus pendalaman.
               </p>
             </Reveal>
           </div>
@@ -139,9 +137,9 @@ export const SkillsPage: React.FC = () => {
           <Reveal
             variant="up"
             delay={0.18}
-            className="mt-10 lg:mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 border-y border-champagne/15 py-6"
+            className="mt-10 lg:mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 border-y border-brass/20 py-6"
           >
-            <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-[#1A1412]/90 border border-champagne/20">
+            <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-obsidian/90 border border-brass/25">
               <div>
                 <p className="font-serif text-lg sm:text-xl font-semibold text-ivory leading-none">
                   Hands-on Experience
@@ -153,7 +151,7 @@ export const SkillsPage: React.FC = () => {
               <span className="shrink-0 size-2.5 rounded-full bg-champagne" aria-hidden="true" />
             </div>
 
-            <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-[#211A17]/75 border border-champagne/15">
+            <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-espresso/75 border border-brass/20">
               <div>
                 <p className="font-serif text-lg sm:text-xl font-normal text-ivory/85 leading-none">
                   Working Knowledge
@@ -165,7 +163,7 @@ export const SkillsPage: React.FC = () => {
               <span className="shrink-0 size-2.5 rounded-full bg-taupe" aria-hidden="true" />
             </div>
 
-            <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-[#1A1412]/50 border border-dashed border-champagne/25">
+            <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-obsidian/55 border border-dashed border-brass/30">
               <div>
                 <p className="font-serif italic text-lg sm:text-xl font-light editorial-outline-strong leading-none">
                   Currently Learning
@@ -228,7 +226,7 @@ export const SkillsPage: React.FC = () => {
             return (
               <section
                 key={domain.id}
-                className={`py-16 md:py-24 px-4 sm:px-6 lg:px-12 border-b ${isLight
+                className={`py-16 md:py-24 px-5 md:px-8 lg:px-12 border-b ${isLight
                   ? 'bg-ivory text-espresso border-espresso/15'
                   : 'bg-obsidian text-ivory border-champagne/15'
                   }`}
@@ -337,7 +335,7 @@ export const SkillsPage: React.FC = () => {
         )}
       </div>
 
-      <section className="bg-chocolate text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12">
+      <section className="bg-chocolate text-ivory py-16 md:py-24 px-5 md:px-8 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           <Reveal variant="up" className="lg:col-span-6 space-y-5">
             <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
@@ -393,7 +391,7 @@ export const SkillsPage: React.FC = () => {
               ].map((node, nodeIdx) => (
                 <StaggerItem
                   key={node.num}
-                  className={`group relative overflow-hidden p-6 bg-[#1A1412] hover:bg-[#211A17] border border-champagne/15 hover:border-champagne/40 flex flex-col justify-between min-h-[195px] lg:min-h-[215px] transition-colors duration-300 ${nodeIdx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
+                  className={`group relative overflow-hidden p-6 bg-obsidian hover:bg-umber border border-brass/20 hover:border-brass/50 flex flex-col justify-between min-h-[195px] lg:min-h-[215px] transition-colors duration-300 ${nodeIdx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
                     }`}
                 >
                   <span

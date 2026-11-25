@@ -1,732 +1,254 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  AnimatePresence,
   motion,
-  useMotionValue,
   useReducedMotion,
   useScroll,
-  useSpring,
   useTransform,
 } from 'framer-motion';
-import { ArrowRight, ArrowUpRight, Github } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
 import { projectsData } from '@/data/projects';
-import { calculateExactAge } from '@/utils/age';
 import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
-import { useCanHoverFine, useMediaQuery } from '@/hooks/useMediaQuery';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { HeroPortrait } from '@/components/home/HeroPortrait';
 import { KineticDisplayWord } from '@/components/home/KineticDisplayWord';
-import { KineticScrollBand } from '@/components/home/KineticScrollBand';
-import { ScrollRevealStatement } from '@/components/home/ScrollRevealStatement';
-import { SplitLookbookWorks } from '@/components/home/SplitLookbookWorks';
-import { KineticCursorField } from '@/components/motion/KineticCursorField';
+import { LenisSelectedWorks } from '@/components/home/LenisSelectedWorks';
 import { KineticLabel } from '@/components/motion/KineticLabel';
 import { MagneticButton } from '@/components/motion/MagneticButton';
-import { HairlineRule, Reveal } from '@/components/motion/Reveal';
-import { TextReveal } from '@/components/motion/TextReveal';
+import { HairlineRule } from '@/components/motion/Reveal';
 import { CopyLinkButton } from '@/components/ui/CopyLinkButton';
+import { prefetchRoute } from '@/utils/routePrefetch';
 
 interface HomePageProps {
   introReady?: boolean;
 }
 
-type PersonaMode = 'engineering' | 'system' | 'studio';
-
-interface PersonaLensSpec {
-  id: PersonaMode;
-  tabLabel: string;
-  headline: string;
-  description: string;
-  metaReadout: readonly { label: string; value: string }[];
-  specs: readonly string[];
-  primaryCta: { label: string; to: string };
-  secondaryCta: { label: string; to: string };
-}
-
-const PERSONA_LENSES: readonly PersonaLensSpec[] = [
-  {
-    id: 'engineering',
-    tabLabel: '01 · ENGINEERING',
-    headline: 'Frontend Engineering & Software QA yang terukur.',
-    description:
-      'Mahasiswa S1 Teknologi Informasi (TI24A) Universitas Amikom Purwokerto & Programmer Intern di PT Puskomedia Indonesia Kreatif—mengerjakan React/TypeScript, Flutter SOMASII, dan pengujian fungsional ASIS Builder (NDA).',
-    metaReadout: [
-      { label: 'ROLE', value: 'Programmer Intern · PT Puskomedia' },
-      { label: 'STACK', value: 'React · TypeScript · Flutter' },
-    ],
-    specs: ['React & TypeScript', 'Flutter & Firebase', 'Functional QA · ASIS NDA'],
-    primaryCta: { label: 'Selected Works', to: '/projects' },
-    secondaryCta: { label: 'Career Journey', to: '/journey' },
-  },
-  {
-    id: 'system',
-    tabLabel: '02 · VISUAL SYSTEM',
-    headline: 'Tipografi editorial dengan performa 60fps.',
-    description:
-      'Membangun antarmuka dalam palet Espresso–Champagne–Ivory, transisi presisi berbasis cubic-bezier(0.22, 1, 0.36, 1), serta modul eksperimental di Creative Lab.',
-    metaReadout: [
-      { label: 'SYSTEM', value: 'Espresso–Champagne–Ivory' },
-      { label: 'LAB', value: '9 Interactive Workbench Modules' },
-    ],
-    specs: ['Design Tokens', 'Framer Kinematics', 'Creative Lab 01–09'],
-    primaryCta: { label: 'Open Creative Lab', to: '/lab' },
-    secondaryCta: { label: 'Visual Gallery', to: '/gallery' },
-  },
-  {
-    id: 'studio',
-    tabLabel: '03 · STUDIO & ROLE',
-    headline: 'Kolaborasi terarah dan atribusi yang transparan.',
-    description:
-      'Co-Founder & Web Developer di SatuRuangCreative, alumni SMK Wiworotomo (PKL GT Computer), pemegang sertifikasi Cisco CCNA (Jul 2026), dan penulis publikasi JPMBA Garuda (Okt 2026).',
-    metaReadout: [
-      { label: 'STUDIO', value: 'SatuRuangCreative · Co-Founder' },
-      { label: 'RECORD', value: 'CCNA (Jul 2026) · JPMBA (Okt 2026)' },
-    ],
-    specs: ['SatuRuangCreative', 'CCNA · Jul 2026', 'JPMBA · Okt 2026'],
-    primaryCta: { label: 'Personal Dossier', to: '/about' },
-    secondaryCta: { label: 'Honors & Record', to: '/achievements' },
-  },
-] as const;
-
-const DISCIPLINE_RIBBON_TERMS = [
-  'FRONTEND ARCHITECTURE',
-  'UI/UX ENGINEERING',
-  'INTERACTIVE SYSTEMS',
-  'SOFTWARE QA',
-  'SATURUANG CREATIVE',
-  'CCNA DISCIPLINE',
+const FLAGSHIP_SLUGS = [
+  'satu-ruang-creative',
+  'somasii-lost-and-found',
+  'asis-builder-page-generator',
 ] as const;
 
 export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
   const prefersReducedMotion = useReducedMotion();
-  const canHoverFine = useCanHoverFine();
   const isTabletOrDesktop = useMediaQuery('(min-width: 768px)');
   const isDesktopLayout = useMediaQuery('(min-width: 1024px)');
   const disableMotion = Boolean(prefersReducedMotion);
   const enableHeroParallax = isTabletOrDesktop && !disableMotion;
-  const enableDesktopCursorShift = canHoverFine && !disableMotion;
-
-  const [personaMode, setPersonaMode] = useState<PersonaMode>('engineering');
-  const activeLens =
-    PERSONA_LENSES.find((p) => p.id === personaMode) ?? PERSONA_LENSES[0];
-
-  const heroCursorX = useMotionValue(0);
-  const heroCursorY = useMotionValue(0);
-  const smoothHeroShiftX = useSpring(heroCursorX, {
-    stiffness: 110,
-    damping: 22,
-    mass: 0.7,
-  });
-  const smoothHeroShiftY = useSpring(heroCursorY, {
-    stiffness: 110,
-    damping: 22,
-    mass: 0.7,
-  });
-
-  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (!enableDesktopCursorShift) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const nx = (e.clientX - rect.left) / rect.width - 0.5;
-    const ny = (e.clientY - rect.top) / rect.height - 0.5;
-    heroCursorX.set(-nx * 8);
-    heroCursorY.set(-ny * 8);
-  };
-
-  const resetHeroCursor = () => {
-    if (!enableDesktopCursorShift) return;
-    heroCursorX.set(0);
-    heroCursorY.set(0);
-  };
 
   const heroRef = useRef<HTMLElement | null>(null);
-  const worksSectionRef = useRef<HTMLElement | null>(null);
-  const monographSectionRef = useRef<HTMLElement | null>(null);
-
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
-  });
-  const { scrollYProgress: worksScrollProgress } = useScroll({
-    target: worksSectionRef,
-    offset: ['start end', 'end start'],
-  });
-  const { scrollYProgress: monographScrollProgress } = useScroll({
-    target: monographSectionRef,
-    offset: ['start end', 'end start'],
   });
 
   const portraitY = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, enableHeroParallax ? (isDesktopLayout ? 30 : 14) : 0],
+    [0, enableHeroParallax ? (isDesktopLayout ? 26 : 12) : 0],
   );
   const portraitScale = useTransform(
     scrollYProgress,
     [0, 1],
-    [1, enableHeroParallax ? (isDesktopLayout ? 1.03 : 1.02) : 1],
+    [1, enableHeroParallax ? 1.025 : 1],
   );
   const wordmarkY = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, enableHeroParallax ? (isDesktopLayout ? -28 : -12) : 0],
-  );
-  const wordmarkOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.85],
-    [1, enableHeroParallax ? 0.78 : 1],
-  );
-  const worksHeadingDrift = useTransform(
-    worksScrollProgress,
-    [0, 1],
-    enableHeroParallax ? [-14, 14] : [0, 0],
-  );
-  const monographHeadingDrift = useTransform(
-    monographScrollProgress,
-    [0, 1],
-    enableHeroParallax ? [14, -14] : [0, 0],
+    [0, enableHeroParallax ? (isDesktopLayout ? -24 : -10) : 0],
   );
 
-  const ageInfo = useMemo(() => calculateExactAge(personalData.birthDateISO), []);
-  const featuredProjects = useMemo(
-    () => projectsData.filter((p) => p.featuredOnHome),
+  const flagshipProjects = useMemo(
+    () =>
+      FLAGSHIP_SLUGS.map((slug) =>
+        projectsData.find((p) => p.slug === slug),
+      ).filter((p): p is (typeof projectsData)[number] => Boolean(p)),
     [],
   );
 
   return (
     <div className="w-full overflow-x-clip">
       {/* =====================================================================
-          SPREAD 01 — MONUMENTAL EDITORIAL COVER + INTERACTIVE PERSONA LENS
+          ACT 1 — THE EDITORIAL COVER
       ====================================================================== */}
       <section
         ref={heroRef}
-        onMouseMove={handleHeroMouseMove}
-        onMouseLeave={resetHeroCursor}
-        className="relative bg-obsidian text-ivory flex flex-col justify-between pt-24 sm:pt-28 pb-10 sm:pb-12 px-4 sm:px-6 lg:px-12 overflow-hidden"
+        className="relative min-h-[calc(100svh-1rem)] bg-obsidian text-ivory flex flex-col justify-between pt-24 sm:pt-28 pb-8 sm:pb-10 px-5 md:px-8 lg:px-12 overflow-hidden"
       >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 studio-vignette"
         />
-        <KineticCursorField variant="hero" className="z-[2]" />
 
-        {/* Single Minimalist Folio Strip */}
-        <div className="relative z-20 max-w-[1440px] w-full mx-auto flex flex-wrap items-center justify-between gap-4 border-b border-champagne/15 pb-3.5 font-mono text-[10px] sm:text-[11px] tracking-[0.22em] uppercase">
-          <span className="text-champagne">PURWOKERTO · ID</span>
-          <span className="text-taupe">
-            EST. {ageInfo.birthYear} · USIA {ageInfo.age}
-          </span>
+        {/* Minimal Folio Strip */}
+        <div className="relative z-20 max-w-[1440px] w-full mx-auto flex items-center justify-between gap-4 border-b border-brass/20 pb-3.5 font-mono text-[10px] sm:text-[11px] tracking-[0.22em] uppercase">
+          <span className="text-brass">PURWOKERTO · ID</span>
+          <span className="text-taupe">AMDZ · DOSSIER</span>
         </div>
 
-        {/* Coordinated Cover Lockup + Asymmetric Portrait & Persona Lens */}
+        {/* Coordinated Cover Lockup: Masthead & Action (7) + Editorial Portrait Plate (5) */}
         <motion.div
-          initial={disableMotion ? false : { scale: 1.035, opacity: 0.92 }}
+          initial={disableMotion ? false : { scale: 1.03, opacity: 0.94 }}
           animate={
             introReady
               ? { scale: 1, opacity: 1 }
-              : { scale: 1.035, opacity: 0.92 }
+              : { scale: 1.03, opacity: 0.94 }
           }
-          transition={{ duration: disableMotion ? 0 : 0.86, ease: EASE_LUXURY }}
-          className="relative z-10 max-w-[1440px] w-full mx-auto py-7 sm:py-10 lg:py-12 will-change-transform"
+          transition={{ duration: disableMotion ? 0 : 0.72, ease: EASE_LUXURY }}
+          className="relative z-10 max-w-[1440px] w-full mx-auto my-auto py-8 sm:py-10 lg:py-12 will-change-transform"
         >
-          {/* Monumental Interactive Kinetic Masthead */}
-          <motion.div
-            style={{ y: wordmarkY, opacity: wordmarkOpacity }}
-            initial={disableMotion ? false : { opacity: 0, y: 18 }}
-            animate={introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-            transition={{
-              duration: disableMotion ? 0 : MOTION_DURATION,
-              delay: disableMotion ? 0 : 0.08,
-              ease: EASE_LUXURY,
-            }}
-            className="w-full text-center mb-8 sm:mb-10 lg:mb-12 will-change-transform"
-          >
-            <KineticDisplayWord
-              word="AFLAN"
-              ariaLabel="AFLAN · Aflan Mu'afa Dzulfiqar"
-              introReady={introReady}
-            />
-          </motion.div>
-
-          {/* Asymmetric 12-Column Cover: Portrait Plate (5) + Interactive Persona Lens (7) */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-8 lg:gap-14 items-center">
-            <div className="md:col-span-5 flex justify-center">
+            <motion.div
+              style={{ y: wordmarkY }}
+              initial={disableMotion ? false : { opacity: 0, y: 14 }}
+              animate={introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+              transition={{
+                duration: disableMotion ? 0 : MOTION_DURATION,
+                delay: disableMotion ? 0 : 0.06,
+                ease: EASE_LUXURY,
+              }}
+              className="md:col-span-7 flex flex-col items-center md:items-start text-center md:text-left gap-5 sm:gap-6 will-change-transform"
+            >
+              <KineticDisplayWord
+                word="AFLAN"
+                ariaLabel="AFLAN · Aflan Mu'afa Dzulfiqar"
+                align="left"
+                introReady={introReady}
+              />
+
+              <p className="font-serif text-lg sm:text-xl lg:text-2xl italic text-champagne leading-snug max-w-xl">
+                Frontend &amp; UI/UX Engineer yang memadukan arsitektur kode presisi dengan disiplin QA.
+              </p>
+
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-1">
+                <MagneticButton maxPull={6}>
+                  <Link
+                    to="/projects"
+                    onMouseEnter={() => prefetchRoute('/projects')}
+                    onFocus={() => prefetchRoute('/projects')}
+                    onTouchStart={() => prefetchRoute('/projects')}
+                    className="group inline-flex items-center gap-2.5 min-h-[48px] px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all duration-300"
+                  >
+                    <KineticLabel>Explore Works</KineticLabel>
+                    <ArrowUpRight
+                      className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </MagneticButton>
+
+                <Link
+                  to="/about"
+                  onMouseEnter={() => prefetchRoute('/about')}
+                  onFocus={() => prefetchRoute('/about')}
+                  onTouchStart={() => prefetchRoute('/about')}
+                  className="group inline-flex items-center gap-2 min-h-[48px] px-5 py-3 rounded-full border border-brass/35 bg-umber/60 text-ivory font-mono text-xs tracking-[0.16em] uppercase hover:border-brass hover:bg-espresso active:scale-[0.97] transition-all duration-300"
+                >
+                  <span>Read Dossier</span>
+                  <ArrowRight
+                    className="size-4 text-brass transition-transform duration-300 group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </div>
+            </motion.div>
+
+            <div className="md:col-span-5 flex justify-center md:justify-end">
               <HeroPortrait
                 portraitY={portraitY}
                 portraitScale={portraitScale}
                 introReady={introReady}
               />
             </div>
-
-            <motion.div
-              style={
-                enableDesktopCursorShift
-                  ? { x: smoothHeroShiftX, y: smoothHeroShiftY }
-                  : undefined
-              }
-              initial={disableMotion ? false : { opacity: 0, y: 18 }}
-              animate={introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-              transition={{
-                duration: disableMotion ? 0 : MOTION_DURATION,
-                delay: disableMotion ? 0 : 0.24,
-                ease: EASE_LUXURY,
-              }}
-              className="md:col-span-7 flex flex-col gap-5 sm:gap-6 lg:gap-7 max-w-2xl mx-auto md:mx-0 w-full will-change-transform"
-            >
-              <p className="font-serif text-lg sm:text-xl italic text-champagne/90 leading-snug">
-                Membangun antarmuka web yang presisi, cepat, dan terstruktur—dari design
-                system hingga implementasi frontend.
-              </p>
-
-              {/* Interactive Persona Lens Switcher — Tactile Pills on Mobile / Hairline Tabs on sm+ */}
-              <div
-                role="tablist"
-                aria-label="Fokus Persona Portofolio"
-                className="flex flex-wrap items-center gap-2 sm:gap-5 sm:border-b sm:border-champagne/20 pb-1"
-              >
-                {PERSONA_LENSES.map((lens) => {
-                  const active = lens.id === activeLens.id;
-                  return (
-                    <motion.button
-                      key={lens.id}
-                      type="button"
-                      role="tab"
-                      aria-selected={active}
-                      whileTap={disableMotion ? undefined : { scale: 0.97 }}
-                      onClick={() => setPersonaMode(lens.id)}
-                      className={`relative min-h-[44px] px-3.5 sm:px-1 py-2 rounded-full sm:rounded-none border sm:border-0 font-mono text-[10px] sm:text-[11px] tracking-[0.16em] sm:tracking-[0.2em] uppercase transition-colors cursor-pointer whitespace-nowrap focus-visible:outline-2 focus-visible:outline-champagne ${
-                        active
-                          ? 'bg-champagne text-obsidian border-champagne font-medium sm:bg-transparent sm:text-champagne sm:font-normal'
-                          : 'bg-espresso/60 border-champagne/20 text-ivory/80 hover:border-champagne/50 sm:bg-transparent sm:text-taupe sm:hover:text-ivory'
-                      }`}
-                    >
-                      <span>{lens.tabLabel}</span>
-                      {active && (
-                        <motion.span
-                          layoutId="hero-persona-underline"
-                          aria-hidden="true"
-                          transition={{
-                            duration: disableMotion ? 0 : 0.34,
-                            ease: EASE_LUXURY,
-                          }}
-                          className="hidden sm:block absolute inset-x-0 -bottom-[1px] h-[2px] bg-champagne"
-                        />
-                      )}
-                    </motion.button>
-                  );
-                })}
-              </div>
-
-              {/* Dynamic Silk Crossfade Lens Panel */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeLens.id}
-                  role="tabpanel"
-                  initial={
-                    disableMotion ? { opacity: 0 } : { opacity: 0, y: 10 }
-                  }
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={disableMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
-                  transition={{
-                    duration: disableMotion ? 0.12 : 0.26,
-                    ease: EASE_LUXURY,
-                  }}
-                  className="space-y-5 min-h-[210px] sm:min-h-[185px]"
-                >
-                  <h2 className="font-serif text-2xl sm:text-3xl md:text-[2.15rem] font-light leading-[1.14] text-ivory">
-                    {activeLens.headline}
-                  </h2>
-
-                  <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                    {activeLens.description}
-                  </p>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 border-y border-champagne/15 py-3">
-                    {activeLens.metaReadout.map((item) => (
-                      <div key={item.label} className="space-y-0.5">
-                        <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-taupe">
-                          {item.label}
-                        </p>
-                        <p className="font-mono text-[11px] tracking-[0.06em] text-champagne">
-                          {item.value}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    {activeLens.specs.map((spec) => (
-                      <span
-                        key={spec}
-                        className="px-3 py-1 border border-champagne/25 bg-espresso/55 font-mono text-[10px] tracking-[0.16em] uppercase text-champagne"
-                      >
-                        {spec}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-3 pt-2">
-                    <Link
-                      to={activeLens.primaryCta.to}
-                      className="group inline-flex items-center gap-2.5 min-h-[48px] px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all duration-300"
-                    >
-                      <KineticLabel>{activeLens.primaryCta.label}</KineticLabel>
-                      <ArrowUpRight
-                        className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                        aria-hidden="true"
-                      />
-                    </Link>
-
-                    <Link
-                      to={activeLens.secondaryCta.to}
-                      className="inline-flex items-center gap-2 min-h-[48px] px-6 py-3 rounded-full border border-champagne/35 bg-obsidian/50 text-ivory font-mono text-xs tracking-[0.16em] uppercase hover:border-champagne hover:bg-espresso active:scale-[0.97] transition-all duration-300"
-                    >
-                      <span>{activeLens.secondaryCta.label}</span>
-                      <ArrowRight className="size-4" aria-hidden="true" />
-                    </Link>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </motion.div>
           </div>
         </motion.div>
 
-        {/* Minimalist Bottom Scroll Indicator */}
+        {/* Bottom Coordinates & Scroll Cue */}
         <div className="relative z-20 max-w-[1440px] w-full mx-auto pt-4 flex items-center justify-between gap-4">
-          <span className="font-mono text-[10px] tracking-[0.24em] uppercase text-taupe">
+          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-taupe">
             {personalData.coordinates}
           </span>
           <div className="flex items-center gap-3">
-            <span className="font-mono text-[10px] tracking-[0.26em] uppercase text-champagne/80">
+            <span className="font-mono text-[10px] tracking-[0.24em] uppercase text-brass">
               Gulir
             </span>
             <span
-              className="relative block w-px h-8 bg-champagne/20 overflow-hidden"
+              className="relative block w-px h-7 bg-brass/25 overflow-hidden"
               aria-hidden="true"
             >
-              <span className="aflan-scroll-line absolute inset-0 bg-champagne" />
+              <span className="aflan-scroll-line absolute inset-0 bg-brass" />
             </span>
           </div>
         </div>
       </section>
 
       {/* =====================================================================
-          EDITORIAL KINETIC DISCIPLINE RIBBON (GPU CSS MARQUEE, HOVER-PAUSE)
+          ACT 2 — LENIS SCROLL-DRIVEN SELECTED WORKS (3 FLAGSHIP WORKS)
       ====================================================================== */}
-      <div
-        role="region"
-        aria-label="Core disciplines"
-        className="aflan-marquee-wrapper relative w-full overflow-hidden border-y border-champagne/12 bg-[#1A1412] py-3 sm:py-3.5 select-none"
-      >
-        <div className="aflan-marquee-track">
-          {[false, true].map((hidden, dupIdx) => (
-            <div
-              key={dupIdx}
-              aria-hidden={hidden}
-              className="flex items-center shrink-0 gap-7 sm:gap-10 pr-7 sm:pr-10"
-            >
-              {DISCIPLINE_RIBBON_TERMS.map((item, idx) => (
-                <React.Fragment key={`${dupIdx}-${item}`}>
-                  <span
-                    className={
-                      idx % 2 === 1
-                        ? 'font-serif italic text-base sm:text-lg tracking-[0.06em] text-ivory/85 whitespace-nowrap'
-                        : 'font-mono text-[10px] sm:text-[11px] tracking-[0.24em] uppercase text-champagne/80 whitespace-nowrap'
-                    }
-                  >
-                    {item}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="size-1 rounded-full bg-champagne/45 shrink-0"
-                  />
-                </React.Fragment>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
+      <section className="relative bg-umber text-ivory py-20 md:py-28 lg:py-36 px-5 md:px-8 lg:px-12 border-t border-brass/15 overflow-x-clip">
+        <div className="max-w-[1440px] mx-auto space-y-14 sm:space-y-18">
+          <div className="flex items-center justify-between gap-4 pb-5 border-b border-brass/20">
+            <h2 className="font-mono text-[10px] sm:text-xs tracking-[0.22em] uppercase text-brass">
+              SELECTED WORKS
+            </h2>
+            <span className="font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase text-taupe">
+              03 FEATURED
+            </span>
+          </div>
 
-      {/* =====================================================================
-          SPREAD 02 — FULL-BLEED WARM IVORY CENTERPIECE SPREAD
-      ====================================================================== */}
-      <ScrollRevealStatement />
+          <LenisSelectedWorks projects={flagshipProjects} />
 
-      {/* =====================================================================
-          SCROLL-LINKED DUAL-AXIS KINETIC TYPOGRAPHY BAND
-      ====================================================================== */}
-      <KineticScrollBand />
-
-      {/* =====================================================================
-          SPREAD 03 — DRAMATIC SPLIT LOOKBOOK STAGE & MOBILE SWIPE DECK
-      ====================================================================== */}
-      <section
-        ref={worksSectionRef}
-        className="relative bg-espresso text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12 overflow-x-clip"
-      >
-        <div className="max-w-[1440px] mx-auto space-y-10 sm:space-y-14">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-champagne/15">
-            <motion.div
-              style={{ x: worksHeadingDrift }}
-              className="space-y-3 will-change-transform"
-            >
-              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-champagne">
-                FEATURED CASE STUDIES
-              </p>
-              <TextReveal
-                as="h2"
-                className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-[1.08] text-ivory"
-                lines={[
-                  <>
-                    Selected <span className="italic text-champagne/90">Works</span>
-                  </>,
-                ]}
-              />
-            </motion.div>
-
+          <div className="pt-8 border-t border-brass/15 flex justify-start md:justify-end">
             <Link
               to="/projects"
-              data-cursor-label="PROJECTS"
-              className="group relative inline-flex items-center gap-2 pb-1 font-mono text-xs tracking-[0.2em] uppercase text-champagne hover:text-ivory transition-colors self-start sm:self-auto"
+              data-cursor-label="ARCHIVE"
+              onMouseEnter={() => prefetchRoute('/projects')}
+              onFocus={() => prefetchRoute('/projects')}
+              onTouchStart={() => prefetchRoute('/projects')}
+              className="group inline-flex items-center gap-2.5 min-h-[44px] font-mono text-xs tracking-[0.2em] uppercase text-champagne hover:text-ivory transition-colors"
             >
-              <KineticLabel>Explore All Projects</KineticLabel>
-              <ArrowUpRight
-                className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                aria-hidden="true"
-              />
-            </Link>
-          </div>
-
-          <SplitLookbookWorks projects={featuredProjects} />
-        </div>
-      </section>
-
-      {/* =====================================================================
-          SPREAD 04 — MODULAR ARCHITECTURAL PROOF BENTO (3-DEVICE PARITY)
-      ====================================================================== */}
-      <section
-        ref={monographSectionRef}
-        className="relative bg-obsidian text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12 border-t border-champagne/15 overflow-x-clip"
-      >
-        <div className="max-w-[1440px] mx-auto space-y-10 sm:space-y-12">
-          <Reveal
-            variant="up"
-            className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-champagne/15"
-          >
-            <motion.div
-              style={{ x: monographHeadingDrift }}
-              className="space-y-3 will-change-transform"
-            >
-              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] font-medium text-champagne">
-                ARCHITECTURAL PROOF &amp; RECORD
-              </p>
-              <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-[1.08] text-ivory">
-                Crafted with Discipline,{' '}
-                <span className="italic text-champagne/90">Verified in Production.</span>
-              </h2>
-            </motion.div>
-
-            <Link
-              to="/about"
-              className="group inline-flex items-center gap-2 min-h-[44px] font-mono text-xs tracking-[0.18em] uppercase text-champagne border-b border-champagne/50 pb-1 hover:text-ivory hover:border-ivory transition-colors self-start sm:self-auto"
-            >
-              <span>Personal Dossier</span>
+              <span className="border-b border-brass/50 pb-0.5 group-hover:border-ivory transition-colors">
+                View Full Archive
+              </span>
               <ArrowRight
-                className="size-4 transition-transform duration-300 group-hover:translate-x-1"
+                className="size-4 text-brass transition-transform duration-300 group-hover:translate-x-1"
                 aria-hidden="true"
               />
             </Link>
-          </Reveal>
-
-          {/* Asymmetric Bento: Wide + 2-Col Compact + Wide on Mobile / 2-Col Tablet / 7+5 + 5+7 Desktop */}
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-12 gap-3.5 sm:gap-5 lg:gap-7">
-            <Reveal variant="up" className="col-span-2 md:col-span-1 lg:col-span-7">
-              <motion.div
-                whileTap={disableMotion ? undefined : { scale: 0.985 }}
-                className="h-full"
-              >
-                <Link
-                  to="/projects/satu-ruang-creative"
-                  className="group relative flex flex-col justify-between h-full min-h-[250px] sm:min-h-[300px] p-6 sm:p-8 lg:p-10 bg-[#211A17] hover:bg-[#261E1A] text-ivory border border-champagne/20 hover:border-champagne/55 transition-colors duration-300 overflow-hidden"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                  />
-                  <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.2em] uppercase text-champagne">
-                    <span>01 · SATURUANGCREATIVE STUDIO</span>
-                    <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
-                  </div>
-                  <div className="pt-8 space-y-3.5">
-                    <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-light text-ivory group-hover:text-champagne transition-colors italic">
-                      &ldquo;Satu Ruang, Banyak Ide, Satu Cerita.&rdquo;
-                    </h3>
-                    <p className="font-sans text-sm md:text-base text-ivory/75 max-w-xl leading-relaxed">
-                      Co-Founder &amp; Web Developer — merancang arsitektur UI/UX dan platform
-                      RuangHijau Nusantara bersama tim kreatif mahasiswa.
-                    </p>
-                    <div className="flex flex-wrap gap-2 pt-1">
-                      {['Co-Founder & Web Dev', 'RuangHijau Nusantara'].map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2.5 py-1 border border-champagne/25 bg-obsidian/55 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne/90"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            </Reveal>
-
-            <Reveal variant="up" delay={0.05} className="col-span-1 md:col-span-1 lg:col-span-5">
-              <motion.div
-                whileTap={disableMotion ? undefined : { scale: 0.98 }}
-                className="h-full"
-              >
-                <Link
-                  to="/journey"
-                  className="group relative flex flex-col justify-between h-full min-h-[210px] sm:min-h-[300px] p-4 sm:p-8 lg:p-10 bg-[#211A17] hover:bg-[#261E1A] text-ivory border border-champagne/20 hover:border-champagne/55 transition-colors duration-300 overflow-hidden"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                  />
-                  <div className="flex items-center justify-between gap-2 font-mono text-[9px] sm:text-[10px] tracking-[0.16em] sm:tracking-[0.2em] uppercase text-champagne">
-                    <span className="truncate">02 · PUSKOMEDIA QA</span>
-                    <ArrowUpRight className="size-3.5 sm:size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
-                  </div>
-                  <div className="pt-5 sm:pt-8 space-y-2.5 sm:space-y-3.5">
-                    <h3 className="font-serif text-lg sm:text-3xl font-light text-ivory group-hover:text-champagne transition-colors leading-snug">
-                      ASIS Builder (NDA) Evaluation
-                    </h3>
-                    <p className="font-sans text-xs sm:text-base text-ivory/75 leading-relaxed line-clamp-3 sm:line-clamp-none">
-                      Programmer Intern QA — functional testing &amp; requirement analysis pada sistem internal PT Puskomedia Indonesia Kreatif.
-                    </p>
-                    <div className="hidden sm:flex flex-wrap gap-2 pt-1">
-                      {['Functional QA', 'PT Puskomedia'].map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2.5 py-1 border border-champagne/25 bg-obsidian/55 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne/90"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            </Reveal>
-
-            <Reveal variant="up" delay={0.09} className="col-span-1 md:col-span-1 lg:col-span-5">
-              <motion.div
-                whileTap={disableMotion ? undefined : { scale: 0.98 }}
-                className="h-full"
-              >
-                <Link
-                  to="/skills"
-                  className="group relative flex flex-col justify-between h-full min-h-[210px] sm:min-h-[285px] p-4 sm:p-8 lg:p-10 bg-[#211A17] hover:bg-[#261E1A] text-ivory border border-champagne/20 hover:border-champagne/55 transition-colors duration-300 overflow-hidden"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                  />
-                  <div className="flex items-center justify-between gap-2 font-mono text-[9px] sm:text-[10px] tracking-[0.16em] sm:tracking-[0.2em] uppercase text-champagne">
-                    <span className="truncate">03 · CCNA &amp; SYSTEMS</span>
-                    <ArrowUpRight className="size-3.5 sm:size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
-                  </div>
-                  <div className="pt-5 sm:pt-8 space-y-2.5 sm:space-y-3.5">
-                    <h3 className="font-serif text-lg sm:text-3xl font-light text-ivory group-hover:text-champagne transition-colors leading-snug">
-                      Cisco CCNA &amp; GT Computer
-                    </h3>
-                    <p className="font-sans text-xs sm:text-base text-ivory/75 leading-relaxed line-clamp-3 sm:line-clamp-none">
-                      Fondasi PKL hardware SMK Wiworotomo di GT Computer berpadu sertifikasi jaringan Cisco CCNA (Jul 2026).
-                    </p>
-                    <div className="hidden sm:flex flex-wrap gap-2 pt-1">
-                      {['Cisco CCNA · Jul 2026', 'GT Computer PKL'].map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2.5 py-1 border border-champagne/25 bg-obsidian/55 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne/90"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            </Reveal>
-
-            <Reveal variant="up" delay={0.13} className="col-span-2 md:col-span-1 lg:col-span-7">
-              <motion.div
-                whileTap={disableMotion ? undefined : { scale: 0.985 }}
-                className="h-full"
-              >
-                <Link
-                  to="/achievements"
-                  className="group relative flex flex-col justify-between h-full min-h-[220px] sm:min-h-[285px] p-6 sm:p-8 lg:p-10 bg-[#211A17] hover:bg-[#261E1A] text-ivory border border-champagne/20 hover:border-champagne/55 transition-colors duration-300 overflow-hidden"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                  />
-                  <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.2em] uppercase text-champagne">
-                    <span>04 · JPMBA PUBLICATION &amp; SOMASII</span>
-                    <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
-                  </div>
-                  <div className="pt-7 sm:pt-8 space-y-3.5">
-                    <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-light text-ivory group-hover:text-champagne transition-colors">
-                      JPMBA Garuda (Okt 2026) &amp; S1 TI24A Amikom
-                    </h3>
-                    <p className="font-sans text-sm md:text-base text-ivory/75 max-w-xl leading-relaxed">
-                      Publikasi Jurnal Pengabdian Masyarakat Bangsa terindeks Garuda,
-                      pengembangan aplikasi kampus SOMASII (Flutter &amp; Firebase), serta arsip visual monograf di Galeri.
-                    </p>
-                    <div className="flex flex-wrap gap-2 pt-1">
-                      {['JPMBA Garuda · Okt 2026', 'SOMASII · Flutter', 'Visual Archive'].map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2.5 py-1 border border-champagne/25 bg-obsidian/55 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne/90"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            </Reveal>
           </div>
         </div>
       </section>
 
       {/* =====================================================================
-          SPREAD 05 — ARCHITECTURAL CLOSING SPREAD
+          ACT 3 — QUIET CLOSING SPREAD
       ====================================================================== */}
-      <section className="relative bg-obsidian text-ivory py-20 md:py-28 px-4 sm:px-6 lg:px-12 border-t border-champagne/15">
-        <div className="max-w-[1440px] mx-auto space-y-10">
-          <HairlineRule tone="champagne" />
+      <section className="relative bg-linen text-obsidian py-20 sm:py-28 lg:py-36 px-5 md:px-8 lg:px-12 border-t border-brass/30 overflow-x-clip">
+        <div className="max-w-[1440px] mx-auto space-y-10 sm:space-y-12">
+          <HairlineRule tone="espresso" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pt-2">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end pt-2">
             <div className="lg:col-span-8 space-y-4">
-              <p className="font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-champagne">
+              <p className="font-mono text-[10px] sm:text-xs tracking-[0.22em] uppercase text-cognac font-medium">
                 CORRESPONDENCE
               </p>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.08] text-ivory">
-                Terbuka untuk kolaborasi produk web,{' '}
-                <span className="italic text-champagne">UI engineering, dan Software QA.</span>
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight leading-[1.1] text-obsidian">
+                Tersedia untuk pengembangan web frontend,{' '}
+                <span className="italic text-cognac">sistem antarmuka, dan evaluasi Software QA.</span>
               </h2>
             </div>
 
             <div className="lg:col-span-4 flex flex-wrap lg:justify-end items-center gap-3">
-              <MagneticButton maxPull={7}>
+              <MagneticButton maxPull={6}>
                 <Link
                   to="/contact"
-                  className="group inline-flex items-center gap-2.5 min-h-[48px] px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all duration-300"
+                  onMouseEnter={() => prefetchRoute('/contact')}
+                  onFocus={() => prefetchRoute('/contact')}
+                  onTouchStart={() => prefetchRoute('/contact')}
+                  className="group inline-flex items-center gap-2.5 min-h-[48px] px-6 py-3 rounded-full bg-obsidian text-ivory font-mono text-xs tracking-[0.16em] uppercase font-medium hover:bg-cognac active:scale-[0.97] transition-all duration-300"
                 >
-                  <KineticLabel>Get in Touch</KineticLabel>
+                  <KineticLabel>Start a Conversation</KineticLabel>
                   <ArrowUpRight
                     className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                     aria-hidden="true"
@@ -739,24 +261,10 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                 label="Copy Email"
                 copiedLabel="Email Copied"
                 toastTitle="Email Tersalin"
-                surface="dark"
+                surface="light"
                 size="md"
               />
             </div>
-          </div>
-
-          <div className="pt-6 border-t border-champagne/15 flex flex-wrap items-center justify-between gap-4 font-mono text-[11px] tracking-[0.18em] uppercase text-taupe">
-            <span>{contactData.email}</span>
-            <a
-              href={contactData.githubHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 min-h-[44px] text-champagne hover:text-ivory transition-colors"
-            >
-              <Github className="size-3.5" aria-hidden="true" />
-              <span>GitHub · {contactData.githubHandle}</span>
-              <ArrowUpRight className="size-3.5" aria-hidden="true" />
-            </a>
           </div>
         </div>
       </section>

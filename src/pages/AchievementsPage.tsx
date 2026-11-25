@@ -53,7 +53,7 @@ export const AchievementsPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="bg-espresso text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
+      <section className="bg-umber text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-5 md:px-8 lg:px-12 border-b border-brass/20">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4">
             <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
@@ -83,9 +83,7 @@ export const AchievementsPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
               <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                Kumpulan pencapaian resmi yang mencakup sertifikasi Cisco Networking Academy,
-                publikasi ilmiah terindeks Garuda, pengalaman magang industri, serta perjalanan
-                akademik di Universitas Amikom Purwokerto.
+                Sertifikasi Cisco CCNA, publikasi ilmiah Garuda JPMBA, dan rekam jejak industri terverifikasi.
               </p>
             </Reveal>
           </div>
@@ -105,7 +103,7 @@ export const AchievementsPage: React.FC = () => {
 
       <section
         aria-labelledby="achievements-list-heading"
-        className="bg-ivory text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12"
+        className="bg-ivory text-espresso py-16 md:py-24 px-5 md:px-8 lg:px-12"
       >
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 lg:block gap-0 md:gap-4 lg:gap-0 divide-y md:divide-y-0 lg:divide-y divide-espresso/15 border-y md:border-y-0 lg:border-y border-espresso/15">
@@ -125,7 +123,7 @@ export const AchievementsPage: React.FC = () => {
                     isOrphanOnTablet ? 'md:col-span-2' : ''
                   } ${
                     isSelected
-                      ? 'bg-[#1A1412] text-ivory md:border-champagne/25'
+                      ? 'bg-obsidian text-ivory md:border-brass/35'
                       : 'hover:bg-offwhite text-espresso md:bg-offwhite/70 lg:bg-transparent'
                   }`}
                 >
@@ -176,7 +174,7 @@ export const AchievementsPage: React.FC = () => {
           </div>
 
           {activeEntry && (
-            <aside className="hidden md:block lg:col-span-5 lg:sticky lg:top-24 bg-[#1A1412] text-ivory border border-champagne/15 p-7 sm:p-9 shadow-2xl">
+            <aside className="hidden md:block lg:col-span-5 lg:sticky lg:top-24 bg-obsidian text-ivory border border-brass/25 p-7 sm:p-9 shadow-2xl">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeEntry.id}
