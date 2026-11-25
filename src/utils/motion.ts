@@ -25,27 +25,48 @@ export const LUXURY_TRANSITION: Transition = {
   ease: EASE_LUXURY,
 };
 
-export const directionalPageVariants: Variants = {
-  initial: (direction = 1) => ({
-    opacity: 0,
-    x: direction * 12,
-  }),
+export type RouteTransitionKind = 'editorial' | 'showcase';
+
+export interface PageTransitionCustom {
+  direction: 1 | -1;
+  kind: RouteTransitionKind;
+}
+
+export const biDirectionalPageVariants: Variants = {
+  initial: (custom?: PageTransitionCustom) => {
+    const direction = custom?.direction ?? 1;
+    const kind = custom?.kind ?? 'editorial';
+    return {
+      opacity: 0,
+      x: direction * 24,
+      y: kind === 'showcase' ? 10 : 0,
+      scale: 0.99,
+    };
+  },
   animate: {
     opacity: 1,
     x: 0,
+    y: 0,
+    scale: 1,
     transition: {
-      duration: 0.24,
+      duration: 0.34,
       ease: EASE_LUXURY,
     },
   },
-  exit: (direction = 1) => ({
-    opacity: 0,
-    x: direction * -10,
-    transition: {
-      duration: 0.09,
-      ease: EASE_LUXURY,
-    },
-  }),
+  exit: (custom?: PageTransitionCustom) => {
+    const direction = custom?.direction ?? 1;
+    const kind = custom?.kind ?? 'editorial';
+    return {
+      opacity: 0,
+      x: direction * -22,
+      y: kind === 'showcase' ? -6 : 0,
+      scale: 0.988,
+      transition: {
+        duration: 0.2,
+        ease: EASE_LUXURY,
+      },
+    };
+  },
 };
 
 export const pageContentVariants: Variants = {
@@ -72,6 +93,6 @@ export const pageContentVariants: Variants = {
 
 export const reducedPageVariants: Variants = {
   initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.1 } },
-  exit: { opacity: 0, transition: { duration: 0.06 } },
+  animate: { opacity: 1, transition: { duration: 0.12 } },
+  exit: { opacity: 0, transition: { duration: 0.08 } },
 };

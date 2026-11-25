@@ -27,6 +27,7 @@ import {
   EditorialAccordion,
   type EditorialAccordionItem,
 } from '@/components/ui/EditorialAccordion';
+import { prefetchRoute } from '@/utils/routePrefetch';
 
 interface ProjectCaseStudyContentProps {
   project: ProjectEntry;
@@ -136,6 +137,10 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
           <div className="flex flex-wrap items-center justify-between gap-4">
             <Link
               to="/projects"
+              state={{ navDirection: -1 }}
+              onMouseEnter={() => prefetchRoute('/projects')}
+              onFocus={() => prefetchRoute('/projects')}
+              onTouchStart={() => prefetchRoute('/projects')}
               className="group inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne hover:text-ivory transition-colors"
             >
               <ArrowLeft
@@ -409,6 +414,10 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-champagne/15">
           <Link
             to={`/projects/${prevProject.slug}`}
+            state={{ navDirection: -1 }}
+            onMouseEnter={() => prefetchRoute(`/projects/${prevProject.slug}`)}
+            onFocus={() => prefetchRoute(`/projects/${prevProject.slug}`)}
+            onTouchStart={() => prefetchRoute(`/projects/${prevProject.slug}`)}
             className="relative group p-6 sm:p-9 lg:p-14 hover:bg-obsidian/45 transition-colors duration-500 flex flex-col justify-between gap-4 min-w-0 overflow-hidden"
           >
             <span
@@ -434,6 +443,10 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
 
           <Link
             to={`/projects/${nextProject.slug}`}
+            state={{ navDirection: 1 }}
+            onMouseEnter={() => prefetchRoute(`/projects/${nextProject.slug}`)}
+            onFocus={() => prefetchRoute(`/projects/${nextProject.slug}`)}
+            onTouchStart={() => prefetchRoute(`/projects/${nextProject.slug}`)}
             className="relative group p-6 sm:p-9 lg:p-14 hover:bg-obsidian/45 transition-colors duration-500 flex flex-col justify-between gap-4 md:items-end md:text-right min-w-0 overflow-hidden"
           >
             <span

@@ -37,8 +37,6 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
     skipFocusRestoreRef.current = false;
     previousFocusRef.current =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
     pauseScroll();
 
     const rafId = window.requestAnimationFrame(() => {
@@ -55,7 +53,6 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.cancelAnimationFrame(rafId);
-      document.body.style.overflow = prevOverflow;
       resumeScroll();
       window.removeEventListener('keydown', handleKeyDown);
       if (

@@ -167,9 +167,9 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
           </motion.div>
 
           {/* 3-Column Center-Stage Grid: Left Action | Center Sculpted Portrait | Right Dossier */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-7 sm:gap-8 lg:gap-8 xl:gap-10 items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(360px,420px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(385px,440px)_minmax(0,1fr)] gap-7 sm:gap-8 lg:gap-7 xl:gap-10 items-center">
             {/* CENTER ANCHOR: Sculpted Atelier Double-Contour Portrait */}
-            <div className="col-span-1 sm:col-span-2 lg:col-span-4 order-1 lg:order-2 flex justify-center">
+            <div className="col-span-1 sm:col-span-2 lg:col-span-1 order-1 lg:order-2 flex justify-center">
               <HeroPortrait
                 portraitY={portraitY}
                 portraitScale={portraitScale}
@@ -187,7 +187,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                 delay: disableMotion ? 0 : 0.14,
                 ease: EASE_LUXURY,
               }}
-              className="col-span-1 lg:col-span-4 order-2 lg:order-1 flex flex-col items-center sm:items-start text-center sm:text-left gap-4 sm:gap-5 will-change-transform"
+              className="col-span-1 lg:col-span-1 order-2 lg:order-1 flex flex-col items-center sm:items-start text-center sm:text-left gap-4 sm:gap-5 will-change-transform"
             >
               <span className="inline-flex items-center gap-2 font-mono text-[10px] sm:text-[11px] tracking-[0.22em] uppercase text-champagne">
                 <span aria-hidden="true" className="w-4 h-px bg-brass/70 hidden sm:inline-block" />
@@ -227,7 +227,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                 delay: disableMotion ? 0 : 0.2,
                 ease: EASE_LUXURY,
               }}
-              className="col-span-1 lg:col-span-4 order-3 lg:order-3 flex flex-col items-center sm:items-end text-center sm:text-right gap-5 will-change-transform"
+              className="col-span-1 lg:col-span-1 order-3 lg:order-3 flex flex-col items-center sm:items-end text-center sm:text-right gap-5 will-change-transform"
             >
               <dl className="w-full max-w-xs space-y-2.5 border-y border-champagne/25 py-3.5 font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase">
                 <div className="flex items-center justify-between sm:justify-end gap-3">

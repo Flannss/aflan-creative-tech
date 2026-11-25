@@ -319,10 +319,8 @@ export const GalleryPage: React.FC = () => {
 
   useEffect(() => {
     if (lightboxIndex === null) return;
-    const prevOverflow = document.body.style.overflow;
     const prevHeaderTheme = document.documentElement.dataset.headerTheme;
 
-    document.body.style.overflow = 'hidden';
     pauseScroll();
     document.documentElement.dataset.headerTheme = 'dark';
     window.dispatchEvent(new Event('aflan-nav-theme-sync'));
@@ -342,7 +340,6 @@ export const GalleryPage: React.FC = () => {
 
     window.addEventListener('keydown', onKeyDown);
     return () => {
-      document.body.style.overflow = prevOverflow;
       resumeScroll();
       if (prevHeaderTheme === undefined) {
         delete document.documentElement.dataset.headerTheme;

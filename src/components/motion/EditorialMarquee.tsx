@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   motion,
   useReducedMotion,
@@ -36,6 +36,37 @@ export const EditorialMarquee: React.FC<EditorialMarqueeProps> = ({
 }) => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
+  const [isInView, setIsInView] = useState(true);
+  const [isTabHidden, setIsTabHidden] = useState(
+    () => typeof document !== 'undefined' && document.hidden,
+  );
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    const observer =
+      el && typeof IntersectionObserver !== 'undefined'
+        ? new IntersectionObserver(
+            ([entry]) => {
+              setIsInView(Boolean(entry?.isIntersecting));
+            },
+            { threshold: 0.02 },
+          )
+        : null;
+
+    if (el && observer) {
+      observer.observe(el);
+    }
+
+    const handleVisibility = () => {
+      setIsTabHidden(document.hidden);
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    return () => {
+      observer?.disconnect();
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -53,12 +84,14 @@ export const EditorialMarquee: React.FC<EditorialMarqueeProps> = ({
     prefersReducedMotion ? [0, 0] : [-20, 18],
   );
 
+  const paused = !active || !isInView || isTabHidden;
+
   return (
     <section
       ref={sectionRef}
       aria-label="Ringkasan disiplin inti"
       className={`aflan-marquee-group relative w-full bg-umber py-5 sm:py-6 overflow-x-clip select-none ${
-        !active ? 'aflan-marquee-paused' : ''
+        paused ? 'aflan-marquee-paused' : ''
       }`}
     >
       {/* Warm Gradient Border Hairlines */}

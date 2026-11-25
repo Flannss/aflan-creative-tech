@@ -6,15 +6,16 @@ import { getProjectBySlug } from '@/data/projects';
 const CANONICAL_ORIGIN = personalData.siteUrl.replace(/\/$/, '');
 
 const ROUTE_TITLES: Record<string, string> = {
-  '/': "AFLAN DOSSIER — Aflan Mu'afa Dzulfiqar · Creative Technologist",
-  '/about': 'AFLAN DOSSIER — Personal Dossier',
-  '/journey': 'AFLAN DOSSIER — Experience & Journey',
-  '/skills': 'AFLAN DOSSIER — Core Capabilities',
-  '/projects': 'AFLAN DOSSIER — Selected Works',
-  '/lab': 'AFLAN DOSSIER — Creative Lab',
-  '/gallery': 'AFLAN DOSSIER — Visual Archive',
-  '/achievements': 'AFLAN DOSSIER — Verified Honors',
-  '/contact': 'AFLAN DOSSIER — Start a Conversation',
+  '/': "AFLAN DOSSIER · Aflan Mu'afa Dzulfiqar · Creative Technologist",
+  '/about': 'AFLAN DOSSIER · Personal Dossier',
+  '/journey': 'AFLAN DOSSIER · Experience & Journey',
+  '/skills': 'AFLAN DOSSIER · Core Capabilities',
+  '/projects': 'AFLAN DOSSIER · Selected Works',
+  '/lab': 'AFLAN DOSSIER · Creative Lab',
+  '/gallery': 'AFLAN DOSSIER · Visual Archive',
+  '/achievements': 'AFLAN DOSSIER · Verified Honors',
+  '/honors': 'AFLAN DOSSIER · Verified Honors',
+  '/contact': 'AFLAN DOSSIER · Start a Conversation',
 };
 
 /**
@@ -34,10 +35,10 @@ export function useDocumentMeta(): void {
         const slug = pathname.slice('/projects/'.length);
         const matchedProject = getProjectBySlug(slug);
         nextTitle = matchedProject
-          ? `AFLAN DOSSIER — ${matchedProject.title}`
-          : 'AFLAN DOSSIER — Case Study Not Found';
+          ? `AFLAN DOSSIER · ${matchedProject.title}`
+          : 'AFLAN DOSSIER · Case Study Not Found';
       } else {
-        nextTitle = '404 · AFLAN DOSSIER — Archive Not Found';
+        nextTitle = '404 · AFLAN DOSSIER · Archive Not Found';
       }
     }
 

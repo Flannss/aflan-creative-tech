@@ -28,8 +28,8 @@ const TILT_SPRING = { stiffness: 145, damping: 24, mass: 0.65 };
 
 /**
  * Center-Stage Sculpted Atelier Double-Contour Portrait Frame:
- * - Sculpted dome outer hairline silhouette (`rounded-t-[170px] rounded-b-[22px]`) paired with
- *   a floating inner Caramel Bronze rim and micro registration pips.
+ * - Enlarged sculpted dome outer hairline silhouette (`rounded-t-[195px] rounded-b-[24px]`) paired
+ *   with a spacing-calibrated inner Champagne-to-Caramel-Bronze rim and apex registration diamond.
  * - Progressive 4-side edge opacity fade dissolving smoothly into `#211814`, anchored by
  *   the dual-tone engraved 1-line `MU'AFA DZULFIQAR` signature.
  * - Desktop (`canHoverFine`): 3D perspective tilt, counter-parallax, opposite signature drift,
@@ -135,7 +135,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
       {/* Caramel–Mocha Ambient Backdrop Halo behind Sculpted Plate */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -inset-6 max-w-[430px] mx-auto"
+        className="pointer-events-none absolute -inset-6 max-w-[460px] mx-auto"
         style={{
           background:
             'radial-gradient(ellipse 68% 68% at 50% 48%, rgba(185,141,97,0.22) 0%, rgba(110,79,58,0.22) 48%, transparent 74%)',
@@ -159,24 +159,33 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         data-cursor-label="DOSSIER"
-        className="group relative z-10 w-full max-w-[270px] sm:max-w-[310px] lg:max-w-[345px] xl:max-w-[380px] aspect-[4/5] rounded-t-[170px] rounded-b-[22px] border border-champagne/38 hover:border-champagne/68 bg-[#211814]/75 p-3 sm:p-3.5 transition-colors duration-500 overflow-hidden will-change-transform shadow-[0_24px_64px_rgba(0,0,0,0.42)]"
+        className="group relative z-10 w-full max-w-[285px] sm:max-w-[310px] md:max-w-[330px] lg:max-w-[360px] xl:max-w-[400px] aspect-[4/5] rounded-t-[195px] rounded-b-[24px] border border-champagne/35 hover:border-champagne/70 bg-[#211814]/75 p-3 sm:p-3.5 transition-colors duration-500 overflow-hidden will-change-transform shadow-[0_24px_64px_rgba(0,0,0,0.42)]"
       >
-        {/* Floating Inner Contour Rim + Apex & Corner Registration Pips */}
+        {/* Subtle Champagne-to-Caramel Bronze Rim Wash */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-[7px] z-20 rounded-t-[162px] rounded-b-[16px] border border-brass/32 group-hover:border-champagne/55 transition-colors duration-500"
+          className="pointer-events-none absolute inset-0 rounded-t-[195px] rounded-b-[24px] opacity-40 group-hover:opacity-70 transition-opacity duration-500"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(223,200,166,0.16) 0%, rgba(185,141,97,0.08) 42%, transparent 78%)',
+          }}
+        />
+        {/* Floating Inner Contour Rim + Apex Diamond & Corner Registration Pips */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-[7px] z-20 rounded-t-[186px] rounded-b-[18px] border border-champagne/20 group-hover:border-champagne/48 transition-colors duration-500"
         />
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute top-[6px] left-1/2 -translate-x-1/2 z-30 size-1.5 rotate-45 bg-champagne/75"
+          className="pointer-events-none absolute top-[5px] left-1/2 -translate-x-1/2 z-30 size-2 rotate-45 bg-linear-to-br from-[#DFC8A6] to-[#B98D61] shadow-[0_0_8px_rgba(223,200,166,0.45)]"
         />
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute bottom-2.5 left-2.5 z-30 size-1 rounded-full bg-brass/75"
+          className="pointer-events-none absolute bottom-3 left-3 z-30 size-1.5 rounded-full bg-brass/85"
         />
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute bottom-2.5 right-2.5 z-30 size-1 rounded-full bg-brass/75"
+          className="pointer-events-none absolute bottom-3 right-3 z-30 size-1.5 rounded-full bg-brass/85"
         />
 
         {/* Subtle Inner Warm Studio Glow */}
@@ -218,7 +227,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
 
         {/* Progressive 4-Side Edge Opacity Fading Portrait */}
         <div
-          className="relative w-full h-full rounded-t-[158px] rounded-b-[12px] overflow-hidden"
+          className="relative w-full h-full rounded-t-[182px] rounded-b-[14px] overflow-hidden"
           style={{
             maskImage: PROGRESSIVE_EDGE_MASK,
             WebkitMaskImage: PROGRESSIVE_EDGE_MASK,
@@ -270,7 +279,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
         >
           <p
             aria-label="Mu'afa Dzulfiqar"
-            className="select-none flex items-baseline justify-center gap-x-2 whitespace-nowrap text-[0.95rem] sm:text-lg lg:text-[1.28rem] tracking-[0.08em] leading-none font-serif italic font-medium"
+            className="select-none flex items-baseline justify-center gap-x-2 whitespace-nowrap text-[1rem] sm:text-lg lg:text-[1.35rem] tracking-[0.08em] leading-none font-serif italic font-medium"
           >
             <span className="text-engraved-brown">MU&apos;AFA</span>{' '}
             <span className="text-engraved-ivory">DZULFIQAR</span>

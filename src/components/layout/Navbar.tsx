@@ -216,8 +216,6 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
   useEffect(() => {
     if (!menuOpen) return;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
     pauseScroll();
 
     const timeInterval = window.setInterval(() => {
@@ -234,7 +232,6 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
     window.addEventListener('keydown', onKeyDown);
 
     return () => {
-      document.body.style.overflow = prevOverflow;
       resumeScroll();
       window.clearInterval(timeInterval);
       window.removeEventListener('keydown', onKeyDown);

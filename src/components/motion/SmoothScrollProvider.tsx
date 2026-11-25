@@ -11,8 +11,8 @@ interface SmoothScrollProviderProps {
 }
 
 /**
- * Lightweight Lenis smooth scroll provider with reference-counted modal locking
- * and automatic disablement under `prefers-reduced-motion: reduce`.
+ * Lightweight Lenis smooth scroll provider with atomic reference-counted modal locking,
+ * tab-visibility RAF pause, and automatic disablement under `prefers-reduced-motion: reduce`.
  */
 export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({
   children,
@@ -20,6 +20,7 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({
   const prefersReducedMotion = useReducedMotion();
   const lenisRef = useRef<Lenis | null>(null);
   const lockCountRef = useRef<number>(0);
+  const prevBodyOverflowRef = useRef<string>('');
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -42,19 +43,58 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({
 
     let rafId = 0;
     const raf = (time: number) => {
+      rafId = 0;
+      if (document.hidden) return;
       lenis.raf(time);
       rafId = window.requestAnimationFrame(raf);
     };
-    rafId = window.requestAnimationFrame(raf);
+
+    const startRaf = () => {
+      if (!rafId && !document.hidden) {
+        rafId = window.requestAnimationFrame(raf);
+      }
+    };
+
+    const stopRaf = () => {
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    };
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        stopRaf();
+      } else {
+        startRaf();
+      }
+    };
+
+    startRaf();
+    document.addEventListener('visibilitychange', handleVisibility);
 
     return () => {
-      window.cancelAnimationFrame(rafId);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      stopRaf();
       lenis.destroy();
       lenisRef.current = null;
     };
   }, [prefersReducedMotion]);
 
+  useEffect(() => {
+    return () => {
+      if (lockCountRef.current > 0 && typeof document !== 'undefined') {
+        document.body.style.overflow = prevBodyOverflowRef.current;
+        lockCountRef.current = 0;
+      }
+    };
+  }, []);
+
   const pauseScroll = useCallback(() => {
+    if (lockCountRef.current === 0 && typeof document !== 'undefined') {
+      prevBodyOverflowRef.current = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+    }
     lockCountRef.current += 1;
     lenisRef.current?.stop();
   }, []);
@@ -62,6 +102,9 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({
   const resumeScroll = useCallback(() => {
     lockCountRef.current = Math.max(0, lockCountRef.current - 1);
     if (lockCountRef.current === 0) {
+      if (typeof document !== 'undefined') {
+        document.body.style.overflow = prevBodyOverflowRef.current;
+      }
       lenisRef.current?.start();
     }
   }, []);

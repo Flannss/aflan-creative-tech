@@ -297,13 +297,13 @@
 .aflan-title-shimmer {
   background-image: linear-gradient(
     108deg,
-    #f4efe6 0%,
-    #f4efe6 38%,
-    #d8c3a5 48%,
-    #fffdf8 52%,
-    #d8c3a5 56%,
-    #f4efe6 66%,
-    #f4efe6 100%
+    #F6F1E9 0%,
+    #F6F1E9 36%,
+    #DFC8A6 47%,
+    #FFFDF8 51%,
+    #DFC8A6 56%,
+    #F6F1E9 68%,
+    #F6F1E9 100%
   );
   background-size: 260% 100%;
   -webkit-background-clip: text;

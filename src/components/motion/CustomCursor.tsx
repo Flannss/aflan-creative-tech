@@ -198,12 +198,19 @@ export const CustomCursor: React.FC = () => {
       }
     };
 
+    const handleVisibility = () => {
+      if (document.hidden) {
+        handleLeave();
+      }
+    };
+
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
     window.addEventListener('pointerdown', handlePointerDown, { passive: true });
     window.addEventListener('pointerup', handlePointerUp, { passive: true });
     window.addEventListener('blur', handleLeave);
     document.addEventListener('pointerleave', handleLeave);
     document.addEventListener('mouseout', handleMouseOut);
+    document.addEventListener('visibilitychange', handleVisibility);
 
     return () => {
       rootEl.classList.remove('aflan-cursor-active');
@@ -213,6 +220,7 @@ export const CustomCursor: React.FC = () => {
       window.removeEventListener('blur', handleLeave);
       document.removeEventListener('pointerleave', handleLeave);
       document.removeEventListener('mouseout', handleMouseOut);
+      document.removeEventListener('visibilitychange', handleVisibility);
       if (rafId) {
         window.cancelAnimationFrame(rafId);
       }
@@ -240,7 +248,7 @@ export const CustomCursor: React.FC = () => {
         >
           <path
             d="M5 0.5L6.15 3.85L9.5 5L6.15 6.15L5 9.5L3.85 6.15L0.5 5L3.85 3.85L5 0.5Z"
-            fill="#F4EFE6"
+            fill="#F6F1E9"
           />
         </svg>
       </div>
@@ -251,7 +259,7 @@ export const CustomCursor: React.FC = () => {
         aria-hidden="true"
         data-mode="default"
         style={{ opacity: 0 }}
-        className="pointer-events-none fixed top-0 left-0 z-[9999] size-[34px] rounded-full border border-[#F4EFE6]/85 mix-blend-difference transition-[width,height,border-radius,border-color,opacity] duration-200 ease-out will-change-transform data-[mode=interactive]:size-10 data-[mode=interactive]:rounded-md data-[mode=interactive]:border-[#F4EFE6]/25"
+        className="pointer-events-none fixed top-0 left-0 z-[9999] size-[34px] rounded-full border border-[#F6F1E9]/85 mix-blend-difference transition-[width,height,border-radius,border-color,opacity] duration-200 ease-out will-change-transform data-[mode=interactive]:size-10 data-[mode=interactive]:rounded-md data-[mode=interactive]:border-[#F6F1E9]/25"
       >
         {/* Architectural corner reticle brackets shown on interactive hover */}
         <span className="opacity-0 in-data-[mode=interactive]:opacity-100 transition-opacity duration-200">

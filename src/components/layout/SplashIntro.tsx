@@ -36,12 +36,12 @@ function getPurwokertoWibTime(): string {
 }
 
 /**
- * Warm Atelier Aurora & Architectural Compass Intro Gate:
- * - Warm Espresso canvas (`#211814`) illuminated by dual slow-breathing Caramel Bronze
- *   and Velvet Mocha radial aurora glows plus counter-rotating SVG compass orbital rings.
- * - Focal lockup: top `AMDZ` crest & live Purwokerto WIB clock, cursor-reactive per-letter
- *   `PORTFOLIO`, parallax engraved `BY AMDZ`, and Magnetic `ENTER` with periodic shimmer sweep.
- * - Exit: Dual-Panel Silk Aperture Split (`-102%` / `+102%` + Champagne center seam flash).
+ * Warm Atelier Collector-Edition Intro Gate:
+ * - Layered 10-step Lab tonal gradient canvas (`#211814` Warm Espresso blending Velvet Mocha
+ *   `#2B1D17`, Warm Chestnut `#432F24`, Warm Cognac `#6E4F3A`, Caramel Bronze & Champagne glows).
+ * - Curved architectural double hairline border (`rounded-[28px] sm:rounded-[38px] md:rounded-[48px]`).
+ * - Bold sculptural `PORTFOLIO` typography (`font-bold`, interactive per-letter hover physics),
+ *   engraved `BY AMDZ` subtitle, and Magnetic `ENTER` aperture release.
  */
 export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -73,8 +73,6 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
   }, [onEnter]);
 
   useEffect(() => {
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
     pauseScroll();
 
     const clockId = window.setInterval(() => {
@@ -91,7 +89,6 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.clearInterval(clockId);
-      document.body.style.overflow = prevOverflow;
       resumeScroll();
       window.removeEventListener('keydown', handleKeyDown);
     };
@@ -134,7 +131,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         isExiting ? 'pointer-events-none' : ''
       }`}
     >
-      {/* Seamless Dual-Panel Silk Aperture Split Panels */}
+      {/* Layered Warm Lab Dual-Panel Silk Aperture Split Panels */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -149,6 +146,10 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                   transition: { duration: 0.68, ease: EASE_LUXURY },
                 }
           }
+          style={{
+            background:
+              'radial-gradient(ellipse 85% 95% at 50% 100%, rgba(110,79,58,0.28) 0%, rgba(43,29,23,0.92) 55%, #211814 100%)',
+          }}
           className="absolute top-0 inset-x-0 h-1/2 bg-[#211814] will-change-transform"
         />
         <motion.div
@@ -161,6 +162,10 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                   transition: { duration: 0.68, ease: EASE_LUXURY },
                 }
           }
+          style={{
+            background:
+              'radial-gradient(ellipse 85% 95% at 50% 0%, rgba(67,47,36,0.45) 0%, rgba(43,29,23,0.94) 55%, #211814 100%)',
+          }}
           className="absolute bottom-0 inset-x-0 h-1/2 bg-[#211814] will-change-transform"
         />
         <motion.div
@@ -178,7 +183,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         />
       </div>
 
-      {/* Foreground Warm Atelier Aurora, Meridians & Typography Seal */}
+      {/* Foreground Warm Atelier Lighting, Curved Frame & Typography Seal */}
       <motion.div
         initial={{ opacity: 1, scale: 1, y: 0 }}
         exit={
@@ -191,9 +196,9 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                 transition: { duration: 0.24, ease: EASE_LUXURY },
               }
         }
-        className="relative z-10 h-full w-full flex flex-col items-center justify-between px-5 sm:px-8 md:px-12 py-7 sm:py-10 will-change-[transform,opacity]"
+        className="relative z-10 h-full w-full flex flex-col items-center justify-between px-7 sm:px-11 md:px-16 py-9 sm:py-12 md:py-14 will-change-[transform,opacity]"
       >
-        {/* Warm Atelier Dual Breathing Radial Auroras */}
+        {/* Corner Warm Chestnut/Cognac Washes + Center Caramel-Champagne Glow */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -201,17 +206,41 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           <div
             style={{
               background:
-                'radial-gradient(circle 480px at 36% 40%, rgba(185,141,97,0.28) 0%, rgba(142,107,75,0.10) 46%, transparent 74%)',
+                'radial-gradient(circle 420px at 14% 16%, rgba(110,79,58,0.34) 0%, rgba(67,47,36,0.14) 48%, transparent 76%)',
+            }}
+            className="absolute inset-0"
+          />
+          <div
+            style={{
+              background:
+                'radial-gradient(circle 440px at 86% 84%, rgba(67,47,36,0.42) 0%, rgba(110,79,58,0.18) 46%, transparent 76%)',
+            }}
+            className="absolute inset-0"
+          />
+          <div
+            style={{
+              background:
+                'radial-gradient(circle 500px at 40% 42%, rgba(185,141,97,0.22) 0%, rgba(142,107,75,0.10) 46%, transparent 74%)',
             }}
             className="absolute -inset-12 aflan-aurora-a will-change-transform"
           />
           <div
             style={{
               background:
-                'radial-gradient(circle 520px at 66% 58%, rgba(142,107,75,0.34) 0%, rgba(51,36,28,0.18) 46%, transparent 76%)',
+                'radial-gradient(circle 480px at 62% 54%, rgba(223,200,166,0.15) 0%, rgba(185,141,97,0.09) 44%, transparent 74%)',
             }}
             className="absolute -inset-12 aflan-aurora-b will-change-transform"
           />
+        </div>
+
+        {/* Curved Architectural Double Hairline Frame */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-3 sm:inset-5 md:inset-7 rounded-[28px] sm:rounded-[38px] md:rounded-[48px] border border-champagne/30 overflow-hidden"
+        >
+          <span className="absolute top-0 inset-x-10 h-px bg-linear-to-r from-[#8E6B4B]/20 via-[#DFC8A6]/70 to-[#B98D61]/40" />
+          <span className="absolute bottom-0 inset-x-10 h-px bg-linear-to-r from-[#B98D61]/40 via-[#DFC8A6]/60 to-[#8E6B4B]/20" />
+          <div className="absolute inset-[6px] rounded-[23px] sm:rounded-[33px] md:rounded-[43px] border border-champagne/12" />
         </div>
 
         {/* Fine Architectural Meridian Crosshairs */}
@@ -219,8 +248,8 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 overflow-hidden"
         >
-          <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-champagne/8" />
-          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-px bg-champagne/8" />
+          <div className="absolute inset-y-6 left-1/2 -translate-x-1/2 w-px bg-champagne/8" />
+          <div className="absolute inset-x-6 top-1/2 -translate-y-1/2 h-px bg-champagne/8" />
         </div>
 
         {/* Top Micro-Header */}
@@ -228,7 +257,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           initial={prefersReducedMotion ? false : { opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.44, ease: EASE_LUXURY }}
-          className="relative z-10 w-full max-w-[1360px] flex items-center justify-between gap-4 font-mono text-[10px] sm:text-[11px] tracking-[0.26em] uppercase"
+          className="relative z-10 w-full max-w-[1320px] flex items-center justify-between gap-4 font-mono text-[10px] sm:text-[11px] tracking-[0.26em] uppercase"
         >
           <span className="inline-flex items-center gap-2.5 text-champagne/90">
             <MonogramMark size={22} className="text-champagne shrink-0" />
@@ -244,7 +273,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         </motion.div>
 
         {/* Centered Focal Seal + Counter-Rotating Compass Rings */}
-        <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto px-2">
+        <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto px-1 max-w-full">
           <motion.div
             aria-hidden="true"
             initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.92 }}
@@ -255,7 +284,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                 ? { rotate: compassRotate, x: compassX, y: compassY }
                 : undefined
             }
-            className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[290px] sm:size-[400px] md:size-[460px] flex items-center justify-center will-change-transform"
+            className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[280px] sm:size-[400px] md:size-[460px] flex items-center justify-center will-change-transform"
           >
             <svg
               viewBox="0 0 460 460"
@@ -267,33 +296,33 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                   cx="230"
                   cy="230"
                   r="224"
-                  stroke="rgba(216,195,165,0.16)"
+                  stroke="rgba(223,200,166,0.18)"
                   strokeWidth="1"
                   fill="none"
                 />
-                <line x1="230" y1="0" x2="230" y2="12" stroke="rgba(216,195,165,0.38)" strokeWidth="1" />
-                <line x1="230" y1="448" x2="230" y2="460" stroke="rgba(216,195,165,0.38)" strokeWidth="1" />
-                <line x1="0" y1="230" x2="12" y2="230" stroke="rgba(216,195,165,0.38)" strokeWidth="1" />
-                <line x1="448" y1="230" x2="460" y2="230" stroke="rgba(216,195,165,0.38)" strokeWidth="1" />
-                <circle cx="230" cy="6" r="2" fill="rgba(216,195,165,0.48)" />
-                <circle cx="230" cy="454" r="2" fill="rgba(216,195,165,0.48)" />
-                <circle cx="6" cy="230" r="2" fill="rgba(216,195,165,0.48)" />
-                <circle cx="454" cy="230" r="2" fill="rgba(216,195,165,0.48)" />
+                <line x1="230" y1="0" x2="230" y2="12" stroke="rgba(223,200,166,0.42)" strokeWidth="1" />
+                <line x1="230" y1="448" x2="230" y2="460" stroke="rgba(223,200,166,0.42)" strokeWidth="1" />
+                <line x1="0" y1="230" x2="12" y2="230" stroke="rgba(223,200,166,0.42)" strokeWidth="1" />
+                <line x1="448" y1="230" x2="460" y2="230" stroke="rgba(223,200,166,0.42)" strokeWidth="1" />
+                <circle cx="230" cy="6" r="2" fill="rgba(223,200,166,0.52)" />
+                <circle cx="230" cy="454" r="2" fill="rgba(223,200,166,0.52)" />
+                <circle cx="6" cy="230" r="2" fill="rgba(223,200,166,0.52)" />
+                <circle cx="454" cy="230" r="2" fill="rgba(223,200,166,0.52)" />
               </g>
               <g className="aflan-ring-ccw origin-center">
                 <circle
                   cx="230"
                   cy="230"
                   r="184"
-                  stroke="rgba(169,132,94,0.15)"
+                  stroke="rgba(185,141,97,0.18)"
                   strokeWidth="1"
                   strokeDasharray="4 7"
                   fill="none"
                 />
-                <circle cx="100" cy="100" r="1.6" fill="rgba(216,195,165,0.36)" />
-                <circle cx="360" cy="100" r="1.6" fill="rgba(216,195,165,0.36)" />
-                <circle cx="100" cy="360" r="1.6" fill="rgba(216,195,165,0.36)" />
-                <circle cx="360" cy="360" r="1.6" fill="rgba(216,195,165,0.36)" />
+                <circle cx="100" cy="100" r="1.6" fill="rgba(223,200,166,0.38)" />
+                <circle cx="360" cy="100" r="1.6" fill="rgba(223,200,166,0.38)" />
+                <circle cx="100" cy="360" r="1.6" fill="rgba(223,200,166,0.38)" />
+                <circle cx="360" cy="360" r="1.6" fill="rgba(223,200,166,0.38)" />
               </g>
             </svg>
           </motion.div>
@@ -303,16 +332,16 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
             initial={prefersReducedMotion ? false : { scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
             transition={{ duration: 0.44, delay: 0.05, ease: EASE_LUXURY }}
-            className="block w-10 h-px bg-champagne/55 mb-6 origin-center"
+            className="block w-10 h-px bg-champagne/60 mb-6 origin-center"
           />
 
           <h1
             aria-label="Portfolio by AMDZ"
-            className="relative z-10 flex flex-col items-center"
+            className="relative z-10 flex flex-col items-center max-w-full"
           >
             <span
               aria-hidden="true"
-              className="inline-flex items-baseline justify-center py-2 px-1 -my-2"
+              className="inline-flex items-baseline justify-center py-2 px-1 -my-2 max-w-full"
             >
               {PORTFOLIO_LETTERS.map((char, idx) => (
                 <motion.span
@@ -341,9 +370,9 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                     delay: 0.06 + idx * 0.024,
                     ease: EASE_LUXURY,
                   }}
-                  className={`inline-block font-serif font-light uppercase text-[2.7rem] sm:text-6xl md:text-7xl tracking-[0.08em] leading-[1.15] px-[0.02em] aflan-title-shimmer cursor-default will-change-transform ${
+                  className={`inline-block font-serif font-bold uppercase text-[clamp(2.5rem,6.4vw,5.4rem)] tracking-[0.14em] sm:tracking-[0.18em] leading-[1.12] px-[0.02em] aflan-title-shimmer cursor-default will-change-transform ${
                     enableCursorFx
-                      ? 'transition-[filter] duration-300 hover:brightness-125 hover:drop-shadow-[0_6px_16px_rgba(244,239,230,0.3)]'
+                      ? 'transition-[filter] duration-300 hover:brightness-125 hover:drop-shadow-[0_6px_16px_rgba(246,241,233,0.34)]'
                       : ''
                   }`}
                 >
@@ -378,7 +407,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                 }
                 className={`inline-block py-1.5 px-3 -my-1.5 font-serif italic font-medium uppercase tracking-[0.14em] text-engraved-champagne text-xl sm:text-3xl md:text-4xl leading-[1.2] select-none cursor-default will-change-transform ${
                   enableCursorFx
-                    ? 'transition-[filter] duration-300 hover:drop-shadow-[0_0_16px_rgba(216,195,165,0.38)]'
+                    ? 'transition-[filter] duration-300 hover:drop-shadow-[0_0_16px_rgba(223,200,166,0.42)]'
                     : ''
                 }`}
               >
@@ -397,7 +426,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
               <div className="relative inline-flex items-center justify-center">
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute -inset-1.5 rounded-full border border-champagne/30 aflan-breath-halo"
+                  className="pointer-events-none absolute -inset-1.5 rounded-full border border-champagne/32 aflan-breath-halo"
                 />
                 <button
                   type="button"
@@ -408,7 +437,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                 >
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 aflan-enter-shimmer bg-gradient-to-r from-transparent via-champagne/25 to-transparent"
+                    className="pointer-events-none absolute inset-0 aflan-enter-shimmer bg-gradient-to-r from-transparent via-champagne/28 to-transparent"
                   />
                   <span
                     aria-hidden="true"
@@ -430,7 +459,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           initial={prefersReducedMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.44, delay: 0.26, ease: EASE_LUXURY }}
-          className="relative z-10 font-mono text-[10px] tracking-[0.28em] uppercase text-taupe/80"
+          className="relative z-10 font-mono text-[10px] tracking-[0.28em] uppercase text-taupe/85"
         >
           PRESS ENTER
         </motion.div>

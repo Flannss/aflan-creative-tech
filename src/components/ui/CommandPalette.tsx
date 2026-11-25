@@ -292,23 +292,26 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     }
   }, [filteredItems, open, safeActiveIndex]);
 
-  // Body scroll lock & input focus management
+  // Atomic scroll lock, input focus management, and browser popstate close
   useEffect(() => {
     if (!open) return;
 
     previousFocusRef.current =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
     pauseScroll();
 
     const rafId = window.requestAnimationFrame(() => {
       inputRef.current?.focus();
     });
 
+    const handlePopState = () => {
+      closePalette(true);
+    };
+    window.addEventListener('popstate', handlePopState);
+
     return () => {
       window.cancelAnimationFrame(rafId);
-      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('popstate', handlePopState);
       resumeScroll();
       if (
         !skipRestoreFocusRef.current &&
@@ -318,7 +321,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         previousFocusRef.current.focus();
       }
     };
-  }, [open, pauseScroll, resumeScroll]);
+  }, [closePalette, open, pauseScroll, resumeScroll]);
 
   // Keep active keyboard-selected item scrolled into view
   useEffect(() => {
