@@ -18,6 +18,8 @@ interface SplashIntroProps {
   onEnter: (targetPath?: string) => void;
 }
 
+const PORTFOLIO_LETTERS = 'PORTFOLIO'.split('');
+
 function getPurwokertoWibTime(): string {
   try {
     return new Intl.DateTimeFormat('id-ID', {
@@ -34,16 +36,16 @@ function getPurwokertoWibTime(): string {
 }
 
 /**
- * Minimalist Architectural Seal Intro Gate with Staggered 5-Column Editorial Shutter Reveal.
- * - Ultra-clean editorial breathing room: top AMDZ crest & Purwokerto live WIB,
- *   centered compass orbital hairline (reacts softly to pointer on desktop),
- *   PORTFOLIO + engraved BY AMDZ, Magnetic `ENTER` seal CTA, and subtle `PRESS ENTER` cue.
- * - Exit: 5 GPU-animated Espresso columns rise in a center-outward wave (`0.62s`),
- *   unveiling the Homepage cleanly without blocking pointer/keyboard input.
+ * Minimalist Architectural Seal Intro Gate with Dual-Panel Silk Aperture Split:
+ * - Top AMDZ crest & Purwokerto live WIB, dual counter-rotating orbital compass rings,
+ *   cursor-reactive `PORTFOLIO` (per-letter hover tilt/lift) & engraved `BY AMDZ` parallax depth,
+ *   Magnetic `ENTER` CTA with breathing halo, and subtle `PRESS ENTER` cue.
+ * - Exit: Dual-Panel Silk Aperture Split (`-102%` / `+102%` + Champagne seam flash) reveals Home cleanly.
  */
 export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
   const prefersReducedMotion = useReducedMotion();
   const canHoverFine = useCanHoverFine();
+  const enableCursorFx = canHoverFine && !prefersReducedMotion;
   const { pauseScroll, resumeScroll } = useSmoothScroll();
   const [isExiting, setIsExiting] = useState(false);
   const [wibTime, setWibTime] = useState<string>(() => getPurwokertoWibTime());
@@ -53,6 +55,19 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
   const compassRotate = useSpring(compassRotRaw, {
     stiffness: 90,
     damping: 24,
+    mass: 0.7,
+  });
+
+  const subtitleRawX = useMotionValue(0);
+  const subtitleRawY = useMotionValue(0);
+  const subtitleX = useSpring(subtitleRawX, {
+    stiffness: 110,
+    damping: 22,
+    mass: 0.7,
+  });
+  const subtitleY = useSpring(subtitleRawY, {
+    stiffness: 110,
+    damping: 22,
     mass: 0.7,
   });
 
@@ -89,9 +104,19 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
   }, [pauseScroll, resumeScroll, triggerEnter]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!canHoverFine || prefersReducedMotion) return;
+    if (!enableCursorFx) return;
     const relX = e.clientX / Math.max(1, window.innerWidth) - 0.5;
+    const relY = e.clientY / Math.max(1, window.innerHeight) - 0.5;
     compassRotRaw.set(relX * 10);
+    subtitleRawX.set(relX * 14);
+    subtitleRawY.set(relY * 8);
+  };
+
+  const handleMouseLeave = () => {
+    if (!enableCursorFx) return;
+    compassRotRaw.set(0);
+    subtitleRawX.set(0);
+    subtitleRawY.set(0);
   };
 
   return (
@@ -100,6 +125,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
       aria-modal="true"
       aria-label="Pembuka Portofolio AFLAN"
       onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       initial={{ opacity: 1 }}
       exit={
         prefersReducedMotion
@@ -285,28 +311,81 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
             aria-label="Portfolio by AMDZ"
             className="relative z-10 flex flex-col items-center"
           >
-            <span className="block overflow-hidden">
-              <motion.span
-                aria-hidden="true"
-                initial={prefersReducedMotion ? false : { y: '100%' }}
-                animate={{ y: '0%' }}
-                transition={{ duration: 0.56, delay: 0.1, ease: EASE_LUXURY }}
-                className="block font-serif font-light uppercase text-[2.75rem] sm:text-6xl md:text-7xl tracking-[0.08em] leading-none aflan-title-shimmer will-change-transform"
-              >
-                PORTFOLIO
-              </motion.span>
+            <span
+              aria-hidden="true"
+              className="inline-flex items-baseline justify-center py-2 px-1 -my-2"
+            >
+              {PORTFOLIO_LETTERS.map((char, idx) => (
+                <motion.span
+                  key={`${char}-${idx}`}
+                  initial={
+                    prefersReducedMotion ? false : { opacity: 0, y: 16 }
+                  }
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={
+                    enableCursorFx
+                      ? {
+                          y: -6,
+                          rotate: idx % 2 === 0 ? -2.5 : 2.5,
+                          scale: 1.04,
+                          transition: {
+                            type: 'spring',
+                            stiffness: 280,
+                            damping: 20,
+                            mass: 0.48,
+                          },
+                        }
+                      : undefined
+                  }
+                  transition={{
+                    duration: 0.46,
+                    delay: 0.08 + idx * 0.025,
+                    ease: EASE_LUXURY,
+                  }}
+                  className={`inline-block font-serif font-light uppercase text-[2.75rem] sm:text-6xl md:text-7xl tracking-[0.08em] leading-[1.15] px-[0.02em] aflan-title-shimmer cursor-default will-change-transform ${
+                    enableCursorFx
+                      ? 'transition-[filter] duration-300 hover:brightness-125 hover:drop-shadow-[0_6px_16px_rgba(244,239,230,0.3)]'
+                      : ''
+                  }`}
+                >
+                  {char}
+                </motion.span>
+              ))}
             </span>
-            <span className="block overflow-hidden mt-2.5 md:mt-3">
+
+            <motion.span
+              aria-hidden="true"
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.18, ease: EASE_LUXURY }}
+              style={
+                enableCursorFx ? { x: subtitleX, y: subtitleY } : undefined
+              }
+              className="mt-2.5 md:mt-3 inline-block will-change-transform"
+            >
               <motion.span
-                aria-hidden="true"
-                initial={prefersReducedMotion ? false : { y: '100%' }}
-                animate={{ y: '0%' }}
-                transition={{ duration: 0.54, delay: 0.18, ease: EASE_LUXURY }}
-                className="block font-serif italic font-medium uppercase tracking-[0.14em] text-engraved-champagne text-xl sm:text-3xl md:text-4xl leading-none select-none will-change-transform"
+                whileHover={
+                  enableCursorFx
+                    ? {
+                        scale: 1.03,
+                        y: -2,
+                        transition: {
+                          type: 'spring',
+                          stiffness: 280,
+                          damping: 20,
+                        },
+                      }
+                    : undefined
+                }
+                className={`inline-block py-1.5 px-3 -my-1.5 font-serif italic font-medium uppercase tracking-[0.14em] text-engraved-champagne text-xl sm:text-3xl md:text-4xl leading-[1.2] select-none cursor-default will-change-transform ${
+                  enableCursorFx
+                    ? 'transition-[filter] duration-300 hover:drop-shadow-[0_0_16px_rgba(216,195,165,0.35)]'
+                    : ''
+                }`}
               >
                 BY AMDZ
               </motion.span>
-            </span>
+            </motion.span>
           </h1>
 
           <motion.div

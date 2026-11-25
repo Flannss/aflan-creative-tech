@@ -159,6 +159,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
   const menuOpen = menuOpenPath === location.pathname;
   const openMenu = () => {
+    setHoveredPath(null);
     setWibTime(getPurwokertoWibTime());
     setMenuOpenPath(location.pathname);
   };
@@ -360,13 +361,13 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                             />
                           </motion.span>
                         )}
-                        <span className="relative z-10 inline-flex overflow-hidden align-middle">
-                          <span className="inline-block transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/nav:-translate-y-[115%] motion-reduce:transform-none">
+                        <span className="relative z-10 inline-flex overflow-hidden align-middle leading-[1.35] py-0.5 px-0.5 -my-0.5">
+                          <span className="inline-block transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/nav:-translate-y-[125%] motion-reduce:transform-none">
                             {route.shortLabel}
                           </span>
                           <span
                             aria-hidden="true"
-                            className="pointer-events-none absolute inset-0 inline-block italic translate-y-[115%] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/nav:translate-y-0 motion-reduce:hidden"
+                            className="pointer-events-none absolute inset-x-0 top-0.5 inline-block italic translate-y-[125%] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/nav:translate-y-0 motion-reduce:hidden"
                           >
                             {route.shortLabel}
                           </span>
@@ -581,24 +582,30 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                               <span className="font-mono text-[11px] tracking-[0.22em] text-champagne/75 shrink-0">
                                 {route.index}
                               </span>
-                              <span className="block overflow-hidden">
-                                <motion.span
-                                  initial={prefersReducedMotion ? false : { y: '105%' }}
-                                  animate={{ y: '0%' }}
-                                  transition={{
-                                    delay: prefersReducedMotion ? 0 : 0.04 + i * 0.03,
-                                    duration: 0.4,
-                                    ease: EASE_LUXURY,
-                                  }}
-                                  className={`inline-block font-serif text-[1.6rem] sm:text-3xl md:text-[1.75rem] xl:text-[2.45rem] leading-tight whitespace-nowrap transition-transform duration-300 ${
+                              <motion.span
+                                initial={
+                                  prefersReducedMotion
+                                    ? false
+                                    : { opacity: 0, y: 12 }
+                                }
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{
+                                  delay: prefersReducedMotion ? 0 : 0.03 + i * 0.025,
+                                  duration: 0.36,
+                                  ease: EASE_LUXURY,
+                                }}
+                                className="inline-block"
+                              >
+                                <span
+                                  className={`inline-block font-serif text-[1.6rem] sm:text-3xl md:text-[1.75rem] xl:text-[2.45rem] leading-[1.32] py-1 pr-3 -my-1 whitespace-nowrap transition-[transform,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                                     isCurrent
                                       ? 'text-champagne italic translate-x-1'
                                       : 'text-ivory group-hover:text-champagne group-hover:italic group-hover:translate-x-1.5'
                                   }`}
                                 >
                                   {route.label}
-                                </motion.span>
-                              </span>
+                                </span>
+                              </motion.span>
                               {isCurrent && (
                                 <span className="sm:hidden inline-flex items-center px-2 py-0.5 rounded-full border border-champagne/40 bg-champagne/10 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne shrink-0">
                                   Active
@@ -631,77 +638,72 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
                 {/* Live Editorial Context Panel (Tablet & Desktop >= 768px) */}
                 <aside className="hidden md:flex md:col-span-5 min-w-0 flex-col pl-4 lg:pl-8 border-l border-champagne/15">
-                  <div className="relative overflow-hidden border border-champagne/20 bg-espresso/60 p-6 lg:p-7">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={activePreviewRoute.path}
-                        initial={
-                          prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 8 }
-                        }
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={
-                          prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -6 }
-                        }
-                        transition={{ duration: 0.24, ease: EASE_LUXURY }}
-                        className="space-y-5"
-                      >
-                        <div className="flex items-center justify-between gap-3">
-                          <span className="font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
-                            PAGE {activePreviewRoute.index} · {activeRouteContext.tag}
+                  <div className="relative overflow-hidden border border-champagne/25 bg-[#211A17] p-6 lg:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+                    <motion.div
+                      key={activePreviewRoute.path}
+                      initial={
+                        prefersReducedMotion ? false : { opacity: 0.78, y: 4 }
+                      }
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.18, ease: EASE_LUXURY }}
+                      className="space-y-5"
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
+                          PAGE {activePreviewRoute.index} · {activeRouteContext.tag}
+                        </span>
+                        <MonogramMark size={24} className="text-champagne/80 shrink-0" />
+                      </div>
+
+                      <div className="relative flex items-center justify-between gap-4 py-4 px-5 bg-[#1A1412]/90 border border-champagne/20">
+                        <div className="min-w-0">
+                          <p className="font-serif text-3xl lg:text-4xl font-light text-ivory leading-[1.22] pb-0.5">
+                            {activePreviewRoute.label}
+                          </p>
+                          <p className="font-sans text-xs text-champagne/90 mt-1.5">
+                            {activePreviewRoute.subtitle}
+                          </p>
+                        </div>
+                        <div className="relative flex items-center justify-end shrink-0">
+                          <ContextMotifSvg motif={activeRouteContext.motif} />
+                          <span className="pointer-events-none absolute right-0 font-serif italic text-5xl text-champagne/15 leading-none select-none">
+                            {activePreviewRoute.index}
                           </span>
-                          <MonogramMark size={24} className="text-champagne/75 shrink-0" />
                         </div>
+                      </div>
 
-                        <div className="relative flex items-center justify-between gap-4 py-4 px-5 bg-obsidian/70 border border-champagne/15">
-                          <div>
-                            <p className="font-serif text-3xl lg:text-4xl font-light text-ivory leading-none">
-                              {activePreviewRoute.label}
-                            </p>
-                            <p className="font-sans text-xs text-champagne/85 mt-2">
-                              {activePreviewRoute.subtitle}
-                            </p>
-                          </div>
-                          <div className="relative flex items-center justify-end shrink-0">
-                            <ContextMotifSvg motif={activeRouteContext.motif} />
-                            <span className="pointer-events-none absolute right-0 font-serif italic text-5xl text-champagne/15 leading-none select-none">
-                              {activePreviewRoute.index}
-                            </span>
-                          </div>
+                      <p className="font-sans text-xs lg:text-sm text-ivory/85 leading-relaxed">
+                        {activeRouteContext.summary}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2">
+                        {activeRouteContext.highlights.map((chip) => (
+                          <span
+                            key={chip}
+                            className="px-2.5 py-1 border border-champagne/25 bg-[#1A1412]/65 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne"
+                          >
+                            {chip}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4 pt-4 border-t border-champagne/15 text-xs">
+                        <div>
+                          <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-taupe">
+                            Identitas
+                          </p>
+                          <p className="text-ivory mt-1 truncate">{personalData.fullName}</p>
                         </div>
-
-                        <p className="font-sans text-xs lg:text-sm text-ivory/80 leading-relaxed">
-                          {activeRouteContext.summary}
-                        </p>
-
-                        <div className="flex flex-wrap gap-2">
-                          {activeRouteContext.highlights.map((chip) => (
-                            <span
-                              key={chip}
-                              className="px-2.5 py-1 border border-champagne/20 bg-obsidian/55 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne/90"
-                            >
-                              {chip}
-                            </span>
-                          ))}
+                        <div>
+                          <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-taupe">
+                            Usia &amp; Basis
+                          </p>
+                          <p className="text-ivory mt-1">
+                            {ageDetails.age} Tahun · Purwokerto
+                          </p>
                         </div>
-
-                        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-champagne/15 text-xs">
-                          <div>
-                            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-taupe">
-                              Identitas
-                            </p>
-                            <p className="text-ivory mt-1 truncate">{personalData.fullName}</p>
-                          </div>
-                          <div>
-                            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-taupe">
-                              Usia &amp; Basis
-                            </p>
-                            <p className="text-ivory mt-1">
-                              {ageDetails.age} Tahun · Purwokerto
-                            </p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    </AnimatePresence>
+                      </div>
+                    </motion.div>
                   </div>
                 </aside>
               </div>
