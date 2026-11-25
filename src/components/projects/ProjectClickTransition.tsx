@@ -31,11 +31,11 @@ export const ProjectTransitionPortal: React.FC<ProjectTransitionPortalProps> = (
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.44, ease: EASE_LUXURY }}
+        transition={{ duration: 0.32, ease: EASE_LUXURY }}
         className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#291E18_0%,_#171615_55%,_#0A0807_100%)]"
       />
 
-      {/* Expanding preview image box with cinematic masking reveal */}
+      {/* Expanding preview image box with fluid scale reveal */}
       <motion.div
         initial={{
           top: originRect.top,
@@ -51,13 +51,13 @@ export const ProjectTransitionPortal: React.FC<ProjectTransitionPortalProps> = (
           height: '100%',
           borderColor: 'rgba(216, 195, 165, 0)',
         }}
-        transition={{ duration: 0.52, ease: EASE_LUXURY }}
+        transition={{ duration: 0.36, ease: EASE_LUXURY }}
         className="absolute overflow-hidden bg-obsidian border shadow-[0_32px_100px_rgba(0,0,0,0.85)] will-change-[top,left,width,height]"
       >
         <motion.div
-          initial={{ scale: 1, clipPath: 'inset(3% 3% 3% 3%)' }}
-          animate={{ scale: 1.08, clipPath: 'inset(0% 0% 0% 0%)' }}
-          transition={{ duration: 0.54, ease: EASE_LUXURY }}
+          initial={{ scale: 1, opacity: 0.92 }}
+          animate={{ scale: 1.05, opacity: 1 }}
+          transition={{ duration: 0.38, ease: EASE_LUXURY }}
           className="w-full h-full will-change-transform"
         >
           {project.previewImage ? (
@@ -94,9 +94,9 @@ export const ProjectTransitionPortal: React.FC<ProjectTransitionPortalProps> = (
 
         {/* Subtle editorial caption emerging during expansion */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.42, delay: 0.08, ease: EASE_LUXURY }}
+          transition={{ duration: 0.34, delay: 0.04, ease: EASE_LUXURY }}
           className="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14 max-w-[1440px] mx-auto"
         >
           <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne mb-2">

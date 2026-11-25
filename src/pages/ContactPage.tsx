@@ -374,7 +374,7 @@ export const ContactPage: React.FC = () => {
 
                 <div className="pt-3 border-t border-champagne/15 flex flex-wrap items-center justify-between gap-3">
                   <span className="font-sans text-xs text-ivory/70">
-                    Respon utama untuk proyek, magang &amp; kolaborasi
+                    Respons utama untuk proyek, magang &amp; kolaborasi
                   </span>
                   <button
                     type="button"

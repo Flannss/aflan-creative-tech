@@ -28,11 +28,11 @@ export const Reveal: React.FC<RevealProps> = ({
   }
 
   const initialMap = {
-    up: { opacity: 0, y: 24 },
-    left: { opacity: 0, x: -20 },
-    right: { opacity: 0, x: 20 },
+    up: { opacity: 0, y: 16 },
+    left: { opacity: 0, x: -16 },
+    right: { opacity: 0, x: 16 },
     fade: { opacity: 0 },
-    clip: { opacity: 0, clipPath: 'inset(10% 0% 0% 0%)', scale: 1.03 },
+    clip: { opacity: 0, y: 16, scale: 0.988 },
   };
 
   const visibleMap = {
@@ -40,7 +40,7 @@ export const Reveal: React.FC<RevealProps> = ({
     left: { opacity: 1, x: 0 },
     right: { opacity: 1, x: 0 },
     fade: { opacity: 1 },
-    clip: { opacity: 1, clipPath: 'inset(0% 0% 0% 0%)', scale: 1 },
+    clip: { opacity: 1, y: 0, scale: 1 },
   };
 
   return (
@@ -73,8 +73,8 @@ interface StaggerGroupProps {
 export const StaggerGroup: React.FC<StaggerGroupProps> = ({
   children,
   className = '',
-  stagger = 0.075,
-  delayChildren = 0.04,
+  stagger = 0.05,
+  delayChildren = 0.02,
 }) => {
   const prefersReducedMotion = useReducedMotion();
 
@@ -121,7 +121,7 @@ export const StaggerItem: React.FC<StaggerItemProps> = ({
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 22, scale: 0.985 },
+        hidden: { opacity: 0, y: 16, scale: 0.99 },
         visible: {
           opacity: 1,
           y: 0,
@@ -180,7 +180,7 @@ export const HairlineRule: React.FC<HairlineRuleProps> = ({
             whileInView: { scaleX: 1 },
             viewport: { once: true, amount: 'some' },
           })}
-      transition={{ duration: 0.72, delay, ease: EASE_LUXURY }}
+      transition={{ duration: 0.56, delay, ease: EASE_LUXURY }}
       className={`h-px w-full will-change-transform ${originClass} ${colorClass} ${className}`}
     />
   );

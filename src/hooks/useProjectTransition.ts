@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useReducedMotion } from 'framer-motion';
 import type { ProjectEntry } from '@/data/projects';
 
-const NAVIGATE_DELAY_MS = 520;
+const NAVIGATE_DELAY_MS = 360;
 
 export interface PreviewOriginRect {
   top: number;
@@ -92,6 +92,7 @@ export function useProjectTransition() {
 
       timerRef.current = window.setTimeout(() => {
         timerRef.current = null;
+        setTransitionState(null);
         navigate(`/projects/${project.slug}`);
       }, NAVIGATE_DELAY_MS);
     },

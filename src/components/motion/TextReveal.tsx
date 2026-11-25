@@ -38,7 +38,7 @@ export const TextReveal: React.FC<TextRevealProps> = ({
   className = '',
   lineClassName = '',
   delay = 0,
-  stagger = 0.08,
+  stagger = 0.05,
   immediate = false,
 }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -73,15 +73,15 @@ export const TextReveal: React.FC<TextRevealProps> = ({
           >
             <motion.span
               className={`block will-change-transform ${lineClassName}`}
-              initial={{ y: '108%', opacity: 0.001 }}
+              initial={{ y: 16, opacity: 0 }}
               {...(immediate
-                ? { animate: { y: '0%', opacity: 1 } }
+                ? { animate: { y: 0, opacity: 1 } }
                 : {
-                    whileInView: { y: '0%', opacity: 1 },
+                    whileInView: { y: 0, opacity: 1 },
                     viewport: { once: true, amount: 'some' },
                   })}
               transition={{
-                duration: 0.74,
+                duration: 0.56,
                 delay: delay + index * stagger,
                 ease: EASE_LUXURY,
               }}

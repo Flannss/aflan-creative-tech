@@ -121,7 +121,7 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
             objectPosition: item.objectPosition ?? 'center',
             filter: combinedFilter,
           }}
-          className={`w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] motion-reduce:transform-none ${
+          className={`w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transform-none ${
             item.imageScaleClass ?? ''
           }`}
         />

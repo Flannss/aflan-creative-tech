@@ -28,22 +28,30 @@ const AppRoutes: React.FC = () => {
   const location = useLocation();
 
   return (
-    <PageTransition key={location.pathname}>
-      <Routes location={location}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/journey" element={<JourneyPage />} />
-        <Route path="/skills" element={<SkillsPage />} />
-        <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/projects/:slug" element={<ProjectDetailPage />} />
-        <Route path="/lab" element={<CreativeLabPage />} />
-        <Route path="/creative-lab" element={<Navigate to="/lab" replace />} />
-        <Route path="/gallery" element={<GalleryPage />} />
-        <Route path="/achievements" element={<AchievementsPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </PageTransition>
+    <AnimatePresence
+      mode="wait"
+      initial={false}
+      onExitComplete={() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      }}
+    >
+      <PageTransition key={location.pathname}>
+        <Routes location={location}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/journey" element={<JourneyPage />} />
+          <Route path="/skills" element={<SkillsPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/projects/:slug" element={<ProjectDetailPage />} />
+          <Route path="/lab" element={<CreativeLabPage />} />
+          <Route path="/creative-lab" element={<Navigate to="/lab" replace />} />
+          <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/achievements" element={<AchievementsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </PageTransition>
+    </AnimatePresence>
   );
 };
 

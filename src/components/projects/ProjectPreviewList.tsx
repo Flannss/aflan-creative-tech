@@ -209,7 +209,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                           alt={project.previewCaption}
                           loading="lazy"
                           style={{ objectPosition: project.previewObjectPosition ?? 'center' }}
-                          className={`w-full h-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] motion-reduce:transform-none ${
+                          className={`w-full h-full transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transform-none ${
                             project.previewImageFit === 'contain'
                               ? 'object-contain p-5'
                               : 'object-cover'

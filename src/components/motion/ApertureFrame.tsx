@@ -11,7 +11,7 @@ interface ApertureFrameProps {
 }
 
 /**
- * Aperture clip-path frame paired with subtle counter-scale reveal (1.06 -> 1)
+ * Fluid GPU-only image entrance paired with gentle counter-scale settle (1.04 -> 1)
  * for curated project thumbnails and monograph gallery plates.
  */
 export const ApertureFrame: React.FC<ApertureFrameProps> = ({
@@ -33,25 +33,25 @@ export const ApertureFrame: React.FC<ApertureFrameProps> = ({
 
   return (
     <motion.div
-      initial={{ clipPath: 'inset(7% 0% 7% 0%)', opacity: 0.45 }}
+      initial={{ opacity: 0, y: 16 }}
       {...(immediate
-        ? { animate: { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1 } }
+        ? { animate: { opacity: 1, y: 0 } }
         : {
-            whileInView: { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1 },
+            whileInView: { opacity: 1, y: 0 },
             viewport: { once: true, amount: 'some' },
           })}
-      transition={{ duration: 0.76, delay, ease: EASE_LUXURY }}
-      className={`overflow-hidden will-change-[clip-path,opacity] ${className}`}
+      transition={{ duration: 0.56, delay, ease: EASE_LUXURY }}
+      className={`overflow-hidden will-change-[transform,opacity] ${className}`}
     >
       <motion.div
-        initial={{ scale: 1.06 }}
+        initial={{ scale: 1.04 }}
         {...(immediate
           ? { animate: { scale: 1 } }
           : {
               whileInView: { scale: 1 },
               viewport: { once: true, amount: 'some' },
             })}
-        transition={{ duration: 0.86, delay, ease: EASE_LUXURY }}
+        transition={{ duration: 0.68, delay, ease: EASE_LUXURY }}
         className={`w-full h-full will-change-transform ${innerClassName}`}
       >
         {children}

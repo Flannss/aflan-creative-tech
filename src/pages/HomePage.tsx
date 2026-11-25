@@ -397,10 +397,10 @@ export const HomePage: React.FC = () => {
             variant="up"
             className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-12 lg:mb-16 border-b border-champagne/15"
           >
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-champagne">
-              THE IDENTITY / MONOGRAM PHILOSOPHY
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne">
+              FILOSOFI IDENTITAS · MONOGRAM AMDZ
             </span>
-            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.22em] uppercase text-taupe">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-taupe">
               ANATOMI LAMBANG · AFLAN / AMDZ
             </span>
           </Reveal>
@@ -500,7 +500,7 @@ export const HomePage: React.FC = () => {
                   {
                     code: '02 · RUANG DALAM',
                     title: 'Ruang Kreatif',
-                    desc: 'Siluet ganda di bagian dalam terinspirasi dari semangat Satu Ruang Creative: proporsi yang lapang dan terarah.',
+                    desc: 'Siluet ganda di bagian dalam terinspirasi dari semangat SatuRuangCreative: proporsi yang lapang dan terarah.',
                   },
                   {
                     code: '03 · SUMBU DATAR',
@@ -545,8 +545,8 @@ export const HomePage: React.FC = () => {
             className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-espresso/15"
           >
             <div className="space-y-2">
-              <p className="font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-bronze font-medium">
-                BAB 01 / IDENTITAS
+              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-bronze font-medium">
+                BAB 01 · IDENTITAS
               </p>
               <div className="flex items-center gap-3.5">
                 <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight text-espresso/90">
@@ -556,7 +556,7 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
             <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
-              {personalData.status} · {personalData.studyProgram}
+              {personalData.status} · {personalData.university}
             </p>
           </Reveal>
 

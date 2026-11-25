@@ -85,7 +85,7 @@ export const ProjectsPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5 space-y-4">
               <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                Mencakup inisiatif studio mahasiswa Satu Ruang Creative, aplikasi mobile
+                Mencakup inisiatif studio mahasiswa SatuRuangCreative, aplikasi mobile
                 SOMASII, evaluasi QA pada ASIS Builder (NDA), serta identitas digital AFLAN,
                 disajikan transparan dengan ruang lingkup yang terukur.
               </p>
@@ -200,9 +200,9 @@ export const ProjectsPage: React.FC = () => {
                                 style={{
                                   objectPosition: project.previewObjectPosition ?? 'center',
                                 }}
-                                className={`w-full h-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transform-none ${
+                                className={`w-full h-full transition-transform duration-700 ease-out motion-reduce:transform-none ${
                                   transitioningSlug === project.slug
-                                    ? 'scale-[1.08]'
+                                    ? 'scale-[1.05]'
                                     : 'group-hover:scale-[1.03]'
                                 } ${
                                   project.previewImageFit === 'contain'

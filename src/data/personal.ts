@@ -46,7 +46,7 @@ export const personalData = {
       'Fokus pada Software Evaluation, Functional Testing pada ASIS Builder, dan System Requirement Analysis.',
   },
   vocationalInternship: {
-    role: 'Technical Support & Hardware Specialist (PKL SMK · 3 Bulan, Kelas XI)',
+    role: 'Technical Support & Hardware Specialist',
     company: 'GT Computer Purwokerto',
     school: 'SMK Wiworotomo Purwokerto',
     period: 'PKL SMK · 3 Bulan (Kelas XI)',

@@ -6,7 +6,7 @@ import { BrandSignature, MonogramMark } from '@/components/brand/Monogram';
 import { navigationRoutes, personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
 import { calculateExactAge } from '@/utils/age';
-import { EASE_LUXURY } from '@/utils/motion';
+import { EASE_LUXURY, SPRING_SILK } from '@/utils/motion';
 
 interface NavbarProps {
   onOpenCommandPalette?: () => void;
@@ -172,10 +172,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                         {active && (
                           <motion.span
                             layoutId="aflan-nav-pill"
-                            transition={{
-                              duration: prefersReducedMotion ? 0 : 0.48,
-                              ease: EASE_LUXURY,
-                            }}
+                            transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
                             className={`absolute inset-0 rounded-full -z-10 ${
                               isLightHeaderRoute ? 'bg-espresso' : 'bg-champagne'
                             }`}
@@ -224,10 +221,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                             <motion.span
                               layoutId="aflan-tablet-nav-underline"
                               aria-hidden="true"
-                              transition={{
-                                duration: prefersReducedMotion ? 0 : 0.42,
-                                ease: EASE_LUXURY,
-                              }}
+                              transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
                               className={`absolute inset-x-2.5 bottom-1 h-[1.5px] ${
                                 isLightHeaderRoute ? 'bg-mocha' : 'bg-champagne'
                               }`}
@@ -259,7 +253,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                 {menuOpen ? 'Tutup' : 'Indeks'}
               </span>
               <span className="font-mono text-[10px] opacity-70 hidden sm:inline">
-                09
+                {String(navigationRoutes.length).padStart(2, '0')}
               </span>
               {menuOpen ? (
                 <X className="size-4" aria-hidden="true" />
@@ -281,20 +275,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
             initial={
               prefersReducedMotion
                 ? { opacity: 0 }
-                : { opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }
+                : { opacity: 0, y: -16 }
             }
-            animate={
-              prefersReducedMotion
-                ? { opacity: 1 }
-                : { opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }
-            }
+            animate={{ opacity: 1, y: 0 }}
             exit={
               prefersReducedMotion
                 ? { opacity: 0 }
-                : { opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }
+                : { opacity: 0, y: -12 }
             }
-            transition={{ duration: prefersReducedMotion ? 0.2 : 0.72, ease: EASE_LUXURY }}
-            className="fixed inset-0 z-65 bg-obsidian text-ivory overflow-y-auto"
+            transition={{ duration: prefersReducedMotion ? 0.16 : 0.32, ease: EASE_LUXURY }}
+            className="fixed inset-0 z-65 bg-obsidian text-ivory overflow-y-auto will-change-[transform,opacity]"
           >
             <div className="studio-vignette min-h-dvh flex flex-col justify-between px-4 sm:px-6 lg:px-12 py-6">
               <div className="max-w-[1440px] w-full mx-auto flex items-center justify-between gap-2.5 sm:gap-3 pb-5 sm:pb-6 border-b border-champagne/15">
@@ -348,11 +338,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                     return (
                       <motion.div
                         key={route.path}
-                        initial={prefersReducedMotion ? false : { opacity: 0, x: -20 }}
+                        initial={prefersReducedMotion ? false : { opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{
-                          delay: prefersReducedMotion ? 0 : 0.08 + i * 0.035,
-                          duration: 0.48,
+                          delay: prefersReducedMotion ? 0 : 0.04 + i * 0.025,
+                          duration: 0.34,
                           ease: EASE_LUXURY,
                         }}
                       >

@@ -229,8 +229,8 @@ export const SkillsPage: React.FC = () => {
               <section
                 key={domain.id}
                 className={`py-16 md:py-24 px-4 sm:px-6 lg:px-12 border-b ${isLight
-                    ? 'bg-ivory text-espresso border-espresso/15'
-                    : 'bg-obsidian text-ivory border-champagne/15'
+                  ? 'bg-ivory text-espresso border-espresso/15'
+                  : 'bg-obsidian text-ivory border-champagne/15'
                   }`}
               >
                 <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
@@ -246,7 +246,7 @@ export const SkillsPage: React.FC = () => {
                         className={`font-mono text-[10px] tracking-[0.26em] uppercase ${isLight ? 'text-bronze' : 'text-champagne'
                           }`}
                       >
-                        DOMAIN {domain.index} / {totalDomainsLabel}
+                        DOMAIN {domain.index} · {totalDomainsLabel}
                       </span>
                     </div>
                     <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-[2.7rem] leading-[1.08] lg:leading-[1.06] font-light">
@@ -285,8 +285,8 @@ export const SkillsPage: React.FC = () => {
 
                   <div
                     className={`lg:col-span-8 divide-y border-y ${isLight
-                        ? 'divide-espresso/15 border-espresso/15'
-                        : 'divide-champagne/15 border-champagne/15'
+                      ? 'divide-espresso/15 border-espresso/15'
+                      : 'divide-champagne/15 border-champagne/15'
                       }`}
                   >
                     {domain.items.map((item, itemIdx) => {

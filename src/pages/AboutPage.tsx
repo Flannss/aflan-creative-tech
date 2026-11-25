@@ -61,7 +61,7 @@ export const AboutPage: React.FC = () => {
     {
       id: 'about-studio',
       label: 'Inisiatif Studio',
-      value: 'Co-Founder & Web Developer · Satu Ruang Creative',
+      value: 'Co-Founder & Web Developer · SatuRuangCreative',
     },
   ];
 
@@ -353,7 +353,7 @@ export const AboutPage: React.FC = () => {
                     INISIATIF STUDIO MAHASISWA
                   </span>
                   <h3 className="font-serif text-xl md:text-2xl font-light text-champagne italic leading-snug">
-                    Satu Ruang Creative
+                    SatuRuangCreative
                   </h3>
                   <p className="font-sans text-sm text-ivory/75 leading-relaxed">
                     Co-Founder &amp; Web Developer · &ldquo;Satu Ruang, Banyak Ide, Satu

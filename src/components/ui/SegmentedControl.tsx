@@ -1,6 +1,6 @@
 import type React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { EASE_LUXURY } from '@/utils/motion';
+import { SPRING_SILK } from '@/utils/motion';
 
 export interface SegmentedOption<T extends string> {
   value: T;
@@ -112,11 +112,7 @@ export function SegmentedControl<T extends string>({
                 <motion.span
                   layoutId={layoutId}
                   aria-hidden="true"
-                  transition={
-                    prefersReducedMotion
-                      ? { duration: 0 }
-                      : { duration: 0.42, ease: EASE_LUXURY }
-                  }
+                  transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
                   className="absolute inset-0 rounded-full bg-champagne shadow-[0_4px_16px_rgba(216,195,165,0.22)]"
                 />
               )}

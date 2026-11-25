@@ -19,7 +19,6 @@ export const Layout: React.FC<LayoutProps> = ({ children, splashActive = false }
   const [commandOpen, setCommandOpen] = useState(false);
 
   useLayoutEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     delete document.documentElement.dataset.headerTheme;
     window.dispatchEvent(new Event('aflan-nav-theme-sync'));
 

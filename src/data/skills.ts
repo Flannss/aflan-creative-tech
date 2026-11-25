@@ -120,7 +120,7 @@ export const skillDomains: SkillDomain[] = [
     title: 'UI/UX',
     subtitle: 'Hierarki editorial, desain responsif & sistem antarmuka modular',
     description:
-      'Merancang antarmuka dengan hirarki tipografi yang tegas, rasio kontras terukur, dan keterbacaan konsisten di desktop, tablet, maupun smartphone.',
+      'Merancang antarmuka dengan hierarki tipografi yang tegas, rasio kontras terukur, dan keterbacaan konsisten di desktop, tablet, maupun smartphone.',
     items: [
       {
         name: 'UI Design',
