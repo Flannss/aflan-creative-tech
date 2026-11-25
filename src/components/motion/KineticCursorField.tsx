@@ -73,17 +73,25 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
         'rgba(216, 195, 165, 0.16)',
       ];
 
-      nodes = Array.from({ length: count }, (_, idx) => ({
-        bx: (((idx * 37 + 13) % 88) + 6) * 0.01,
-        by: (((idx * 53 + 17) % 84) + 8) * 0.01,
-        phase: idx * 0.85,
-        speed: 0.45 + (idx % 5) * 0.14,
-        size: 1.5 + (idx % 3) * 0.45,
-        diamond: idx % 2 === 0,
-        tone: tones[idx % tones.length],
-        ox: 0,
-        oy: 0,
-      }));
+      nodes = Array.from({ length: count }, (_, idx) => {
+        const bx = (((idx * 37 + 13) % 88) + 6) * 0.01;
+        let by = (((idx * 53 + 17) % 84) + 8) * 0.01;
+        // Keep the upper-center AFLAN masthead zone clean from floating micro-dots
+        if (bx >= 0.22 && bx <= 0.78 && by < 0.4) {
+          by = 0.46 + (idx % 3) * 0.08;
+        }
+        return {
+          bx,
+          by,
+          phase: idx * 0.85,
+          speed: 0.45 + (idx % 5) * 0.14,
+          size: 1.5 + (idx % 3) * 0.45,
+          diamond: idx % 2 === 0,
+          tone: tones[idx % tones.length],
+          ox: 0,
+          oy: 0,
+        };
+      });
     };
 
     const resize = () => {

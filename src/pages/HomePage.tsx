@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import {
   AnimatePresence,
   motion,
+  useMotionValue,
   useReducedMotion,
   useScroll,
+  useSpring,
   useTransform,
 } from 'framer-motion';
 import { ArrowRight, ArrowUpRight, Github } from 'lucide-react';
@@ -13,15 +15,16 @@ import { contactData } from '@/data/contact';
 import { projectsData } from '@/data/projects';
 import { calculateExactAge } from '@/utils/age';
 import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useCanHoverFine, useMediaQuery } from '@/hooks/useMediaQuery';
 import { HeroPortrait } from '@/components/home/HeroPortrait';
+import { KineticDisplayWord } from '@/components/home/KineticDisplayWord';
 import { SplitLookbookWorks } from '@/components/home/SplitLookbookWorks';
 import { KineticCursorField } from '@/components/motion/KineticCursorField';
 import { KineticLabel } from '@/components/motion/KineticLabel';
+import { MagneticButton } from '@/components/motion/MagneticButton';
 import { HairlineRule, Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { CopyLinkButton } from '@/components/ui/CopyLinkButton';
-import { EditorialMarquee } from '@/components/ui/EditorialMarquee';
 
 interface HomePageProps {
   introReady?: boolean;
@@ -72,21 +75,71 @@ const PERSONA_LENSES: readonly PersonaLensSpec[] = [
   },
 ] as const;
 
+const DISCIPLINE_RIBBON_TERMS = [
+  'FRONTEND ARCHITECTURE',
+  'UI/UX ENGINEERING',
+  'INTERACTIVE SYSTEMS',
+  'SOFTWARE QA',
+  'SATURUANG CREATIVE',
+  'CCNA DISCIPLINE',
+] as const;
+
 export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
   const prefersReducedMotion = useReducedMotion();
+  const canHoverFine = useCanHoverFine();
   const isTabletOrDesktop = useMediaQuery('(min-width: 768px)');
   const isDesktopLayout = useMediaQuery('(min-width: 1024px)');
   const disableMotion = Boolean(prefersReducedMotion);
   const enableHeroParallax = isTabletOrDesktop && !disableMotion;
+  const enableDesktopCursorShift = canHoverFine && !disableMotion;
 
   const [personaMode, setPersonaMode] = useState<PersonaMode>('engineering');
   const activeLens =
     PERSONA_LENSES.find((p) => p.id === personaMode) ?? PERSONA_LENSES[0];
 
+  const heroCursorX = useMotionValue(0);
+  const heroCursorY = useMotionValue(0);
+  const smoothHeroShiftX = useSpring(heroCursorX, {
+    stiffness: 110,
+    damping: 22,
+    mass: 0.7,
+  });
+  const smoothHeroShiftY = useSpring(heroCursorY, {
+    stiffness: 110,
+    damping: 22,
+    mass: 0.7,
+  });
+
+  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!enableDesktopCursorShift) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+    const ny = (e.clientY - rect.top) / rect.height - 0.5;
+    heroCursorX.set(-nx * 8);
+    heroCursorY.set(-ny * 8);
+  };
+
+  const resetHeroCursor = () => {
+    if (!enableDesktopCursorShift) return;
+    heroCursorX.set(0);
+    heroCursorY.set(0);
+  };
+
   const heroRef = useRef<HTMLElement | null>(null);
+  const worksSectionRef = useRef<HTMLElement | null>(null);
+  const monographSectionRef = useRef<HTMLElement | null>(null);
+
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
+  });
+  const { scrollYProgress: worksScrollProgress } = useScroll({
+    target: worksSectionRef,
+    offset: ['start end', 'end start'],
+  });
+  const { scrollYProgress: monographScrollProgress } = useScroll({
+    target: monographSectionRef,
+    offset: ['start end', 'end start'],
   });
 
   const portraitY = useTransform(
@@ -109,6 +162,16 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
     [0, 0.85],
     [1, enableHeroParallax ? 0.78 : 1],
   );
+  const worksHeadingDrift = useTransform(
+    worksScrollProgress,
+    [0, 1],
+    enableHeroParallax ? [-14, 14] : [0, 0],
+  );
+  const monographHeadingDrift = useTransform(
+    monographScrollProgress,
+    [0, 1],
+    enableHeroParallax ? [14, -14] : [0, 0],
+  );
 
   const ageInfo = useMemo(() => calculateExactAge(personalData.birthDateISO), []);
   const featuredProjects = useMemo(
@@ -123,6 +186,8 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
       ====================================================================== */}
       <section
         ref={heroRef}
+        onMouseMove={handleHeroMouseMove}
+        onMouseLeave={resetHeroCursor}
         className="relative bg-obsidian text-ivory flex flex-col justify-between pt-24 sm:pt-28 pb-10 sm:pb-12 px-4 sm:px-6 lg:px-12 overflow-hidden"
       >
         <div
@@ -141,16 +206,16 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
 
         {/* Coordinated Cover Lockup + Asymmetric Portrait & Persona Lens */}
         <motion.div
-          initial={disableMotion ? false : { scale: 1.04, opacity: 0.92 }}
+          initial={disableMotion ? false : { scale: 1.035, opacity: 0.92 }}
           animate={
             introReady
               ? { scale: 1, opacity: 1 }
-              : { scale: 1.04, opacity: 0.92 }
+              : { scale: 1.035, opacity: 0.92 }
           }
           transition={{ duration: disableMotion ? 0 : 0.86, ease: EASE_LUXURY }}
           className="relative z-10 max-w-[1440px] w-full mx-auto py-7 sm:py-10 lg:py-12 will-change-transform"
         >
-          {/* Monumental Display Masthead */}
+          {/* Monumental Interactive Kinetic Masthead */}
           <motion.div
             style={{ y: wordmarkY, opacity: wordmarkOpacity }}
             initial={disableMotion ? false : { opacity: 0, y: 18 }}
@@ -160,14 +225,12 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
               delay: disableMotion ? 0 : 0.08,
               ease: EASE_LUXURY,
             }}
-            className="w-full text-center select-none mb-8 sm:mb-10 lg:mb-12 will-change-transform"
+            className="w-full text-center mb-8 sm:mb-10 lg:mb-12 will-change-transform"
           >
-            <h1
-              aria-label="AFLAN · Aflan Mu'afa Dzulfiqar"
-              className="font-display font-['Bodoni_Moda',Georgia,serif] font-medium uppercase text-ivory text-center select-none text-[clamp(3.25rem,9.5vw,7.25rem)] leading-[0.95] tracking-[0.1em] sm:tracking-[0.14em] md:tracking-[0.16em] pl-[0.1em] sm:pl-[0.14em] md:pl-[0.16em] drop-shadow-[0_10px_28px_rgba(23,22,21,0.65)]"
-            >
-              AFLAN
-            </h1>
+            <KineticDisplayWord
+              word="AFLAN"
+              ariaLabel="AFLAN · Aflan Mu'afa Dzulfiqar"
+            />
           </motion.div>
 
           {/* Asymmetric 12-Column Cover: Portrait Plate (5) + Interactive Persona Lens (7) */}
@@ -181,6 +244,11 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
             </div>
 
             <motion.div
+              style={
+                enableDesktopCursorShift
+                  ? { x: smoothHeroShiftX, y: smoothHeroShiftY }
+                  : undefined
+              }
               initial={disableMotion ? false : { opacity: 0, y: 18 }}
               animate={introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
               transition={{
@@ -188,7 +256,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                 delay: disableMotion ? 0 : 0.24,
                 ease: EASE_LUXURY,
               }}
-              className="lg:col-span-7 flex flex-col gap-6 sm:gap-7 max-w-2xl mx-auto lg:mx-0 w-full"
+              className="lg:col-span-7 flex flex-col gap-6 sm:gap-7 max-w-2xl mx-auto lg:mx-0 w-full will-change-transform"
             >
               <p className="font-serif text-lg sm:text-xl italic text-champagne/90 leading-snug">
                 Membangun antarmuka web yang presisi, cepat, dan terstruktur—dari design
@@ -311,15 +379,56 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
         </div>
       </section>
 
-      <EditorialMarquee variant="espresso" />
+      {/* =====================================================================
+          EDITORIAL KINETIC DISCIPLINE RIBBON (GPU CSS MARQUEE, HOVER-PAUSE)
+      ====================================================================== */}
+      <div
+        role="region"
+        aria-label="Core disciplines"
+        className="aflan-marquee-wrapper relative w-full overflow-hidden border-y border-champagne/12 bg-[#1A1412] py-3 sm:py-3.5 select-none"
+      >
+        <div className="aflan-marquee-track">
+          {[false, true].map((hidden, dupIdx) => (
+            <div
+              key={dupIdx}
+              aria-hidden={hidden}
+              className="flex items-center shrink-0 gap-7 sm:gap-10 pr-7 sm:pr-10"
+            >
+              {DISCIPLINE_RIBBON_TERMS.map((item, idx) => (
+                <React.Fragment key={`${dupIdx}-${item}`}>
+                  <span
+                    className={
+                      idx % 2 === 1
+                        ? 'font-serif italic text-base sm:text-lg tracking-[0.06em] text-ivory/85 whitespace-nowrap'
+                        : 'font-mono text-[10px] sm:text-[11px] tracking-[0.24em] uppercase text-champagne/80 whitespace-nowrap'
+                    }
+                  >
+                    {item}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="size-1 rounded-full bg-champagne/45 shrink-0"
+                  />
+                </React.Fragment>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* =====================================================================
           SPREAD 02 — SIGNATURE SPLIT LOOKBOOK STAGE: SELECTED WORKS
       ====================================================================== */}
-      <section className="relative bg-espresso text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12">
+      <section
+        ref={worksSectionRef}
+        className="relative bg-espresso text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12 overflow-x-clip"
+      >
         <div className="max-w-[1440px] mx-auto space-y-10 sm:space-y-14">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-champagne/15">
-            <div className="space-y-3">
+            <motion.div
+              style={{ x: worksHeadingDrift }}
+              className="space-y-3 will-change-transform"
+            >
               <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-champagne">
                 FEATURED CASE STUDIES
               </p>
@@ -332,7 +441,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                   </>,
                 ]}
               />
-            </div>
+            </motion.div>
 
             <Link
               to="/projects"
@@ -354,21 +463,27 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
       {/* =====================================================================
           SPREAD 03 — ASYMMETRIC EDITORIAL MONOGRAPH GRID
       ====================================================================== */}
-      <section className="relative bg-ivory text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12 border-t border-espresso/10">
+      <section
+        ref={monographSectionRef}
+        className="relative bg-ivory text-espresso py-16 md:py-24 px-4 sm:px-6 lg:px-12 border-t border-espresso/10 overflow-x-clip"
+      >
         <div className="max-w-[1440px] mx-auto space-y-12">
           <Reveal
             variant="up"
             className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-espresso/15"
           >
-            <div className="space-y-3">
+            <motion.div
+              style={{ x: monographHeadingDrift }}
+              className="space-y-3 will-change-transform"
+            >
               <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] font-medium text-bronze">
-                EDITORIAL MONOGRAPH
+                CORE ARCHITECTURE
               </p>
               <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-[1.08] text-espresso">
                 Crafted with Discipline,{' '}
                 <span className="italic text-mocha">Verified in Production.</span>
               </h2>
-            </div>
+            </motion.div>
 
             <Link
               to="/about"
@@ -387,7 +502,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
             <Reveal variant="up" className="lg:col-span-7">
               <Link
                 to="/skills"
-                className="group relative flex flex-col justify-between min-h-[290px] sm:min-h-[320px] p-7 sm:p-10 bg-obsidian text-ivory border border-espresso/20 overflow-hidden"
+                className="group relative flex flex-col justify-between min-h-[290px] sm:min-h-[320px] p-7 sm:p-10 bg-[#1A1412] hover:bg-[#211A17] text-ivory border border-champagne/15 hover:border-champagne/40 transition-colors duration-300 overflow-hidden"
               >
                 <span
                   aria-hidden="true"
@@ -413,7 +528,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
             <Reveal variant="up" delay={0.06} className="lg:col-span-5">
               <Link
                 to="/projects/satu-ruang-creative"
-                className="group relative flex flex-col justify-between min-h-[290px] sm:min-h-[320px] p-7 sm:p-10 bg-offwhite text-espresso border border-espresso/15 hover:border-mocha transition-colors overflow-hidden"
+                className="group relative flex flex-col justify-between min-h-[290px] sm:min-h-[320px] p-7 sm:p-10 bg-offwhite hover:bg-ivory text-espresso border border-espresso/15 hover:border-mocha transition-colors duration-300 overflow-hidden"
               >
                 <span
                   aria-hidden="true"
@@ -438,7 +553,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
             <Reveal variant="up" delay={0.1} className="lg:col-span-5">
               <Link
                 to="/journey"
-                className="group relative flex flex-col justify-between min-h-[280px] p-7 sm:p-10 bg-offwhite text-espresso border border-espresso/15 hover:border-mocha transition-colors overflow-hidden"
+                className="group relative flex flex-col justify-between min-h-[280px] p-7 sm:p-10 bg-offwhite hover:bg-ivory text-espresso border border-espresso/15 hover:border-mocha transition-colors duration-300 overflow-hidden"
               >
                 <span
                   aria-hidden="true"
@@ -463,7 +578,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
             <Reveal variant="up" delay={0.14} className="lg:col-span-7">
               <Link
                 to="/achievements"
-                className="group relative flex flex-col justify-between min-h-[280px] p-7 sm:p-10 bg-espresso text-ivory border border-espresso/20 overflow-hidden"
+                className="group relative flex flex-col justify-between min-h-[280px] p-7 sm:p-10 bg-[#1A1412] hover:bg-[#211A17] text-ivory border border-champagne/15 hover:border-champagne/40 transition-colors duration-300 overflow-hidden"
               >
                 <span
                   aria-hidden="true"
@@ -507,16 +622,18 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
             </div>
 
             <div className="lg:col-span-4 flex flex-wrap lg:justify-end items-center gap-3">
-              <Link
-                to="/contact"
-                className="group inline-flex items-center gap-2.5 min-h-[44px] px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all duration-300"
-              >
-                <KineticLabel>Get in Touch</KineticLabel>
-                <ArrowUpRight
-                  className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  aria-hidden="true"
-                />
-              </Link>
+              <MagneticButton maxPull={7}>
+                <Link
+                  to="/contact"
+                  className="group inline-flex items-center gap-2.5 min-h-[44px] px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all duration-300"
+                >
+                  <KineticLabel>Get in Touch</KineticLabel>
+                  <ArrowUpRight
+                    className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </MagneticButton>
 
               <CopyLinkButton
                 url={contactData.email}

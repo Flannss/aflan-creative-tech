@@ -78,7 +78,15 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
 
                 <div className="min-w-0 space-y-2">
                   <div className="flex items-center gap-3 font-mono text-[10px] tracking-[0.2em] uppercase">
-                    <span className="text-champagne">{project.index}</span>
+                    <span
+                      className={`transition-colors duration-300 ${
+                        isActive
+                          ? 'text-champagne font-medium'
+                          : 'text-champagne/60 group-hover:text-champagne'
+                      }`}
+                    >
+                      {project.index}
+                    </span>
                     <span className="text-champagne/30">/</span>
                     <span className="text-taupe">{project.category}</span>
                     <span className="text-champagne/30">·</span>
@@ -88,8 +96,8 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
                   <h3
                     className={`font-serif text-2xl xl:text-3xl font-light leading-tight transition-all duration-300 ${
                       isActive
-                        ? 'text-champagne translate-x-1'
-                        : 'text-ivory group-hover:text-champagne/90'
+                        ? 'text-champagne translate-x-2'
+                        : 'text-ivory group-hover:text-champagne/90 group-hover:translate-x-1.5'
                     }`}
                   >
                     {project.title}
@@ -124,7 +132,7 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
                   initial={
                     prefersReducedMotion
                       ? { opacity: 0 }
-                      : { opacity: 0, scale: 1.04 }
+                      : { opacity: 0, scale: 1.035 }
                   }
                   animate={{ opacity: 1, scale: 1 }}
                   exit={
@@ -133,7 +141,7 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
                       : { opacity: 0, scale: 0.985 }
                   }
                   transition={{
-                    duration: prefersReducedMotion ? 0.14 : 0.42,
+                    duration: prefersReducedMotion ? 0.14 : 0.44,
                     ease: EASE_LUXURY,
                   }}
                   className="w-full h-full will-change-[transform,opacity]"
