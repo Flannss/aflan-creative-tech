@@ -1,55 +1,82 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useCanHoverFine } from '@/hooks/useMediaQuery';
+import { EASE_LUXURY } from '@/utils/motion';
 
 interface KineticDisplayWordProps {
   word: string;
   ariaLabel?: string;
   className?: string;
+  introReady?: boolean;
 }
 
 /**
- * Editorial monumental masthead display word with sturdy Cormorant Garamond SemiBold serifs,
- * smooth Ivory-to-Champagne metallic gradient, and individual per-letter cursor hover reaction.
- * - Zero React re-renders; static & clean on touch devices and `prefers-reduced-motion`.
+ * Interactive sculptural masthead rendered in Cinzel architectural serif.
+ * Keeps `introReady` staggered letter choreography crisp across Desktop, Tablet,
+ * and Mobile while isolating subtle magnetic hover elevation to fine-pointer devices.
  */
 export const KineticDisplayWord: React.FC<KineticDisplayWordProps> = ({
   word,
   ariaLabel,
   className = '',
+  introReady = true,
 }) => {
   const canHoverFine = useCanHoverFine();
   const prefersReducedMotion = useReducedMotion();
-  const enableKineticLetters = canHoverFine && !prefersReducedMotion;
-  const letters = Array.from(word);
+  const disableMotion = Boolean(prefersReducedMotion);
+  const enableInteractiveLetters = canHoverFine && !disableMotion;
+
+  const letters = word.split('');
 
   return (
     <h1
       aria-label={ariaLabel ?? word}
-      className={`font-serif font-semibold uppercase text-center select-none text-[clamp(3.6rem,10.5vw,7.8rem)] leading-[0.92] tracking-[0.04em] sm:tracking-[0.07em] pl-[0.04em] sm:pl-[0.07em] pb-1 ${className}`}
+      className={`font-masthead font-semibold uppercase text-center select-none text-[clamp(3.1rem,9.2vw,7.2rem)] leading-[0.94] tracking-[0.06em] sm:tracking-[0.09em] pl-[0.06em] sm:pl-[0.09em] pb-1 text-ivory ${className}`}
     >
-      {letters.map((char, idx) => {
-        const hoverRotate = idx % 2 === 0 ? -2.2 : 2.2;
-        return (
-          <motion.span
-            key={`${char}-${idx}`}
-            aria-hidden="true"
-            whileHover={
-              enableKineticLetters
-                ? {
-                    y: -6,
-                    rotate: hoverRotate,
-                    scale: 1.03,
-                  }
-                : undefined
-            }
-            transition={{ type: 'spring', stiffness: 320, damping: 20 }}
-            className="inline-block bg-gradient-to-b from-[#F4EFE6] via-[#EFE5D5] to-[#CBB492] bg-clip-text text-transparent px-[0.02em] will-change-transform drop-shadow-[0_10px_28px_rgba(23,22,21,0.55)]"
-          >
-            {char === ' ' ? '\u00A0' : char}
-          </motion.span>
-        );
-      })}
+      <span aria-hidden="true" className="inline-flex items-baseline justify-center">
+        {letters.map((char, idx) =>
+          disableMotion ? (
+            <span key={`${char}-${idx}`} className="inline-block">
+              {char}
+            </span>
+          ) : (
+            <motion.span
+              key={`${char}-${idx}`}
+              initial={{ opacity: 0, y: 14 }}
+              animate={
+                introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }
+              }
+              whileHover={
+                enableInteractiveLetters
+                  ? {
+                      y: -6,
+                      scale: 1.04,
+                      color: '#D8C3A5',
+                      transition: {
+                        type: 'spring',
+                        stiffness: 360,
+                        damping: 22,
+                        mass: 0.45,
+                      },
+                    }
+                  : undefined
+              }
+              transition={{
+                duration: 0.54,
+                delay: 0.04 + idx * 0.04,
+                ease: EASE_LUXURY,
+              }}
+              className={`inline-block cursor-default will-change-transform ${
+                enableInteractiveLetters
+                  ? 'transition-[filter] duration-300 hover:drop-shadow-[0_6px_18px_rgba(216,195,165,0.22)]'
+                  : ''
+              }`}
+            >
+              {char}
+            </motion.span>
+          ),
+        )}
+      </span>
     </h1>
   );
 };

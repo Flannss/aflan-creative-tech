@@ -225,74 +225,121 @@ export const SplitLookbookWorks: React.FC<SplitLookbookWorksProps> = ({
       </div>
 
       {/* TABLET & MOBILE EDITORIAL LOOKBOOK CARDS (< 1024px) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:hidden">
-        {projects.map((project, idx) => (
-          <Link
-            key={project.slug}
-            to={`/projects/${project.slug}`}
-            onClick={(e) => handleOpen(e, project)}
-            className={`group flex flex-col bg-obsidian border border-champagne/20 hover:border-champagne/55 active:border-champagne transition-colors overflow-hidden ${
-              projects.length % 2 === 1 && idx === projects.length - 1
-                ? 'md:col-span-2'
-                : ''
-            }`}
-          >
-            <ApertureFrame className="aspect-video border-b border-champagne/15">
-              {project.previewImage ? (
-                <div
-                  className="w-full h-full"
-                  style={{ backgroundColor: project.previewBg ?? '#2B1D17' }}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:hidden">
+        {projects.map((project, idx) => {
+          const isLead = idx === 0;
+          const isOrphanTail =
+            !isLead &&
+            (projects.length - 1) % 2 === 1 &&
+            idx === projects.length - 1;
+          const spanFullOnTablet = isLead || isOrphanTail;
+
+          return (
+            <article
+              key={project.slug}
+              className={`group flex flex-col bg-obsidian border border-champagne/20 hover:border-champagne/55 transition-colors overflow-hidden ${
+                spanFullOnTablet ? 'md:col-span-2' : ''
+              }`}
+            >
+              <Link
+                to={`/projects/${project.slug}`}
+                onClick={(e) => handleOpen(e, project)}
+                aria-label={`Buka studi kasus ${project.title}`}
+                className="block focus-visible:outline-2 focus-visible:outline-champagne"
+              >
+                <ApertureFrame
+                  className={`${
+                    isLead ? 'aspect-video' : 'aspect-[16/10]'
+                  } border-b border-champagne/15`}
                 >
-                  <img
-                    src={project.previewImage}
-                    alt={project.previewCaption}
-                    loading="lazy"
-                    decoding="async"
-                    style={{
-                      objectPosition: project.previewObjectPosition ?? 'center',
-                    }}
-                    className={`w-full h-full ${
-                      project.previewImageFit === 'contain'
-                        ? 'object-contain p-6'
-                        : 'object-cover'
-                    }`}
-                  />
-                </div>
-              ) : (
-                <TypographicDossierPlate
-                  project={project}
-                  compact
-                  className="w-full h-full border-0"
-                />
-              )}
-            </ApertureFrame>
+                  {project.previewImage ? (
+                    <div
+                      className="w-full h-full"
+                      style={{ backgroundColor: project.previewBg ?? '#2B1D17' }}
+                    >
+                      <img
+                        src={project.previewImage}
+                        alt={project.previewCaption}
+                        loading="lazy"
+                        decoding="async"
+                        style={{
+                          objectPosition:
+                            project.previewObjectPosition ?? 'center',
+                        }}
+                        className={`w-full h-full ${
+                          project.previewImageFit === 'contain'
+                            ? 'object-contain p-5 sm:p-6'
+                            : 'object-cover'
+                        }`}
+                      />
+                    </div>
+                  ) : (
+                    <TypographicDossierPlate
+                      project={project}
+                      compact
+                      className="w-full h-full border-0"
+                    />
+                  )}
+                </ApertureFrame>
+              </Link>
 
-            <div className="flex-1 p-5 sm:p-6 flex flex-col justify-between gap-4">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between gap-2 font-mono text-[10px] tracking-[0.18em] uppercase">
-                  <span className="text-champagne">
-                    {project.index} · {project.category}
-                  </span>
-                  <span className="text-taupe">{project.yearLabel}</span>
-                </div>
-                <h3 className="font-serif text-2xl font-light text-ivory group-hover:text-champagne transition-colors">
-                  {project.title}
-                </h3>
-                <p className="font-sans text-sm text-ivory/75 line-clamp-2 leading-relaxed">
-                  {project.summary}
-                </p>
-              </div>
+              <div className="flex-1 p-5 sm:p-6 flex flex-col justify-between gap-4">
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between gap-2 font-mono text-[10px] tracking-[0.18em] uppercase">
+                    <span className="inline-flex items-center gap-2 text-champagne">
+                      <span>
+                        {project.index} · {project.category}
+                      </span>
+                      {isLead && (
+                        <span className="px-2 py-0.5 border border-champagne/35 bg-champagne/10 text-[9px] tracking-[0.18em] text-champagne">
+                          FEATURED
+                        </span>
+                      )}
+                    </span>
+                    <span className="text-taupe">{project.yearLabel}</span>
+                  </div>
 
-              <div className="pt-3 border-t border-champagne/15 flex items-center justify-between gap-3 font-mono text-[10px] tracking-[0.16em] uppercase text-champagne min-h-[44px]">
-                <span className="truncate text-taupe">{project.role}</span>
-                <span className="inline-flex items-center gap-1 shrink-0">
-                  Preview
-                  <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                </span>
+                  <Link
+                    to={`/projects/${project.slug}`}
+                    onClick={(e) => handleOpen(e, project)}
+                    className="block"
+                  >
+                    <h3
+                      className={`font-serif font-light text-ivory group-hover:text-champagne transition-colors ${
+                        isLead ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'
+                      }`}
+                    >
+                      {project.title}
+                    </h3>
+                  </Link>
+
+                  <p className="font-sans text-sm text-ivory/75 line-clamp-2 leading-relaxed">
+                    {project.summary}
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-champagne/15 flex flex-wrap items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setPreviewProject(project)}
+                    className="inline-flex items-center min-h-[44px] pr-2 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne hover:text-ivory transition-colors cursor-pointer"
+                  >
+                    Quick Preview
+                  </button>
+
+                  <Link
+                    to={`/projects/${project.slug}`}
+                    onClick={(e) => handleOpen(e, project)}
+                    className="inline-flex items-center gap-1.5 min-h-[44px] px-4 py-2 rounded-full border border-champagne/35 bg-espresso/60 font-mono text-[10px] tracking-[0.16em] uppercase text-ivory hover:bg-champagne hover:text-obsidian hover:border-champagne transition-colors shrink-0"
+                  >
+                    <span>Case Study</span>
+                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                  </Link>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </article>
+          );
+        })}
       </div>
 
       <ProjectPreviewModal

@@ -18,6 +18,7 @@ import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 import { useCanHoverFine, useMediaQuery } from '@/hooks/useMediaQuery';
 import { HeroPortrait } from '@/components/home/HeroPortrait';
 import { KineticDisplayWord } from '@/components/home/KineticDisplayWord';
+import { ScrollRevealStatement } from '@/components/home/ScrollRevealStatement';
 import { SplitLookbookWorks } from '@/components/home/SplitLookbookWorks';
 import { KineticCursorField } from '@/components/motion/KineticCursorField';
 import { KineticLabel } from '@/components/motion/KineticLabel';
@@ -37,6 +38,7 @@ interface PersonaLensSpec {
   tabLabel: string;
   headline: string;
   description: string;
+  metaReadout: readonly { label: string; value: string }[];
   specs: readonly string[];
   primaryCta: { label: string; to: string };
   secondaryCta: { label: string; to: string };
@@ -49,6 +51,10 @@ const PERSONA_LENSES: readonly PersonaLensSpec[] = [
     headline: 'Frontend Engineering & Software QA yang terukur.',
     description:
       'Mahasiswa S1 Teknologi Informasi (TI24A) Universitas Amikom Purwokerto & Programmer Intern di PT Puskomedia Indonesia Kreatif—mengerjakan React/TypeScript, Flutter SOMASII, dan pengujian fungsional ASIS Builder (NDA).',
+    metaReadout: [
+      { label: 'ROLE', value: 'Programmer Intern · PT Puskomedia' },
+      { label: 'STACK', value: 'React · TypeScript · Flutter' },
+    ],
     specs: ['React & TypeScript', 'Flutter & Firebase', 'Functional QA · ASIS NDA'],
     primaryCta: { label: 'Selected Works', to: '/projects' },
     secondaryCta: { label: 'Career Journey', to: '/journey' },
@@ -59,6 +65,10 @@ const PERSONA_LENSES: readonly PersonaLensSpec[] = [
     headline: 'Tipografi editorial dengan performa 60fps.',
     description:
       'Membangun antarmuka dalam palet Espresso–Champagne–Ivory, transisi presisi berbasis cubic-bezier(0.22, 1, 0.36, 1), serta modul eksperimental di Creative Lab.',
+    metaReadout: [
+      { label: 'SYSTEM', value: 'Espresso–Champagne–Ivory' },
+      { label: 'LAB', value: '9 Interactive Workbench Modules' },
+    ],
     specs: ['Design Tokens', 'Framer Kinematics', 'Creative Lab 01–09'],
     primaryCta: { label: 'Open Creative Lab', to: '/lab' },
     secondaryCta: { label: 'Visual Gallery', to: '/gallery' },
@@ -69,6 +79,10 @@ const PERSONA_LENSES: readonly PersonaLensSpec[] = [
     headline: 'Kolaborasi terarah dan atribusi yang transparan.',
     description:
       'Co-Founder & Web Developer di SatuRuangCreative, alumni SMK Wiworotomo (PKL GT Computer), pemegang sertifikasi Cisco CCNA (Jul 2026), dan penulis publikasi JPMBA Garuda (Okt 2026).',
+    metaReadout: [
+      { label: 'STUDIO', value: 'SatuRuangCreative · Co-Founder' },
+      { label: 'RECORD', value: 'CCNA (Jul 2026) · JPMBA (Okt 2026)' },
+    ],
     specs: ['SatuRuangCreative', 'CCNA · Jul 2026', 'JPMBA · Okt 2026'],
     primaryCta: { label: 'Personal Dossier', to: '/about' },
     secondaryCta: { label: 'Honors & Record', to: '/achievements' },
@@ -230,12 +244,13 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
             <KineticDisplayWord
               word="AFLAN"
               ariaLabel="AFLAN · Aflan Mu'afa Dzulfiqar"
+              introReady={introReady}
             />
           </motion.div>
 
           {/* Asymmetric 12-Column Cover: Portrait Plate (5) + Interactive Persona Lens (7) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            <div className="lg:col-span-5 flex justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-8 lg:gap-14 items-center">
+            <div className="md:col-span-5 flex justify-center">
               <HeroPortrait
                 portraitY={portraitY}
                 portraitScale={portraitScale}
@@ -256,7 +271,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                 delay: disableMotion ? 0 : 0.24,
                 ease: EASE_LUXURY,
               }}
-              className="lg:col-span-7 flex flex-col gap-6 sm:gap-7 max-w-2xl mx-auto lg:mx-0 w-full will-change-transform"
+              className="md:col-span-7 flex flex-col gap-5 sm:gap-6 lg:gap-7 max-w-2xl mx-auto md:mx-0 w-full will-change-transform"
             >
               <p className="font-serif text-lg sm:text-xl italic text-champagne/90 leading-snug">
                 Membangun antarmuka web yang presisi, cepat, dan terstruktur—dari design
@@ -323,6 +338,19 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                     {activeLens.description}
                   </p>
 
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 border-y border-champagne/15 py-3">
+                    {activeLens.metaReadout.map((item) => (
+                      <div key={item.label} className="space-y-0.5">
+                        <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-taupe">
+                          {item.label}
+                        </p>
+                        <p className="font-mono text-[11px] tracking-[0.06em] text-champagne">
+                          {item.value}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
                   <div className="flex flex-wrap gap-2">
                     {activeLens.specs.map((spec) => (
                       <span
@@ -337,7 +365,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                   <div className="flex flex-wrap items-center gap-3 pt-2">
                     <Link
                       to={activeLens.primaryCta.to}
-                      className="group inline-flex items-center gap-2.5 min-h-[44px] px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all duration-300"
+                      className="group inline-flex items-center gap-2.5 min-h-[48px] px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all duration-300"
                     >
                       <KineticLabel>{activeLens.primaryCta.label}</KineticLabel>
                       <ArrowUpRight
@@ -348,7 +376,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
 
                     <Link
                       to={activeLens.secondaryCta.to}
-                      className="inline-flex items-center gap-2 min-h-[44px] px-6 py-3 rounded-full border border-champagne/35 bg-obsidian/50 text-ivory font-mono text-xs tracking-[0.16em] uppercase hover:border-champagne hover:bg-espresso active:scale-[0.97] transition-all duration-300"
+                      className="inline-flex items-center gap-2 min-h-[48px] px-6 py-3 rounded-full border border-champagne/35 bg-obsidian/50 text-ivory font-mono text-xs tracking-[0.16em] uppercase hover:border-champagne hover:bg-espresso active:scale-[0.97] transition-all duration-300"
                     >
                       <span>{activeLens.secondaryCta.label}</span>
                       <ArrowRight className="size-4" aria-hidden="true" />
@@ -415,6 +443,11 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
           ))}
         </div>
       </div>
+
+      {/* =====================================================================
+          INTERACTIVE SCROLL-SCRUBBED EDITORIAL THESIS
+      ====================================================================== */}
+      <ScrollRevealStatement />
 
       {/* =====================================================================
           SPREAD 02 — SIGNATURE SPLIT LOOKBOOK STAGE: SELECTED WORKS
@@ -497,12 +530,12 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
             </Link>
           </Reveal>
 
-          {/* Asymmetric 7+5 / 5+7 Monograph Spread */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-7">
+          {/* Architectural Proof & Credentials Bento: 2-Col Tablet / 7+5 + 5+7 Desktop */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 md:gap-6 lg:gap-7">
             <Reveal variant="up" className="lg:col-span-7">
               <Link
                 to="/skills"
-                className="group relative flex flex-col justify-between min-h-[290px] sm:min-h-[320px] p-7 sm:p-10 bg-[#1A1412] hover:bg-[#211A17] text-ivory border border-champagne/15 hover:border-champagne/40 transition-colors duration-300 overflow-hidden"
+                className="group relative flex flex-col justify-between min-h-[280px] sm:min-h-[320px] p-6 sm:p-8 lg:p-10 bg-[#1A1412] hover:bg-[#211A17] text-ivory border border-champagne/15 hover:border-champagne/40 transition-colors duration-300 overflow-hidden"
               >
                 <span
                   aria-hidden="true"
@@ -512,8 +545,8 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                   <span>01 · FRONTEND &amp; UI/UX ARCHITECTURE</span>
                   <ArrowUpRight className="size-4" aria-hidden="true" />
                 </div>
-                <div className="pt-10 space-y-3">
-                  <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-ivory group-hover:text-champagne transition-colors">
+                <div className="pt-8 sm:pt-10 space-y-4">
+                  <h3 className="font-serif text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-light text-ivory group-hover:text-champagne transition-colors">
                     Modular React Systems &amp; Creative Lab
                   </h3>
                   <p className="font-sans text-sm md:text-base text-ivory/75 max-w-xl leading-relaxed">
@@ -521,6 +554,16 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                     mengutamakan keterbacaan tipografi, aksesibilitas 3 breakpoint, serta
                     interaksi 60fps.
                   </p>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {['React 19 · TypeScript', 'Tailwind v4', 'Creative Lab 01–09'].map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2.5 py-1 border border-champagne/20 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne/85"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </Link>
             </Reveal>
@@ -528,7 +571,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
             <Reveal variant="up" delay={0.06} className="lg:col-span-5">
               <Link
                 to="/projects/satu-ruang-creative"
-                className="group relative flex flex-col justify-between min-h-[290px] sm:min-h-[320px] p-7 sm:p-10 bg-offwhite hover:bg-ivory text-espresso border border-espresso/15 hover:border-mocha transition-colors duration-300 overflow-hidden"
+                className="group relative flex flex-col justify-between min-h-[280px] sm:min-h-[320px] p-6 sm:p-8 lg:p-10 bg-offwhite hover:bg-ivory text-espresso border border-espresso/15 hover:border-mocha transition-colors duration-300 overflow-hidden"
               >
                 <span
                   aria-hidden="true"
@@ -538,7 +581,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                   <span>02 · SATURUANGCREATIVE STUDIO</span>
                   <ArrowUpRight className="size-4" aria-hidden="true" />
                 </div>
-                <div className="pt-10 space-y-3">
+                <div className="pt-8 sm:pt-10 space-y-4">
                   <h3 className="font-serif text-2xl sm:text-3xl font-light text-espresso group-hover:text-mocha transition-colors italic">
                     &ldquo;Satu Ruang, Banyak Ide, Satu Cerita.&rdquo;
                   </h3>
@@ -546,6 +589,16 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                     Co-Founder &amp; Web Developer — merancang arsitektur UI/UX dan platform
                     RuangHijau Nusantara bersama tim kreatif mahasiswa.
                   </p>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {['Co-Founder & Web Dev', 'RuangHijau Nusantara'].map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2.5 py-1 border border-espresso/20 font-mono text-[9px] tracking-[0.16em] uppercase text-bronze"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </Link>
             </Reveal>
@@ -553,7 +606,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
             <Reveal variant="up" delay={0.1} className="lg:col-span-5">
               <Link
                 to="/journey"
-                className="group relative flex flex-col justify-between min-h-[280px] p-7 sm:p-10 bg-offwhite hover:bg-ivory text-espresso border border-espresso/15 hover:border-mocha transition-colors duration-300 overflow-hidden"
+                className="group relative flex flex-col justify-between min-h-[280px] p-6 sm:p-8 lg:p-10 bg-offwhite hover:bg-ivory text-espresso border border-espresso/15 hover:border-mocha transition-colors duration-300 overflow-hidden"
               >
                 <span
                   aria-hidden="true"
@@ -563,7 +616,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                   <span>03 · SOFTWARE QA &amp; CCNA DISCIPLINE</span>
                   <ArrowUpRight className="size-4" aria-hidden="true" />
                 </div>
-                <div className="pt-10 space-y-3">
+                <div className="pt-8 sm:pt-10 space-y-4">
                   <h3 className="font-serif text-2xl sm:text-3xl font-light text-espresso group-hover:text-mocha transition-colors">
                     PT Puskomedia · ASIS Builder (NDA) &amp; GT Computer
                   </h3>
@@ -571,6 +624,16 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                     Berawal dari PKL hardware SMK Wiworotomo di GT Computer hingga Programmer
                     Intern QA &amp; Cisco CCNA (Jul 2026).
                   </p>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {['ASIS Functional QA', 'Cisco CCNA · Jul 2026'].map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2.5 py-1 border border-espresso/20 font-mono text-[9px] tracking-[0.16em] uppercase text-bronze"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </Link>
             </Reveal>
@@ -578,7 +641,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
             <Reveal variant="up" delay={0.14} className="lg:col-span-7">
               <Link
                 to="/achievements"
-                className="group relative flex flex-col justify-between min-h-[280px] p-7 sm:p-10 bg-[#1A1412] hover:bg-[#211A17] text-ivory border border-champagne/15 hover:border-champagne/40 transition-colors duration-300 overflow-hidden"
+                className="group relative flex flex-col justify-between min-h-[280px] p-6 sm:p-8 lg:p-10 bg-[#1A1412] hover:bg-[#211A17] text-ivory border border-champagne/15 hover:border-champagne/40 transition-colors duration-300 overflow-hidden"
               >
                 <span
                   aria-hidden="true"
@@ -588,14 +651,24 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                   <span>04 · JPMBA PUBLICATION &amp; VISUAL ARCHIVE</span>
                   <ArrowUpRight className="size-4" aria-hidden="true" />
                 </div>
-                <div className="pt-10 space-y-3">
-                  <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-ivory group-hover:text-champagne transition-colors">
+                <div className="pt-8 sm:pt-10 space-y-4">
+                  <h3 className="font-serif text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-light text-ivory group-hover:text-champagne transition-colors">
                     JPMBA Garuda (Okt 2026) &amp; S1 TI24A Amikom
                   </h3>
                   <p className="font-sans text-sm md:text-base text-ivory/75 max-w-xl leading-relaxed">
                     Publikasi Jurnal Pengabdian Masyarakat Bangsa terindeks Garuda,
                     aplikasi kampus SOMASII, serta arsip visual monograf di Galeri.
                   </p>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {['JPMBA Garuda · Okt 2026', 'SOMASII · Flutter', 'Visual Monograph'].map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2.5 py-1 border border-champagne/20 font-mono text-[9px] tracking-[0.16em] uppercase text-champagne/85"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </Link>
             </Reveal>
@@ -625,7 +698,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
               <MagneticButton maxPull={7}>
                 <Link
                   to="/contact"
-                  className="group inline-flex items-center gap-2.5 min-h-[44px] px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all duration-300"
+                  className="group inline-flex items-center gap-2.5 min-h-[48px] px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all duration-300"
                 >
                   <KineticLabel>Get in Touch</KineticLabel>
                   <ArrowUpRight
@@ -652,7 +725,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
               href={contactData.githubHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-champagne hover:text-ivory transition-colors"
+              className="inline-flex items-center gap-2 min-h-[44px] text-champagne hover:text-ivory transition-colors"
             >
               <Github className="size-3.5" aria-hidden="true" />
               <span>GitHub · {contactData.githubHandle}</span>

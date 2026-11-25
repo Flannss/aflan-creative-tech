@@ -18,9 +18,6 @@ interface SplashIntroProps {
   onEnter: (targetPath?: string) => void;
 }
 
-const SHUTTER_EASE = [0.76, 0, 0.24, 1] as const;
-const SHUTTER_DELAYS = [0.09, 0.045, 0, 0.045, 0.09] as const;
-
 function getPurwokertoWibTime(): string {
   try {
     return new Intl.DateTimeFormat('id-ID', {
@@ -113,30 +110,57 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         isExiting ? 'pointer-events-none' : ''
       }`}
     >
-      {/* 5-Column Staggered Editorial Shutter Background Layer */}
+      {/* Seamless Dual-Panel Silk Aperture Split Layer */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 grid grid-cols-5"
+        className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        {SHUTTER_DELAYS.map((delay, idx) => (
-          <motion.div
-            key={`shutter-${idx}`}
-            initial={{ y: '0%' }}
-            exit={
-              prefersReducedMotion
-                ? { opacity: 0, transition: { duration: 0.2 } }
-                : {
-                    y: '-102%',
-                    transition: {
-                      duration: 0.62,
-                      delay,
-                      ease: SHUTTER_EASE,
-                    },
-                  }
-            }
-            className="h-full w-full bg-[#1A1412] border-r border-champagne/10 last:border-r-0 will-change-transform"
-          />
-        ))}
+        <motion.div
+          initial={{ y: '0%' }}
+          exit={
+            prefersReducedMotion
+              ? { opacity: 0, transition: { duration: 0.2 } }
+              : {
+                  y: '-102%',
+                  transition: {
+                    duration: 0.68,
+                    ease: EASE_LUXURY,
+                  },
+                }
+          }
+          className="absolute top-0 inset-x-0 h-1/2 bg-[#1A1412] will-change-transform"
+        />
+        <motion.div
+          initial={{ y: '0%' }}
+          exit={
+            prefersReducedMotion
+              ? { opacity: 0, transition: { duration: 0.2 } }
+              : {
+                  y: '102%',
+                  transition: {
+                    duration: 0.68,
+                    ease: EASE_LUXURY,
+                  },
+                }
+          }
+          className="absolute bottom-0 inset-x-0 h-1/2 bg-[#1A1412] will-change-transform"
+        />
+        <motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          exit={
+            prefersReducedMotion
+              ? { opacity: 0 }
+              : {
+                  scaleX: [0, 1, 1],
+                  opacity: [0, 0.9, 0],
+                  transition: {
+                    duration: 0.52,
+                    ease: EASE_LUXURY,
+                  },
+                }
+          }
+          className="absolute top-1/2 inset-x-0 -translate-y-1/2 h-px bg-champagne/40 origin-center will-change-[transform,opacity]"
+        />
       </div>
 
       {/* Foreground Minimalist Seal & Corner Micro-Labels */}

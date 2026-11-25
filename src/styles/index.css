@@ -14,6 +14,7 @@
 
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-display: "Bodoni Moda", Georgia, "Times New Roman", serif;
+  --font-masthead: "Cinzel", Georgia, "Times New Roman", serif;
   --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 }
@@ -101,6 +102,10 @@
 
 .font-display {
   font-family: var(--font-display);
+}
+
+.font-masthead {
+  font-family: var(--font-masthead);
 }
 
 /* Warm Studio Lighting Echoing Portrait Chiaroscuro */
