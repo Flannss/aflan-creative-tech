@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import { useReducedMotion } from 'framer-motion';
+import { useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
 import type { ProjectEntry } from '@/data/projects';
 import { ApertureFrame } from '@/components/motion/ApertureFrame';
+import { FloatingProjectPreview } from '@/components/projects/FloatingProjectPreview';
 import { ProjectPreviewModal } from '@/components/projects/ProjectPreviewModal';
 import { TypographicDossierPlate } from '@/components/projects/TypographicDossierPlate';
 import { useCanHoverFine, useMediaQuery } from '@/hooks/useMediaQuery';
@@ -12,82 +13,105 @@ interface ProjectPreviewListProps {
   projects: ProjectEntry[];
 }
 
+const CARD_WIDTH = 310;
+const CARD_HEIGHT = 224;
+const OFFSET_X = 28;
+const VIEWPORT_MARGIN = 20;
+const MIN_VIEWPORT_Y = 92;
+
+function getClampedFloatingPos(clientX: number, clientY: number) {
+  const viewportW = window.innerWidth;
+  const viewportH = window.innerHeight;
+
+  let x = clientX + OFFSET_X;
+  if (x + CARD_WIDTH > viewportW - VIEWPORT_MARGIN) {
+    x = clientX - CARD_WIDTH - OFFSET_X;
+  }
+  x = Math.max(VIEWPORT_MARGIN, Math.min(x, viewportW - CARD_WIDTH - VIEWPORT_MARGIN));
+
+  const maxY = Math.max(MIN_VIEWPORT_Y, viewportH - CARD_HEIGHT - VIEWPORT_MARGIN);
+  const y = Math.max(MIN_VIEWPORT_Y, Math.min(clientY - CARD_HEIGHT / 2, maxY));
+
+  return { x, y };
+}
+
 /**
  * Editorial project index rows featuring:
- * - Wide desktop (>= 1280px, fine pointer): smooth RAF-interpolated floating visual preview positioned outside text columns.
- * - Mobile / tablet: crisp inline responsive visual card inside each row.
+ * - Desktop (>= 1024px, fine pointer): portal-mounted floating visual preview with viewport-clamped spring cursor tracking.
+ * - Mobile / tablet (< 1024px): crisp inline responsive visual card inside each row.
  * - Silky editorial preview modal on primary click while preserving Ctrl/Cmd+Click to open new tab.
  */
 export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects }) => {
   const [activeProject, setActiveProject] = useState<ProjectEntry | null>(null);
   const [previewProject, setPreviewProject] = useState<ProjectEntry | null>(null);
+  const location = useLocation();
   const canHoverFine = useCanHoverFine();
-  const isWideDesktop = useMediaQuery('(min-width: 1280px)');
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
   const prefersReducedMotion = useReducedMotion();
-  const canHover = canHoverFine && isWideDesktop && !prefersReducedMotion;
+  const canHover = canHoverFine && isDesktop;
 
-  const previewRef = useRef<HTMLDivElement | null>(null);
-  const pointerTarget = useRef({ x: 0, y: 0 });
-  const pointerCurrent = useRef({ x: 0, y: 0 });
-  const isInsideList = useRef(false);
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+  const smoothX = useSpring(rawX, { stiffness: 260, damping: 28, mass: 0.5 });
+  const smoothY = useSpring(rawY, { stiffness: 260, damping: 28, mass: 0.5 });
+  const hasActivePreviewRef = useRef(false);
 
   const isPreviewVisible =
     canHover && activeProject !== null && previewProject === null;
 
   useEffect(() => {
-    if (!isPreviewVisible) return;
+    hasActivePreviewRef.current = false;
+    setActiveProject(null);
+  }, [location.pathname]);
 
-    let rafId = 0;
-
-    const animate = () => {
-      const dx = pointerTarget.current.x - pointerCurrent.current.x;
-      const dy = pointerTarget.current.y - pointerCurrent.current.y;
-      pointerCurrent.current.x += dx * 0.14;
-      pointerCurrent.current.y += dy * 0.14;
-
-      const tilt = Math.max(-4.5, Math.min(4.5, dx * 0.075));
-
-      if (previewRef.current) {
-        const cardWidth = previewRef.current.offsetWidth || 300;
-        const cardHeight = previewRef.current.offsetHeight || 220;
-        const viewportW = window.innerWidth;
-        const viewportH = window.innerHeight;
-
-        const isPointerOnRightSide = pointerCurrent.current.x > viewportW * 0.62;
-        const targetPosX = isPointerOnRightSide
-          ? 24
-          : Math.max(viewportW - cardWidth - 24, pointerCurrent.current.x + 180);
-
-        const clampedX = Math.min(Math.max(targetPosX, 24), viewportW - cardWidth - 24);
-        const clampedY = Math.min(
-          Math.max(pointerCurrent.current.y - cardHeight / 2, 92),
-          viewportH - cardHeight - 24,
-        );
-
-        previewRef.current.style.transform = `translate3d(${clampedX}px, ${clampedY}px, 0) rotate(${tilt.toFixed(2)}deg)`;
-        previewRef.current.style.opacity = '1';
-      }
-
-      rafId = window.requestAnimationFrame(animate);
-    };
-
-    rafId = window.requestAnimationFrame(animate);
-    return () => window.cancelAnimationFrame(rafId);
-  }, [isPreviewVisible]);
-
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!canHover) return;
-    pointerTarget.current.x = e.clientX;
-    pointerTarget.current.y = e.clientY;
-    if (!isInsideList.current) {
-      isInsideList.current = true;
-      pointerCurrent.current.x = e.clientX;
-      pointerCurrent.current.y = e.clientY;
+  const syncPosition = (clientX: number, clientY: number, immediate: boolean) => {
+    const { x, y } = getClampedFloatingPos(clientX, clientY);
+    if (immediate) {
+      rawX.jump(x);
+      rawY.jump(y);
+      smoothX.jump(x);
+      smoothY.jump(y);
+    } else {
+      rawX.set(x);
+      rawY.set(y);
     }
   };
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!canHover || !hasActivePreviewRef.current) return;
+    syncPosition(e.clientX, e.clientY, Boolean(prefersReducedMotion));
+  };
+
+  const handleRowEnter = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    project: ProjectEntry,
+  ) => {
+    if (!canHover || previewProject !== null) return;
+    const isFirstHover = !hasActivePreviewRef.current;
+    syncPosition(e.clientX, e.clientY, isFirstHover || Boolean(prefersReducedMotion));
+    hasActivePreviewRef.current = true;
+    setActiveProject(project);
+  };
+
+  const handleRowFocus = (
+    e: React.FocusEvent<HTMLAnchorElement>,
+    project: ProjectEntry,
+  ) => {
+    if (!canHover || previewProject !== null) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    syncPosition(rect.right - 160, rect.top + rect.height / 2, true);
+    hasActivePreviewRef.current = true;
+    setActiveProject(project);
+  };
+
+  const handleRowBlur = () => {
+    if (!canHover) return;
+    hasActivePreviewRef.current = false;
+    setActiveProject(null);
+  };
+
   const handleLeaveList = () => {
-    isInsideList.current = false;
+    hasActivePreviewRef.current = false;
     setActiveProject(null);
   };
 
@@ -99,6 +123,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
       return;
     }
     e.preventDefault();
+    hasActivePreviewRef.current = false;
     setActiveProject(null);
     setPreviewProject(project);
   };
@@ -106,8 +131,8 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
   return (
     <div
       className="relative overflow-x-clip"
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handleLeaveList}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleLeaveList}
     >
       <div className="grid grid-cols-1 md:grid-cols-2 lg:block gap-0 md:gap-6 lg:gap-0 divide-y md:divide-y-0 lg:divide-y divide-champagne/15 border-y md:border-y-0 lg:border-y border-champagne/15">
         {projects.map((project, idx) => {
@@ -120,13 +145,9 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
               key={project.slug}
               to={`/projects/${project.slug}`}
               onClick={(e) => handleRowClick(e, project)}
-              onMouseEnter={() =>
-                canHover && previewProject === null && setActiveProject(project)
-              }
-              onFocus={() =>
-                canHover && previewProject === null && setActiveProject(project)
-              }
-              onBlur={() => canHover && setActiveProject(null)}
+              onMouseEnter={(e) => handleRowEnter(e, project)}
+              onFocus={(e) => handleRowFocus(e, project)}
+              onBlur={handleRowBlur}
               className={`relative group block md:flex md:flex-col md:h-full lg:block lg:h-auto py-8 sm:py-10 md:p-6 lg:py-10 lg:px-5 px-2 sm:px-4 md:mx-0 lg:-mx-5 md:border md:border-champagne/20 md:bg-obsidian/45 md:hover:border-champagne/55 md:active:border-champagne lg:border-0 lg:bg-transparent transition-all duration-300 hover:bg-espresso/45 active:bg-espresso/60 active:scale-[0.99] lg:active:scale-100 ${
                 isOrphanOnTablet ? 'md:col-span-2' : ''
               } ${isSelected ? 'bg-espresso/65' : ''}`}
@@ -220,48 +241,11 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
         })}
       </div>
 
-      {isPreviewVisible && activeProject && (
-        <div
-          ref={previewRef}
-          aria-hidden="true"
-          style={{ opacity: 0 }}
-          className="hidden xl:block pointer-events-none fixed top-0 left-0 z-40 w-[300px] overflow-hidden border border-champagne/25 bg-obsidian shadow-[0_24px_60px_rgba(0,0,0,0.55)] transition-opacity duration-200"
-        >
-          <div>
-            {activeProject.previewImage ? (
-              <div
-                className="relative aspect-video overflow-hidden"
-                style={{ backgroundColor: activeProject.previewBg ?? '#2B1D17' }}
-              >
-                <img
-                  src={activeProject.previewImage}
-                  alt=""
-                  style={{ objectPosition: activeProject.previewObjectPosition ?? 'center' }}
-                  className={`w-full h-full ${
-                    activeProject.previewImageFit === 'contain'
-                      ? 'object-contain p-5'
-                      : 'object-cover'
-                  }`}
-                />
-              </div>
-            ) : (
-              <TypographicDossierPlate
-                project={activeProject}
-                compact
-                className="aspect-video"
-              />
-            )}
-            <div className="px-4 py-3 bg-obsidian border-t border-champagne/15 flex items-center justify-between gap-3">
-              <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-champagne truncate">
-                {activeProject.platform}
-              </span>
-              <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-taupe shrink-0">
-                Preview Dossier →
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
+      <FloatingProjectPreview
+        project={isPreviewVisible ? activeProject : null}
+        x={smoothX}
+        y={smoothY}
+      />
 
       <ProjectPreviewModal
         project={previewProject}
