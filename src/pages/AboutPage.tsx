@@ -123,6 +123,7 @@ export const AboutPage: React.FC = () => {
                   <img
                     src={personalData.portraitPath}
                     alt="Studi potret editorial Aflan Mu'afa Dzulfiqar"
+                    loading="lazy"
                     decoding="async"
                     className="w-full h-full object-cover object-[50%_14%] sepia-[22%] contrast-105 group-hover:sepia-0 group-hover:contrast-100 transition-all duration-700"
                   />

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 import {
@@ -367,15 +367,6 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
 export const ProjectDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const project = slug ? getProjectBySlug(slug) : undefined;
-
-  useEffect(() => {
-    if (project) {
-      document.title =
-        project.slug === 'aflan-digital-identity'
-          ? 'Studi Kasus: Identitas Digital Personal · AFLAN (AMDZ)'
-          : `${project.title} · AFLAN (AMDZ)`;
-    }
-  }, [project]);
 
   if (!project) {
     return (

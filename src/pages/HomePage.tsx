@@ -272,6 +272,9 @@ export const HomePage: React.FC = () => {
                       <img
                         src={personalData.portraitPath}
                         alt="Potret studio Aflan Mu'afa Dzulfiqar"
+                        loading="eager"
+                        fetchPriority="high"
+                        decoding="async"
                         className="w-full h-full object-cover object-[50%_18%]"
                       />
                     </motion.div>

@@ -11,14 +11,35 @@ interface FooterProps {
   onOpenCommandPalette?: () => void;
 }
 
+function getPurwokertoWibTime(): string {
+  try {
+    return new Intl.DateTimeFormat('id-ID', {
+      timeZone: personalData.timezone,
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    })
+      .format(new Date())
+      .replace('.', ':');
+  } catch {
+    return '--:--';
+  }
+}
+
 export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
   const [copied, setCopied] = useState(false);
+  const [wibTime, setWibTime] = useState<string>(() => getPurwokertoWibTime());
   const copyTimerRef = useRef<number | null>(null);
   const { showToast } = useToast();
   const currentYear = new Date().getFullYear();
 
   useEffect(() => {
+    const clockInterval = window.setInterval(() => {
+      setWibTime(getPurwokertoWibTime());
+    }, 15000);
+
     return () => {
+      window.clearInterval(clockInterval);
       if (copyTimerRef.current !== null) {
         window.clearTimeout(copyTimerRef.current);
       }
@@ -214,8 +235,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
           <p>
             {`© ${currentYear} ${personalData.fullName} (${personalData.monogram}). Dirancang dengan presisi.`}
           </p>
-          <p className="text-champagne/75">
-            Tangerang → Purwokerto · Identitas Digital
+          <p className="inline-flex items-center gap-2 text-champagne/80">
+            <span
+              aria-hidden="true"
+              className="size-1.5 rounded-full bg-champagne animate-pulse motion-reduce:animate-none"
+            />
+            <span>PURWOKERTO, ID · {wibTime} WIB</span>
           </p>
         </div>
       </div>

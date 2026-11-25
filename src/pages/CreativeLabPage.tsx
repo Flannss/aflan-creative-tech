@@ -1153,6 +1153,190 @@ const MotionEasingWorkbench: React.FC = () => {
   );
 };
 
+/* ============================================================================
+   MODULE E — DESIGN SYSTEM & TOKEN SPECIMEN
+============================================================================ */
+const CORE_DESIGN_TOKENS = [
+  {
+    name: 'Espresso',
+    hex: '#1A1412',
+    role: 'Primary Canvas & Editorial Veil',
+    lightText: true,
+    note: 'Dasar ruang gelap editorial dengan kontras tinggi dan tenang.',
+  },
+  {
+    name: 'Luxury Brown',
+    hex: '#8A6D4B',
+    role: 'Engraved Accents & Hairline Meta',
+    lightText: true,
+    note: 'Aksen mikro-label dan garis ukiran tipografi serif.',
+  },
+  {
+    name: 'Champagne',
+    hex: '#D8C3A5',
+    role: 'Interactive Highlights & Active Rings',
+    lightText: false,
+    note: 'Penanda fokus interaktif, pill aktif, dan indikator progres.',
+  },
+  {
+    name: 'Ivory',
+    hex: '#F4EFE6',
+    role: 'Primary Display Ink & Light Surface',
+    lightText: false,
+    note: 'Tinta display utama dan permukaan arsip terang yang lapang.',
+  },
+] as const;
+
+const DesignTokenSpecimen: React.FC = () => {
+  const { showToast } = useToast();
+  const [copiedHex, setCopiedHex] = useState<string | null>(null);
+  const copyTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current !== null) {
+        window.clearTimeout(copyTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleCopyHex = async (tokenName: string, hex: string) => {
+    try {
+      await navigator.clipboard.writeText(hex);
+      setCopiedHex(hex);
+      showToast('Hex Token Tersalin', `${tokenName} · ${hex}`);
+      if (copyTimerRef.current !== null) {
+        window.clearTimeout(copyTimerRef.current);
+      }
+      copyTimerRef.current = window.setTimeout(() => setCopiedHex(null), 2200);
+    } catch {
+      showToast('Salin Manual', `${tokenName} · ${hex}`);
+    }
+  };
+
+  return (
+    <div className="space-y-8">
+      {/* Interactive Core Palette Swatches */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {CORE_DESIGN_TOKENS.map((token) => {
+          const isCopied = copiedHex === token.hex;
+          return (
+            <button
+              key={token.hex}
+              type="button"
+              onClick={() => void handleCopyHex(token.name, token.hex)}
+              aria-label={`Salin hex token ${token.name} ${token.hex}`}
+              className="group text-left rounded-2xl border border-champagne/20 bg-espresso/60 overflow-hidden hover:border-champagne/60 active:scale-[0.985] transition-all cursor-pointer flex flex-col justify-between"
+            >
+              <div
+                className="w-full h-24 sm:h-28 p-4 flex items-start justify-between border-b border-champagne/15"
+                style={{ backgroundColor: token.hex }}
+              >
+                <span
+                  className={`font-mono text-[10px] tracking-[0.18em] uppercase px-2.5 py-1 rounded-full border ${
+                    token.lightText
+                      ? 'border-champagne/35 bg-obsidian/55 text-ivory'
+                      : 'border-espresso/25 bg-ivory/80 text-espresso'
+                  }`}
+                >
+                  {token.hex}
+                </span>
+
+                <span
+                  className={`size-8 rounded-full border flex items-center justify-center transition-colors ${
+                    token.lightText
+                      ? 'border-champagne/35 bg-obsidian/55 text-champagne group-hover:bg-champagne group-hover:text-obsidian'
+                      : 'border-espresso/25 bg-ivory/85 text-espresso group-hover:bg-espresso group-hover:text-ivory'
+                  }`}
+                >
+                  {isCopied ? (
+                    <Check className="size-3.5" aria-hidden="true" />
+                  ) : (
+                    <Copy className="size-3.5" aria-hidden="true" />
+                  )}
+                </span>
+              </div>
+
+              <div className="p-4 sm:p-5 space-y-1.5 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="font-serif text-xl sm:text-2xl font-light text-ivory group-hover:text-champagne transition-colors">
+                    {token.name}
+                  </h3>
+                  <p className="text-[10px] font-mono uppercase tracking-[0.15em] text-champagne/85 mt-0.5">
+                    {token.role}
+                  </p>
+                </div>
+                <p className="font-sans text-xs text-ivory/70 leading-relaxed pt-2">
+                  {token.note}
+                </p>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Live Typography Specimen */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="rounded-2xl border border-champagne/20 bg-obsidian/80 p-5 sm:p-6 flex flex-col justify-between gap-6">
+          <div className="flex items-center justify-between gap-2 pb-3 border-b border-champagne/15">
+            <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-champagne">
+              MASTHEAD DISPLAY
+            </span>
+            <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-taupe">
+              Bodoni Moda
+            </span>
+          </div>
+          <p className="font-display text-3xl sm:text-4xl uppercase tracking-[0.22em] text-ivory leading-none select-none">
+            AFLAN
+          </p>
+          <p className="font-sans text-xs text-ivory/70 leading-relaxed">
+            Didone kontras tinggi khusus untuk masthead utama halaman depan.
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-champagne/20 bg-obsidian/80 p-5 sm:p-6 flex flex-col justify-between gap-6">
+          <div className="flex items-center justify-between gap-2 pb-3 border-b border-champagne/15">
+            <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-champagne">
+              EDITORIAL SERIF &amp; ENGRAVED
+            </span>
+            <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-taupe">
+              Cormorant Garamond
+            </span>
+          </div>
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className="font-serif italic text-3xl font-light text-ivory leading-none">
+              Editorial Craft
+            </span>
+            <span className="font-serif italic font-medium uppercase tracking-[0.14em] text-xl text-engraved-champagne leading-none select-none">
+              BY AMDZ
+            </span>
+          </div>
+          <p className="font-sans text-xs text-ivory/70 leading-relaxed">
+            Dipakai pada judul section, italic emphasis, dan ukiran `.text-engraved-*`.
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-champagne/20 bg-obsidian/80 p-5 sm:p-6 flex flex-col justify-between gap-6">
+          <div className="flex items-center justify-between gap-2 pb-3 border-b border-champagne/15">
+            <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-champagne">
+              TECHNICAL MICRO-LABEL
+            </span>
+            <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-taupe">
+              Space Grotesk Mono
+            </span>
+          </div>
+          <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.15em] text-champagne leading-relaxed wrap-break-word">
+            BAB 06 · 10PX–12PX · TRACKING 0.15EM
+          </p>
+          <p className="font-sans text-xs text-ivory/70 leading-relaxed">
+            Struktur indeks bab, metadata terverifikasi, dan penanda aksi antarmuka.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const CreativeLabPage: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
 
@@ -1254,6 +1438,7 @@ export const CreativeLabPage: React.FC = () => {
               { href: '#lab-easing', label: '05 · Koreografi Motion' },
               { href: '#lab-contrast', label: '06 · Matriks Kontras' },
               { href: '#lab-workbench', label: '07 · Motion Workbench' },
+              { href: '#lab-tokens', label: '08 · Token Specimen' },
             ].map((mod) => (
               <a
                 key={mod.href}
@@ -1679,6 +1864,33 @@ export const CreativeLabPage: React.FC = () => {
           </Reveal>
 
           <MotionEasingWorkbench />
+        </div>
+      </section>
+
+      {/* LAB 08 — DESIGN SYSTEM & TOKEN SPECIMEN */}
+      <section
+        id="lab-tokens"
+        className="relative bg-obsidian text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-t border-champagne/15"
+      >
+        <div className="max-w-[1440px] mx-auto space-y-8">
+          <HairlineRule tone="champagne" className="mb-2" />
+          <Reveal variant="up" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
+            <div className="lg:col-span-7">
+              <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
+                <Sparkles className="size-3.5" aria-hidden="true" />
+                LAB 08 · DESIGN SYSTEM &amp; TOKEN SPECIMEN
+              </span>
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light tracking-tight mt-2">
+                Design System &amp; Token Specimen
+              </h2>
+            </div>
+            <p className="lg:col-span-5 font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
+              Referensi langsung empat token warna inti Espresso–Champagne–Ivory dan tiga
+              hirarki tipografi utama; klik swatch mana saja untuk menyalin kode hex ke clipboard.
+            </p>
+          </Reveal>
+
+          <DesignTokenSpecimen />
         </div>
       </section>
     </div>

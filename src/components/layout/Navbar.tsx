@@ -399,6 +399,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                       <img
                         src={personalData.portraitPath}
                         alt="Potret studio Aflan Mu'afa Dzulfiqar"
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover object-[50%_22%] opacity-85"
                       />
                       <div className="absolute inset-0 bg-linear-to-t from-obsidian/90 via-obsidian/20 to-transparent" />

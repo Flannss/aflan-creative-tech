@@ -1,13 +1,11 @@
-import React, { useLayoutEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ScrollProgress } from '@/components/motion/ScrollProgress';
 import { CustomCursor } from '@/components/motion/CustomCursor';
+import { BackToTop } from '@/components/ui/BackToTop';
 import { CommandPalette } from '@/components/ui/CommandPalette';
-import { navigationRoutes, personalData } from '@/data/personal';
-
-const CANONICAL_ORIGIN = personalData.siteUrl.replace(/\/$/, '');
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -15,40 +13,21 @@ interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children, splashActive = false }) => {
-  const { pathname } = useLocation();
   const [commandOpen, setCommandOpen] = useState(false);
 
-  useLayoutEffect(() => {
-    delete document.documentElement.dataset.headerTheme;
-    window.dispatchEvent(new Event('aflan-nav-theme-sync'));
+  useDocumentMeta();
 
-    const matched = navigationRoutes.find((r) => r.path === pathname);
-    if (matched) {
-      document.title =
-        matched.path === '/'
-          ? "AFLAN · Aflan Mu'afa Dzulfiqar | Identitas Digital Personal"
-          : `${matched.label} · AFLAN (AMDZ)`;
-    } else if (pathname.startsWith('/projects/')) {
-      document.title = 'Dossier Proyek · AFLAN (AMDZ)';
-    } else {
-      document.title = 'AFLAN · Identitas Digital Personal';
-    }
-
-    const canonicalUrl =
-      pathname === '/' ? `${CANONICAL_ORIGIN}/` : `${CANONICAL_ORIGIN}${pathname}`;
-    const canonicalLink = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    if (canonicalLink) {
-      canonicalLink.href = canonicalUrl;
-    }
-    const ogUrl = document.querySelector<HTMLMetaElement>('meta[property="og:url"]');
-    if (ogUrl) {
-      ogUrl.content = canonicalUrl;
-    }
-    const twitterUrl = document.querySelector<HTMLMetaElement>('meta[name="twitter:url"]');
-    if (twitterUrl) {
-      twitterUrl.content = canonicalUrl;
-    }
-  }, [pathname]);
+  useEffect(() => {
+    const handleOpenCommand = () => {
+      if (!splashActive) {
+        setCommandOpen(true);
+      }
+    };
+    window.addEventListener('aflan-open-command-palette', handleOpenCommand);
+    return () => {
+      window.removeEventListener('aflan-open-command-palette', handleOpenCommand);
+    };
+  }, [splashActive]);
 
   return (
     <div className="relative min-h-screen flex flex-col bg-obsidian text-ivory">
@@ -62,6 +41,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, splashActive = false }
       <div className="aflan-grain-overlay" aria-hidden="true" />
 
       <ScrollProgress />
+      <BackToTop />
       <CustomCursor />
       <Navbar onOpenCommandPalette={() => setCommandOpen(true)} />
 
