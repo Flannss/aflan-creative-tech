@@ -30,12 +30,11 @@ function getPurwokertoWibTime(): string {
 }
 
 /**
- * Interactive Architectural Matrix Intro Gate (`brand.dropbox.com` modular tiles ×
- * `eszterbial.com` open spatial choreography) crafted strictly in Espresso–Champagne–Ivory.
- * - Zero `<canvas>` loops and zero SVG `<feTurbulence>` filters.
- * - Desktop: 3×3 asymmetric hairline matrix with live WIB readout and direct chapter tiles.
- * - Tablet / Mobile: crisp full-viewport `100dvh` cover + compact 2×2 shortcut matrix without scroll.
- * - Exit: surrounding tiles glide radially outward while center cell expands smoothly (`~0.58s`).
+ * Interactive Architectural Matrix Intro Gate crafted strictly in Espresso–Champagne–Ivory.
+ * - Zero `<canvas>` loops and zero heavy SVG filters.
+ * - Staggered hairline matrix choreography (`< 0.85s`, non-blocking from t=0).
+ * - Desktop: 3×3 tactile grid with living geometric SVG micro-glyphs & English shortcuts.
+ * - Tablet / Mobile: crisp `100dvh` cover + compact 2×2 shortcut matrix without scroll.
  */
 export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -105,7 +104,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         isExiting ? 'pointer-events-none' : ''
       }`}
     >
-      {/* Lightweight Static Warm Studio Gradient */}
+      {/* Warm Static Studio Gradient */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -115,9 +114,30 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         }}
       />
 
+      {/* Hairline Cross-Axis Entrance Choreography (Desktop) */}
+      {!prefersReducedMotion && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none hidden lg:block absolute inset-0 z-[2]"
+        >
+          <motion.span
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ duration: 0.48, ease: EASE_LUXURY }}
+            className="absolute inset-x-0 top-[28%] h-px origin-center bg-champagne/10"
+          />
+          <motion.span
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ duration: 0.48, delay: 0.06, ease: EASE_LUXURY }}
+            className="absolute inset-x-0 bottom-[28%] h-px origin-center bg-champagne/10"
+          />
+        </div>
+      )}
+
       {/* DESKTOP MODULAR ARCHITECTURAL MATRIX (>= 1024px) */}
       <div className="relative z-10 hidden lg:grid lg:grid-cols-[1fr_minmax(420px,1.55fr)_1fr] lg:grid-rows-[1fr_minmax(320px,1.55fr)_1fr] h-full w-full">
-        {/* Cell [1,1] — Top-Left Shortcut: Selected Works */}
+        {/* Cell [1,1] — Top-Left Shortcut: PROJECTS */}
         <motion.button
           type="button"
           onMouseEnter={() => prefetchRoute('/projects')}
@@ -125,21 +145,25 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           onTouchStart={() => prefetchRoute('/projects')}
           onClick={() => triggerEnter('/projects')}
           exit={tileExit('-6%', '-8%')}
-          initial={prefersReducedMotion ? false : { opacity: 0, y: -8 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.05, ease: EASE_LUXURY }}
+          transition={{ duration: 0.42, delay: 0.04, ease: EASE_LUXURY }}
           data-cursor-label="PROJECTS"
-          className="group relative border-b border-r border-champagne/12 p-6 xl:p-8 flex flex-col justify-between text-left bg-transparent hover:bg-[#211A17] transition-colors duration-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne"
+          className="group relative overflow-hidden border-b border-r border-champagne/15 p-6 xl:p-8 flex flex-col justify-between text-left bg-transparent hover:bg-[#211A17] transition-colors duration-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne"
         >
-          <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/80">
-            <span>01 · SELECTED WORKS</span>
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute top-0 inset-x-0 h-[1.5px] bg-champagne/80 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:hidden"
+          />
+          <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/85">
+            <span>PROJECTS</span>
             <ArrowUpRight
               className="size-3.5 text-taupe group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300"
               aria-hidden="true"
             />
           </div>
 
-          <div className="my-auto py-3">
+          <div className="my-auto py-2">
             <svg
               aria-hidden="true"
               viewBox="0 0 88 28"
@@ -153,6 +177,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1"
+                className="transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-0.5"
               />
               <rect
                 x="31"
@@ -162,6 +187,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1"
+                className="transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0.5"
               />
               <rect
                 x="61"
@@ -172,59 +198,57 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                 stroke="currentColor"
                 strokeWidth="1"
                 strokeDasharray="2 2"
+                className="transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-0.5"
               />
             </svg>
           </div>
 
-          <div className="space-y-1">
-            <p className="font-serif text-xl font-light text-ivory group-hover:text-champagne transition-colors">
-              Arsip Studi Kasus
-            </p>
-            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-taupe">
-              SATURUANG · SOMASII · ASIS NDA
-            </p>
-          </div>
+          <p className="font-serif text-xl font-light text-ivory group-hover:text-champagne transition-colors">
+            Selected Works
+          </p>
         </motion.button>
 
         {/* Cell [1,2] — Top-Center Identity Crest */}
         <motion.div
           exit={tileExit('0%', '-10%')}
-          initial={prefersReducedMotion ? false : { opacity: 0, y: -8 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.08, ease: EASE_LUXURY }}
-          className="border-b border-r border-champagne/12 px-8 py-6 flex flex-col items-center justify-center text-center gap-2.5"
+          transition={{ duration: 0.42, delay: 0.08, ease: EASE_LUXURY }}
+          className="border-b border-r border-champagne/15 px-8 py-6 flex flex-col items-center justify-center text-center gap-2"
         >
           <span className="inline-flex items-center gap-2.5 font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
             <MonogramMark size={24} className="text-champagne" />
             <span>AFLAN</span>
           </span>
-          <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-taupe">
-            WEB DEVELOPER · UI ENGINEER · SOFTWARE QA
+          <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
+            WEB DEVELOPER · UI ENGINEER · QA
           </p>
         </motion.div>
 
-        {/* Cell [1,3] — Top-Right Live Purwokerto Clock & Coordinates */}
+        {/* Cell [1,3] — Top-Right Live Purwokerto Clock */}
         <motion.div
           exit={tileExit('6%', '-8%')}
-          initial={prefersReducedMotion ? false : { opacity: 0, y: -8 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.1, ease: EASE_LUXURY }}
-          className="border-b border-champagne/12 p-6 xl:p-8 flex flex-col justify-between text-right"
+          transition={{ duration: 0.42, delay: 0.12, ease: EASE_LUXURY }}
+          className="border-b border-champagne/15 p-6 xl:p-8 flex flex-col justify-between text-right"
         >
-          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-taupe">
+          <span className="inline-flex items-center justify-end gap-2 font-mono text-[10px] tracking-[0.22em] uppercase text-taupe">
+            <span
+              aria-hidden="true"
+              className="size-1.5 rounded-full bg-champagne animate-pulse motion-reduce:animate-none"
+            />
             PURWOKERTO · ID
           </span>
-          <div className="my-auto">
-            <p className="font-serif text-3xl xl:text-4xl font-light text-champagne tabular-nums">
-              {wibTime} <span className="text-sm font-mono tracking-[0.2em]">WIB</span>
-            </p>
-          </div>
+          <p className="font-serif text-3xl xl:text-4xl font-light text-champagne tabular-nums my-auto">
+            {wibTime} <span className="text-sm font-mono tracking-[0.2em]">WIB</span>
+          </p>
           <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-taupe">
-            {personalData.coordinates}
+            LIVE LOCAL TIME
           </span>
         </motion.div>
 
-        {/* Cell [2,1] — Middle-Left Shortcut: Creative Lab */}
+        {/* Cell [2,1] — Middle-Left Shortcut: LAB */}
         <motion.button
           type="button"
           onMouseEnter={() => prefetchRoute('/lab')}
@@ -232,21 +256,25 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           onTouchStart={() => prefetchRoute('/lab')}
           onClick={() => triggerEnter('/lab')}
           exit={tileExit('-8%', '0%')}
-          initial={prefersReducedMotion ? false : { opacity: 0, x: -8 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.45, delay: 0.12, ease: EASE_LUXURY }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.42, delay: 0.16, ease: EASE_LUXURY }}
           data-cursor-label="OPEN LAB"
-          className="group relative border-b border-r border-champagne/12 p-6 xl:p-8 flex flex-col justify-between text-left bg-transparent hover:bg-[#211A17] transition-colors duration-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne"
+          className="group relative overflow-hidden border-b border-r border-champagne/15 p-6 xl:p-8 flex flex-col justify-between text-left bg-transparent hover:bg-[#211A17] transition-colors duration-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne"
         >
-          <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/80">
-            <span>02 · CREATIVE LAB</span>
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute top-0 inset-x-0 h-[1.5px] bg-champagne/80 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:hidden"
+          />
+          <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/85">
+            <span>LAB</span>
             <ArrowUpRight
               className="size-3.5 text-taupe group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300"
               aria-hidden="true"
             />
           </div>
 
-          <div className="my-auto py-3">
+          <div className="my-auto py-2">
             <svg
               aria-hidden="true"
               viewBox="0 0 88 36"
@@ -257,25 +285,33 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.25"
+                className="transition-all duration-500 group-hover:stroke-[1.7]"
               />
-              <circle cx="4" cy="30" r="2.2" fill="currentColor" />
-              <circle cx="84" cy="6" r="2.2" fill="currentColor" />
+              <circle
+                cx="4"
+                cy="30"
+                r="2.2"
+                fill="currentColor"
+                className="transition-transform duration-500 origin-center group-hover:scale-125"
+              />
+              <circle
+                cx="84"
+                cy="6"
+                r="2.2"
+                fill="currentColor"
+                className="transition-transform duration-500 origin-center group-hover:scale-125"
+              />
             </svg>
           </div>
 
-          <div className="space-y-1">
-            <p className="font-serif text-xl font-light text-ivory group-hover:text-champagne transition-colors">
-              Interactive Visual Systems
-            </p>
-            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-taupe">
-              09 MODULES · MOTION WORKBENCH
-            </p>
-          </div>
+          <p className="font-serif text-xl font-light text-ivory group-hover:text-champagne transition-colors">
+            Creative Lab
+          </p>
         </motion.button>
 
-        {/* Cell [2,2] — CENTER PRIMARY HERO ENTRY */}
+        {/* Cell [2,2] — CENTER PRIMARY ENTRY */}
         <motion.div
-          initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.97 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={
             prefersReducedMotion
@@ -286,12 +322,15 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                   transition: { duration: 0.56, ease: SPATIAL_EXIT_EASE },
                 }
           }
-          transition={{ duration: 0.5, delay: 0.04, ease: EASE_LUXURY }}
-          className="relative border-b border-r border-champagne/18 p-8 xl:p-12 flex flex-col items-center justify-center text-center bg-[#211A17]/40 will-change-[transform,opacity]"
+          transition={{ duration: 0.45, delay: 0.04, ease: EASE_LUXURY }}
+          className="relative border-b border-r border-champagne/20 p-8 xl:p-12 flex flex-col items-center justify-center text-center bg-[#211A17]/40 will-change-[transform,opacity]"
         >
-          <span
+          <motion.span
             aria-hidden="true"
-            className="block w-12 h-px bg-champagne/45 mb-6"
+            initial={prefersReducedMotion ? false : { scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.5, delay: 0.14, ease: EASE_LUXURY }}
+            className="block w-12 h-px bg-champagne/45 mb-6 origin-center"
           />
 
           <h1 aria-label="Portfolio by AMDZ" className="flex flex-col items-center">
@@ -309,9 +348,12 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
             </span>
           </h1>
 
-          <span
+          <motion.span
             aria-hidden="true"
-            className="block w-12 h-px bg-champagne/45 my-6"
+            initial={prefersReducedMotion ? false : { scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.5, delay: 0.18, ease: EASE_LUXURY }}
+            className="block w-12 h-px bg-champagne/45 my-6 origin-center"
           />
 
           <button
@@ -319,17 +361,21 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
             onClick={() => triggerEnter()}
             autoFocus
             data-cursor-label="ENTER"
-            className="group inline-flex items-center justify-center gap-3 min-h-[44px] px-8 py-3.5 rounded-full border border-champagne/45 bg-[#1A1412]/80 text-ivory font-mono text-xs uppercase tracking-[0.22em] hover:bg-champagne hover:border-champagne hover:text-obsidian active:scale-[0.97] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne"
+            className="group relative overflow-hidden inline-flex items-center justify-center gap-3 min-h-[44px] px-8 py-3.5 rounded-full border border-champagne/45 bg-[#1A1412]/85 text-ivory font-mono text-xs uppercase tracking-[0.22em] hover:bg-champagne hover:border-champagne hover:text-obsidian active:scale-[0.97] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne"
           >
-            <KineticLabel>MASUK / ENTER</KineticLabel>
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] bg-gradient-to-r from-transparent via-ivory/20 to-transparent motion-reduce:hidden"
+            />
+            <KineticLabel className="relative z-10">ENTER DOSSIER</KineticLabel>
             <ArrowUpRight
-              className="size-4 text-champagne transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-obsidian group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+              className="relative z-10 size-4 text-champagne transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-obsidian group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
               aria-hidden="true"
             />
           </button>
         </motion.div>
 
-        {/* Cell [2,3] — Middle-Right Shortcut: Journey Timeline */}
+        {/* Cell [2,3] — Middle-Right Shortcut: JOURNEY */}
         <motion.button
           type="button"
           onMouseEnter={() => prefetchRoute('/journey')}
@@ -337,21 +383,25 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           onTouchStart={() => prefetchRoute('/journey')}
           onClick={() => triggerEnter('/journey')}
           exit={tileExit('8%', '0%')}
-          initial={prefersReducedMotion ? false : { opacity: 0, x: 8 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.45, delay: 0.14, ease: EASE_LUXURY }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.42, delay: 0.2, ease: EASE_LUXURY }}
           data-cursor-label="JOURNEY"
-          className="group relative border-b border-champagne/12 p-6 xl:p-8 flex flex-col justify-between text-right bg-transparent hover:bg-[#211A17] transition-colors duration-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne"
+          className="group relative overflow-hidden border-b border-champagne/15 p-6 xl:p-8 flex flex-col justify-between text-right bg-transparent hover:bg-[#211A17] transition-colors duration-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne"
         >
-          <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/80">
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute top-0 inset-x-0 h-[1.5px] bg-champagne/80 origin-right scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:hidden"
+          />
+          <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/85">
             <ArrowUpRight
               className="size-3.5 text-taupe group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300"
               aria-hidden="true"
             />
-            <span>03 · JOURNEY</span>
+            <span>JOURNEY</span>
           </div>
 
-          <div className="my-auto py-3 flex justify-end">
+          <div className="my-auto py-2 flex justify-end">
             <svg
               aria-hidden="true"
               viewBox="0 0 88 28"
@@ -365,41 +415,49 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                 stroke="currentColor"
                 strokeWidth="1"
               />
-              <circle cx="16" cy="14" r="2.5" fill="currentColor" />
-              <circle cx="48" cy="14" r="2.5" fill="currentColor" />
-              <circle cx="76" cy="14" r="3" fill="currentColor" />
+              <circle
+                cx="16"
+                cy="14"
+                r="2.5"
+                fill="currentColor"
+                className="transition-transform duration-300 origin-[16px_14px] group-hover:scale-125"
+              />
+              <circle
+                cx="48"
+                cy="14"
+                r="2.5"
+                fill="currentColor"
+                className="transition-transform duration-300 origin-[48px_14px] group-hover:scale-125"
+              />
+              <circle
+                cx="76"
+                cy="14"
+                r="3"
+                fill="currentColor"
+                className="transition-transform duration-300 origin-[76px_14px] group-hover:scale-125"
+              />
             </svg>
           </div>
 
-          <div className="space-y-1">
-            <p className="font-serif text-xl font-light text-ivory group-hover:text-champagne transition-colors">
-              Linimasa &amp; Magang
-            </p>
-            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-taupe">
-              PUSKOMEDIA · AMIKOM · GT
-            </p>
-          </div>
+          <p className="font-serif text-xl font-light text-ivory group-hover:text-champagne transition-colors">
+            Career Timeline
+          </p>
         </motion.button>
 
-        {/* Cell [3,1] — Bottom-Left Factual Studio & Intern Roles */}
+        {/* Cell [3,1] — Bottom-Left Studio & Intern Role */}
         <motion.div
           exit={tileExit('-6%', '8%')}
           initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.16, ease: EASE_LUXURY }}
-          className="border-r border-champagne/12 p-6 xl:p-8 flex flex-col justify-between"
+          transition={{ duration: 0.42, delay: 0.24, ease: EASE_LUXURY }}
+          className="border-r border-champagne/15 p-6 xl:p-8 flex flex-col justify-between"
         >
           <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/80">
-            SATURUANG · ROLE
+            CURRENT ROLES
           </span>
-          <div className="space-y-1">
-            <p className="font-serif text-lg text-ivory">
-              Co-Founder · SatuRuangCreative
-            </p>
-            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-taupe">
-              PROGRAMMER INTERN QA · {personalData.studyProgram}
-            </p>
-          </div>
+          <p className="font-serif text-lg xl:text-xl text-ivory leading-snug">
+            SatuRuangCreative &amp; Puskomedia QA
+          </p>
         </motion.div>
 
         {/* Cell [3,2] — Bottom-Center Colophon */}
@@ -407,14 +465,14 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           exit={tileExit('0%', '10%')}
           initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.18, ease: EASE_LUXURY }}
-          className="border-r border-champagne/12 px-8 py-6 flex flex-col items-center justify-center text-center gap-1.5 font-mono text-[10px] tracking-[0.22em] uppercase"
+          transition={{ duration: 0.42, delay: 0.28, ease: EASE_LUXURY }}
+          className="border-r border-champagne/15 px-8 py-6 flex flex-col items-center justify-center text-center gap-1.5 font-mono text-[10px] tracking-[0.22em] uppercase"
         >
-          <span className="text-taupe">DOSSIER DIGITAL PERSONAL</span>
-          <span className="text-champagne/75">TEKAN ENTER UNTUK MASUK</span>
+          <span className="text-taupe">PERSONAL DIGITAL DOSSIER</span>
+          <span className="text-champagne/75">PRESS ENTER TO CONTINUE</span>
         </motion.div>
 
-        {/* Cell [3,3] — Bottom-Right Shortcut: Honors & Credentials */}
+        {/* Cell [3,3] — Bottom-Right Shortcut: HONORS */}
         <motion.button
           type="button"
           onMouseEnter={() => prefetchRoute('/achievements')}
@@ -424,31 +482,29 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           exit={tileExit('6%', '8%')}
           initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.2, ease: EASE_LUXURY }}
+          transition={{ duration: 0.42, delay: 0.32, ease: EASE_LUXURY }}
           data-cursor-label="HONORS"
-          className="group relative p-6 xl:p-8 flex flex-col justify-between text-right bg-transparent hover:bg-[#211A17] transition-colors duration-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne"
+          className="group relative overflow-hidden p-6 xl:p-8 flex flex-col justify-between text-right bg-transparent hover:bg-[#211A17] transition-colors duration-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne"
         >
-          <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/80">
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute top-0 inset-x-0 h-[1.5px] bg-champagne/80 origin-right scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:hidden"
+          />
+          <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/85">
             <ArrowUpRight
               className="size-3.5 text-taupe group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300"
               aria-hidden="true"
             />
-            <span>04 · HONORS</span>
+            <span>HONORS</span>
           </div>
-          <div className="space-y-1">
-            <p className="font-serif text-lg text-ivory group-hover:text-champagne transition-colors">
-              CCNA Cisco &amp; Jurnal JPMBA
-            </p>
-            <p className="font-mono text-[10px] tracking-[0.16em] uppercase text-taupe">
-              JUL 2026 · GARUDA OKT 2026
-            </p>
-          </div>
+          <p className="font-serif text-lg xl:text-xl text-ivory group-hover:text-champagne transition-colors">
+            CCNA Cisco &amp; JPMBA
+          </p>
         </motion.button>
       </div>
 
-      {/* MOBILE & TABLET MATRIX LAYOUT (< 1024px) — Guaranteed 100dvh, Zero Scroll */}
+      {/* MOBILE & TABLET MATRIX LAYOUT (< 1024px) — 100dvh, Zero Scroll */}
       <div className="relative z-10 lg:hidden flex flex-col justify-between h-full w-full">
-        {/* Top Crest Bar */}
         <motion.div
           exit={tileExit('0%', '-10%')}
           className="flex items-center justify-between gap-3 px-5 py-4 border-b border-champagne/15 font-mono text-[10px] tracking-[0.22em] uppercase"
@@ -457,12 +513,15 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
             <MonogramMark size={22} className="text-champagne" />
             <span>AFLAN</span>
           </span>
-          <span className="text-taupe tabular-nums">
-            PURWOKERTO · {wibTime} WIB
+          <span className="inline-flex items-center gap-1.5 text-taupe tabular-nums">
+            <span
+              aria-hidden="true"
+              className="size-1.5 rounded-full bg-champagne animate-pulse motion-reduce:animate-none"
+            />
+            {wibTime} WIB
           </span>
         </motion.div>
 
-        {/* Center Primary Cell */}
         <motion.div
           exit={
             prefersReducedMotion
@@ -499,21 +558,20 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
             onClick={() => triggerEnter()}
             className="mt-7 inline-flex items-center justify-center gap-2.5 min-h-[44px] px-7 py-3 rounded-full border border-champagne/45 bg-[#211A17]/80 text-ivory font-mono text-xs uppercase tracking-[0.2em] hover:bg-champagne hover:text-obsidian active:scale-[0.97] transition-all cursor-pointer"
           >
-            <span>MASUK / ENTER</span>
+            <span>ENTER DOSSIER</span>
             <ArrowUpRight className="size-4 text-champagne" aria-hidden="true" />
           </button>
         </motion.div>
 
-        {/* Bottom 2x2 Quick Matrix Shortcuts */}
         <motion.div
           exit={tileExit('0%', '12%')}
           className="grid grid-cols-2 border-t border-champagne/15 divide-x divide-champagne/12"
         >
           {[
-            { path: '/projects', index: '01', label: 'Projects' },
-            { path: '/lab', index: '02', label: 'Creative Lab' },
-            { path: '/journey', index: '03', label: 'Journey' },
-            { path: '/achievements', index: '04', label: 'Honors' },
+            { path: '/projects', label: 'Projects' },
+            { path: '/lab', label: 'Lab' },
+            { path: '/journey', label: 'Journey' },
+            { path: '/achievements', label: 'Honors' },
           ].map((tile, idx) => (
             <button
               key={tile.path}
@@ -525,7 +583,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
               }`}
             >
               <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-champagne truncate">
-                {tile.index} · {tile.label}
+                {tile.label}
               </span>
               <ArrowUpRight className="size-3.5 shrink-0 text-taupe" aria-hidden="true" />
             </button>

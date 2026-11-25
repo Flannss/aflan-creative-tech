@@ -87,7 +87,7 @@ const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
           <div className="lg:col-span-5 flex flex-wrap lg:justify-end gap-3">
             <Link
               to="/contact"
-              data-cursor="KONTAK"
+              data-cursor="CONTACT"
               onMouseEnter={() => prefetchRoute('/contact')}
               onFocus={() => prefetchRoute('/contact')}
               onTouchStart={() => prefetchRoute('/contact')}
@@ -157,7 +157,7 @@ const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
 
           <div className="md:col-span-1 lg:col-span-4">
             <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-champagne mb-5">
-              SITE INDEX · 01–09
+              NAVIGATION
             </p>
             <ul className="grid grid-cols-2 gap-x-6 gap-y-3 md:gap-y-2.5">
               {navigationRoutes.map((route) => (
@@ -220,7 +220,9 @@ const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
         <div className="py-10 sm:py-12 select-none overflow-hidden">
           <Link
             to="/contact"
-            data-cursor="HUBUNGI"
+            data-cursor="CONTACT"
+            onMouseEnter={() => prefetchRoute('/contact')}
+            onFocus={() => prefetchRoute('/contact')}
             className="group block text-center"
             aria-label="AFLAN CONNECT · Hubungi Aflan"
           >

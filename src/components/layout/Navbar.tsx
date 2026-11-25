@@ -20,6 +20,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   const [scrolled, setScrolled] = useState(false);
   const [overDarkSurface, setOverDarkSurface] = useState(false);
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
+  const [navHoverPath, setNavHoverPath] = useState<string | null>(null);
   const prefersReducedMotion = useReducedMotion();
   const { pauseScroll, resumeScroll } = useSmoothScroll();
   const triggerRef = useRef<HTMLButtonElement | null>(null);
@@ -126,8 +127,9 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between gap-3 sm:gap-4">
           <Link
             to="/"
-            aria-label="Beranda AFLAN"
-            data-cursor="BERANDA"
+            aria-label="AFLAN Home"
+            data-cursor="HOME"
+            onMouseEnter={() => prefetchRoute('/')}
             className="shrink-0 focus-visible:outline-2 focus-visible:outline-champagne rounded-sm"
           >
             <BrandSignature
@@ -137,7 +139,8 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
           </Link>
 
           <nav
-            aria-label="Navigasi utama"
+            aria-label="Primary navigation"
+            onMouseLeave={() => setNavHoverPath(null)}
             className={`hidden xl:flex items-center gap-0.5 2xl:gap-1 px-2 2xl:px-2.5 py-1.5 rounded-full backdrop-blur-md border ${
               isLightHeaderRoute
                 ? 'bg-offwhite/90 border-espresso/15'
@@ -148,25 +151,32 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
               const isProjectDetail =
                 route.path === '/projects' &&
                 location.pathname.startsWith('/projects/');
+              const isGhostHovered = navHoverPath === route.path;
 
               return (
                 <NavLink
                   key={route.path}
                   to={route.path}
                   end={route.path === '/'}
-                  onMouseEnter={() => prefetchRoute(route.path)}
-                  onFocus={() => prefetchRoute(route.path)}
+                  onMouseEnter={() => {
+                    setNavHoverPath(route.path);
+                    prefetchRoute(route.path);
+                  }}
+                  onFocus={() => {
+                    setNavHoverPath(route.path);
+                    prefetchRoute(route.path);
+                  }}
                   onTouchStart={() => prefetchRoute(route.path)}
                   className={({ isActive }) => {
                     const active = isActive || isProjectDetail;
                     if (isLightHeaderRoute) {
-                      return `relative px-2.5 2xl:px-3.5 py-1.5 rounded-full font-mono text-[10px] 2xl:text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300 ${
+                      return `group/nav relative px-2.5 2xl:px-3.5 py-1.5 rounded-full font-mono text-[10px] 2xl:text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300 ${
                         active
                           ? 'text-ivory font-medium'
                           : 'text-espresso/80 hover:text-mocha'
                       }`;
                     }
-                    return `relative px-2.5 2xl:px-3.5 py-1.5 rounded-full font-mono text-[10px] 2xl:text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300 ${
+                    return `group/nav relative px-2.5 2xl:px-3.5 py-1.5 rounded-full font-mono text-[10px] 2xl:text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300 ${
                       active
                         ? 'text-obsidian font-medium'
                         : 'text-ivory/80 hover:text-champagne'
@@ -177,16 +187,43 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                     const active = isActive || isProjectDetail;
                     return (
                       <>
-                        {active && (
+                        {!active && isGhostHovered && (
                           <motion.span
-                            layoutId="aflan-nav-pill"
+                            layoutId="nav-hover"
+                            aria-hidden="true"
                             transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
-                            className={`absolute inset-0 rounded-full -z-10 ${
-                              isLightHeaderRoute ? 'bg-espresso' : 'bg-champagne'
+                            className={`absolute inset-0 rounded-full -z-20 ${
+                              isLightHeaderRoute ? 'bg-espresso/10' : 'bg-champagne/14'
                             }`}
                           />
                         )}
-                        {route.shortLabel}
+                        {active && (
+                          <motion.span
+                            layoutId="aflan-nav-pill"
+                            aria-hidden="true"
+                            transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
+                            className={`absolute inset-0 rounded-full -z-10 shadow-xs ${
+                              isLightHeaderRoute ? 'bg-espresso' : 'bg-champagne'
+                            }`}
+                          >
+                            <span
+                              className={`absolute bottom-1 left-1/2 -translate-x-1/2 w-3 h-[1.5px] rounded-full ${
+                                isLightHeaderRoute ? 'bg-champagne/75' : 'bg-obsidian/45'
+                              }`}
+                            />
+                          </motion.span>
+                        )}
+                        <span className="relative z-10 inline-flex overflow-hidden align-middle">
+                          <span className="inline-block transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/nav:-translate-y-[115%] motion-reduce:transform-none">
+                            {route.shortLabel}
+                          </span>
+                          <span
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 inline-block italic translate-y-[115%] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/nav:translate-y-0 motion-reduce:hidden"
+                          >
+                            {route.shortLabel}
+                          </span>
+                        </span>
                       </>
                     );
                   }}
@@ -252,16 +289,16 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
               onClick={() => (menuOpen ? closeMenu() : openMenu())}
               aria-expanded={menuOpen}
               aria-controls="aflan-editorial-menu"
-              aria-label={menuOpen ? 'Tutup indeks navigasi' : 'Buka indeks navigasi penuh'}
-              data-cursor={menuOpen ? 'TUTUP' : 'INDEKS'}
-              className={`inline-flex items-center gap-2 sm:gap-2.5 min-h-[44px] lg:min-h-0 px-4 py-2.5 lg:py-2 rounded-full border shrink-0 transition-all duration-300 ${
+              aria-label={menuOpen ? 'Close full navigation' : 'Open full navigation'}
+              data-cursor={menuOpen ? 'CLOSE' : 'MENU'}
+              className={`inline-flex items-center gap-2 sm:gap-2.5 min-h-[44px] lg:min-h-0 px-4 py-2.5 lg:py-2 rounded-full border shrink-0 transition-all duration-300 cursor-pointer ${
                 isLightHeaderRoute
                   ? 'border-espresso/30 bg-espresso text-ivory hover:bg-mocha hover:border-mocha'
                   : 'border-champagne/35 bg-espresso/75 text-ivory hover:bg-champagne hover:text-obsidian'
               }`}
             >
               <span className="font-mono text-[11px] tracking-[0.2em] uppercase">
-                {menuOpen ? 'Tutup' : 'Indeks'}
+                {menuOpen ? 'Close' : 'Menu'}
               </span>
               <span className="font-mono text-[10px] opacity-70 hidden sm:inline">
                 {String(navigationRoutes.length).padStart(2, '0')}
@@ -282,7 +319,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
             id="aflan-editorial-menu"
             role="dialog"
             aria-modal="true"
-            aria-label="Indeks navigasi sembilan bab"
+            aria-label="Full site navigation"
             initial={
               prefersReducedMotion
                 ? { opacity: 0 }
@@ -300,7 +337,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
           >
             <div className="studio-vignette min-h-dvh flex flex-col justify-between px-4 sm:px-6 lg:px-12 py-6">
               <div className="max-w-[1440px] w-full mx-auto flex items-center justify-between gap-2.5 sm:gap-3 pb-5 sm:pb-6 border-b border-champagne/15">
-                <Link to="/" onClick={closeMenu} aria-label="Beranda AFLAN" className="shrink-0">
+                <Link to="/" onClick={closeMenu} aria-label="AFLAN Home" className="shrink-0">
                   <BrandSignature tone="light" />
                 </Link>
                 <div className="flex items-center gap-2 shrink-0">
@@ -311,7 +348,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                         closeMenu();
                         onOpenCommandPalette();
                       }}
-                      aria-label="Buka indeks cepat Command Palette"
+                      aria-label="Open Quick Index Command Palette"
                       className="inline-flex items-center gap-1.5 min-h-[44px] lg:min-h-0 px-3 sm:px-3.5 py-2.5 lg:py-2 rounded-full border border-champagne/20 bg-espresso/70 text-champagne hover:border-champagne hover:bg-espresso transition-colors shrink-0 cursor-pointer font-mono text-[10px] sm:text-[11px] tracking-[0.15em] uppercase"
                     >
                       <Search className="size-3.5" aria-hidden="true" />
@@ -325,11 +362,11 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                       closeMenu();
                       triggerRef.current?.focus();
                     }}
-                    aria-label="Tutup menu navigasi"
-                    className="inline-flex items-center gap-2 min-h-[44px] lg:min-h-0 px-3.5 sm:px-4 py-2.5 lg:py-2 rounded-full border border-champagne/40 text-champagne hover:bg-champagne hover:text-obsidian transition-colors shrink-0"
+                    aria-label="Close navigation menu"
+                    className="inline-flex items-center gap-2 min-h-[44px] lg:min-h-0 px-3.5 sm:px-4 py-2.5 lg:py-2 rounded-full border border-champagne/40 text-champagne hover:bg-champagne hover:text-obsidian transition-colors shrink-0 cursor-pointer"
                   >
                     <span className="font-mono text-[11px] tracking-[0.2em] uppercase">
-                      Tutup
+                      Close
                     </span>
                     <X className="size-4" aria-hidden="true" />
                   </button>
@@ -338,7 +375,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
               <div className="max-w-[1440px] w-full mx-auto py-6 sm:py-10 grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-center my-auto">
                 <nav
-                  aria-label="Daftar 9 bab portofolio"
+                  aria-label="Portfolio page directory"
                   className="lg:col-span-7 min-w-0 divide-y divide-champagne/10"
                 >
                   {navigationRoutes.map((route, i) => {
@@ -405,7 +442,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                   <div className="relative overflow-hidden border border-champagne/20 bg-espresso/60 p-6">
                     <div className="flex items-center justify-between mb-4">
                       <span className="font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
-                        BAB {activePreviewRoute.index}
+                        PAGE {activePreviewRoute.index} · {activePreviewRoute.shortLabel}
                       </span>
                       <MonogramMark size={26} className="text-champagne/70" />
                     </div>

@@ -18,23 +18,24 @@ interface HeroPortraitProps {
   introReady: boolean;
 }
 
-const FEATHERED_SILHOUETTE_MASK =
-  'radial-gradient(ellipse 76% 78% at 50% 42%, #000 52%, rgba(0, 0, 0, 0.62) 75%, transparent 98%)';
+const PROGRESSIVE_EDGE_MASK = [
+  'linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.58) 14%, #000 30%, #000 70%, rgba(0, 0, 0, 0.58) 86%, transparent 100%)',
+  'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.65) 10%, #000 26%, #000 66%, rgba(0, 0, 0, 0.45) 86%, transparent 100%)',
+].join(', ');
 
 /**
- * Unboxed Seamless Editorial Silhouette portrait for the Home Hero.
- * - Zero rigid outer boxes, borders, chamfered corners, or shadows.
- * - Uses 4-side elliptical `mask-image` feathering + bottom studio dissolve so all
- *   four edges melt organically into the #171615 / #1A1412 background.
- * - Desktop: fluid pointer parallax (±6px) without boxy 3D tilt.
- * - Tablet / Mobile: soft scroll-linked vertical drift.
+ * Refined Editorial Portrait Frame for the Home Hero:
+ * - Single clean architectural outer border (`rounded-[22px] border-champagne/20`) with airy inset.
+ * - Progressive 4-side edge opacity feathering (`mask-image` composite + bottom studio dissolve)
+ *   so left, right, top, and bottom blazer edges fade organically into `#1A1412`.
+ * - Zero dangling vertical labels; anchored by 1-line dual-tone engraved `MU'AFA DZULFIQAR`.
  */
 export const HeroPortrait: React.FC<HeroPortraitProps> = ({
   portraitY,
   portraitScale,
   introReady,
 }) => {
-  const silhouetteRef = useRef<HTMLDivElement | null>(null);
+  const frameRef = useRef<HTMLDivElement | null>(null);
   const canHoverFine = useCanHoverFine();
   const prefersReducedMotion = useReducedMotion();
   const disableMotion = Boolean(prefersReducedMotion);
@@ -47,7 +48,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
   const smoothY = useSpring(pointerOffsetY, springConfig);
 
   const { scrollYProgress: touchScrollProgress } = useScroll({
-    target: silhouetteRef,
+    target: frameRef,
     offset: ['start end', 'end start'],
   });
   const touchPortraitDrift = useTransform(
@@ -72,29 +73,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
   };
 
   return (
-    <div
-      ref={silhouetteRef}
-      className="relative w-full flex items-center justify-center"
-    >
-      {/* Subtle Asymmetric Hairline Editorial Index Axis (Left Margin) */}
-      <motion.div
-        aria-hidden="true"
-        initial={disableMotion ? false : { opacity: 0, y: 12 }}
-        animate={introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-        transition={{
-          duration: disableMotion ? 0 : MOTION_DURATION,
-          delay: disableMotion ? 0 : 0.22,
-          ease: EASE_LUXURY,
-        }}
-        className="hidden sm:flex flex-col items-center gap-3 mr-2 sm:mr-3 select-none shrink-0"
-      >
-        <span className="size-1 rounded-full bg-champagne/60" />
-        <span className="block w-px h-16 bg-linear-to-b from-champagne/45 via-champagne/15 to-transparent" />
-        <span className="font-mono text-[9px] tracking-[0.28em] uppercase text-champagne/55 [writing-mode:vertical-rl] rotate-180">
-          01 · AMDZ
-        </span>
-      </motion.div>
-
+    <div ref={frameRef} className="relative w-full flex items-center justify-center">
       <motion.div
         style={{ y: portraitY }}
         initial={disableMotion ? false : { opacity: 0, y: 18 }}
@@ -107,24 +86,26 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         data-cursor-label="DOSSIER"
-        className="group relative z-10 w-full max-w-[300px] sm:max-w-[350px] lg:max-w-[390px] xl:max-w-[420px] aspect-[4/5]"
+        className="group relative z-10 w-full max-w-[300px] sm:max-w-[345px] lg:max-w-[385px] xl:max-w-[415px] aspect-[4/5] rounded-[22px] border border-champagne/20 hover:border-champagne/40 bg-[#1A1412]/70 p-3 sm:p-4 transition-colors duration-500 overflow-hidden"
       >
-        {/* Warm Unboxed Studio Ambient Halo behind Subject */}
+        {/* Subtle Warm Studio Ambient Glow inside frame */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -inset-8 opacity-75 transition-opacity duration-700 group-hover:opacity-100"
+          className="pointer-events-none absolute inset-0 opacity-75 transition-opacity duration-700 group-hover:opacity-100"
           style={{
             background:
-              'radial-gradient(ellipse 64% 60% at 50% 42%, rgba(216,195,165,0.13) 0%, rgba(138,109,75,0.06) 46%, transparent 74%)',
+              'radial-gradient(ellipse 68% 62% at 50% 42%, rgba(216,195,165,0.12) 0%, rgba(138,109,75,0.05) 48%, transparent 76%)',
           }}
         />
 
-        {/* 4-Side Optical Feathered Portrait Container (Zero Hard Crop Edges) */}
+        {/* Progressive 4-Side Edge Opacity Fading Portrait */}
         <div
-          className="relative w-full h-full overflow-hidden"
+          className="relative w-full h-full rounded-[14px] overflow-hidden"
           style={{
-            maskImage: FEATHERED_SILHOUETTE_MASK,
-            WebkitMaskImage: FEATHERED_SILHOUETTE_MASK,
+            maskImage: PROGRESSIVE_EDGE_MASK,
+            WebkitMaskImage: PROGRESSIVE_EDGE_MASK,
+            maskComposite: 'intersect',
+            WebkitMaskComposite: 'source-in',
           }}
         >
           <motion.div
@@ -153,18 +134,18 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
             </motion.div>
           </motion.div>
 
-          {/* Soft Bottom Studio Dissolve into #171615 / #1A1412 */}
+          {/* Soft Bottom Studio Dissolve into #1A1412 */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-obsidian via-obsidian/55 to-transparent"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-[#1A1412] via-[#1A1412]/55 to-transparent"
           />
         </div>
 
-        {/* Floating 1-Line Dual-Tone Engraved Signature */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-1 sm:bottom-2 z-20 px-2 flex justify-center">
+        {/* Authoritative 1-Line Dual-Tone Engraved Signature */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-4 sm:bottom-5 z-20 px-4 flex justify-center">
           <p
             aria-label="Mu'afa Dzulfiqar"
-            className="select-none flex items-baseline justify-center gap-x-2.5 whitespace-nowrap text-lg sm:text-xl md:text-[1.45rem] tracking-[0.08em] leading-none font-serif italic font-medium"
+            className="select-none flex items-baseline justify-center gap-x-2.5 whitespace-nowrap text-lg sm:text-xl md:text-[1.4rem] tracking-[0.08em] leading-none font-serif italic font-medium"
           >
             <span className="text-engraved-brown">MU&apos;AFA</span>{' '}
             <span className="text-engraved-ivory">DZULFIQAR</span>

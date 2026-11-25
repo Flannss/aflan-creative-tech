@@ -104,7 +104,7 @@ export const SkillsPage: React.FC = () => {
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4">
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
-              BAB 04 · CORE CAPABILITIES
+              CORE CAPABILITIES
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
               TECHNICAL STACK · {totalDomainsLabel} CORE DOMAINS

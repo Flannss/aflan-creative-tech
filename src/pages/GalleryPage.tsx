@@ -378,7 +378,7 @@ export const GalleryPage: React.FC = () => {
             className="flex flex-wrap items-center justify-between gap-4"
           >
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
-              BAB 07 · VISUAL ARCHIVE · {String(filteredItems.length).padStart(2, '0')} PELAT
+              VISUAL ARCHIVE · {String(filteredItems.length).padStart(2, '0')} PLATES
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
               PERSONAL PORTRAITS &amp; TYPOGRAPHIC STUDIES

@@ -113,7 +113,7 @@ export const AboutPage: React.FC = () => {
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4">
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
-              BAB 02 · PERSONAL DOSSIER
+              PERSONAL DOSSIER
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
               {personalData.positioning}
@@ -374,7 +374,7 @@ export const AboutPage: React.FC = () => {
 
             <div className="mt-10 pt-8 border-t border-espresso/15 space-y-5">
               <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-bronze font-medium">
-                FAQ KOLABORASI · QUICK BRIEF
+                COLLABORATION FAQ
               </p>
               <EditorialAccordion
                 items={collaborationFaqItems}

@@ -73,7 +73,7 @@ export const ProjectsPage: React.FC = () => {
             className="flex flex-wrap items-center justify-between gap-4"
           >
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
-              BAB 05 · SELECTED WORKS
+              SELECTED WORKS
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
               {filteredProjects.length} ENTRI DITAMPILKAN

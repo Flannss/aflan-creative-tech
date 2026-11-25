@@ -167,7 +167,7 @@ export const JourneyPage: React.FC = () => {
             className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15"
           >
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
-              BAB 03 · EXPERIENCE &amp; TIMELINE
+              CAREER TIMELINE
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
               ACADEMIC &amp; PROFESSIONAL RECORD
@@ -216,7 +216,7 @@ export const JourneyPage: React.FC = () => {
           <aside className="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
             <div className="space-y-3 pb-6 border-b border-espresso/15">
               <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-[#8A6D4B]">
-                KATEGORI AKTIF · {String(filteredMilestones.length).padStart(2, '0')} BAB
+                TIMELINE · {String(filteredMilestones.length).padStart(2, '0')} ENTRIES
               </p>
               <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight leading-[1.08] text-espresso/90">
                 {selectedCategory === 'Semua' ? (
@@ -229,7 +229,7 @@ export const JourneyPage: React.FC = () => {
               </h2>
               {activeMilestone && (
                 <p className="font-sans text-sm text-espresso/80 leading-relaxed">
-                  Bab aktif:{' '}
+                  Fase aktif:{' '}
                   <span className="font-medium text-espresso">
                     {activeMilestone.chapter} · {activeMilestone.periodLabel}
                   </span>
@@ -237,7 +237,7 @@ export const JourneyPage: React.FC = () => {
               )}
             </div>
 
-            <nav aria-label="Indeks bab perjalanan" className="space-y-2">
+            <nav aria-label="Indeks kronologi perjalanan" className="space-y-2">
               {filteredMilestones.map((item) => {
                 const isSelected = activeMilestone?.id === item.id;
                 return (
@@ -257,7 +257,7 @@ export const JourneyPage: React.FC = () => {
                           isSelected ? 'text-champagne' : 'text-mocha'
                         }`}
                       >
-                        BAB {item.chapter} · {item.category}
+                        {item.chapter} · {item.category}
                       </span>
                       <span className="block font-serif text-lg leading-snug sm:truncate mt-0.5">
                         {item.title}
@@ -312,7 +312,7 @@ export const JourneyPage: React.FC = () => {
                 to="/skills"
                 className="inline-flex items-center gap-1.5 text-espresso hover:text-mocha transition-colors"
               >
-                04 · Keahlian Teknis
+                Explore Skills
                 <ArrowRight className="size-3.5" aria-hidden="true" />
               </Link>
             </div>
@@ -404,10 +404,10 @@ export const JourneyPage: React.FC = () => {
 
                   <div className="pt-5 border-t border-champagne/15 flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.22em] uppercase text-taupe">
                     <span>
-                      BAB {String(idx + 1).padStart(2, '0')} /{' '}
+                      {item.periodLabel} · {String(idx + 1).padStart(2, '0')} /{' '}
                       {String(filteredMilestones.length).padStart(2, '0')}
                     </span>
-                    <span className="text-champagne/80">ARSIP TERVERIFIKASI · AMDZ</span>
+                    <span className="text-champagne/80">VERIFIED RECORD · AMDZ</span>
                   </div>
                 </article>
               </StackingCard>

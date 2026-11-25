@@ -1356,10 +1356,10 @@ const DesignTokenSpecimen: React.FC = () => {
             </span>
           </div>
           <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.15em] text-champagne leading-relaxed wrap-break-word">
-            BAB 06 · 10PX–12PX · TRACKING 0.15EM
+            MONO LABEL · 10PX–12PX · TRACKING 0.15EM
           </p>
           <p className="font-sans text-xs text-ivory/70 leading-relaxed">
-            Struktur indeks bab, metadata terverifikasi, dan penanda aksi antarmuka.
+            Metadata terverifikasi, label navigasi, dan penanda aksi antarmuka.
           </p>
         </div>
       </div>
@@ -1425,7 +1425,7 @@ export const CreativeLabPage: React.FC = () => {
           >
             <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
               <Sparkles className="size-3.5" aria-hidden="true" />
-              BAB 06 · CREATIVE LAB
+              CREATIVE LAB
             </span>
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-espresso/85 border border-champagne/25 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
               INTERACTIVE UI IMPLEMENTATION · PLAYGROUND

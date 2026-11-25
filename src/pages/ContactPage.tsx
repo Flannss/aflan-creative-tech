@@ -274,7 +274,7 @@ export const ContactPage: React.FC = () => {
             className="flex flex-wrap items-center justify-between gap-4"
           >
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-[#8A6D4B]">
-              BAB 09 · START A CONVERSATION
+              GET IN TOUCH
             </span>
             <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-[#8A6D4B]">
               <Clock className="size-3.5" aria-hidden="true" />
@@ -300,9 +300,8 @@ export const ContactPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.12} className="lg:col-span-5">
               <p className="font-sans text-sm md:text-base text-espresso/80 leading-relaxed max-w-prose">
-                {contactData.availabilityNote} Kirim pesan langsung ke inbox saya melalui
-                formulir tanpa perlu membuka aplikasi email terpisah, atau gunakan kanal
-                kontak cepat di samping.
+                {contactData.availabilityNote} Kirim pesan langsung ke inbox saya lewat
+                formulir ini atau gunakan kanal cepat di bawah.
               </p>
             </Reveal>
           </div>

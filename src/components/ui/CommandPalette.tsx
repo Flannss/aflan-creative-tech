@@ -14,10 +14,10 @@ import { projectsData } from '@/data/projects';
 import { contactData } from '@/data/contact';
 import { useToast } from '@/hooks/useToast';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
-import { EASE_LUXURY } from '@/utils/motion';
+import { EASE_LUXURY, SPRING_SILK } from '@/utils/motion';
 import { prefetchRoute } from '@/utils/routePrefetch';
 
-type CommandGroup = 'SITE INDEX · 01–09' | 'SELECTED WORKS · CASE STUDIES' | 'QUICK ACTIONS';
+type CommandGroup = 'NAVIGATION' | 'SELECTED WORKS' | 'QUICK ACTIONS';
 
 interface CommandItem {
   id: string;
@@ -40,8 +40,8 @@ interface CommandPaletteProps {
 }
 
 const GROUP_ORDER: readonly CommandGroup[] = [
-  'SITE INDEX · 01–09',
-  'SELECTED WORKS · CASE STUDIES',
+  'NAVIGATION',
+  'SELECTED WORKS',
   'QUICK ACTIONS',
 ];
 
@@ -118,11 +118,11 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
       return {
         id: `page-${route.path}`,
-        group: 'SITE INDEX · 01–09',
+        group: 'NAVIGATION',
         index: route.index,
         title: route.label,
         subtitle: route.subtitle,
-        badge: isCurrent ? 'AKTIF' : `BAB ${route.index}`,
+        badge: isCurrent ? 'CURRENT' : undefined,
         keywords: `${route.shortLabel} ${route.path} ${extraKeywords}`,
         prefetchPath: route.path,
         isCurrent,
@@ -135,10 +135,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
     const projectItems: CommandItem[] = projectsData.map((project) => ({
       id: `project-${project.slug}`,
-      group: 'SELECTED WORKS · CASE STUDIES',
+      group: 'SELECTED WORKS',
       index: project.index,
       title: project.title,
-      subtitle: project.subtitle,
+      subtitle: project.platform,
       badge: project.category,
       keywords: `${project.slug} ${project.platform} ${project.category} ${project.verificationState} ${project.stack.join(' ')}`,
       prefetchPath: `/projects/${project.slug}`,
@@ -153,7 +153,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       {
         id: 'action-copy-email',
         group: 'QUICK ACTIONS',
-        title: 'Salin Email Resmi',
+        title: 'Copy Official Email',
         subtitle: contactData.email,
         badge: 'COPY',
         keywords: `email mail kontak hubungi salin copy ${contactData.email}`,
@@ -169,7 +169,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       {
         id: 'action-copy-url',
         group: 'QUICK ACTIONS',
-        title: 'Salin URL Portofolio',
+        title: 'Copy Portfolio URL',
         subtitle: personalData.siteUrl,
         badge: 'COPY',
         keywords: `url link share bagikan salin copy domain ${personalData.siteDomain}`,
@@ -181,7 +181,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       {
         id: 'action-open-github',
         group: 'QUICK ACTIONS',
-        title: `Buka GitHub · ${contactData.githubHandle}`,
+        title: `Open GitHub · ${contactData.githubHandle}`,
         subtitle: contactData.githubHref,
         badge: 'OPEN',
         keywords: `github kode repositori source code ${contactData.githubHandle}`,
@@ -383,8 +383,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     ? `cmd-opt-${filteredItems[safeActiveIndex].id}`
                     : undefined
                 }
-                aria-label="Cari halaman, case study, atau quick action"
-                placeholder="Cari halaman, case study, atau quick action..."
+                aria-label="Search pages, projects, or quick actions"
+                placeholder="Search pages, projects, or actions..."
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
@@ -453,13 +453,21 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                               if (item.prefetchPath) prefetchRoute(item.prefetchPath);
                             }}
                             onClick={() => item.onSelect()}
-                            className={`w-full text-left px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3 border-l-2 transition-colors cursor-pointer ${
-                              isSelected
-                                ? 'bg-champagne/12 border-champagne text-ivory'
-                                : 'border-transparent text-ivory/80 hover:bg-champagne/6'
+                            className={`relative w-full text-left px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3 transition-colors cursor-pointer ${
+                              isSelected ? 'text-ivory' : 'text-ivory/80 hover:text-ivory'
                             }`}
                           >
-                            <div className="flex items-baseline gap-3 min-w-0 flex-1">
+                            {isSelected && (
+                              <motion.span
+                                layoutId="cmd-active-row"
+                                aria-hidden="true"
+                                transition={
+                                  prefersReducedMotion ? { duration: 0 } : SPRING_SILK
+                                }
+                                className="pointer-events-none absolute inset-0 bg-[#211A17] border-l-2 border-champagne"
+                              />
+                            )}
+                            <div className="relative z-10 flex items-baseline gap-3 min-w-0 flex-1">
                               {item.index && (
                                 <span
                                   className={`shrink-0 font-mono text-[10px] tracking-[0.18em] uppercase ${
@@ -483,7 +491,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                               </div>
                             </div>
 
-                            <div className="flex items-center gap-2 shrink-0">
+                            <div className="relative z-10 flex items-center gap-2 shrink-0">
                               {item.badge && (
                                 <span
                                   className={`hidden sm:inline-block px-2 py-0.5 rounded-full border text-[10px] font-mono uppercase tracking-[0.14em] ${
@@ -523,10 +531,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               ) : (
                 <div className="px-5 py-10 text-center space-y-3">
                   <p className="font-serif text-xl font-light text-ivory/90">
-                    Tidak ditemukan entri untuk &ldquo;{query.trim()}&rdquo;
+                    No results for &ldquo;{query.trim()}&rdquo;
                   </p>
                   <p className="font-sans text-xs text-taupe">
-                    Coba cari Beranda, SOMASII, ASIS Builder, Lab, atau Email.
+                    Try Home, Projects, SOMASII, ASIS Builder, Lab, or Email.
                   </p>
                   <button
                     type="button"
@@ -535,9 +543,9 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                       setActiveIndex(0);
                       inputRef.current?.focus();
                     }}
-                    className="inline-flex items-center px-4 py-2 rounded-full border border-champagne/30 text-[10px] font-mono uppercase tracking-[0.15em] text-champagne hover:bg-champagne hover:text-obsidian transition-colors cursor-pointer"
+                    className="inline-flex items-center min-h-[44px] sm:min-h-0 px-4 py-2 rounded-full border border-champagne/30 text-[10px] font-mono uppercase tracking-[0.15em] text-champagne hover:bg-champagne hover:text-obsidian transition-colors cursor-pointer"
                   >
-                    Reset Pencarian
+                    Reset Search
                   </button>
                 </div>
               )}
@@ -545,7 +553,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
             {/* Footer Keybind Legend */}
             <div className="border-t border-champagne/15 px-4 sm:px-5 py-2.5 bg-obsidian/50 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono uppercase tracking-[0.15em] text-taupe shrink-0">
-              <span>↑↓ Navigasi · ↵ Buka · ESC Tutup</span>
+              <span>↑↓ Navigate · ↵ Open · Esc Close</span>
               <span className="text-champagne/75">AFLAN DOSSIER · ⌘K</span>
             </div>
           </motion.div>

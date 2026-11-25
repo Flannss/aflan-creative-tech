@@ -45,30 +45,30 @@ const PERSONA_LENSES: readonly PersonaLensSpec[] = [
     tabLabel: '01 · ENGINEERING',
     headline: 'Frontend Engineering & Software QA yang terukur.',
     description:
-      'Mahasiswa S1 Teknologi Informasi (TI24A) Universitas Amikom Purwokerto & Programmer Intern di PT Puskomedia Indonesia Kreatif — memadukan React/TypeScript, Flutter SOMASII, dan Functional Testing ASIS Builder (NDA).',
+      'Mahasiswa S1 Teknologi Informasi (TI24A) Universitas Amikom Purwokerto & Programmer Intern di PT Puskomedia Indonesia Kreatif—mengerjakan React/TypeScript, Flutter SOMASII, dan pengujian fungsional ASIS Builder (NDA).',
     specs: ['React & TypeScript', 'Flutter & Firebase', 'Functional QA · ASIS NDA'],
-    primaryCta: { label: 'Explore Selected Works', to: '/projects' },
-    secondaryCta: { label: 'Perjalanan Karir', to: '/journey' },
+    primaryCta: { label: 'Selected Works', to: '/projects' },
+    secondaryCta: { label: 'Career Journey', to: '/journey' },
   },
   {
     id: 'system',
     tabLabel: '02 · VISUAL SYSTEM',
-    headline: 'Tipografi editorial dengan disiplin performa 60fps.',
+    headline: 'Tipografi editorial dengan performa 60fps.',
     description:
-      'Merancang antarmuka modern dalam palet Espresso–Champagne–Ivory, sistem motion presisi berbasis cubic-bezier(0.22, 1, 0.36, 1), serta modul eksperimental interaktif di Creative Lab.',
+      'Membangun antarmuka dalam palet Espresso–Champagne–Ivory, transisi presisi berbasis cubic-bezier(0.22, 1, 0.36, 1), serta modul eksperimental di Creative Lab.',
     specs: ['Design Tokens', 'Framer Kinematics', 'Creative Lab 01–09'],
-    primaryCta: { label: 'Buka Creative Lab', to: '/lab' },
-    secondaryCta: { label: 'Galeri Monograf', to: '/gallery' },
+    primaryCta: { label: 'Open Creative Lab', to: '/lab' },
+    secondaryCta: { label: 'Visual Gallery', to: '/gallery' },
   },
   {
     id: 'studio',
     tabLabel: '03 · STUDIO & ROLE',
-    headline: 'Kolaborasi terarah, atribusi peran yang transparan.',
+    headline: 'Kolaborasi terarah dan atribusi yang transparan.',
     description:
-      'Co-Founder & Web Developer di SatuRuangCreative, alumni SMK Wiworotomo (PKL GT Computer), pemegang sertifikasi Cisco CCNA (Jul 2026), serta penulis publikasi JPMBA Garuda (Okt 2026).',
+      'Co-Founder & Web Developer di SatuRuangCreative, alumni SMK Wiworotomo (PKL GT Computer), pemegang sertifikasi Cisco CCNA (Jul 2026), dan penulis publikasi JPMBA Garuda (Okt 2026).',
     specs: ['SatuRuangCreative', 'CCNA · Jul 2026', 'JPMBA · Okt 2026'],
     primaryCta: { label: 'Personal Dossier', to: '/about' },
-    secondaryCta: { label: 'Pencapaian', to: '/achievements' },
+    secondaryCta: { label: 'Honors & Record', to: '/achievements' },
   },
 ] as const;
 
@@ -164,7 +164,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
           >
             <h1
               aria-label="AFLAN · Aflan Mu'afa Dzulfiqar"
-              className="font-display font-['Bodoni_Moda',Georgia,serif] font-normal uppercase text-ivory leading-[0.88] text-center select-none text-[3.25rem] sm:text-7xl md:text-[5.25rem] lg:text-[6.5rem] xl:text-[7.25rem] tracking-[0.22em] pl-[0.22em] sm:tracking-[0.28em] sm:pl-[0.28em] lg:tracking-[0.36em] lg:pl-[0.36em] drop-shadow-[0_10px_30px_rgba(23,22,21,0.75)]"
+              className="font-display font-['Bodoni_Moda',Georgia,serif] font-medium uppercase text-ivory text-center select-none text-[clamp(3.25rem,9.5vw,7.25rem)] leading-[0.95] tracking-[0.1em] sm:tracking-[0.14em] md:tracking-[0.16em] pl-[0.1em] sm:pl-[0.14em] md:pl-[0.16em] drop-shadow-[0_10px_28px_rgba(23,22,21,0.65)]"
             >
               AFLAN
             </h1>
@@ -191,8 +191,8 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
               className="lg:col-span-7 flex flex-col gap-6 sm:gap-7 max-w-2xl mx-auto lg:mx-0 w-full"
             >
               <p className="font-serif text-lg sm:text-xl italic text-champagne/90 leading-snug">
-                Web Developer, UI Engineer &amp; Software QA — membangun sistem visual
-                yang jernih dan terverifikasi.
+                Membangun antarmuka web yang presisi, cepat, dan terstruktur—dari design
+                system hingga implementasi frontend.
               </p>
 
               {/* Interactive Persona Lens Switcher */}
@@ -321,7 +321,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-champagne/15">
             <div className="space-y-3">
               <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-champagne">
-                01 · SELECTED WORKS
+                FEATURED CASE STUDIES
               </p>
               <TextReveal
                 as="h2"
@@ -336,7 +336,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
 
             <Link
               to="/projects"
-              data-cursor-label="ARSIP"
+              data-cursor-label="PROJECTS"
               className="group relative inline-flex items-center gap-2 pb-1 font-mono text-xs tracking-[0.2em] uppercase text-champagne hover:text-ivory transition-colors self-start sm:self-auto"
             >
               <KineticLabel>Explore All Projects</KineticLabel>
@@ -362,7 +362,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
           >
             <div className="space-y-3">
               <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] font-medium text-bronze">
-                02 · EDITORIAL MONOGRAPH
+                EDITORIAL MONOGRAPH
               </p>
               <h2 className="font-serif text-3xl md:text-5xl font-light tracking-tight leading-[1.08] text-espresso">
                 Crafted with Discipline,{' '}
@@ -498,7 +498,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pt-2">
             <div className="lg:col-span-8 space-y-4">
               <p className="font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-champagne">
-                03 · CORRESPONDENCE
+                CORRESPONDENCE
               </p>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.08] text-ivory">
                 Terbuka untuk kolaborasi produk web,{' '}
@@ -511,7 +511,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                 to="/contact"
                 className="group inline-flex items-center gap-2.5 min-h-[44px] px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all duration-300"
               >
-                <KineticLabel>Mulai Percakapan</KineticLabel>
+                <KineticLabel>Get in Touch</KineticLabel>
                 <ArrowUpRight
                   className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                   aria-hidden="true"
@@ -520,9 +520,9 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
 
               <CopyLinkButton
                 url={contactData.email}
-                label="Salin Email"
-                copiedLabel="Email Tersalin"
-                toastTitle="Email Resmi Tersalin"
+                label="Copy Email"
+                copiedLabel="Email Copied"
+                toastTitle="Email Tersalin"
                 surface="dark"
                 size="md"
               />
