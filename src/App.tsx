@@ -135,7 +135,10 @@ const AppShell: React.FC = () => {
     }
   });
 
-  useEffect(() => warmUpCoreRoutes(), []);
+  useEffect(() => {
+    if (showSplash) return;
+    return warmUpCoreRoutes(1800);
+  }, [showSplash]);
 
   const handleEnterPortfolio = useCallback(
     (targetPath?: string) => {

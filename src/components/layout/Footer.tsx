@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ArrowUpRight, Check, Copy, Github, Search } from 'lucide-react';
 import { BrandSignature } from '@/components/brand/Monogram';
 import { KineticLabel } from '@/components/motion/KineticLabel';
@@ -28,6 +28,8 @@ function getPurwokertoWibTime(): string {
 }
 
 const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
+  const location = useLocation();
+  const isHomeRoute = location.pathname === '/';
   const [copied, setCopied] = useState(false);
   const [wibTime, setWibTime] = useState<string>(() => getPurwokertoWibTime());
   const copyTimerRef = useRef<number | null>(null);
@@ -72,52 +74,58 @@ const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
         }}
       />
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-5 md:px-8 lg:px-12 pt-14 sm:pt-20 lg:pt-24 pb-24 sm:pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 sm:pb-14 border-b border-champagne/15 items-end">
-          <div className="lg:col-span-7">
-            <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne mb-3">
-              START A CONVERSATION · COLLABORATION
-            </p>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-ivory/95">
-              Punya ide menarik untuk{' '}
-              <span className="italic text-champagne/90">dieksplorasi bersama?</span>
-            </h2>
-          </div>
+      <div
+        className={`relative z-10 max-w-[1440px] mx-auto px-5 md:px-8 lg:px-12 pb-24 sm:pb-12 ${
+          isHomeRoute ? 'pt-6 sm:pt-8' : 'pt-14 sm:pt-20 lg:pt-24'
+        }`}
+      >
+        {!isHomeRoute && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 sm:pb-14 border-b border-champagne/15 items-end">
+            <div className="lg:col-span-7">
+              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne mb-3">
+                START A CONVERSATION · COLLABORATION
+              </p>
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.08] font-light tracking-tight text-ivory/95">
+                Punya ide menarik untuk{' '}
+                <span className="italic text-champagne/90">dieksplorasi bersama?</span>
+              </h2>
+            </div>
 
-          <div className="lg:col-span-5 flex flex-wrap lg:justify-end gap-3">
-            <Link
-              to="/contact"
-              data-cursor="CONTACT"
-              onMouseEnter={() => prefetchRoute('/contact')}
-              onFocus={() => prefetchRoute('/contact')}
-              onTouchStart={() => prefetchRoute('/contact')}
-              className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
-            >
-              <KineticLabel>Mulai Percakapan</KineticLabel>
-              <ArrowUpRight
-                className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
-                aria-hidden="true"
-              />
-            </Link>
-            <button
-              type="button"
-              onClick={handleCopyEmail}
-              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full border border-champagne/35 bg-espresso/60 text-ivory font-mono text-xs tracking-[0.16em] uppercase hover:border-champagne hover:bg-espresso active:scale-[0.97] transition-all"
-            >
-              {copied ? (
-                <>
-                  <Check className="size-3.5 text-champagne" aria-hidden="true" />
-                  Email Tersalin
-                </>
-              ) : (
-                <>
-                  <Copy className="size-3.5 text-champagne" aria-hidden="true" />
-                  Salin Email
-                </>
-              )}
-            </button>
+            <div className="lg:col-span-5 flex flex-wrap lg:justify-end gap-3">
+              <Link
+                to="/contact"
+                data-cursor="CONTACT"
+                onMouseEnter={() => prefetchRoute('/contact')}
+                onFocus={() => prefetchRoute('/contact')}
+                onTouchStart={() => prefetchRoute('/contact')}
+                className="group inline-flex items-center gap-2.5 min-h-[44px] px-6 py-3.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
+              >
+                <KineticLabel>Mulai Percakapan</KineticLabel>
+                <ArrowUpRight
+                  className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+                  aria-hidden="true"
+                />
+              </Link>
+              <button
+                type="button"
+                onClick={handleCopyEmail}
+                className="inline-flex items-center gap-2 min-h-[44px] px-5 py-3.5 rounded-full border border-champagne/35 bg-espresso/60 text-ivory font-mono text-xs tracking-[0.16em] uppercase hover:border-champagne hover:bg-espresso active:scale-[0.97] transition-all cursor-pointer"
+              >
+                {copied ? (
+                  <>
+                    <Check className="size-3.5 text-champagne" aria-hidden="true" />
+                    Email Tersalin
+                  </>
+                ) : (
+                  <>
+                    <Copy className="size-3.5 text-champagne" aria-hidden="true" />
+                    Salin Email
+                  </>
+                )}
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 py-14 sm:py-16 border-b border-champagne/15">
           <div className="md:col-span-2 lg:col-span-4 space-y-5">

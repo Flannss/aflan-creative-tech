@@ -110,7 +110,7 @@ export const navigationRoutes: NavRoute[] = [
     label: 'Home',
     shortLabel: 'HOME',
     path: '/',
-    subtitle: 'Editorial Cover & Persona Lens',
+    subtitle: 'Editorial Cover, AMDZ & Works',
   },
   {
     index: '02',

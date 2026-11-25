@@ -21,19 +21,19 @@ interface HeroPortraitProps {
 
 const PROGRESSIVE_EDGE_MASK = [
   'linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.58) 14%, #000 30%, #000 70%, rgba(0, 0, 0, 0.58) 86%, transparent 100%)',
-  'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.65) 10%, #000 26%, #000 66%, rgba(0, 0, 0, 0.45) 86%, transparent 100%)',
+  'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.68) 10%, #000 26%, #000 66%, rgba(0, 0, 0, 0.45) 86%, transparent 100%)',
 ].join(', ');
 
 const TILT_SPRING = { stiffness: 145, damping: 24, mass: 0.65 };
 
 /**
- * Editorial Portrait Plate:
- * - Proportioned for balanced harmony across Mobile (`max-w-[280px]`), Tablet (`max-w-[335px]`),
- *   and Desktop (`max-w-[385px]`–`415px`).
- * - Single Champagne/Bronze hairline border framing a 4-side edge-faded studio dissolve into `#1A1412`,
- *   anchored by 1-line dual-tone engraved `MU'AFA DZULFIQAR`.
- * - Desktop (`canHoverFine`): 3D tilt, counter-parallax photo, opposite signature shift, and specular rim-light.
- * - Tablet & Mobile: smooth scroll parallax drift and subtle diagonal ambient sheen.
+ * Center-Stage Sculpted Atelier Double-Contour Portrait Frame:
+ * - Sculpted dome outer hairline silhouette (`rounded-t-[170px] rounded-b-[22px]`) paired with
+ *   a floating inner Caramel Bronze rim and micro registration pips.
+ * - Progressive 4-side edge opacity fade dissolving smoothly into `#191310`, anchored by
+ *   the dual-tone engraved 1-line `MU'AFA DZULFIQAR` signature.
+ * - Desktop (`canHoverFine`): 3D perspective tilt, counter-parallax, opposite signature drift,
+ *   and specular studio rim-light; Tablet/Mobile: smooth scroll parallax + ambient diagonal sheen.
  */
 export const HeroPortrait: React.FC<HeroPortraitProps> = ({
   portraitY,
@@ -89,7 +89,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
     enablePointerParallax ? [-2.5, 2.5] : [0, 0],
   );
 
-  const specularRimLight = useMotionTemplate`radial-gradient(280px circle at ${smoothPctX}% ${smoothPctY}%, rgba(246,241,233,0.16) 0%, rgba(201,169,124,0.09) 42%, transparent 72%)`;
+  const specularRimLight = useMotionTemplate`radial-gradient(280px circle at ${smoothPctX}% ${smoothPctY}%, rgba(244,238,228,0.16) 0%, rgba(176,135,94,0.10) 42%, transparent 72%)`;
 
   const { scrollYProgress: touchScrollProgress } = useScroll({
     target: frameRef,
@@ -130,8 +130,18 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
     <div
       ref={frameRef}
       style={enablePointerParallax ? { perspective: 1100 } : undefined}
-      className="relative w-full flex items-center justify-center lg:justify-end"
+      className="relative w-full flex items-center justify-center"
     >
+      {/* Caramel–Mocha Ambient Backdrop Halo behind Sculpted Plate */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-6 max-w-[430px] mx-auto"
+        style={{
+          background:
+            'radial-gradient(ellipse 68% 68% at 50% 48%, rgba(176,135,94,0.18) 0%, rgba(58,39,29,0.22) 48%, transparent 74%)',
+        }}
+      />
+
       <motion.div
         style={{
           y: portraitY,
@@ -142,22 +152,40 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
         animate={introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
         transition={{
           duration: disableMotion ? 0 : MOTION_DURATION,
-          delay: disableMotion ? 0 : 0.12,
+          delay: disableMotion ? 0 : 0.1,
           ease: EASE_LUXURY,
         }}
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         data-cursor-label="DOSSIER"
-        className="group relative z-10 w-full max-w-[280px] sm:max-w-[325px] md:max-w-[335px] lg:max-w-[385px] xl:max-w-[415px] aspect-[4/5] rounded-[22px] border border-champagne/25 hover:border-champagne/55 bg-[#1A1412]/75 p-3 sm:p-3.5 lg:p-4 transition-colors duration-500 overflow-hidden will-change-transform"
+        className="group relative z-10 w-full max-w-[270px] sm:max-w-[310px] lg:max-w-[345px] xl:max-w-[380px] aspect-[4/5] rounded-t-[170px] rounded-b-[22px] border border-champagne/30 hover:border-champagne/60 bg-[#191310]/80 p-3 sm:p-3.5 transition-colors duration-500 overflow-hidden will-change-transform shadow-[0_24px_64px_rgba(0,0,0,0.42)]"
       >
-        {/* Warm Studio Caramel Bronze & Champagne Ambient Backlight */}
+        {/* Floating Inner Contour Rim + Apex & Corner Registration Pips */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-[7px] z-20 rounded-t-[162px] rounded-b-[16px] border border-brass/25 group-hover:border-champagne/45 transition-colors duration-500"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute top-[6px] left-1/2 -translate-x-1/2 z-30 size-1.5 rotate-45 bg-champagne/75"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-2.5 left-2.5 z-30 size-1 rounded-full bg-brass/75"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-2.5 right-2.5 z-30 size-1 rounded-full bg-brass/75"
+        />
+
+        {/* Subtle Inner Warm Studio Glow */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 opacity-85 transition-opacity duration-700 group-hover:opacity-100"
           style={{
             background:
-              'radial-gradient(ellipse 68% 62% at 50% 42%, rgba(216,195,165,0.13) 0%, rgba(169,132,94,0.08) 48%, transparent 76%)',
+              'radial-gradient(ellipse 68% 62% at 50% 42%, rgba(223,201,168,0.14) 0%, rgba(176,135,94,0.09) 48%, transparent 76%)',
           }}
         />
 
@@ -182,7 +210,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
               className="aflan-portrait-sheen h-full w-1/2"
               style={{
                 background:
-                  'linear-gradient(90deg, transparent 0%, rgba(246,241,233,0.11) 50%, transparent 100%)',
+                  'linear-gradient(90deg, transparent 0%, rgba(244,238,228,0.11) 50%, transparent 100%)',
               }}
             />
           </div>
@@ -190,7 +218,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
 
         {/* Progressive 4-Side Edge Opacity Fading Portrait */}
         <div
-          className="relative w-full h-full rounded-[14px] overflow-hidden"
+          className="relative w-full h-full rounded-t-[158px] rounded-b-[12px] overflow-hidden"
           style={{
             maskImage: PROGRESSIVE_EDGE_MASK,
             WebkitMaskImage: PROGRESSIVE_EDGE_MASK,
@@ -224,10 +252,10 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
             </motion.div>
           </motion.div>
 
-          {/* Soft Bottom Studio Dissolve into #1A1412 Warm Espresso */}
+          {/* Soft Bottom Studio Dissolve into #191310 Warm Espresso */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-[#1A1412] via-[#1A1412]/58 to-transparent"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-[#191310] via-[#191310]/60 to-transparent"
           />
         </div>
 
@@ -238,11 +266,11 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
               ? { x: signatureShiftX, y: signatureShiftY }
               : undefined
           }
-          className="pointer-events-none absolute inset-x-0 bottom-3.5 sm:bottom-4 lg:bottom-5 z-30 px-3 flex justify-center will-change-transform"
+          className="pointer-events-none absolute inset-x-0 bottom-3.5 sm:bottom-4 z-30 px-3 flex justify-center will-change-transform"
         >
           <p
             aria-label="Mu'afa Dzulfiqar"
-            className="select-none flex items-baseline justify-center gap-x-2 whitespace-nowrap text-[0.95rem] sm:text-lg lg:text-[1.35rem] tracking-[0.08em] leading-none font-serif italic font-medium"
+            className="select-none flex items-baseline justify-center gap-x-2 whitespace-nowrap text-[0.95rem] sm:text-lg lg:text-[1.28rem] tracking-[0.08em] leading-none font-serif italic font-medium"
           >
             <span className="text-engraved-brown">MU&apos;AFA</span>{' '}
             <span className="text-engraved-ivory">DZULFIQAR</span>

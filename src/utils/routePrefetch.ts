@@ -83,11 +83,14 @@ const CORE_WARMUP_ROUTES = [
 ] as const;
 
 /**
- * Silently warms up navigation chunks after initial paint using `requestIdleCallback`
- * (or a 1.5s fallback timer) without competing with LCP.
+ * Silently warms up navigation chunks only after `delayMs` and when the main thread
+ * becomes idle so entry gate & initial LCP stay uncontested.
  */
-export function warmUpCoreRoutes(): () => void {
+export function warmUpCoreRoutes(delayMs = 1800): () => void {
   if (typeof window === 'undefined') return () => {};
+
+  let idleId: number | null = null;
+  let fallbackId: number | null = null;
 
   const runWarmup = () => {
     for (const route of CORE_WARMUP_ROUTES) {
@@ -95,11 +98,21 @@ export function warmUpCoreRoutes(): () => void {
     }
   };
 
-  if (typeof window.requestIdleCallback === 'function') {
-    const idleId = window.requestIdleCallback(runWarmup, { timeout: 2200 });
-    return () => window.cancelIdleCallback(idleId);
-  }
+  const delayTimer = window.setTimeout(() => {
+    if (typeof window.requestIdleCallback === 'function') {
+      idleId = window.requestIdleCallback(runWarmup, { timeout: 2200 });
+    } else {
+      fallbackId = window.setTimeout(runWarmup, 400);
+    }
+  }, delayMs);
 
-  const timerId = window.setTimeout(runWarmup, 1500);
-  return () => window.clearTimeout(timerId);
+  return () => {
+    window.clearTimeout(delayTimer);
+    if (idleId !== null && typeof window.cancelIdleCallback === 'function') {
+      window.cancelIdleCallback(idleId);
+    }
+    if (fallbackId !== null) {
+      window.clearTimeout(fallbackId);
+    }
+  };
 }

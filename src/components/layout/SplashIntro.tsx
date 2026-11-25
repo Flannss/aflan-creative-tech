@@ -149,7 +149,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                   transition: { duration: 0.68, ease: EASE_LUXURY },
                 }
           }
-          className="absolute top-0 inset-x-0 h-1/2 bg-[#1A1412] will-change-transform"
+          className="absolute top-0 inset-x-0 h-1/2 bg-[#191310] will-change-transform"
         />
         <motion.div
           initial={{ y: '0%' }}
@@ -161,7 +161,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                   transition: { duration: 0.68, ease: EASE_LUXURY },
                 }
           }
-          className="absolute bottom-0 inset-x-0 h-1/2 bg-[#1A1412] will-change-transform"
+          className="absolute bottom-0 inset-x-0 h-1/2 bg-[#191310] will-change-transform"
         />
         <motion.div
           initial={{ scaleX: 0, opacity: 0 }}
@@ -404,7 +404,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
                   onClick={triggerEnter}
                   autoFocus
                   data-cursor-label="ENTER"
-                  className="group relative overflow-hidden inline-flex items-center justify-center gap-3 min-h-[48px] px-9 py-3.5 rounded-full border border-champagne/45 bg-[#241B17]/85 text-ivory font-mono text-xs uppercase tracking-[0.24em] hover:bg-champagne hover:border-champagne hover:text-obsidian active:scale-[0.96] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne"
+                  className="group relative overflow-hidden inline-flex items-center justify-center gap-3 min-h-[48px] px-9 py-3.5 rounded-full border border-champagne/45 bg-[#251B16]/85 text-ivory font-mono text-xs uppercase tracking-[0.24em] hover:bg-champagne hover:border-champagne hover:text-obsidian active:scale-[0.96] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne"
                 >
                   <span
                     aria-hidden="true"

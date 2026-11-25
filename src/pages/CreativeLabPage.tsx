@@ -23,16 +23,16 @@ import { useToast } from '@/hooks/useToast';
 import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 
 const PALETTE_SWATCHES = [
-  { name: 'Warm Espresso', hex: '#1A1412' },
-  { name: 'Velvet Mocha', hex: '#241B17' },
-  { name: 'Warm Walnut', hex: '#2E221C' },
-  { name: 'Deep Cocoa', hex: '#3A2921' },
-  { name: 'Warm Chestnut', hex: '#6E4F3A' },
-  { name: 'Luxury Brown', hex: '#8A6D4B' },
-  { name: 'Caramel Bronze', hex: '#A9845E' },
-  { name: 'Champagne', hex: '#D8C3A5' },
-  { name: 'Soft Cream', hex: '#EFE7DA' },
-  { name: 'Warm Ivory', hex: '#F4EFE6' },
+  { name: 'Warm Espresso', hex: '#191310' },
+  { name: 'Velvet Mocha', hex: '#251B16' },
+  { name: 'Warm Walnut', hex: '#30221B' },
+  { name: 'Warm Chestnut', hex: '#3A271D' },
+  { name: 'Warm Cognac', hex: '#6E4F3A' },
+  { name: 'Luxury Brown', hex: '#856343' },
+  { name: 'Caramel Bronze', hex: '#B0875E' },
+  { name: 'Champagne', hex: '#DFC9A8' },
+  { name: 'Almond Cream', hex: '#EAE0D0' },
+  { name: 'Warm Ivory', hex: '#F4EEE4' },
 ] as const;
 
 const EASING_PRESETS = [
@@ -596,7 +596,7 @@ const ChiaroscuroCanvas: React.FC = () => {
 
     const drawFrame = () => {
       rafId = 0;
-      ctx.fillStyle = '#1A1412';
+      ctx.fillStyle = '#191310';
       ctx.fillRect(0, 0, width, height);
 
       const lightX = pointerRef.current.active ? pointerRef.current.x : width * 0.52;
@@ -610,9 +610,9 @@ const ChiaroscuroCanvas: React.FC = () => {
         lightY,
         Math.max(width, height) * 0.62,
       );
-      grad.addColorStop(0, 'rgba(216, 195, 165, 0.22)');
-      grad.addColorStop(0.38, 'rgba(169, 132, 94, 0.16)');
-      grad.addColorStop(1, 'rgba(26, 20, 18, 0)');
+      grad.addColorStop(0, 'rgba(223, 201, 168, 0.22)');
+      grad.addColorStop(0.38, 'rgba(176, 135, 94, 0.16)');
+      grad.addColorStop(1, 'rgba(25, 19, 16, 0)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
 
@@ -1190,31 +1190,31 @@ const MotionEasingWorkbench: React.FC = () => {
 const CORE_DESIGN_TOKENS = [
   {
     name: 'Warm Espresso',
-    hex: '#1A1412',
+    hex: '#191310',
     role: 'Primary Canvas & Editorial Veil',
     lightText: true,
     note: 'Dasar coklat mewah hangat dengan kedalaman tinggi dan tenang.',
   },
   {
     name: 'Velvet Mocha',
-    hex: '#241B17',
+    hex: '#251B16',
     role: 'Elevated Mocha Surface',
     lightText: true,
-    note: 'Permukaan kakao lembut untuk kartu arsitektural dan panel konteks.',
+    note: 'Permukaan kakao lembut untuk kartu arsitektural dan panggung karya.',
   },
   {
-    name: 'Champagne',
-    hex: '#D8C3A5',
-    role: 'Primary Gold-Warmth & Focus',
-    lightText: false,
-    note: 'Penanda fokus interaktif, garis hairline presisi, dan sorotan aktif.',
+    name: 'Caramel Bronze',
+    hex: '#B0875E',
+    role: 'Warm Metallic Accent & Borders',
+    lightText: true,
+    note: 'Sorotan hangat, garis kontur arsitektural, dan indikator aktif.',
   },
   {
     name: 'Warm Ivory',
-    hex: '#F4EFE6',
+    hex: '#F4EEE4',
     role: 'Editorial Contrast & Ink',
     lightText: false,
-    note: 'Latar kontras hangat dan tinta utama yang nyaman dibaca.',
+    note: 'Permukaan kertas terang hangat yang menyatu dengan Almond Cream.',
   },
 ] as const;
 

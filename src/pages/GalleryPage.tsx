@@ -49,11 +49,11 @@ const TONAL_FILTERS: Record<
 };
 
 const PALETTE_BARS = [
-  { name: 'Espresso', hex: '#1A1412' },
-  { name: 'Mocha', hex: '#241B17' },
-  { name: 'Chestnut', hex: '#6E4F3A' },
-  { name: 'Champagne', hex: '#D8C3A5' },
-  { name: 'Ivory', hex: '#F4EFE6' },
+  { name: 'Espresso', hex: '#191310' },
+  { name: 'Mocha', hex: '#251B16' },
+  { name: 'Chestnut', hex: '#3A271D' },
+  { name: 'Champagne', hex: '#DFC9A8' },
+  { name: 'Ivory', hex: '#F4EEE4' },
 ] as const;
 
 const OPTICAL_GRAIN_STYLE = {
@@ -177,7 +177,7 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
           <div className="my-auto py-3.5 space-y-3">
             <div className="flex flex-col gap-1.5">
               {PALETTE_BARS.map((bar) => {
-                const isLightSwatch = bar.hex === '#F4EFE6' || bar.hex === '#D8C3A5';
+                const isLightSwatch = bar.hex === '#F4EEE4' || bar.hex === '#DFC9A8';
                 return (
                   <div
                     key={bar.hex}
@@ -213,7 +213,7 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
           </div>
 
           <div className="flex items-center justify-between font-mono text-[9px] tracking-[0.18em] uppercase text-taupe border-t border-champagne/15 pt-2.5">
-            <span>#1A1412 → #F4EFE6</span>
+            <span>#191310 → #F4EEE4</span>
             <span>CHIAROSCURO</span>
           </div>
         </div>

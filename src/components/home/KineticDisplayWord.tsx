@@ -7,20 +7,19 @@ interface KineticDisplayWordProps {
   word: string;
   ariaLabel?: string;
   className?: string;
-  align?: 'center' | 'left';
   introReady?: boolean;
 }
 
 /**
- * Interactive sculptural masthead rendered in Cinzel architectural serif.
- * Fluid scale fits 375px, 768px, and 1440px without horizontal overflow,
- * isolating tactile per-letter elevation to fine-pointer desktop cursors.
+ * Monumental Editorial Masthead rendered in Playfair Display (`500/600`):
+ * - Centered magazine-cover lockup with Warm Ivory -> Champagne -> Caramel Bronze
+ *   metallic gradient per letter and fluid spring lift on fine-pointer hover.
+ * - Keeps staggered entrance synchronized with `introReady` without text clipping.
  */
 export const KineticDisplayWord: React.FC<KineticDisplayWordProps> = ({
   word,
   ariaLabel,
   className = '',
-  align = 'center',
   introReady = true,
 }) => {
   const canHoverFine = useCanHoverFine();
@@ -29,34 +28,33 @@ export const KineticDisplayWord: React.FC<KineticDisplayWordProps> = ({
   const enableInteractiveLetters = canHoverFine && !disableMotion;
 
   const letters = word.split('');
-  const alignText = align === 'left' ? 'text-center lg:text-left' : 'text-center';
-  const alignFlex =
-    align === 'left' ? 'justify-center lg:justify-start' : 'justify-center';
 
   return (
     <h1
       aria-label={ariaLabel ?? word}
-      className={`font-masthead font-semibold uppercase select-none text-[clamp(2.9rem,11.5vw,6.8rem)] leading-[0.94] tracking-[0.06em] sm:tracking-[0.08em] pb-1 text-ivory ${alignText} ${className}`}
+      className={`font-masthead font-semibold uppercase text-center select-none text-[clamp(3.6rem,11vw,8.6rem)] leading-[0.9] tracking-[0.04em] sm:tracking-[0.06em] py-2 -my-2 ${className}`}
     >
-      <span aria-hidden="true" className={`inline-flex items-baseline ${alignFlex}`}>
+      <span aria-hidden="true" className="inline-flex items-baseline justify-center">
         {letters.map((char, idx) =>
           disableMotion ? (
-            <span key={`${char}-${idx}`} className="inline-block">
+            <span
+              key={`${char}-${idx}`}
+              className="inline-block bg-linear-to-b from-[#F4EEE4] via-[#DFC9A8] to-[#B0875E] bg-clip-text text-transparent px-[0.015em]"
+            >
               {char}
             </span>
           ) : (
             <motion.span
               key={`${char}-${idx}`}
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 14 }}
               animate={
-                introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }
+                introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }
               }
               whileHover={
                 enableInteractiveLetters
                   ? {
                       y: -6,
                       scale: 1.04,
-                      color: '#C9A97C',
                       transition: {
                         type: 'spring',
                         stiffness: 340,
@@ -67,13 +65,13 @@ export const KineticDisplayWord: React.FC<KineticDisplayWordProps> = ({
                   : undefined
               }
               transition={{
-                duration: 0.46,
+                duration: 0.48,
                 delay: 0.03 + idx * 0.035,
                 ease: EASE_LUXURY,
               }}
-              className={`inline-block cursor-default will-change-transform ${
+              className={`inline-block cursor-default will-change-transform bg-linear-to-b from-[#F4EEE4] via-[#DFC9A8] to-[#B0875E] bg-clip-text text-transparent px-[0.015em] ${
                 enableInteractiveLetters
-                  ? 'transition-[filter] duration-300 hover:drop-shadow-[0_6px_18px_rgba(201,169,124,0.24)]'
+                  ? 'transition-[filter] duration-300 hover:brightness-125 hover:drop-shadow-[0_6px_18px_rgba(223,201,168,0.28)]'
                   : ''
               }`}
             >

@@ -480,15 +480,19 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
             initial={
               prefersReducedMotion
                 ? { opacity: 0 }
-                : { opacity: 0, y: -16 }
+                : { opacity: 0, y: -12 }
             }
             animate={{ opacity: 1, y: 0 }}
             exit={
               prefersReducedMotion
                 ? { opacity: 0 }
-                : { opacity: 0, y: -12 }
+                : {
+                    opacity: 0,
+                    y: -10,
+                    transition: { duration: 0.3, ease: EASE_LUXURY },
+                  }
             }
-            transition={{ duration: prefersReducedMotion ? 0.16 : 0.34, ease: EASE_LUXURY }}
+            transition={{ duration: prefersReducedMotion ? 0.16 : 0.42, ease: EASE_LUXURY }}
             data-lenis-prevent
             className="fixed inset-0 z-65 bg-obsidian text-ivory overflow-y-auto overscroll-contain will-change-[transform,opacity]"
           >
@@ -543,15 +547,16 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                       location.pathname === route.path ||
                       (route.path === '/projects' &&
                         location.pathname.startsWith('/projects/'));
-                    const isFocused = hoveredPath === route.path;
-                    const isDimmed = hoveredPath !== null && !isFocused;
+                    const isHighlighted =
+                      hoveredPath !== null ? hoveredPath === route.path : isCurrent;
+                    const isDimmed = hoveredPath !== null && !isHighlighted;
 
                     return (
                       <motion.div
                         key={route.path}
                         whileTap={prefersReducedMotion ? undefined : { scale: 0.985 }}
-                        className={`transition-opacity duration-300 ${
-                          isDimmed ? 'md:opacity-40' : 'opacity-100'
+                        className={`relative transition-opacity duration-300 ${
+                          isDimmed ? 'md:opacity-45' : 'opacity-100'
                         }`}
                       >
                         <Link
@@ -566,20 +571,20 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                           }}
                           onTouchStart={() => prefetchRoute(route.path)}
                           onClick={closeMenu}
-                          className="relative group grid grid-cols-[minmax(0,1fr)_auto] sm:grid-cols-[minmax(195px,max-content)_minmax(0,1fr)_auto] md:grid-cols-[minmax(160px,max-content)_minmax(0,1fr)_auto] xl:grid-cols-[minmax(230px,max-content)_minmax(0,1fr)_auto] items-center gap-x-4 xl:gap-x-6 py-3 sm:py-3.5 px-2 sm:px-3 min-h-[56px] transition-colors"
+                          className="relative group grid grid-cols-[minmax(0,1fr)_auto] sm:grid-cols-[minmax(195px,max-content)_minmax(0,1fr)_auto] md:grid-cols-[minmax(160px,max-content)_minmax(0,1fr)_auto] xl:grid-cols-[minmax(230px,max-content)_minmax(0,1fr)_auto] items-center gap-x-4 xl:gap-x-6 py-3 sm:py-3.5 px-3 sm:px-4 min-h-[56px] transition-colors"
                         >
-                          <span
-                            aria-hidden="true"
-                            className={`pointer-events-none absolute left-0 inset-y-2.5 w-[2px] bg-champagne transition-transform duration-300 origin-top ${
-                              isCurrent || isFocused
-                                ? 'scale-y-100'
-                                : 'scale-y-0 group-hover:scale-y-100'
-                            }`}
-                          />
+                          {isHighlighted && (
+                            <motion.span
+                              layoutId="menu-row-highlight"
+                              aria-hidden="true"
+                              transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
+                              className="pointer-events-none absolute inset-0 -z-10 bg-espresso/75 border-l-2 border-champagne"
+                            />
+                          )}
 
-                          <div className="min-w-0 flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-4">
+                          <div className="relative z-10 min-w-0 flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-4">
                             <div className="flex items-baseline gap-3 sm:gap-4 min-w-0">
-                              <span className="font-mono text-[11px] tracking-[0.22em] text-champagne/75 shrink-0">
+                              <span className="font-mono text-[11px] tracking-[0.22em] text-champagne/80 shrink-0">
                                 {route.index}
                               </span>
                               <motion.span
@@ -590,7 +595,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                                 }
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{
-                                  delay: prefersReducedMotion ? 0 : 0.03 + i * 0.025,
+                                  delay: prefersReducedMotion ? 0 : 0.04 + i * 0.03,
                                   duration: 0.36,
                                   ease: EASE_LUXURY,
                                 }}
@@ -598,9 +603,9 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                               >
                                 <span
                                   className={`inline-block font-serif text-[1.6rem] sm:text-3xl md:text-[1.75rem] xl:text-[2.45rem] leading-[1.32] py-1 pr-3 -my-1 whitespace-nowrap transition-[transform,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                                    isCurrent
-                                      ? 'text-champagne italic translate-x-1'
-                                      : 'text-ivory group-hover:text-champagne group-hover:italic group-hover:translate-x-1.5'
+                                    isHighlighted
+                                      ? 'text-champagne italic translate-x-2'
+                                      : 'text-ivory group-hover:text-champagne group-hover:italic group-hover:translate-x-2'
                                   }`}
                                 >
                                   {route.label}
@@ -618,14 +623,14 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                             </span>
                           </div>
 
-                          <span className="hidden sm:block min-w-0 text-right font-sans text-xs leading-snug text-taupe group-hover:text-ivory/90 transition-colors">
+                          <span className="relative z-10 hidden sm:block min-w-0 text-right font-sans text-xs leading-snug text-taupe group-hover:text-ivory/90 transition-colors">
                             {route.subtitle}
                           </span>
 
                           <ArrowUpRight
-                            className={`size-4 shrink-0 transition-all duration-300 ${
-                              isCurrent
-                                ? 'text-champagne'
+                            className={`relative z-10 size-4 shrink-0 transition-all duration-300 ${
+                              isHighlighted
+                                ? 'text-champagne translate-x-0.5 -translate-y-0.5'
                                 : 'text-champagne/55 group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
                             }`}
                             aria-hidden="true"
