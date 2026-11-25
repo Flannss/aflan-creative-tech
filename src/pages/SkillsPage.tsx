@@ -141,7 +141,7 @@ export const SkillsPage: React.FC = () => {
             delay={0.18}
             className="mt-10 lg:mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 border-y border-champagne/15 py-6"
           >
-            <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-obsidian/55 border border-champagne/25">
+            <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-[#1A1412]/90 border border-champagne/20">
               <div>
                 <p className="font-serif text-lg sm:text-xl font-semibold text-ivory leading-none">
                   Hands-on Experience
@@ -153,7 +153,7 @@ export const SkillsPage: React.FC = () => {
               <span className="shrink-0 size-2.5 rounded-full bg-champagne" aria-hidden="true" />
             </div>
 
-            <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-obsidian/35 border border-champagne/15">
+            <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-[#211A17]/75 border border-champagne/15">
               <div>
                 <p className="font-serif text-lg sm:text-xl font-normal text-ivory/85 leading-none">
                   Working Knowledge
@@ -165,7 +165,7 @@ export const SkillsPage: React.FC = () => {
               <span className="shrink-0 size-2.5 rounded-full bg-taupe" aria-hidden="true" />
             </div>
 
-            <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-obsidian/20 border border-dashed border-champagne/25">
+            <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-[#1A1412]/50 border border-dashed border-champagne/25">
               <div>
                 <p className="font-serif italic text-lg sm:text-xl font-light editorial-outline-strong leading-none">
                   Currently Learning
@@ -393,14 +393,20 @@ export const SkillsPage: React.FC = () => {
               ].map((node, nodeIdx) => (
                 <StaggerItem
                   key={node.num}
-                  className={`p-6 bg-obsidian/65 border border-champagne/15 flex flex-col justify-between min-h-[195px] lg:min-h-[215px] ${nodeIdx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
+                  className={`group relative overflow-hidden p-6 bg-[#1A1412] hover:bg-[#211A17] border border-champagne/15 hover:border-champagne/40 flex flex-col justify-between min-h-[195px] lg:min-h-[215px] transition-colors duration-300 ${nodeIdx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
                     }`}
                 >
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:hidden"
+                  />
                   <span className="font-serif italic text-3xl text-champagne">
                     {node.num}
                   </span>
                   <div className="pt-6">
-                    <h3 className="font-serif text-2xl text-ivory mb-2">{node.title}</h3>
+                    <h3 className="font-serif text-2xl text-ivory mb-2 group-hover:text-champagne transition-colors">
+                      {node.title}
+                    </h3>
                     <p className="font-sans text-sm lg:text-xs leading-relaxed text-ivory/75">
                       {node.body}
                     </p>

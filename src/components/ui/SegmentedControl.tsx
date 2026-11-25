@@ -39,7 +39,7 @@ export function SegmentedControl<T extends string>({
 
   const trackClass =
     surface === 'dark'
-      ? 'bg-obsidian/70 border-champagne/20'
+      ? 'bg-[#1A1412]/90 border-champagne/15'
       : 'bg-espresso/95 border-espresso/20 shadow-xs';
 
   const padClass =

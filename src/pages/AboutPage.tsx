@@ -207,7 +207,7 @@ export const AboutPage: React.FC = () => {
               </Reveal>
 
               <Reveal variant="up" delay={0.14} className="space-y-4">
-                <div className="bg-espresso text-ivory p-6 sm:p-7 border border-espresso space-y-3.5">
+                <div className="bg-[#1A1412] hover:bg-[#211A17] text-ivory p-6 sm:p-7 border border-champagne/15 transition-colors duration-300 space-y-3.5">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
                       <Briefcase className="size-3.5" aria-hidden="true" />
@@ -228,7 +228,7 @@ export const AboutPage: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="bg-offwhite text-espresso p-6 sm:p-7 border border-espresso/15 space-y-3">
+                <div className="bg-offwhite hover:bg-ivory text-espresso p-6 sm:p-7 border border-espresso/15 transition-colors duration-300 space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.22em] uppercase text-bronze font-medium">
                       <Briefcase className="size-3.5" aria-hidden="true" />
@@ -252,15 +252,21 @@ export const AboutPage: React.FC = () => {
 
               <div className="pt-4 border-t border-espresso/15">
                 <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-bronze font-medium mb-4">
-                  KARAKTER KERJA
+                  KARAKTER KERJA · ARCHITECTURAL SPEC
                 </p>
                 <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   {personalData.traits.map((trait, index) => (
                     <StaggerItem
                       key={trait}
-                      className="flex items-center justify-between px-4 py-3.5 bg-offwhite border border-espresso/10"
+                      className="group relative overflow-hidden flex items-center justify-between p-4 sm:px-5 sm:py-4 bg-offwhite hover:bg-ivory border border-espresso/15 hover:border-[#8A6D4B]/55 transition-colors duration-300"
                     >
-                      <span className="font-serif text-lg sm:text-xl text-espresso">{trait}</span>
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute top-0 inset-x-0 h-[2px] bg-[#8A6D4B] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:hidden"
+                      />
+                      <span className="font-serif text-lg sm:text-xl text-espresso group-hover:text-mocha transition-colors">
+                        {trait}
+                      </span>
                       <span className="font-mono text-[10px] tracking-[0.2em] text-bronze">
                         0{index + 1}
                       </span>

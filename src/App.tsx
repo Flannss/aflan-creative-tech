@@ -1,10 +1,11 @@
-import React, { Suspense, lazy, useState } from 'react';
+import React, { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 import {
   BrowserRouter,
   Navigate,
   Route,
   Routes,
   useLocation,
+  useNavigate,
 } from 'react-router-dom';
 import { AnimatePresence, MotionConfig } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
@@ -14,44 +15,32 @@ import { ToastProvider } from '@/components/ui/ToastProvider';
 import { SmoothScrollProvider } from '@/components/motion/SmoothScrollProvider';
 import { PageTransition } from '@/components/motion/PageTransition';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
+import {
+  loadAboutPage,
+  loadAchievementsPage,
+  loadContactPage,
+  loadCreativeLabPage,
+  loadGalleryPage,
+  loadJourneyPage,
+  loadNotFoundPage,
+  loadProjectDetailPage,
+  loadProjectsPage,
+  loadSkillsPage,
+  prefetchRoute,
+  warmUpCoreRoutes,
+} from '@/utils/routePrefetch';
 import { HomePage } from '@/pages/HomePage';
 
-const AboutPage = lazy(() =>
-  import('@/pages/AboutPage').then((m) => ({ default: m.AboutPage })),
-);
-const JourneyPage = lazy(() =>
-  import('@/pages/JourneyPage').then((m) => ({ default: m.JourneyPage })),
-);
-const SkillsPage = lazy(() =>
-  import('@/pages/SkillsPage').then((m) => ({ default: m.SkillsPage })),
-);
-const ProjectsPage = lazy(() =>
-  import('@/pages/ProjectsPage').then((m) => ({ default: m.ProjectsPage })),
-);
-const ProjectDetailPage = lazy(() =>
-  import('@/pages/ProjectDetailPage').then((m) => ({
-    default: m.ProjectDetailPage,
-  })),
-);
-const CreativeLabPage = lazy(() =>
-  import('@/pages/CreativeLabPage').then((m) => ({
-    default: m.CreativeLabPage,
-  })),
-);
-const GalleryPage = lazy(() =>
-  import('@/pages/GalleryPage').then((m) => ({ default: m.GalleryPage })),
-);
-const AchievementsPage = lazy(() =>
-  import('@/pages/AchievementsPage').then((m) => ({
-    default: m.AchievementsPage,
-  })),
-);
-const ContactPage = lazy(() =>
-  import('@/pages/ContactPage').then((m) => ({ default: m.ContactPage })),
-);
-const NotFoundPage = lazy(() =>
-  import('@/pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage })),
-);
+const AboutPage = lazy(loadAboutPage);
+const JourneyPage = lazy(loadJourneyPage);
+const SkillsPage = lazy(loadSkillsPage);
+const ProjectsPage = lazy(loadProjectsPage);
+const ProjectDetailPage = lazy(loadProjectDetailPage);
+const CreativeLabPage = lazy(loadCreativeLabPage);
+const GalleryPage = lazy(loadGalleryPage);
+const AchievementsPage = lazy(loadAchievementsPage);
+const ContactPage = lazy(loadContactPage);
+const NotFoundPage = lazy(loadNotFoundPage);
 
 const RouteFallback: React.FC = () => (
   <div
@@ -101,7 +90,9 @@ const AppRoutes: React.FC<{ introReady: boolean }> = ({ introReady }) => {
 
 const INTRO_SEEN_KEY = 'aflan-intro-seen';
 
-export const App: React.FC = () => {
+const AppShell: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [showSplash, setShowSplash] = useState<boolean>(() => {
     try {
       return (
@@ -113,39 +104,54 @@ export const App: React.FC = () => {
     }
   });
 
-  const handleEnterPortfolio = () => {
-    try {
-      window.sessionStorage.setItem(INTRO_SEEN_KEY, '1');
-    } catch {
-      // Ignore restricted storage environments
-    }
-    setShowSplash(false);
-  };
+  useEffect(() => warmUpCoreRoutes(), []);
+
+  const handleEnterPortfolio = useCallback(
+    (targetPath?: string) => {
+      try {
+        window.sessionStorage.setItem(INTRO_SEEN_KEY, '1');
+      } catch {
+        // Ignore restricted storage environments
+      }
+      if (targetPath && targetPath !== location.pathname) {
+        prefetchRoute(targetPath);
+        navigate(targetPath);
+      }
+      setShowSplash(false);
+    },
+    [location.pathname, navigate],
+  );
 
   return (
-    <MotionConfig reducedMotion="user">
-      <SmoothScrollProvider>
-        <ToastProvider>
-          <AnimatePresence mode="wait">
-            {showSplash && (
-              <SplashIntro
-                key="aflan-splash-intro"
-                onEnter={handleEnterPortfolio}
-              />
-            )}
-          </AnimatePresence>
+    <>
+      <AnimatePresence mode="wait">
+        {showSplash && (
+          <SplashIntro
+            key="aflan-splash-intro"
+            onEnter={handleEnterPortfolio}
+          />
+        )}
+      </AnimatePresence>
 
-          <BrowserRouter>
-            <Layout splashActive={showSplash}>
-              <ErrorBoundary>
-                <AppRoutes introReady={!showSplash} />
-              </ErrorBoundary>
-            </Layout>
-          </BrowserRouter>
-        </ToastProvider>
-      </SmoothScrollProvider>
-    </MotionConfig>
+      <Layout splashActive={showSplash}>
+        <ErrorBoundary>
+          <AppRoutes introReady={!showSplash} />
+        </ErrorBoundary>
+      </Layout>
+    </>
   );
 };
+
+export const App: React.FC = () => (
+  <MotionConfig reducedMotion="user">
+    <SmoothScrollProvider>
+      <ToastProvider>
+        <BrowserRouter>
+          <AppShell />
+        </BrowserRouter>
+      </ToastProvider>
+    </SmoothScrollProvider>
+  </MotionConfig>
+);
 
 export default App;

@@ -6,6 +6,7 @@ import { KineticLabel } from '@/components/motion/KineticLabel';
 import { navigationRoutes, personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
 import { useToast } from '@/hooks/useToast';
+import { prefetchRoute } from '@/utils/routePrefetch';
 
 interface FooterProps {
   onOpenCommandPalette?: () => void;
@@ -26,7 +27,7 @@ function getPurwokertoWibTime(): string {
   }
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
+const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
   const [copied, setCopied] = useState(false);
   const [wibTime, setWibTime] = useState<string>(() => getPurwokertoWibTime());
   const copyTimerRef = useRef<number | null>(null);
@@ -87,6 +88,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
             <Link
               to="/contact"
               data-cursor="KONTAK"
+              onMouseEnter={() => prefetchRoute('/contact')}
+              onFocus={() => prefetchRoute('/contact')}
+              onTouchStart={() => prefetchRoute('/contact')}
               className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
             >
               <KineticLabel>Mulai Percakapan</KineticLabel>
@@ -160,6 +164,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
                 <li key={route.path}>
                   <Link
                     to={route.path}
+                    onMouseEnter={() => prefetchRoute(route.path)}
+                    onFocus={() => prefetchRoute(route.path)}
+                    onTouchStart={() => prefetchRoute(route.path)}
                     className="group inline-flex items-baseline gap-2.5 py-0.5 text-[15px] md:text-sm text-ivory/75 hover:text-champagne transition-colors"
                   >
                     <span className="font-mono text-[10px] text-taupe group-hover:text-champagne transition-colors">
@@ -247,3 +254,5 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
     </footer>
   );
 };
+
+export const Footer = React.memo(FooterComponent);

@@ -127,19 +127,48 @@ const DynamicSpotlightStage: React.FC = () => {
 
   useEffect(() => {
     if (!autoSweep || prefersReducedMotion) return;
+    const el = stageRef.current;
     let rafId = 0;
+    let isInView = true;
     const start = performance.now();
 
     const step = (now: number) => {
+      rafId = 0;
       const elapsed = (now - start) * 0.0014;
       const x = 50 + Math.sin(elapsed) * 34;
       const y = 50 + Math.sin(elapsed * 2) * 24;
       setCoords({ x, y });
-      rafId = window.requestAnimationFrame(step);
+      if (isInView) {
+        rafId = window.requestAnimationFrame(step);
+      }
     };
 
     rafId = window.requestAnimationFrame(step);
-    return () => window.cancelAnimationFrame(rafId);
+
+    let observer: IntersectionObserver | null = null;
+    if (el && typeof IntersectionObserver !== 'undefined') {
+      observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries[0]?.isIntersecting ?? true;
+          isInView = visible;
+          if (visible && !rafId) {
+            rafId = window.requestAnimationFrame(step);
+          } else if (!visible && rafId) {
+            window.cancelAnimationFrame(rafId);
+            rafId = 0;
+          }
+        },
+        { threshold: 0.05 },
+      );
+      observer.observe(el);
+    }
+
+    return () => {
+      observer?.disconnect();
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
+    };
   }, [autoSweep, prefersReducedMotion]);
 
   const updatePointerCoords = (clientX: number, clientY: number) => {

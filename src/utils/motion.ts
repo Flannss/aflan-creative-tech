@@ -28,23 +28,20 @@ export const LUXURY_TRANSITION: Transition = {
 export const pageContentVariants: Variants = {
   initial: {
     opacity: 0,
-    y: 14,
-    scale: 0.994,
+    y: 8,
   },
   animate: {
     opacity: 1,
     y: 0,
-    scale: 1,
     transition: {
-      duration: 0.42,
+      duration: 0.26,
       ease: EASE_LUXURY,
     },
   },
   exit: {
     opacity: 0,
-    y: -6,
     transition: {
-      duration: 0.18,
+      duration: 0.09,
       ease: EASE_LUXURY,
     },
   },
@@ -52,6 +49,6 @@ export const pageContentVariants: Variants = {
 
 export const reducedPageVariants: Variants = {
   initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.12 } },
-  exit: { opacity: 0, transition: { duration: 0.08 } },
+  animate: { opacity: 1, transition: { duration: 0.1 } },
+  exit: { opacity: 0, transition: { duration: 0.06 } },
 };

@@ -56,8 +56,11 @@ const PALETTE_BARS = [
   { name: 'Ivory', hex: '#F5F0E8' },
 ] as const;
 
-const FILM_GRAIN_DATA_URI =
-  "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E\")";
+const OPTICAL_GRAIN_STYLE = {
+  backgroundImage:
+    'radial-gradient(rgba(244, 239, 230, 0.24) 0.65px, transparent 0.65px)',
+  backgroundSize: '3px 3px',
+} as const;
 
 interface PlateVisualProps {
   item: GalleryItem;
@@ -96,11 +99,8 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
         {filmGrain && (
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 opacity-20 mix-blend-overlay"
-            style={{
-              backgroundImage: FILM_GRAIN_DATA_URI,
-              backgroundSize: '160px 160px',
-            }}
+            className="pointer-events-none absolute inset-0 opacity-20 mix-blend-soft-light"
+            style={OPTICAL_GRAIN_STYLE}
           />
         )}
       </div>
@@ -250,11 +250,8 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
       {filmGrain && (
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-22 mix-blend-overlay transition-opacity duration-300"
-          style={{
-            backgroundImage: FILM_GRAIN_DATA_URI,
-            backgroundSize: '160px 160px',
-          }}
+          className="pointer-events-none absolute inset-0 opacity-20 mix-blend-soft-light transition-opacity duration-300"
+          style={OPTICAL_GRAIN_STYLE}
         />
       )}
     </div>
@@ -369,11 +366,8 @@ export const GalleryPage: React.FC = () => {
       {filmGrainEnabled && (
         <div
           aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-40 opacity-[0.045] mix-blend-overlay"
-          style={{
-            backgroundImage: FILM_GRAIN_DATA_URI,
-            backgroundSize: '180px 180px',
-          }}
+          className="pointer-events-none fixed inset-0 z-40 opacity-[0.04] mix-blend-soft-light"
+          style={OPTICAL_GRAIN_STYLE}
         />
       )}
 
@@ -497,7 +491,7 @@ export const GalleryPage: React.FC = () => {
                 const isDetailOpen = revealedCardId === item.id;
                 return (
                   <StaggerItem key={item.id} className="break-inside-avoid">
-                    <article className="group bg-espresso/40 border border-champagne/15 hover:border-champagne/50 active:border-champagne transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-[0_24px_70px_rgba(0,0,0,0.55)]">
+                    <article className="group bg-[#211A17]/80 border border-champagne/15 hover:border-champagne/50 active:border-champagne transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-[0_24px_70px_rgba(0,0,0,0.55)]">
                       <div className={`relative ${item.aspectClass} w-full overflow-hidden bg-obsidian`}>
                         <button
                           type="button"

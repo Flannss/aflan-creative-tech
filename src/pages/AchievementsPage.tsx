@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Award, CheckCircle2 } from 'lucide-react';
 import {
   achievementCategories,
@@ -9,8 +10,10 @@ import {
 import { HairlineRule, Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
+import { EASE_LUXURY } from '@/utils/motion';
 
 export const AchievementsPage: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
   const [selectedCategory, setSelectedCategory] = useState<'Semua' | AchievementCategory>(
     'Semua',
   );
@@ -118,12 +121,12 @@ export const AchievementsPage: React.FC = () => {
                   key={entry.id}
                   type="button"
                   onClick={() => setActiveId(entry.id)}
-                  className={`w-full text-left py-6 px-4 sm:px-6 md:border md:border-espresso/15 lg:border-0 active:scale-[0.99] transition-all duration-300 cursor-pointer ${
+                  className={`w-full min-h-[44px] text-left py-6 px-4 sm:px-6 md:border md:border-espresso/15 lg:border-0 active:scale-[0.99] transition-all duration-300 cursor-pointer ${
                     isOrphanOnTablet ? 'md:col-span-2' : ''
                   } ${
                     isSelected
-                      ? 'bg-espresso text-ivory md:border-espresso'
-                      : 'hover:bg-offwhite text-espresso md:bg-offwhite/60 lg:bg-transparent'
+                      ? 'bg-[#1A1412] text-ivory md:border-champagne/25'
+                      : 'hover:bg-offwhite text-espresso md:bg-offwhite/70 lg:bg-transparent'
                   }`}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
@@ -173,32 +176,50 @@ export const AchievementsPage: React.FC = () => {
           </div>
 
           {activeEntry && (
-            <aside className="hidden md:block lg:col-span-5 lg:sticky lg:top-24 bg-obsidian text-ivory border border-champagne/25 p-7 sm:p-9 shadow-2xl space-y-6">
-              <div className="flex items-center justify-between pb-5 border-b border-champagne/15">
-                <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
-                  DOSSIER CATATAN · {activeEntry.code}
-                </span>
-                <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-taupe">
-                  {activeEntry.dateLabel}
-                </span>
-              </div>
+            <aside className="hidden md:block lg:col-span-5 lg:sticky lg:top-24 bg-[#1A1412] text-ivory border border-champagne/15 p-7 sm:p-9 shadow-2xl">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeEntry.id}
+                  initial={
+                    prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 8 }
+                  }
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={
+                    prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -6 }
+                  }
+                  transition={{
+                    duration: prefersReducedMotion ? 0.12 : 0.22,
+                    ease: EASE_LUXURY,
+                  }}
+                  className="space-y-6"
+                >
+                  <div className="flex items-center justify-between pb-5 border-b border-champagne/15">
+                    <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
+                      DOSSIER CATATAN · {activeEntry.code}
+                    </span>
+                    <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-taupe">
+                      {activeEntry.dateLabel}
+                    </span>
+                  </div>
 
-              <div className="space-y-3">
-                <span className="inline-block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap px-3 py-1 border border-champagne/30 text-champagne">
-                  {activeEntry.status}
-                </span>
-                <h3 className="font-serif text-2xl sm:text-3xl font-light tracking-tight leading-tight text-ivory/95">
-                  {activeEntry.title}
-                </h3>
-                <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-taupe">
-                  {activeEntry.issuer}
-                </p>
-              </div>
+                  <div className="space-y-3">
+                    <span className="inline-block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap px-3 py-1 border border-champagne/30 text-champagne">
+                      {activeEntry.status}
+                    </span>
+                    <h3 className="font-serif text-2xl sm:text-3xl font-light tracking-tight leading-tight text-ivory/95">
+                      {activeEntry.title}
+                    </h3>
+                    <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-taupe">
+                      {activeEntry.issuer}
+                    </p>
+                  </div>
 
-              <div className="space-y-4 pt-3 border-t border-champagne/15 text-sm md:text-base leading-relaxed text-ivory/80 max-w-prose">
-                <p>{activeEntry.summary}</p>
-                <p>{activeEntry.details}</p>
-              </div>
+                  <div className="space-y-4 pt-3 border-t border-champagne/15 text-sm md:text-base leading-relaxed text-ivory/80 max-w-prose">
+                    <p>{activeEntry.summary}</p>
+                    <p>{activeEntry.details}</p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </aside>
           )}
         </div>

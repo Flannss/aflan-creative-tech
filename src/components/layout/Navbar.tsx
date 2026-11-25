@@ -8,12 +8,13 @@ import { contactData } from '@/data/contact';
 import { calculateExactAge } from '@/utils/age';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import { EASE_LUXURY, SPRING_SILK } from '@/utils/motion';
+import { prefetchRoute } from '@/utils/routePrefetch';
 
 interface NavbarProps {
   onOpenCommandPalette?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
+const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   const location = useLocation();
   const [menuOpenPath, setMenuOpenPath] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -153,6 +154,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                   key={route.path}
                   to={route.path}
                   end={route.path === '/'}
+                  onMouseEnter={() => prefetchRoute(route.path)}
+                  onFocus={() => prefetchRoute(route.path)}
+                  onTouchStart={() => prefetchRoute(route.path)}
                   className={({ isActive }) => {
                     const active = isActive || isProjectDetail;
                     if (isLightHeaderRoute) {
@@ -203,6 +207,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                   <NavLink
                     key={route.path}
                     to={route.path}
+                    onMouseEnter={() => prefetchRoute(route.path)}
+                    onFocus={() => prefetchRoute(route.path)}
+                    onTouchStart={() => prefetchRoute(route.path)}
                     className={({ isActive }) => {
                       const active = isActive || isProjectDetail;
                       return `relative px-2.5 py-2 font-mono text-[11px] tracking-[0.15em] uppercase whitespace-nowrap transition-colors ${
@@ -353,8 +360,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                       >
                         <Link
                           to={route.path}
-                          onMouseEnter={() => setHoveredPath(route.path)}
-                          onFocus={() => setHoveredPath(route.path)}
+                          onMouseEnter={() => {
+                            setHoveredPath(route.path);
+                            prefetchRoute(route.path);
+                          }}
+                          onFocus={() => {
+                            setHoveredPath(route.path);
+                            prefetchRoute(route.path);
+                          }}
+                          onTouchStart={() => prefetchRoute(route.path)}
                           onClick={closeMenu}
                           className="group grid grid-cols-[minmax(0,1fr)_auto] sm:grid-cols-[minmax(195px,max-content)_minmax(0,1fr)_auto] lg:grid-cols-[minmax(185px,max-content)_minmax(0,1fr)_auto] xl:grid-cols-[minmax(240px,max-content)_minmax(0,1fr)_auto] items-center gap-x-4 xl:gap-x-6 py-3.5 min-h-[52px] lg:min-h-0 transition-colors"
                         >
@@ -484,3 +498,5 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
     </>
   );
 };
+
+export const Navbar = React.memo(NavbarComponent);

@@ -15,6 +15,7 @@ import { contactData } from '@/data/contact';
 import { useToast } from '@/hooks/useToast';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import { EASE_LUXURY } from '@/utils/motion';
+import { prefetchRoute } from '@/utils/routePrefetch';
 
 type CommandGroup = 'SITE INDEX · 01–09' | 'SELECTED WORKS · CASE STUDIES' | 'QUICK ACTIONS';
 
@@ -26,6 +27,7 @@ interface CommandItem {
   subtitle: string;
   badge?: string;
   keywords: string;
+  prefetchPath?: string;
   external?: boolean;
   isCurrent?: boolean;
   onSelect: () => void;
@@ -122,6 +124,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         subtitle: route.subtitle,
         badge: isCurrent ? 'AKTIF' : `BAB ${route.index}`,
         keywords: `${route.shortLabel} ${route.path} ${extraKeywords}`,
+        prefetchPath: route.path,
         isCurrent,
         onSelect: () => {
           closePalette(true);
@@ -138,6 +141,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       subtitle: project.subtitle,
       badge: project.category,
       keywords: `${project.slug} ${project.platform} ${project.category} ${project.verificationState} ${project.stack.join(' ')}`,
+      prefetchPath: `/projects/${project.slug}`,
       isCurrent: location.pathname === `/projects/${project.slug}`,
       onSelect: () => {
         closePalette(true);
@@ -278,6 +282,15 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     openPalette,
     safeActiveIndex,
   ]);
+
+  // Prefetch route chunk for keyboard-highlighted CommandPalette entry
+  useEffect(() => {
+    if (!open) return;
+    const path = filteredItems[safeActiveIndex]?.prefetchPath;
+    if (path) {
+      prefetchRoute(path);
+    }
+  }, [filteredItems, open, safeActiveIndex]);
 
   // Body scroll lock & input focus management
   useEffect(() => {
@@ -431,7 +444,14 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                             type="button"
                             role="option"
                             aria-selected={isSelected}
-                            onMouseEnter={() => setActiveIndex(flatIndex)}
+                            onMouseEnter={() => {
+                              setActiveIndex(flatIndex);
+                              if (item.prefetchPath) prefetchRoute(item.prefetchPath);
+                            }}
+                            onFocus={() => {
+                              setActiveIndex(flatIndex);
+                              if (item.prefetchPath) prefetchRoute(item.prefetchPath);
+                            }}
                             onClick={() => item.onSelect()}
                             className={`w-full text-left px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3 border-l-2 transition-colors cursor-pointer ${
                               isSelected
