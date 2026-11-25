@@ -1,190 +1,274 @@
 import React, { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { useReducedMotion } from 'framer-motion';
-import { useCanHoverFine, useMediaQuery } from '@/hooks/useMediaQuery';
+import { useCanHoverFine } from '@/hooks/useMediaQuery';
 
-const TOOLTIP_OFFSET_X = 24;
-const TOOLTIP_OFFSET_Y = 24;
-const VIEWPORT_MARGIN = 14;
+type CursorMode = 'default' | 'interactive' | 'labeled' | 'hidden';
 
 /**
- * Unobtrusive editorial custom cursor aura for fine-pointer desktop devices (>= 768px).
- * - Automatically disabled on touch devices, screens < 768px, and prefers-reduced-motion.
- * - Strictly pointer-events-none and hides cleanly over text, inputs, links, and interactive controls.
+ * Luminous Ivory Architectural Reticle custom cursor for fine-pointer Desktop devices.
+ * - Crisp Luminous Ivory (#F4EFE6) with `mix-blend-difference` on diamond core & velocity-reactive outer ring.
+ * - Contextual morphs:
+ *   - `labeled` (`[data-cursor-label]` / `[data-cursor]`): high-contrast solid Ivory capsule lens with sharp Obsidian text.
+ *   - `interactive` (buttons, links, controls): locks outer ring into precision corner-bracketed frame reticle.
+ *   - `hidden`: steps back smoothly over text inputs, textareas, selects, or when pointer leaves window.
+ * - Zero React state updates on pointermove (pure 60fps RAF + DOM refs), disabled on touch/reduced-motion.
  */
 export const CustomCursor: React.FC = () => {
   const { pathname } = useLocation();
   const canHoverFine = useCanHoverFine();
-  const isTabletOrDesktop = useMediaQuery('(min-width: 768px)');
   const prefersReducedMotion = useReducedMotion();
-  const enabled = canHoverFine && isTabletOrDesktop && !prefersReducedMotion;
+  const enabled = canHoverFine && !prefersReducedMotion;
 
+  const coreRef = useRef<HTMLDivElement | null>(null);
   const ringRef = useRef<HTMLDivElement | null>(null);
-  const tooltipRef = useRef<HTMLDivElement | null>(null);
+  const lensRef = useRef<HTMLDivElement | null>(null);
   const labelRef = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
+    if (coreRef.current) coreRef.current.style.opacity = '0';
     if (ringRef.current) {
       ringRef.current.dataset.mode = 'default';
       ringRef.current.style.opacity = '0';
     }
-    if (tooltipRef.current) {
-      tooltipRef.current.dataset.visible = 'false';
+    if (lensRef.current) {
+      lensRef.current.dataset.visible = 'false';
+      lensRef.current.style.opacity = '0';
     }
   }, [pathname]);
 
   useEffect(() => {
-    if (!enabled) return;
+    const rootEl = document.documentElement;
+    if (!enabled) {
+      rootEl.classList.remove('aflan-cursor-active');
+      return;
+    }
 
-    let targetX = -120;
-    let targetY = -120;
-    let currentX = -120;
-    let currentY = -120;
+    rootEl.classList.add('aflan-cursor-active');
+
+    let targetX = -160;
+    let targetY = -160;
+    let ringX = -160;
+    let ringY = -160;
     let visible = false;
+    let pressed = false;
+    let currentMode: CursorMode = 'default';
     let rafId = 0;
 
+    const core = coreRef.current;
     const ring = ringRef.current;
-    const tooltip = tooltipRef.current;
+    const lens = lensRef.current;
     const label = labelRef.current;
 
-    const positionElements = () => {
-      if (ring) {
-        ring.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`;
+    const applyMode = (mode: CursorMode, text = '') => {
+      currentMode = mode;
+      const showMain = visible && mode !== 'hidden' && mode !== 'labeled';
+
+      if (core) {
+        core.dataset.mode = mode;
+        core.style.opacity = showMain ? '1' : '0';
       }
-
-      if (tooltip) {
-        const pillWidth = tooltip.offsetWidth || 84;
-        const pillHeight = tooltip.offsetHeight || 28;
-
-        let tipX = currentX + TOOLTIP_OFFSET_X;
-        let tipY = currentY + TOOLTIP_OFFSET_Y;
-
-        if (tipX + pillWidth > window.innerWidth - VIEWPORT_MARGIN) {
-          tipX = Math.max(VIEWPORT_MARGIN, currentX - pillWidth - TOOLTIP_OFFSET_X);
-        }
-        if (tipY + pillHeight > window.innerHeight - VIEWPORT_MARGIN) {
-          tipY = Math.max(VIEWPORT_MARGIN, currentY - pillHeight - TOOLTIP_OFFSET_Y);
-        }
-
-        tooltip.style.transform = `translate3d(${tipX}px, ${tipY}px, 0)`;
-      }
-    };
-
-    const setCursorMode = (mode: 'default' | 'hidden' | 'labeled', text = '') => {
       if (ring) {
         ring.dataset.mode = mode;
-        ring.style.opacity = visible && mode !== 'hidden' ? '1' : '0';
+        ring.style.opacity = showMain ? '1' : '0';
       }
-      if (tooltip && label) {
-        tooltip.dataset.visible = mode === 'labeled' && visible ? 'true' : 'false';
+      if (lens && label) {
+        const showLens = visible && mode === 'labeled';
+        lens.dataset.visible = showLens ? 'true' : 'false';
+        lens.style.opacity = showLens ? '1' : '0';
         if (text) {
           label.textContent = text;
         }
       }
     };
 
-    const tick = () => {
+    const render = () => {
       rafId = 0;
-      const dx = targetX - currentX;
-      const dy = targetY - currentY;
-      currentX += dx * 0.22;
-      currentY += dy * 0.22;
+      const dx = targetX - ringX;
+      const dy = targetY - ringY;
+      ringX += dx * 0.2;
+      ringY += dy * 0.2;
 
-      positionElements();
+      const pressScale = pressed ? 0.78 : 1;
 
-      if (visible && (Math.abs(dx) > 0.15 || Math.abs(dy) > 0.15)) {
-        rafId = window.requestAnimationFrame(tick);
+      if (core) {
+        core.style.transform = `translate3d(${targetX}px, ${targetY}px, 0) translate(-50%, -50%) scale(${pressScale})`;
+      }
+
+      if (ring) {
+        if (currentMode === 'default') {
+          const speed = Math.hypot(dx, dy);
+          const angle = speed > 0.6 ? Math.atan2(dy, dx) * (180 / Math.PI) : 0;
+          const stretch = speed > 0.6 ? 1 + Math.min(speed * 0.011, 0.36) : 1;
+          const squash = 1 / Math.sqrt(stretch);
+          ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) rotate(${angle.toFixed(1)}deg) scale(${(stretch * pressScale).toFixed(3)}, ${(squash * pressScale).toFixed(3)})`;
+        } else {
+          ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) scale(${pressScale})`;
+        }
+      }
+
+      if (lens) {
+        lens.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) scale(${pressed ? 0.9 : 1})`;
+      }
+
+      if (visible && (Math.abs(dx) > 0.12 || Math.abs(dy) > 0.12)) {
+        rafId = window.requestAnimationFrame(render);
       }
     };
 
-    const scheduleTick = () => {
+    const scheduleRender = () => {
       if (!rafId) {
-        rafId = window.requestAnimationFrame(tick);
+        rafId = window.requestAnimationFrame(render);
       }
     };
 
-    const handleMove = (e: PointerEvent) => {
+    const handlePointerMove = (e: PointerEvent) => {
+      if (e.pointerType && e.pointerType !== 'mouse' && e.pointerType !== 'pen') {
+        return;
+      }
+
       targetX = e.clientX;
       targetY = e.clientY;
       if (!visible) {
         visible = true;
-        currentX = targetX;
-        currentY = targetY;
+        ringX = targetX;
+        ringY = targetY;
       }
 
       const target = e.target as HTMLElement | null;
-      const isFormOrInteractive = Boolean(
+      const isInputTarget = Boolean(
+        target?.closest('input, textarea, select, [contenteditable="true"]'),
+      );
+      const labeledEl = target?.closest<HTMLElement>('[data-cursor-label], [data-cursor]');
+      const isInteractive = Boolean(
         target?.closest(
-          'input, textarea, select, label, button, a, [role="button"], [role="tab"]',
+          'a, button, label, summary, [role="button"], [role="tab"], [role="switch"], [role="checkbox"], [role="link"]',
         ),
       );
-      const isReadableText = Boolean(
-        target?.closest('p, h1, h2, h3, h4, li, dt, dd, blockquote'),
-      );
-      const labeledEl = target?.closest<HTMLElement>('[data-cursor]');
 
-      if (isFormOrInteractive || isReadableText) {
-        setCursorMode('hidden', '');
-      } else if (labeledEl && labeledEl.dataset.cursor) {
-        setCursorMode('labeled', labeledEl.dataset.cursor);
+      if (isInputTarget) {
+        applyMode('hidden');
       } else {
-        setCursorMode('default', '');
+        const customText =
+          labeledEl?.dataset.cursorLabel || labeledEl?.dataset.cursor || '';
+        if (customText) {
+          applyMode('labeled', customText);
+        } else if (isInteractive) {
+          applyMode('interactive');
+        } else {
+          applyMode('default');
+        }
       }
 
-      positionElements();
-      scheduleTick();
+      render();
+      scheduleRender();
+    };
+
+    const handlePointerDown = () => {
+      pressed = true;
+      render();
+    };
+
+    const handlePointerUp = () => {
+      pressed = false;
+      render();
     };
 
     const handleLeave = () => {
       visible = false;
+      pressed = false;
       if (rafId) {
         window.cancelAnimationFrame(rafId);
         rafId = 0;
       }
-      if (ring) {
-        ring.style.opacity = '0';
-      }
-      if (tooltip) {
-        tooltip.dataset.visible = 'false';
+      applyMode('hidden');
+    };
+
+    const handleMouseOut = (e: MouseEvent) => {
+      if (!e.relatedTarget) {
+        handleLeave();
       }
     };
 
-    window.addEventListener('pointermove', handleMove, { passive: true });
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('pointerdown', handlePointerDown, { passive: true });
+    window.addEventListener('pointerup', handlePointerUp, { passive: true });
     window.addEventListener('blur', handleLeave);
     document.addEventListener('pointerleave', handleLeave);
+    document.addEventListener('mouseout', handleMouseOut);
 
     return () => {
-      window.removeEventListener('pointermove', handleMove);
+      rootEl.classList.remove('aflan-cursor-active');
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('pointerup', handlePointerUp);
       window.removeEventListener('blur', handleLeave);
       document.removeEventListener('pointerleave', handleLeave);
+      document.removeEventListener('mouseout', handleMouseOut);
       if (rafId) {
         window.cancelAnimationFrame(rafId);
       }
     };
   }, [enabled]);
 
-  if (!enabled) return null;
+  if (!enabled || typeof document === 'undefined') return null;
 
-  return (
+  return createPortal(
     <>
+      {/* 1. Core Precision 4-Point Ivory Diamond */}
+      <div
+        ref={coreRef}
+        aria-hidden="true"
+        data-mode="default"
+        style={{ opacity: 0 }}
+        className="pointer-events-none fixed top-0 left-0 z-[9999] mix-blend-difference transition-opacity duration-150 will-change-transform"
+      >
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 10 10"
+          fill="none"
+          className="block"
+        >
+          <path
+            d="M5 0.5L6.15 3.85L9.5 5L6.15 6.15L5 9.5L3.85 6.15L0.5 5L3.85 3.85L5 0.5Z"
+            fill="#F4EFE6"
+          />
+        </svg>
+      </div>
+
+      {/* 2. Architectural Luminous Ivory Outer Ring / Interactive Reticle Frame */}
       <div
         ref={ringRef}
         aria-hidden="true"
         data-mode="default"
         style={{ opacity: 0 }}
-        className="pointer-events-none fixed top-0 left-0 z-75 size-5 rounded-full border border-champagne/45 bg-transparent transition-[width,height,background-color,border-color,opacity] duration-200 ease-out data-[mode=labeled]:size-4 data-[mode=labeled]:border-champagne/70 data-[mode=labeled]:bg-champagne/10"
-      />
+        className="pointer-events-none fixed top-0 left-0 z-[9999] size-[34px] rounded-full border border-[#F4EFE6]/85 mix-blend-difference transition-[width,height,border-radius,border-color,opacity] duration-200 ease-out will-change-transform data-[mode=interactive]:size-10 data-[mode=interactive]:rounded-md data-[mode=interactive]:border-[#F4EFE6]/25"
+      >
+        {/* Architectural corner reticle brackets shown on interactive hover */}
+        <span className="opacity-0 in-data-[mode=interactive]:opacity-100 transition-opacity duration-200">
+          <span className="absolute -top-px -left-px size-2 border-t-[1.5px] border-l-[1.5px] border-[#F4EFE6]" />
+          <span className="absolute -top-px -right-px size-2 border-t-[1.5px] border-r-[1.5px] border-[#F4EFE6]" />
+          <span className="absolute -bottom-px -left-px size-2 border-b-[1.5px] border-l-[1.5px] border-[#F4EFE6]" />
+          <span className="absolute -bottom-px -right-px size-2 border-b-[1.5px] border-r-[1.5px] border-[#F4EFE6]" />
+        </span>
+      </div>
+
+      {/* 3. High-Contrast Luminous Ivory Capsule Lens for Contextual Labels */}
       <div
-        ref={tooltipRef}
+        ref={lensRef}
         aria-hidden="true"
         data-visible="false"
-        className="pointer-events-none fixed top-0 left-0 z-75 inline-flex h-7 items-center justify-center rounded-full border border-champagne/65 bg-espresso/95 px-3 shadow-lg opacity-0 scale-95 transition-[opacity,scale] duration-150 ease-out data-[visible=true]:opacity-100 data-[visible=true]:scale-100"
+        style={{ opacity: 0 }}
+        className="pointer-events-none fixed top-0 left-0 z-[9999] inline-flex items-center justify-center rounded-full bg-[#F4EFE6] text-[#171615] px-4 py-1.5 shadow-[0_14px_34px_rgba(0,0,0,0.45)] ring-1 ring-[#D8C3A5]/60 transition-opacity duration-150 will-change-transform"
       >
         <span
           ref={labelRef}
-          className="font-mono text-[10px] tracking-[0.2em] uppercase text-champagne whitespace-nowrap"
+          className="font-mono text-[10px] font-medium tracking-[0.22em] uppercase whitespace-nowrap"
         />
       </div>
-    </>
+    </>,
+    document.body,
   );
 };

@@ -502,7 +502,7 @@ export const GalleryPage: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => setLightboxId(item.id)}
-                          data-cursor="LIHAT"
+                          data-cursor-label="VIEW"
                           aria-label={`Buka ${item.title} pada lightbox layar penuh`}
                           className="block w-full h-full text-left focus-visible:outline-2 focus-visible:outline-champagne"
                         >
@@ -642,7 +642,7 @@ export const GalleryPage: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => setLightboxId(item.id)}
-                          data-cursor="LIGHTBOX"
+                          data-cursor-label="VIEW"
                           aria-label={`Buka ${item.title} pada lightbox layar penuh`}
                           className="group relative block w-full text-left border border-champagne/20 bg-espresso/60 p-3 sm:p-5 shadow-[0_32px_90px_rgba(0,0,0,0.65)] active:scale-[0.99] transition-transform focus-visible:outline-2 focus-visible:outline-champagne"
                         >

@@ -65,7 +65,7 @@ const RouteFallback: React.FC = () => (
   </div>
 );
 
-const AppRoutes: React.FC = () => {
+const AppRoutes: React.FC<{ introReady: boolean }> = ({ introReady }) => {
   const location = useLocation();
   const { scrollTo } = useSmoothScroll();
 
@@ -80,7 +80,7 @@ const AppRoutes: React.FC = () => {
       <PageTransition key={location.pathname}>
         <Suspense fallback={<RouteFallback />}>
           <Routes location={location}>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<HomePage introReady={introReady} />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/journey" element={<JourneyPage />} />
             <Route path="/skills" element={<SkillsPage />} />
@@ -138,7 +138,7 @@ export const App: React.FC = () => {
           <BrowserRouter>
             <Layout splashActive={showSplash}>
               <ErrorBoundary>
-                <AppRoutes />
+                <AppRoutes introReady={!showSplash} />
               </ErrorBoundary>
             </Layout>
           </BrowserRouter>

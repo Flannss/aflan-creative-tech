@@ -157,6 +157,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
               />
               <Link
                 to={`/projects/${project.slug}`}
+                data-cursor-label="EXPLORE"
                 onClick={(e) => handleRowClick(e, project)}
                 onMouseEnter={(e) => handleRowEnter(e, project)}
                 onFocus={(e) => handleRowFocus(e, project)}

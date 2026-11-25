@@ -263,3 +263,18 @@ html.lenis body {
 .lenis.lenis-stopped {
   overflow: clip;
 }
+
+/* Safe Native Cursor Hiding — active only when Luminous Ivory CustomCursor is running */
+@media (hover: hover) and (pointer: fine) {
+  html.aflan-cursor-active,
+  html.aflan-cursor-active * {
+    cursor: none !important;
+  }
+
+  html.aflan-cursor-active input,
+  html.aflan-cursor-active textarea,
+  html.aflan-cursor-active select,
+  html.aflan-cursor-active [contenteditable="true"] {
+    cursor: text !important;
+  }
+}

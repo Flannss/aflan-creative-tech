@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import {
@@ -15,35 +15,24 @@ import { calculateExactAge } from '@/utils/age';
 import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { EditorialMarquee } from '@/components/ui/EditorialMarquee';
+import { HeroPortrait } from '@/components/home/HeroPortrait';
+import { KineticCursorField } from '@/components/motion/KineticCursorField';
 import { KineticLabel } from '@/components/motion/KineticLabel';
 import { HairlineRule, Reveal, StaggerGroup, StaggerItem } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { ProjectPreviewList } from '@/components/projects/ProjectPreviewList';
 import { MonogramMark } from '@/components/brand/Monogram';
 
-export const HomePage: React.FC = () => {
+interface HomePageProps {
+  introReady?: boolean;
+}
+
+export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
   const prefersReducedMotion = useReducedMotion();
   const isTabletOrDesktop = useMediaQuery('(min-width: 768px)');
   const isDesktopLayout = useMediaQuery('(min-width: 1024px)');
   const disableMotion = Boolean(prefersReducedMotion);
   const enableHeroParallax = isTabletOrDesktop && !disableMotion;
-  const [archHover, setArchHover] = useState<{ x: number; y: number; active: boolean }>({
-    x: 0,
-    y: 0,
-    active: false,
-  });
-
-  const handleArchPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!enableHeroParallax || e.pointerType === 'touch') return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const relX = ((e.clientX - rect.left) / rect.width - 0.5) * 14;
-    const relY = ((e.clientY - rect.top) / rect.height - 0.5) * 14;
-    setArchHover({ x: relX, y: relY, active: true });
-  };
-
-  const resetArchHover = () => {
-    setArchHover({ x: 0, y: 0, active: false });
-  };
 
   const heroRef = useRef<HTMLElement | null>(null);
   const philosophyRef = useRef<HTMLElement | null>(null);
@@ -113,6 +102,7 @@ export const HomePage: React.FC = () => {
         className="relative bg-obsidian text-ivory flex flex-col justify-between pt-24 sm:pt-28 pb-10 sm:pb-12 px-4 sm:px-6 lg:px-12 overflow-hidden"
       >
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 studio-vignette" />
+        <KineticCursorField variant="hero" className="z-[2]" />
         <motion.div
           aria-hidden="true"
           style={{ y: haloY }}
@@ -135,13 +125,26 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Center Layered Composition: Restrained Editorial Lockup + Separated Arch Portrait */}
-        <div className="relative z-10 max-w-[1440px] w-full mx-auto py-6 sm:py-8 lg:py-9 flex flex-col items-center justify-center">
+        {/* Center Layered Composition: Coordinated Aperture-Entry Editorial Lockup + Living 3D Arch Portrait */}
+        <motion.div
+          initial={disableMotion ? false : { scale: 1.04, opacity: 0.92 }}
+          animate={
+            introReady
+              ? { scale: 1, opacity: 1 }
+              : { scale: 1.04, opacity: 0.92 }
+          }
+          transition={{ duration: disableMotion ? 0 : 0.88, ease: EASE_LUXURY }}
+          className="relative z-10 max-w-[1440px] w-full mx-auto py-6 sm:py-8 lg:py-9 flex flex-col items-center justify-center will-change-transform"
+        >
           <motion.div
             style={{ y: wordmarkY, opacity: wordmarkOpacity }}
             initial={disableMotion ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: MOTION_DURATION, ease: EASE_LUXURY }}
+            animate={introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{
+              duration: disableMotion ? 0 : MOTION_DURATION,
+              delay: disableMotion ? 0 : 0.08,
+              ease: EASE_LUXURY,
+            }}
             className="relative z-20 w-full text-center select-none mb-5 md:mb-7 will-change-transform"
           >
             <h1
@@ -157,8 +160,12 @@ export const HomePage: React.FC = () => {
             <motion.aside
               style={{ y: dossierY }}
               initial={disableMotion ? false : { opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: MOTION_DURATION, delay: 0.22, ease: EASE_LUXURY }}
+              animate={introReady ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+              transition={{
+                duration: disableMotion ? 0 : MOTION_DURATION,
+                delay: disableMotion ? 0 : 0.26,
+                ease: EASE_LUXURY,
+              }}
               className="order-2 md:col-span-1 lg:order-1 lg:col-span-4 lg:pb-4 will-change-transform"
             >
               <div className="border border-champagne/20 bg-espresso/70 backdrop-blur-md p-5 sm:p-6 max-w-md md:max-w-none lg:max-w-md">
@@ -234,81 +241,25 @@ export const HomePage: React.FC = () => {
               </div>
             </motion.aside>
 
-            {/* Centerpiece Arch Window Portrait with Parallax Hover & Integrated Dossier Plate */}
+            {/* Centerpiece Living 3D Arch Portrait & Integrated Dossier Plate */}
             <div className="order-1 md:col-span-2 lg:order-2 lg:col-span-4 flex flex-col items-center relative">
-              <motion.div
-                style={{ y: portraitY }}
-                initial={
-                  disableMotion
-                    ? false
-                    : { opacity: 0, clipPath: 'inset(12% 0% 0% 0%)' }
-                }
-                animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }}
-                transition={{ duration: MOTION_DURATION, delay: 0.1, ease: EASE_LUXURY }}
-                onPointerMove={handleArchPointerMove}
-                onPointerLeave={resetArchHover}
-                onPointerUp={resetArchHover}
-                whileTap={disableMotion ? undefined : { scale: 0.985 }}
-                className="group relative z-10 w-full max-w-[265px] sm:max-w-[300px] lg:max-w-[310px] xl:max-w-[340px] aspect-[3/4] rounded-t-full rounded-b-lg p-2 border border-champagne/25 bg-espresso/30 shadow-[0_32px_90px_rgba(0,0,0,0.75)] transition-colors duration-500 hover:border-champagne/50"
-              >
-                <div className="relative w-full h-full rounded-t-full rounded-b-md overflow-hidden bg-obsidian">
-                  <motion.div
-                    style={{ scale: portraitScale }}
-                    className="w-full h-full will-change-transform"
-                  >
-                    <motion.div
-                      animate={
-                        disableMotion
-                          ? undefined
-                          : {
-                            x: archHover.x,
-                            y: archHover.y,
-                            scale: archHover.active ? 1.06 : 1.01,
-                          }
-                      }
-                      transition={{ type: 'spring', stiffness: 150, damping: 20, mass: 0.8 }}
-                      className="w-full h-full will-change-transform"
-                    >
-                      <img
-                        src={personalData.portraitPath}
-                        alt="Potret studio Aflan Mu'afa Dzulfiqar"
-                        loading="eager"
-                        fetchPriority="high"
-                        decoding="async"
-                        className="w-full h-full object-cover object-[50%_18%]"
-                      />
-                    </motion.div>
-                  </motion.div>
-
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 bg-linear-to-t from-obsidian via-obsidian/20 to-transparent"
-                  />
-
-                  {/* Integrated Editorial Dossier Plate inside Arch Portrait Frame */}
-                  <div className="absolute inset-x-0 bottom-0 z-20 px-4 sm:px-5 pb-4 sm:pb-5 pt-10 sm:pt-12 flex flex-col items-center text-center bg-linear-to-t from-obsidian/95 via-obsidian/75 to-transparent">
-                    <div className="w-full flex items-center justify-between text-[10px] font-mono tracking-[0.22em] uppercase text-champagne/75 pb-2.5 mb-2.5 border-b border-champagne/15">
-                      <span>POTRET · I</span>
-                      <span>AMDZ</span>
-                    </div>
-                    <p
-                      aria-hidden="true"
-                      className="select-none flex items-baseline justify-center gap-x-2 whitespace-nowrap text-lg sm:text-xl md:text-[1.45rem] tracking-[0.06em] leading-none font-serif italic font-medium"
-                    >
-                      <span className="text-engraved-brown">MU&apos;AFA</span>{' '}
-                      <span className="text-engraved-ivory">DZULFIQAR</span>
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
+              <HeroPortrait
+                portraitY={portraitY}
+                portraitScale={portraitScale}
+                introReady={introReady}
+              />
             </div>
 
             {/* Right Asymmetric Editorial Intro & Primary CTAs */}
             <motion.div
               style={{ y: copyY }}
               initial={disableMotion ? false : { opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: MOTION_DURATION, delay: 0.28, ease: EASE_LUXURY }}
+              animate={introReady ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+              transition={{
+                duration: disableMotion ? 0 : MOTION_DURATION,
+                delay: disableMotion ? 0 : 0.32,
+                ease: EASE_LUXURY,
+              }}
               className="order-3 md:col-span-1 lg:col-span-4 lg:pb-4 flex flex-col lg:items-end lg:text-right gap-4 lg:gap-5 will-change-transform"
             >
               <p
@@ -356,7 +307,7 @@ export const HomePage: React.FC = () => {
               </div>
             </motion.div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Bottom Scroll Indicator */}
         <div className="relative z-20 max-w-[1440px] w-full mx-auto pt-4 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 sm:gap-4">

@@ -71,6 +71,7 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
 
       <Link
         to={`/projects/${project.slug}`}
+        data-cursor-label="OPEN"
         onClick={(e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
             return;
