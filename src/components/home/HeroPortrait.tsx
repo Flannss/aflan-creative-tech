@@ -19,20 +19,23 @@ interface HeroPortraitProps {
   introReady: boolean;
 }
 
+const PLATE_CHAMFER_CLIP =
+  'polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px))';
+
 /**
- * Living 3D editorial arch portrait for the Home Hero.
- * - Desktop fine-pointer: true 3D spring tilt, opposite-direction image counter-parallax,
- *   offset hairline depth frame, foreground plate depth lift, and dynamic Ivory-Champagne
- *   studio rim-light specular sweep driven purely via MotionValues (0 React re-renders).
- * - Tablet / Mobile touch: scroll-linked internal portrait parallax + gentle ambient rim sheen.
- * - Preserves `POTRET · I`, `AMDZ`, hairline divider, and 1-line engraved dual-tone `MU'AFA DZULFIQAR`.
+ * Architectural Editorial Plate portrait for the Home Hero cover.
+ * - Optical Viewfinder Monograph silhouette with subtle chamfered corners,
+ *   4 thin Champagne/Ivory outer registration crop marks, and a seamless studio vignette blend.
+ * - Desktop: lightweight ±3.5deg 3D spring tilt, gentle counter-parallax, and soft specular rim sheen.
+ * - Tablet / Mobile: clean scroll-linked vertical parallax with zero continuous animation overhead.
+ * - Anchored at the base by the locked 1-line dual-tone engraved `MU'AFA DZULFIQAR` signature.
  */
 export const HeroPortrait: React.FC<HeroPortraitProps> = ({
   portraitY,
   portraitScale,
   introReady,
 }) => {
-  const archRef = useRef<HTMLDivElement | null>(null);
+  const frameRef = useRef<HTMLDivElement | null>(null);
   const canHoverFine = useCanHoverFine();
   const prefersReducedMotion = useReducedMotion();
   const disableMotion = Boolean(prefersReducedMotion);
@@ -41,36 +44,30 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
   const normX = useMotionValue(0);
   const normY = useMotionValue(0);
   const glarePctX = useMotionValue(50);
-  const glarePctY = useMotionValue(32);
+  const glarePctY = useMotionValue(34);
 
-  const springConfig = { stiffness: 160, damping: 22, mass: 0.7 };
+  const springConfig = { stiffness: 150, damping: 24, mass: 0.7 };
   const smoothNormX = useSpring(normX, springConfig);
   const smoothNormY = useSpring(normY, springConfig);
-  const smoothGlareX = useSpring(glarePctX, { stiffness: 130, damping: 24 });
-  const smoothGlareY = useSpring(glarePctY, { stiffness: 130, damping: 24 });
+  const smoothGlareX = useSpring(glarePctX, { stiffness: 120, damping: 24 });
+  const smoothGlareY = useSpring(glarePctY, { stiffness: 120, damping: 24 });
 
-  const rotateX = useTransform(smoothNormY, [-0.5, 0.5], [5.5, -5.5]);
-  const rotateY = useTransform(smoothNormX, [-0.5, 0.5], [-6.5, 6.5]);
+  const rotateX = useTransform(smoothNormY, [-0.5, 0.5], [3.5, -3.5]);
+  const rotateY = useTransform(smoothNormX, [-0.5, 0.5], [-3.5, 3.5]);
 
-  const imgParallaxX = useTransform(smoothNormX, [-0.5, 0.5], [10, -10]);
-  const imgParallaxY = useTransform(smoothNormY, [-0.5, 0.5], [8, -8]);
+  const imgParallaxX = useTransform(smoothNormX, [-0.5, 0.5], [6, -6]);
+  const imgParallaxY = useTransform(smoothNormY, [-0.5, 0.5], [5, -5]);
 
-  const frameOffsetX = useTransform(smoothNormX, [-0.5, 0.5], [-6, 6]);
-  const frameOffsetY = useTransform(smoothNormY, [-0.5, 0.5], [-5, 5]);
-
-  const plateOffsetX = useTransform(smoothNormX, [-0.5, 0.5], [-4, 4]);
-  const plateOffsetY = useTransform(smoothNormY, [-0.5, 0.5], [-3, 3]);
-
-  const specularBg = useMotionTemplate`radial-gradient(300px circle at ${smoothGlareX}% ${smoothGlareY}%, rgba(244,239,230,0.22) 0%, rgba(216,195,165,0.10) 36%, transparent 72%)`;
+  const specularBg = useMotionTemplate`radial-gradient(280px circle at ${smoothGlareX}% ${smoothGlareY}%, rgba(244,239,230,0.18) 0%, rgba(216,195,165,0.08) 38%, transparent 72%)`;
 
   const { scrollYProgress: touchScrollProgress } = useScroll({
-    target: archRef,
+    target: frameRef,
     offset: ['start end', 'end start'],
   });
   const touchPortraitShift = useTransform(
     touchScrollProgress,
     [0, 1],
-    !canHoverFine && !disableMotion ? [-10, 10] : [0, 0],
+    !canHoverFine && !disableMotion ? [-8, 8] : [0, 0],
   );
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -89,26 +86,18 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
     normX.set(0);
     normY.set(0);
     glarePctX.set(50);
-    glarePctY.set(32);
+    glarePctY.set(34);
   };
 
   return (
     <div
-      ref={archRef}
+      ref={frameRef}
       className="relative w-full flex flex-col items-center [perspective:1100px]"
     >
       <motion.div
         style={{ y: portraitY }}
-        initial={
-          disableMotion
-            ? false
-            : { opacity: 0, y: 24, clipPath: 'inset(10% 0% 0% 0%)' }
-        }
-        animate={
-          introReady
-            ? { opacity: 1, y: 0, clipPath: 'inset(0% 0% 0% 0%)' }
-            : { opacity: 0, y: 24, clipPath: 'inset(10% 0% 0% 0%)' }
-        }
+        initial={disableMotion ? false : { opacity: 0, y: 20 }}
+        animate={introReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{
           duration: disableMotion ? 0 : MOTION_DURATION,
           delay: disableMotion ? 0 : 0.16,
@@ -117,26 +106,37 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         data-cursor-label="DOSSIER"
-        className="group relative z-10 w-full max-w-[265px] sm:max-w-[300px] lg:max-w-[310px] xl:max-w-[340px] aspect-[3/4]"
+        className="group relative z-10 w-full max-w-[290px] sm:max-w-[330px] lg:max-w-[365px] xl:max-w-[395px] aspect-[4/5]"
       >
-        {/* Warm studio ambient aura halo behind arch */}
+        {/* Subtle Warm Studio Radiance behind plate */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -inset-4 rounded-t-full rounded-b-xl bg-[radial-gradient(circle_at_50%_40%,rgba(216,195,165,0.20)_0%,rgba(138,109,75,0.08)_46%,transparent_74%)] blur-xl opacity-55 group-hover:opacity-90 transition-opacity duration-700"
+          className="pointer-events-none absolute -inset-6 opacity-70 transition-opacity duration-700 group-hover:opacity-100"
+          style={{
+            background:
+              'radial-gradient(ellipse 68% 62% at 50% 42%, rgba(216,195,165,0.13) 0%, rgba(138,109,75,0.06) 44%, transparent 74%)',
+          }}
         />
 
-        {/* Secondary architectural offset hairline frame for multi-plane depth */}
-        <motion.div
+        {/* 4 Optical Viewfinder Crop / Registration Marks outside corners */}
+        <span
           aria-hidden="true"
-          style={
-            enable3D
-              ? { x: frameOffsetX, y: frameOffsetY }
-              : undefined
-          }
-          className="pointer-events-none absolute inset-0 translate-x-2 translate-y-2 rounded-t-full rounded-b-lg border border-champagne/20 transition-colors duration-500 group-hover:border-champagne/40"
+          className="pointer-events-none absolute -top-2.5 -left-2.5 size-4 border-t border-l border-champagne/65 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-0.5 group-hover:-translate-y-0.5"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-2.5 -right-2.5 size-4 border-t border-r border-ivory/65 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-2.5 -left-2.5 size-4 border-b border-l border-ivory/65 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-0.5 group-hover:translate-y-0.5"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-2.5 -right-2.5 size-4 border-b border-r border-champagne/65 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:translate-y-0.5"
         />
 
-        {/* Main 3D tilted arch container */}
+        {/* Chamfered Architectural Plate Container */}
         <motion.div
           style={
             enable3D
@@ -144,99 +144,65 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
                   rotateX,
                   rotateY,
                   transformStyle: 'preserve-3d',
+                  clipPath: PLATE_CHAMFER_CLIP,
                 }
-              : undefined
+              : { clipPath: PLATE_CHAMFER_CLIP }
           }
-          whileTap={disableMotion ? undefined : { scale: 0.985 }}
-          className="relative w-full h-full rounded-t-full rounded-b-lg p-2 border border-champagne/25 bg-espresso/35 shadow-[0_32px_90px_rgba(0,0,0,0.75)] transition-colors duration-500 group-hover:border-champagne/55 will-change-transform"
+          whileTap={disableMotion ? undefined : { scale: 0.99 }}
+          className="relative w-full h-full overflow-hidden bg-obsidian shadow-[0_28px_72px_rgba(0,0,0,0.68)] will-change-transform"
         >
-          <div className="relative w-full h-full rounded-t-full rounded-b-md overflow-hidden bg-obsidian">
-            {/* Scroll-linked vertical parallax */}
+          {/* Scroll-linked scale + touch vertical parallax */}
+          <motion.div
+            style={{
+              scale: portraitScale,
+              y: canHoverFine ? 0 : touchPortraitShift,
+            }}
+            className="w-full h-full will-change-transform"
+          >
+            {/* Subtle counter-parallax portrait image */}
             <motion.div
-              style={{
-                scale: portraitScale,
-                y: canHoverFine ? 0 : touchPortraitShift,
-              }}
+              style={enable3D ? { x: imgParallaxX, y: imgParallaxY } : undefined}
               className="w-full h-full will-change-transform"
             >
-              {/* Counter-parallax depth portrait layer */}
-              <motion.div
-                style={
-                  enable3D
-                    ? { x: imgParallaxX, y: imgParallaxY }
-                    : undefined
-                }
-                className="w-full h-full will-change-transform"
-              >
-                <img
-                  src={personalData.portraitPath}
-                  alt="Potret studio Aflan Mu'afa Dzulfiqar"
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                  className="w-full h-full object-cover object-[50%_18%] scale-[1.06] group-hover:scale-[1.09] brightness-[0.98] contrast-[1.02] group-hover:brightness-[1.05] group-hover:contrast-[1.06] transition-[transform,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transform-none"
-                />
-              </motion.div>
+              <img
+                src={personalData.portraitPath}
+                alt="Potret studio Aflan Mu'afa Dzulfiqar"
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                className="w-full h-full object-cover object-[50%_18%] scale-[1.02] group-hover:scale-[1.045] brightness-[0.98] contrast-[1.02] group-hover:brightness-[1.03] group-hover:contrast-[1.05] transition-[transform,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transform-none"
+              />
             </motion.div>
+          </motion.div>
 
-            {/* Studio Specular Glass Sweep (Desktop pointer hover) */}
-            {enable3D && (
-              <motion.div
-                aria-hidden="true"
-                style={{ background: specularBg }}
-                className="pointer-events-none absolute inset-0 z-10 mix-blend-soft-light opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              />
-            )}
-
-            {/* Touch device ambient rim-light shimmer */}
-            {!canHoverFine && !disableMotion && (
-              <motion.div
-                aria-hidden="true"
-                initial={{ opacity: 0.25, x: '-22%' }}
-                animate={{
-                  opacity: [0.22, 0.48, 0.22],
-                  x: ['-22%', '24%', '-22%'],
-                }}
-                transition={{
-                  duration: 9,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-                className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(115deg,transparent_28%,rgba(244,239,230,0.12)_50%,transparent_72%)]"
-              />
-            )}
-
-            {/* Inner vignette depth + top arch rim catchlight */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 rounded-t-full rounded-b-md shadow-[inset_0_1px_18px_rgba(244,239,230,0.14)] bg-linear-to-t from-obsidian via-obsidian/20 to-transparent"
-            />
-
-            {/* Integrated Foreground Editorial Dossier Plate inside Arch Portrait Frame */}
+          {/* Subtle Desktop Specular Sheen */}
+          {enable3D && (
             <motion.div
-              style={
-                enable3D
-                  ? {
-                      x: plateOffsetX,
-                      y: plateOffsetY,
-                      transform: 'translateZ(20px)',
-                    }
-                  : undefined
-              }
-              className="absolute inset-x-0 bottom-0 z-20 px-4 sm:px-5 pb-4 sm:pb-5 pt-10 sm:pt-12 flex flex-col items-center text-center bg-linear-to-t from-obsidian/95 via-obsidian/75 to-transparent will-change-transform"
+              aria-hidden="true"
+              style={{ background: specularBg }}
+              className="pointer-events-none absolute inset-0 z-10 mix-blend-soft-light opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            />
+          )}
+
+          {/* Seamless Studio Vignette Dissolve into #171615 */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(ellipse_92%_86%_at_50%_40%,transparent_48%,rgba(23,22,21,0.72)_88%,#171615_100%)]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 z-10 bg-linear-to-t from-obsidian via-obsidian/55 to-transparent"
+          />
+
+          {/* Authoritative 1-Line Dual-Tone Engraved Signature */}
+          <div className="absolute inset-x-0 bottom-0 z-20 px-4 sm:px-6 pb-5 sm:pb-6 pt-12 flex justify-center">
+            <p
+              aria-label="Mu'afa Dzulfiqar"
+              className="select-none flex items-baseline justify-center gap-x-2.5 whitespace-nowrap text-lg sm:text-xl md:text-[1.4rem] tracking-[0.08em] leading-none font-serif italic font-medium"
             >
-              <div className="w-full flex items-center justify-between text-[10px] font-mono tracking-[0.22em] uppercase text-champagne/75 pb-2.5 mb-2.5 border-b border-champagne/15">
-                <span>POTRET · I</span>
-                <span>AMDZ</span>
-              </div>
-              <p
-                aria-hidden="true"
-                className="select-none flex items-baseline justify-center gap-x-2 whitespace-nowrap text-lg sm:text-xl md:text-[1.45rem] tracking-[0.06em] leading-none font-serif italic font-medium"
-              >
-                <span className="text-engraved-brown">MU&apos;AFA</span>{' '}
-                <span className="text-engraved-ivory">DZULFIQAR</span>
-              </p>
-            </motion.div>
+              <span className="text-engraved-brown">MU&apos;AFA</span>{' '}
+              <span className="text-engraved-ivory">DZULFIQAR</span>
+            </p>
           </div>
         </motion.div>
       </motion.div>

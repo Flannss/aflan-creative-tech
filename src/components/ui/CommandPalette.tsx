@@ -351,7 +351,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               ease: EASE_LUXURY,
             }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-xl rounded-2xl border border-champagne/20 bg-[#1A1412]/95 backdrop-blur-xl text-ivory shadow-[0_32px_90px_rgba(0,0,0,0.78)] overflow-hidden flex flex-col max-h-[78dvh]"
+            className="w-full max-w-xl rounded-2xl border border-champagne/20 bg-[#1A1412] text-ivory shadow-[0_32px_90px_rgba(0,0,0,0.78)] overflow-hidden flex flex-col max-h-[78dvh]"
           >
             {/* Search Input Header */}
             <div className="flex items-center gap-3 px-4 sm:px-5 py-3.5 border-b border-champagne/15 focus-within:border-champagne/40 transition-colors shrink-0">

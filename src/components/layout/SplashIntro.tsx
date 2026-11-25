@@ -49,12 +49,9 @@ const ruleVariants = {
   },
 };
 
-const FILM_GRAIN_DATA_URI =
-  "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E\")";
-
 /**
  * Luxury editorial entry gate revealed once per session before the Hero.
- * Features a pointer-reactive kinetic canvas field, warm spotlight glow,
+ * Features a lightweight pointer-reactive kinetic field, warm studio radiance,
  * curved hairline frame with architectural corner accents, and a cinematic
  * dual-panel horizontal aperture curtain exit into the homepage.
  */
@@ -181,47 +178,13 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         }
         className="relative z-10 w-full h-full flex flex-col items-center justify-between px-6 py-7 sm:px-12 sm:py-12 md:px-16 md:py-14 will-change-[transform,opacity]"
       >
-        {/* Layered atmospheric depth & Kinetic Cursor Field */}
+        {/* Layered atmospheric depth & Kinetic Cursor Field (0 heavy SVG filters) */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-          <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0.65, scale: 0.96 }}
-            animate={
-              prefersReducedMotion
-                ? { opacity: 0.72, scale: 1 }
-                : { opacity: [0.65, 0.92, 0.65], scale: [0.96, 1.08, 0.96] }
-            }
-            transition={
-              prefersReducedMotion
-                ? undefined
-                : { duration: 10, repeat: Infinity, ease: 'easeInOut' }
-            }
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(125vw,900px)] h-[min(125vw,900px)] rounded-full will-change-transform"
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(110vw,820px)] h-[min(110vw,820px)] rounded-full opacity-80"
             style={{
               background:
-                'radial-gradient(circle at center, rgba(165,126,95,0.28) 0%, rgba(118,86,65,0.16) 34%, rgba(43,29,23,0.06) 62%, transparent 76%)',
-            }}
-          />
-
-          <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0.45, x: '-6%', y: '-4%' }}
-            animate={
-              prefersReducedMotion
-                ? { opacity: 0.45 }
-                : {
-                    opacity: [0.4, 0.65, 0.4],
-                    x: ['-6%', '6%', '-6%'],
-                    y: ['-4%', '5%', '-4%'],
-                  }
-            }
-            transition={
-              prefersReducedMotion
-                ? undefined
-                : { duration: 14, repeat: Infinity, ease: 'easeInOut' }
-            }
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(95vw,660px)] h-[min(95vw,660px)] rounded-full will-change-transform"
-            style={{
-              background:
-                'radial-gradient(circle at center, rgba(216,195,165,0.14) 0%, rgba(118,86,65,0.08) 42%, transparent 72%)',
+                'radial-gradient(circle at center, rgba(165,126,95,0.24) 0%, rgba(118,86,65,0.14) 36%, rgba(43,29,23,0.05) 64%, transparent 76%)',
             }}
           />
 
@@ -240,11 +203,6 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
               background:
                 'radial-gradient(circle at 50% 48%, transparent 34%, rgba(10,8,7,0.45) 72%, rgba(6,5,4,0.82) 100%)',
             }}
-          />
-
-          <div
-            className="absolute inset-0 opacity-[0.035] mix-blend-overlay"
-            style={{ backgroundImage: FILM_GRAIN_DATA_URI, backgroundSize: '200px 200px' }}
           />
         </div>
 

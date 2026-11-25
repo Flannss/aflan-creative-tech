@@ -38,8 +38,6 @@ export const Layout: React.FC<LayoutProps> = ({ children, splashActive = false }
         Lompat ke konten utama
       </a>
 
-      <div className="aflan-grain-overlay" aria-hidden="true" />
-
       <ScrollProgress />
       <BackToTop />
       <CustomCursor />

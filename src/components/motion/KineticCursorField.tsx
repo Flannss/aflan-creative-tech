@@ -19,12 +19,15 @@ interface KineticNode {
   oy: number;
 }
 
+const IDLE_SLEEP_MS = 1200;
+
 /**
  * Lightweight 60fps HTML5 Canvas field rendering ultra-thin architectural silk ribbons
  * and magnetic micro-nodes in Ivory & Champagne.
- * - Desktop fine-pointer: bends elastically along pointer position and velocity without React re-renders.
- * - Touch devices: switches to subtle ambient breathing drift.
- * - Honors `prefers-reduced-motion` (single static editorial frame) and pauses when scrolled out of view.
+ * - Desktop fine-pointer: caps DPR at 1.5, bends elastically along pointer velocity,
+ *   and auto-sleeps RAF after 1.2s of pointer inactivity (0% idle CPU).
+ * - Touch devices (Mobile / Tablet): renders a zero-cost static CSS radial ambient gradient.
+ * - Honors `prefers-reduced-motion` (static editorial composition, zero RAF).
  */
 export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
   variant = 'hero',
@@ -36,6 +39,7 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
   const interactive = canHoverFine && !prefersReducedMotion;
 
   useEffect(() => {
+    if (!canHoverFine) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -46,6 +50,7 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
     let rafId = 0;
     let isInView = true;
     let time = 0;
+    let lastActiveTime = performance.now();
 
     const pointer = {
       x: 0,
@@ -60,8 +65,7 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
     let nodes: KineticNode[] = [];
 
     const buildNodes = () => {
-      const isCompact = width < 1024;
-      const count = isCompact ? 9 : 16;
+      const count = 10;
       const tones = [
         'rgba(244, 239, 230, 0.20)',
         'rgba(216, 195, 165, 0.22)',
@@ -84,7 +88,7 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       width = rect.width;
       height = rect.height;
       canvas.width = Math.max(1, Math.floor(width * dpr));
@@ -93,16 +97,11 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
       buildNodes();
     };
 
-    const drawRibbon = (
-      index: number,
-      total: number,
-      t: number,
-      isCompact: boolean,
-    ) => {
+    const drawRibbon = (index: number, total: number, t: number) => {
       const ratio = (index + 1) / (total + 1);
-      const baseY = height * (0.18 + ratio * 0.64);
-      const segments = isCompact ? 10 : 16;
-      const amp = (variant === 'gate' ? 24 : 28) + (index % 2) * 8;
+      const baseY = height * (0.2 + ratio * 0.6);
+      const segments = 12;
+      const amp = (variant === 'gate' ? 22 : 26) + (index % 2) * 8;
       const freq = 1.65 + index * 0.22;
 
       const pts: Array<{ x: number; y: number }> = [];
@@ -117,13 +116,13 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
           const dx = x - pointer.x;
           const dy = y - pointer.y;
           const dist = Math.hypot(dx, dy);
-          const radius = 260;
+          const radius = 250;
           if (dist < radius) {
             const influence = Math.pow(1 - dist / radius, 1.8);
             const sign = dy >= 0 ? 1 : -1;
             y +=
-              sign * influence * 34 +
-              Math.max(-24, Math.min(24, pointer.vy * 1.15)) * influence;
+              sign * influence * 32 +
+              Math.max(-22, Math.min(22, pointer.vy * 1.1)) * influence;
           }
         }
         pts.push({ x, y });
@@ -143,7 +142,7 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
       ctx.strokeStyle = isIvory
         ? 'rgba(244, 239, 230, 0.095)'
         : 'rgba(216, 195, 165, 0.145)';
-      ctx.lineWidth = isIvory ? 0.9 : 1.1;
+      ctx.lineWidth = isIvory ? 0.9 : 1.05;
       ctx.stroke();
     };
 
@@ -163,55 +162,62 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
 
       ctx.clearRect(0, 0, width, height);
 
-      if (!prefersReducedMotion) {
-        const isCompact = width < 1024;
-        time += isCompact ? 0.008 : 0.012;
+      const now = performance.now();
+      const idleElapsed = now - lastActiveTime;
+      const shouldStep = interactive && idleElapsed < IDLE_SLEEP_MS;
+
+      if (shouldStep) {
+        time += 0.011;
       }
 
+      let maxDelta = 0;
       if (interactive) {
         const prevX = pointer.x;
         const prevY = pointer.y;
-        pointer.x += (pointer.targetX - pointer.x) * 0.14;
-        pointer.y += (pointer.targetY - pointer.y) * 0.14;
+        const dxTarget = pointer.targetX - pointer.x;
+        const dyTarget = pointer.targetY - pointer.y;
+        pointer.x += dxTarget * 0.16;
+        pointer.y += dyTarget * 0.16;
         pointer.vx = (pointer.x - prevX) * 0.85 + pointer.vx * 0.15;
         pointer.vy = (pointer.y - prevY) * 0.85 + pointer.vy * 0.15;
+        maxDelta = Math.max(maxDelta, Math.abs(dxTarget), Math.abs(dyTarget));
       }
 
-      const isCompact = width < 1024;
-      const ribbonCount = isCompact ? 3 : variant === 'gate' ? 4 : 5;
+      const ribbonCount = 3;
       for (let r = 0; r < ribbonCount; r += 1) {
-        drawRibbon(r, ribbonCount, time, isCompact);
+        drawRibbon(r, ribbonCount, time);
       }
 
-      // Update & draw magnetic micro-nodes
       const resolvedNodes: Array<{ x: number; y: number; node: KineticNode }> = [];
       for (const node of nodes) {
         const baseX =
           node.bx * width +
-          (prefersReducedMotion ? 0 : Math.sin(time * node.speed + node.phase) * 14);
+          (prefersReducedMotion ? 0 : Math.sin(time * node.speed + node.phase) * 12);
         const baseY =
           node.by * height +
-          (prefersReducedMotion ? 0 : Math.cos(time * node.speed * 0.9 + node.phase) * 12);
+          (prefersReducedMotion ? 0 : Math.cos(time * node.speed * 0.9 + node.phase) * 10);
 
-        if (interactive && pointer.active) {
+        if (interactive && pointer.active && idleElapsed < IDLE_SLEEP_MS) {
           const dx = baseX - pointer.x;
           const dy = baseY - pointer.y;
           const dist = Math.hypot(dx, dy) || 1;
-          const radius = 190;
+          const radius = 185;
           if (dist < radius) {
-            const pull = (1 - dist / radius) * 26;
-            const targetOx = (dx / dist) * pull + pointer.vx * 0.65;
-            const targetOy = (dy / dist) * pull + pointer.vy * 0.65;
+            const pull = (1 - dist / radius) * 24;
+            const targetOx = (dx / dist) * pull + pointer.vx * 0.6;
+            const targetOy = (dy / dist) * pull + pointer.vy * 0.6;
             node.ox += (targetOx - node.ox) * 0.16;
             node.oy += (targetOy - node.oy) * 0.16;
           } else {
-            node.ox *= 0.9;
-            node.oy *= 0.9;
+            node.ox *= 0.88;
+            node.oy *= 0.88;
           }
         } else {
-          node.ox *= 0.9;
-          node.oy *= 0.9;
+          node.ox *= 0.88;
+          node.oy *= 0.88;
         }
+
+        maxDelta = Math.max(maxDelta, Math.abs(node.ox), Math.abs(node.oy));
 
         const nx = baseX + node.ox;
         const ny = baseY + node.oy;
@@ -227,12 +233,11 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
         }
       }
 
-      // Subtle orbital connectors toward cursor (Desktop fine pointer only)
       if (interactive && pointer.active) {
         for (const item of resolvedNodes) {
           const dist = Math.hypot(item.x - pointer.x, item.y - pointer.y);
-          if (dist < 170) {
-            const alpha = (1 - dist / 170) * 0.18;
+          if (dist < 165) {
+            const alpha = (1 - dist / 165) * 0.16;
             ctx.strokeStyle = `rgba(244, 239, 230, ${alpha.toFixed(3)})`;
             ctx.lineWidth = 0.75;
             ctx.beginPath();
@@ -243,7 +248,14 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
         }
       }
 
-      if (!prefersReducedMotion && isInView) {
+      if (interactive && isInView && (idleElapsed < IDLE_SLEEP_MS || maxDelta > 0.08)) {
+        rafId = window.requestAnimationFrame(drawFrame);
+      }
+    };
+
+    const wakeLoop = () => {
+      lastActiveTime = performance.now();
+      if (interactive && isInView && !rafId) {
         rafId = window.requestAnimationFrame(drawFrame);
       }
     };
@@ -270,10 +282,12 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
         pointer.y = pointer.targetY;
         pointer.active = true;
       }
+      wakeLoop();
     };
 
     const handlePointerLeave = () => {
       pointer.active = false;
+      lastActiveTime = performance.now();
     };
 
     if (interactive) {
@@ -285,7 +299,7 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
     if (typeof ResizeObserver !== 'undefined') {
       resizeObserver = new ResizeObserver(() => {
         resize();
-        if (prefersReducedMotion) drawFrame();
+        drawFrame();
       });
       resizeObserver.observe(canvas);
     } else {
@@ -298,11 +312,11 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
         (entries) => {
           const visible = entries[0]?.isIntersecting ?? true;
           isInView = visible;
-          if (visible && !prefersReducedMotion && !rafId) {
-            rafId = window.requestAnimationFrame(drawFrame);
-          } else if (!visible && rafId) {
+          if (!visible && rafId) {
             window.cancelAnimationFrame(rafId);
             rafId = 0;
+          } else if (visible && interactive && performance.now() - lastActiveTime < IDLE_SLEEP_MS && !rafId) {
+            rafId = window.requestAnimationFrame(drawFrame);
           }
         },
         { threshold: 0.02 },
@@ -322,7 +336,22 @@ export const KineticCursorField: React.FC<KineticCursorFieldProps> = ({
         document.removeEventListener('pointerleave', handlePointerLeave);
       }
     };
-  }, [interactive, prefersReducedMotion, variant]);
+  }, [canHoverFine, interactive, prefersReducedMotion, variant]);
+
+  if (!canHoverFine) {
+    return (
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
+        style={{
+          background:
+            variant === 'gate'
+              ? 'radial-gradient(ellipse 72% 56% at 50% 44%, rgba(216,195,165,0.09) 0%, rgba(138,109,75,0.04) 44%, transparent 76%)'
+              : 'radial-gradient(ellipse 68% 54% at 50% 34%, rgba(216,195,165,0.08) 0%, rgba(138,109,75,0.03) 48%, transparent 78%)',
+        }}
+      />
+    );
+  }
 
   return (
     <div

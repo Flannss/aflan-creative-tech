@@ -87,8 +87,15 @@ export const CustomCursor: React.FC = () => {
       rafId = 0;
       const dx = targetX - ringX;
       const dy = targetY - ringY;
-      ringX += dx * 0.2;
-      ringY += dy * 0.2;
+      const settled = Math.abs(dx) <= 0.15 && Math.abs(dy) <= 0.15;
+
+      if (settled) {
+        ringX = targetX;
+        ringY = targetY;
+      } else {
+        ringX += dx * 0.22;
+        ringY += dy * 0.22;
+      }
 
       const pressScale = pressed ? 0.78 : 1;
 
@@ -97,10 +104,10 @@ export const CustomCursor: React.FC = () => {
       }
 
       if (ring) {
-        if (currentMode === 'default') {
+        if (currentMode === 'default' && !settled) {
           const speed = Math.hypot(dx, dy);
           const angle = speed > 0.6 ? Math.atan2(dy, dx) * (180 / Math.PI) : 0;
-          const stretch = speed > 0.6 ? 1 + Math.min(speed * 0.011, 0.36) : 1;
+          const stretch = speed > 0.6 ? 1 + Math.min(speed * 0.011, 0.34) : 1;
           const squash = 1 / Math.sqrt(stretch);
           ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) rotate(${angle.toFixed(1)}deg) scale(${(stretch * pressScale).toFixed(3)}, ${(squash * pressScale).toFixed(3)})`;
         } else {
@@ -112,7 +119,7 @@ export const CustomCursor: React.FC = () => {
         lens.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%) scale(${pressed ? 0.9 : 1})`;
       }
 
-      if (visible && (Math.abs(dx) > 0.12 || Math.abs(dy) > 0.12)) {
+      if (visible && !settled) {
         rafId = window.requestAnimationFrame(render);
       }
     };
