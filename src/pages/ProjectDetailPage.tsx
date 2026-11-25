@@ -14,12 +14,19 @@ import {
   projectsData,
   type ProjectEntry,
 } from '@/data/projects';
+import { personalData } from '@/data/personal';
 import { TypographicDossierPlate } from '@/components/projects/TypographicDossierPlate';
 import { ApertureFrame } from '@/components/motion/ApertureFrame';
 import { KineticLabel } from '@/components/motion/KineticLabel';
 import { HairlineRule, Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { ParallaxFrame } from '@/components/motion/ParallaxFrame';
+import { BookmarkButton } from '@/components/ui/BookmarkButton';
+import { CopyLinkButton } from '@/components/ui/CopyLinkButton';
+import {
+  EditorialAccordion,
+  type EditorialAccordionItem,
+} from '@/components/ui/EditorialAccordion';
 
 interface ProjectCaseStudyContentProps {
   project: ProjectEntry;
@@ -45,6 +52,71 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
   const prevProject =
     projectsData[(currentIdx - 1 + projectsData.length) % projectsData.length];
   const nextProject = projectsData[(currentIdx + 1) % projectsData.length];
+
+  const caseStudyUrl =
+    typeof window !== 'undefined'
+      ? `${window.location.origin}/projects/${project.slug}`
+      : `${personalData.siteUrl}/projects/${project.slug}`;
+
+  const technicalNotesItems: EditorialAccordionItem[] = [
+    {
+      id: 'scope-attribution',
+      eyebrow: '01 · TRANSPARANSI PERAN',
+      title: 'Ruang Lingkup & Atribusi Kontribusi',
+      content: (
+        <>
+          <p>{project.contributionScope}</p>
+          {project.verificationNotice && (
+            <p className="text-[#8A6D4B] font-medium">{project.verificationNotice}</p>
+          )}
+        </>
+      ),
+    },
+    {
+      id: 'stack-methodology',
+      eyebrow: '02 · ARSITEKTUR & ALAT',
+      title: 'Platform, Stack & Metodologi Kerja',
+      content: (
+        <>
+          <p>
+            <strong className="font-medium text-espresso">Platform:</strong>{' '}
+            {project.platform} ({project.yearLabel}).
+          </p>
+          <p>
+            <strong className="font-medium text-espresso">Komponen Stack:</strong>{' '}
+            {project.stack.join(' · ')}.
+          </p>
+          {project.notableWork && (
+            <p>
+              <strong className="font-medium text-espresso">Sorotan Implementasi:</strong>{' '}
+              {project.notableWork}
+            </p>
+          )}
+        </>
+      ),
+    },
+    {
+      id: 'case-study-discussion',
+      eyebrow: '03 · EVALUASI & KOLABORASI',
+      title: 'Diskusi Teknis & Tinjauan Case Study',
+      content: (
+        <>
+          <p>
+            Ingin meninjau alur arsitektur, detail QA, atau relevansi studi kasus ini untuk
+            kebutuhan tim Anda? Silakan salin tautan case study ini atau mulai korespondensi
+            langsung bersama Aflan.
+          </p>
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-[#8A6D4B] hover:text-espresso border-b border-[#8A6D4B] pb-0.5 transition-colors"
+          >
+            <span>Buka Halaman Contact</span>
+            <ArrowUpRight className="size-3.5" aria-hidden="true" />
+          </Link>
+        </>
+      ),
+    },
+  ];
 
   return (
     <div ref={articleRef} className="w-full overflow-x-clip">
@@ -100,13 +172,28 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
               </p>
               <p className="font-serif text-xl text-champagne/90">{project.yearLabel}</p>
 
+              <div className="pt-2 flex flex-wrap lg:justify-end gap-2.5">
+                <BookmarkButton
+                  slug={project.slug}
+                  projectTitle={project.title}
+                  variant="pill"
+                  surface="dark"
+                />
+                <CopyLinkButton
+                  url={caseStudyUrl}
+                  label="Copy Link"
+                  surface="dark"
+                  size="md"
+                />
+              </div>
+
               {project.liveUrl && (
-                <div className="pt-2 flex lg:justify-end">
+                <div className="pt-1 flex lg:justify-end">
                   <a
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center justify-center gap-2 max-w-full min-w-0 overflow-hidden px-4 xl:px-5 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-[11px] xl:text-xs tracking-[0.12em] xl:tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
+                    className="group inline-flex items-center justify-center gap-2 max-w-full min-w-0 min-h-[44px] overflow-hidden px-4 xl:px-5 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-[11px] xl:text-xs tracking-[0.12em] xl:tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
                   >
                     <KineticLabel className="truncate text-ellipsis">
                       {project.liveUrlLabel ?? 'Kunjungi Situs Live'}
@@ -120,10 +207,10 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
               )}
 
               {project.liveRoute && (
-                <div className="pt-2">
+                <div className="pt-1 flex lg:justify-end">
                   <Link
                     to={project.liveRoute}
-                    className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
+                    className="group inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
                   >
                     <KineticLabel>Buka Creative Lab</KineticLabel>
                     <ArrowUpRight
@@ -298,6 +385,17 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                     </li>
                   ))}
                 </ul>
+              </div>
+
+              <div className="pt-8 border-t border-espresso/15 space-y-5">
+                <p className="font-mono text-[11px] tracking-[0.26em] uppercase text-mocha">
+                  TECHNICAL NOTES &amp; VERIFICATION
+                </p>
+                <EditorialAccordion
+                  items={technicalNotesItems}
+                  surface="light"
+                  defaultOpenIds={['scope-attribution']}
+                />
               </div>
             </Reveal>
           </div>

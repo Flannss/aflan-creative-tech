@@ -387,19 +387,35 @@ export const ContactPage: React.FC = () => {
                       )
                     }
                     aria-label="Salin alamat email resmi Aflan"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-champagne text-obsidian text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium hover:bg-ivory active:scale-[0.97] transition-all cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2 rounded-full bg-champagne text-obsidian text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium hover:bg-ivory active:scale-[0.97] transition-all cursor-pointer"
                   >
-                    {copiedId === 'email' ? (
-                      <>
-                        <Check className="size-3.5" aria-hidden="true" />
-                        Tersalin
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="size-3.5" aria-hidden="true" />
-                        Salin Email
-                      </>
-                    )}
+                    <AnimatePresence mode="wait" initial={false}>
+                      {copiedId === 'email' ? (
+                        <motion.span
+                          key="email-copied"
+                          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.7 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.7 }}
+                          transition={{ duration: 0.18, ease: EASE_LUXURY }}
+                          className="inline-flex items-center gap-2"
+                        >
+                          <Check className="size-3.5 stroke-[2.3]" aria-hidden="true" />
+                          Tersalin
+                        </motion.span>
+                      ) : (
+                        <motion.span
+                          key="email-copy"
+                          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
+                          transition={{ duration: 0.18, ease: EASE_LUXURY }}
+                          className="inline-flex items-center gap-2"
+                        >
+                          <Copy className="size-3.5" aria-hidden="true" />
+                          Salin Email
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
                   </button>
                 </div>
               </div>
@@ -503,19 +519,35 @@ export const ContactPage: React.FC = () => {
                     )
                   }
                   aria-label="Salin tautan portofolio"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-champagne/30 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne hover:border-champagne hover:text-ivory transition-colors cursor-pointer"
+                  className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-4 py-2 rounded-full border border-champagne/30 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne hover:border-champagne hover:text-ivory active:scale-[0.97] transition-all cursor-pointer"
                 >
-                  {copiedId === 'site-link' ? (
-                    <>
-                      <Check className="size-3.5" aria-hidden="true" />
-                      Tersalin
-                    </>
-                  ) : (
-                    <>
-                      <Link2 className="size-3.5" aria-hidden="true" />
-                      Salin Link
-                    </>
-                  )}
+                  <AnimatePresence mode="wait" initial={false}>
+                    {copiedId === 'site-link' ? (
+                      <motion.span
+                        key="site-copied"
+                        initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.7 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.7 }}
+                        transition={{ duration: 0.18, ease: EASE_LUXURY }}
+                        className="inline-flex items-center gap-1.5"
+                      >
+                        <Check className="size-3.5 stroke-[2.3]" aria-hidden="true" />
+                        Tersalin
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="site-copy"
+                        initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
+                        transition={{ duration: 0.18, ease: EASE_LUXURY }}
+                        className="inline-flex items-center gap-1.5"
+                      >
+                        <Link2 className="size-3.5" aria-hidden="true" />
+                        Salin Link
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </button>
               </div>
             </div>
@@ -743,7 +775,7 @@ export const ContactPage: React.FC = () => {
                       type="submit"
                       disabled={submitPhase === 'loading'}
                       aria-busy={submitPhase === 'loading'}
-                      className={`inline-flex items-center justify-center text-center gap-2.5 w-full sm:w-auto max-w-full sm:min-w-[240px] px-5 sm:px-7 py-3.5 rounded-full text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium active:scale-[0.97] transition-all duration-300 cursor-pointer disabled:opacity-75 disabled:cursor-wait ${
+                      className={`group inline-flex items-center justify-center text-center gap-2.5 w-full sm:w-auto max-w-full sm:min-w-[240px] min-h-[48px] px-5 sm:px-7 py-3.5 rounded-full text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium active:scale-[0.97] transition-all duration-300 cursor-pointer disabled:opacity-75 disabled:cursor-wait ${
                         submitPhase === 'success'
                           ? 'bg-[#8A6D4B] text-ivory'
                           : 'bg-espresso text-ivory hover:bg-[#8A6D4B]'
@@ -761,6 +793,7 @@ export const ContactPage: React.FC = () => {
                           >
                             <Loader2
                               className="size-4 animate-spin text-champagne"
+                              strokeWidth={2}
                               aria-hidden="true"
                             />
                             Mengirim...
@@ -770,13 +803,28 @@ export const ContactPage: React.FC = () => {
                         {submitPhase === 'success' && (
                           <motion.span
                             key="success"
-                            initial={{ opacity: 0, scale: 0.92 }}
+                            initial={
+                              prefersReducedMotion
+                                ? { opacity: 0 }
+                                : { opacity: 0, scale: 0.9 }
+                            }
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.96 }}
                             transition={{ duration: 0.28, ease: EASE_LUXURY }}
                             className="inline-flex items-center gap-2.5 text-champagne"
                           >
-                            <Check className="size-4 stroke-[2.5]" aria-hidden="true" />
+                            <motion.span
+                              initial={
+                                prefersReducedMotion
+                                  ? false
+                                  : { scale: 0.65, rotate: -14 }
+                              }
+                              animate={{ scale: 1, rotate: 0 }}
+                              transition={{ type: 'spring', stiffness: 380, damping: 20 }}
+                              className="inline-flex items-center"
+                            >
+                              <Check className="size-4 stroke-[2.5]" aria-hidden="true" />
+                            </motion.span>
                             Pesan Terkirim
                           </motion.span>
                         )}
@@ -786,11 +834,18 @@ export const ContactPage: React.FC = () => {
                             key="idle"
                             initial={{ opacity: 0, y: 6 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -6 }}
+                            exit={
+                              prefersReducedMotion
+                                ? { opacity: 0 }
+                                : { opacity: 0, x: 6, y: -6 }
+                            }
                             transition={{ duration: 0.22, ease: EASE_LUXURY }}
                             className="inline-flex items-center gap-2.5"
                           >
-                            <Send className="size-4" aria-hidden="true" />
+                            <Send
+                              className="size-4 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+                              aria-hidden="true"
+                            />
                             Kirim Pesan Langsung
                           </motion.span>
                         )}

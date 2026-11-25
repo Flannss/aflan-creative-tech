@@ -16,6 +16,7 @@ import { KineticLabel } from '@/components/motion/KineticLabel';
 import { HairlineRule, Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { MonogramMark } from '@/components/brand/Monogram';
+import { TactileInteractionsDeck } from '@/components/lab/TactileInteractionsDeck';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { useIsCoarsePointer } from '@/hooks/useMediaQuery';
 import { useToast } from '@/hooks/useToast';
@@ -1439,6 +1440,7 @@ export const CreativeLabPage: React.FC = () => {
               { href: '#lab-contrast', label: '06 · Matriks Kontras' },
               { href: '#lab-workbench', label: '07 · Motion Workbench' },
               { href: '#lab-tokens', label: '08 · Token Specimen' },
+              { href: '#lab-micro', label: '09 · Tactile Micro-Interactions' },
             ].map((mod) => (
               <a
                 key={mod.href}
@@ -1891,6 +1893,34 @@ export const CreativeLabPage: React.FC = () => {
           </Reveal>
 
           <DesignTokenSpecimen />
+        </div>
+      </section>
+
+      {/* LAB 09 — TACTILE MICRO-INTERACTIONS DECK */}
+      <section
+        id="lab-micro"
+        className="relative bg-espresso text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-t border-champagne/15"
+      >
+        <div className="max-w-[1440px] mx-auto space-y-8">
+          <HairlineRule tone="champagne" className="mb-2" />
+          <Reveal variant="up" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
+            <div className="lg:col-span-7">
+              <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
+                <Sparkles className="size-3.5" aria-hidden="true" />
+                LAB 09 · TACTILE MICRO-INTERACTIONS DECK
+              </span>
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light tracking-tight mt-2">
+                Micro-Interactions &amp; UI Engineering Deck
+              </h2>
+            </div>
+            <p className="lg:col-span-5 font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
+              Enam modul interaksi harian—mulai dari saklar spring, checklist strikethrough,
+              stepper odometer, panel akordeon, copy morph hingga apresiasi Champagne—yang seluruhnya
+              menghormati kurva editorial dan mode reduced-motion.
+            </p>
+          </Reveal>
+
+          <TactileInteractionsDeck />
         </div>
       </section>
     </div>

@@ -63,11 +63,13 @@ export const BackToTop: React.FC = () => {
               ? { opacity: 0 }
               : { opacity: 0, y: 10, scale: 0.94 }
           }
+          whileHover={prefersReducedMotion ? undefined : { y: -2 }}
+          whileTap={{ scale: 0.94 }}
           transition={{
             duration: prefersReducedMotion ? 0.14 : 0.28,
             ease: EASE_LUXURY,
           }}
-          className="fixed bottom-6 right-6 z-40 size-12 rounded-full bg-[#1A1412]/90 backdrop-blur-md text-champagne shadow-[0_12px_32px_rgba(0,0,0,0.48)] flex items-center justify-center hover:bg-espresso hover:text-ivory active:scale-95 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne"
+          className="group fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 size-12 rounded-full bg-[#1A1412]/90 backdrop-blur-md text-champagne shadow-[0_12px_32px_rgba(0,0,0,0.48)] flex items-center justify-center hover:bg-espresso hover:text-ivory transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne"
         >
           <svg
             aria-hidden="true"
@@ -95,7 +97,10 @@ export const BackToTop: React.FC = () => {
               }}
             />
           </svg>
-          <ArrowUp className="relative z-10 size-4" aria-hidden="true" />
+          <ArrowUp
+            className="relative z-10 size-4 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-0.5 motion-reduce:transform-none"
+            aria-hidden="true"
+          />
         </motion.button>
       )}
     </AnimatePresence>

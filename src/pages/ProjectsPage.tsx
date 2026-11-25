@@ -1,6 +1,5 @@
-import React, { useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowUpRight, ShieldCheck } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { Bookmark, ShieldCheck } from 'lucide-react';
 import {
   projectCategories,
   projectsData,
@@ -9,39 +8,54 @@ import {
 } from '@/data/projects';
 import { ProjectPreviewList } from '@/components/projects/ProjectPreviewList';
 import { ProjectPreviewModal } from '@/components/projects/ProjectPreviewModal';
-import { TypographicDossierPlate } from '@/components/projects/TypographicDossierPlate';
-import { ApertureFrame } from '@/components/motion/ApertureFrame';
-import { KineticLabel } from '@/components/motion/KineticLabel';
+import { ProjectVisualGridCard } from '@/components/projects/ProjectVisualGridCard';
 import { Reveal, HairlineRule } from '@/components/motion/Reveal';
-import { StackingCard } from '@/components/motion/StackingCard';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
+import { useBookmarkedProjects } from '@/hooks/useBookmarkedProjects';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+
+type FilterValue = 'All' | ProjectCategory | 'Saved';
+type ViewMode = 'index' | 'grid';
 
 export const ProjectsPage: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<'All' | ProjectCategory>('All');
-  const [viewMode, setViewMode] = useState<'index' | 'spread'>('index');
+  const [selectedCategory, setSelectedCategory] = useState<FilterValue>('All');
+  const [userViewMode, setUserViewMode] = useState<ViewMode | null>(null);
   const [previewProject, setPreviewProject] = useState<ProjectEntry | null>(null);
-  const stackRef = useRef<HTMLDivElement | null>(null);
+
+  const isMobileViewport = useMediaQuery('(max-width: 767px)');
+  const viewMode: ViewMode = userViewMode ?? (isMobileViewport ? 'grid' : 'index');
+
+  const { bookmarkedSlugs, count: bookmarkedCount } = useBookmarkedProjects();
 
   const filteredProjects = useMemo(() => {
     if (selectedCategory === 'All') return projectsData;
+    if (selectedCategory === 'Saved') {
+      return projectsData.filter((p) => bookmarkedSlugs.includes(p.slug));
+    }
     return projectsData.filter((p) => p.category === selectedCategory);
-  }, [selectedCategory]);
+  }, [bookmarkedSlugs, selectedCategory]);
 
   const categoryOptions = useMemo(
-    () =>
-      projectCategories.map((cat) => ({
-        value: cat,
+    () => [
+      ...projectCategories.map((cat) => ({
+        value: cat as FilterValue,
         label: cat === 'All' ? 'Semua' : cat,
       })),
-    [],
+      {
+        value: 'Saved' as FilterValue,
+        label: 'Saved',
+        badge: bookmarkedCount > 0 ? bookmarkedCount : undefined,
+      },
+    ],
+    [bookmarkedCount],
   );
 
   const viewOptions = useMemo(
     () =>
       [
         { value: 'index', label: 'Editorial Index' },
-        { value: 'spread', label: 'Stacked Cards' },
+        { value: 'grid', label: 'Visual Grid' },
       ] as const,
     [],
   );
@@ -113,7 +127,7 @@ export const ProjectsPage: React.FC = () => {
             <SegmentedControl
               options={viewOptions}
               value={viewMode}
-              onChange={setViewMode}
+              onChange={setUserViewMode}
               layoutId="projects-view-pill"
               ariaLabel="Mode tampilan arsip proyek"
               surface="dark"
@@ -127,136 +141,43 @@ export const ProjectsPage: React.FC = () => {
 
       <section className="bg-espresso text-ivory py-16 md:py-24 px-4 sm:px-6 lg:px-12 min-h-[55vh]">
         <div className="max-w-[1440px] mx-auto">
-          {viewMode === 'index' ? (
+          {filteredProjects.length === 0 ? (
+            <div className="max-w-xl mx-auto my-8 p-8 sm:p-10 bg-obsidian/70 border border-champagne/20 text-center space-y-5">
+              <span className="mx-auto size-12 rounded-full border border-champagne/30 bg-espresso/80 flex items-center justify-center text-champagne">
+                <Bookmark className="size-5" aria-hidden="true" />
+              </span>
+              <div className="space-y-2">
+                <p className="font-mono text-[10px] tracking-[0.24em] uppercase text-champagne">
+                  SHORTLIST KOSONG
+                </p>
+                <h2 className="font-serif text-2xl sm:text-3xl font-light text-ivory">
+                  Belum ada proyek yang ditandai.
+                </h2>
+                <p className="font-sans text-sm text-ivory/75 leading-relaxed">
+                  Klik ikon bookmark pada proyek mana saja untuk menyimpan daftar pendek
+                  pribadi Anda selama meninjau portofolio ini.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedCategory('All')}
+                className="inline-flex items-center justify-center min-h-[44px] px-6 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-[11px] uppercase tracking-[0.16em] font-medium hover:bg-ivory active:scale-[0.97] transition-all cursor-pointer"
+              >
+                Tampilkan Semua Proyek
+              </button>
+            </div>
+          ) : viewMode === 'index' ? (
             <ProjectPreviewList projects={filteredProjects} />
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-              {/* Pinned Category Heading Rail */}
-              <aside className="lg:col-span-4 lg:sticky lg:top-24 space-y-4">
-                <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap text-champagne">
-                  DOSSIER BERTUMPUK · {String(filteredProjects.length).padStart(2, '0')} KARYA
-                </p>
-                <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight leading-[1.08] text-ivory">
-                  {selectedCategory === 'All' ? (
-                    <>
-                      Seluruh <span className="italic text-champagne/90">Karya Terkurasi</span>
-                    </>
-                  ) : (
-                    <span className="italic text-champagne/90">{selectedCategory}</span>
-                  )}
-                </h2>
-                <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed max-w-prose">
-                  Gulir untuk menelusuri kartu proyek yang bertumpuk lembut, lalu klik kartu
-                  mana saja untuk membuka studi kasus penuh.
-                </p>
-                <div className="pt-4 border-t border-champagne/15 text-[10px] font-mono uppercase tracking-[0.15em] whitespace-nowrap text-taupe">
-                  KLIK KARTU UNTUK QUICK PREVIEW →
-                </div>
-              </aside>
-
-              {/* Pure Stacking Project Cards */}
-              <div
-                ref={stackRef}
-                className="relative isolate lg:col-span-8 space-y-6 md:space-y-10 pb-6"
-              >
-                {filteredProjects.map((project, idx) => (
-                  <StackingCard
-                    key={`${selectedCategory}-${project.slug}`}
-                    containerRef={stackRef}
-                    index={idx}
-                    total={filteredProjects.length}
-                    baseTopPx={96}
-                    offsetStepPx={14}
-                  >
-                    <Link
-                      to={`/projects/${project.slug}`}
-                      onClick={(e) => {
-                        if (
-                          e.metaKey ||
-                          e.ctrlKey ||
-                          e.shiftKey ||
-                          e.altKey ||
-                          e.button !== 0
-                        ) {
-                          return;
-                        }
-                        e.preventDefault();
-                        setPreviewProject(project);
-                      }}
-                      className={`group flex flex-col bg-obsidian border border-champagne/25 hover:border-champagne/65 active:border-champagne transition-all duration-300 overflow-hidden shadow-[0_28px_80px_rgba(0,0,0,0.55)] ${
-                        previewProject?.slug === project.slug
-                          ? 'border-champagne/75'
-                          : ''
-                      }`}
-                    >
-                      <div
-                        data-project-preview
-                        className="relative aspect-video overflow-hidden border-b border-champagne/15"
-                      >
-                        <ApertureFrame className="w-full h-full">
-                          {project.previewImage ? (
-                            <div
-                              className="w-full h-full"
-                              style={{ backgroundColor: project.previewBg ?? '#2B1D17' }}
-                            >
-                              <img
-                                src={project.previewImage}
-                                alt={project.previewCaption}
-                                loading="lazy"
-                                decoding="async"
-                                style={{
-                                  objectPosition: project.previewObjectPosition ?? 'center',
-                                }}
-                                className={`w-full h-full transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transform-none ${
-                                  project.previewImageFit === 'contain'
-                                    ? 'object-contain p-8'
-                                    : 'object-cover'
-                                }`}
-                              />
-                            </div>
-                          ) : (
-                            <TypographicDossierPlate
-                              project={project}
-                              compact
-                              className="w-full h-full border-0"
-                            />
-                          )}
-                        </ApertureFrame>
-                      </div>
-
-                      <div className="p-6 sm:p-8 flex flex-col justify-between gap-5">
-                        <div className="space-y-3">
-                          <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] tracking-[0.2em] uppercase">
-                            <span className="text-champagne">
-                              {project.index} · {project.category}
-                            </span>
-                            <span className="text-taupe">{project.verificationState}</span>
-                          </div>
-                          <h3 className="font-serif text-2xl sm:text-3xl font-light text-ivory group-hover:text-champagne transition-colors">
-                            {project.title}
-                          </h3>
-                          <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                            {project.summary}
-                          </p>
-                        </div>
-
-                        <div className="pt-4 border-t border-champagne/15 flex items-center justify-between gap-3">
-                          <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-taupe truncate">
-                            {project.role}
-                          </span>
-                          <span className="inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.18em] uppercase text-champagne shrink-0">
-                            <KineticLabel>Preview Dossier</KineticLabel>
-                            <ArrowUpRight
-                              className="size-3.5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
-                              aria-hidden="true"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                    </Link>
-                  </StackingCard>
-                ))}
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 items-stretch">
+              {filteredProjects.map((project) => (
+                <ProjectVisualGridCard
+                  key={`${selectedCategory}-${project.slug}`}
+                  project={project}
+                  isSelected={previewProject?.slug === project.slug}
+                  onOpenPreview={setPreviewProject}
+                />
+              ))}
             </div>
           )}
         </div>

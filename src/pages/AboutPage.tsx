@@ -20,6 +20,10 @@ import { HairlineRule, Reveal, StaggerGroup, StaggerItem } from '@/components/mo
 import { TextReveal } from '@/components/motion/TextReveal';
 import { ParallaxFrame } from '@/components/motion/ParallaxFrame';
 import { MonogramMark } from '@/components/brand/Monogram';
+import {
+  EditorialAccordion,
+  type EditorialAccordionItem,
+} from '@/components/ui/EditorialAccordion';
 
 export const AboutPage: React.FC = () => {
   const ageInfo = useMemo(() => calculateExactAge(personalData.birthDateISO), []);
@@ -62,6 +66,44 @@ export const AboutPage: React.FC = () => {
       id: 'about-studio',
       label: 'Inisiatif Studio',
       value: 'Co-Founder & Web Developer · SatuRuangCreative',
+    },
+  ];
+
+  const collaborationFaqItems: EditorialAccordionItem[] = [
+    {
+      id: 'faq-role-focus',
+      eyebrow: '01 · FOKUS PERAN',
+      title: 'Fokus Peran & Kontribusi Utama',
+      content: (
+        <p>
+          Berperan pada pengembangan antarmuka web modern ({personalData.positioning}),
+          pembuatan aplikasi mobile lintas platform, serta evaluasi fungsional Software
+          QA dan alur kerja sistem secara terdokumentasi.
+        </p>
+      ),
+    },
+    {
+      id: 'faq-workflow-qa',
+      eyebrow: '02 · METODE KERJA',
+      title: 'Alur Kerja Frontend & Pengujian QA',
+      content: (
+        <p>
+          Mengimplementasikan antarmuka berbasis React, TypeScript, Tailwind CSS, dan
+          Framer Motion yang disertai pemeriksaan fungsional terstruktur, pengujian
+          responsivitas 3 breakpoint (Mobile, Tablet, Desktop), serta kepatuhan aksesibilitas.
+        </p>
+      ),
+    },
+    {
+      id: 'faq-availability',
+      eyebrow: '03 · KETERSEDIAAN',
+      title: 'Ketersediaan Proyek, Magang & Kolaborasi',
+      content: (
+        <p>
+          Berdomisili di {personalData.currentLocation} dan terbiasa berkolaborasi jarak jauh
+          maupun hybrid bersama tim mahasiswa maupun profesional ({contactData.availabilityStatus}).
+        </p>
+      ),
     },
   ];
 
@@ -323,6 +365,17 @@ export const AboutPage: React.FC = () => {
                 </div>
               ))}
             </dl>
+
+            <div className="mt-10 pt-8 border-t border-espresso/15 space-y-5">
+              <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-bronze font-medium">
+                FAQ KOLABORASI · QUICK BRIEF
+              </p>
+              <EditorialAccordion
+                items={collaborationFaqItems}
+                surface="light"
+                defaultOpenIds={['faq-role-focus']}
+              />
+            </div>
           </Reveal>
 
           <Reveal variant="up" delay={0.12} className="lg:col-span-5 space-y-6">

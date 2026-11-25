@@ -69,7 +69,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
                   initial={
                     prefersReducedMotion
                       ? { opacity: 0 }
-                      : { opacity: 0, y: -22, scale: 0.96 }
+                      : { opacity: 0, y: -24, scale: 0.96 }
                   }
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={
@@ -77,7 +77,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
                       ? { opacity: 0 }
                       : { opacity: 0, y: -14, scale: 0.97 }
                   }
-                  transition={{ duration: 0.42, ease: EASE_LUXURY }}
+                  transition={{ duration: 0.38, ease: EASE_LUXURY }}
                   className="pointer-events-auto relative overflow-hidden max-w-md w-full sm:w-auto min-w-[240px] rounded-2xl bg-obsidian/95 backdrop-blur-md border border-champagne/40 text-ivory shadow-[0_24px_64px_rgba(0,0,0,0.68)] px-4 sm:px-5 py-3.5"
                 >
                   <div className="flex items-center gap-3">
@@ -101,21 +101,27 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
                       type="button"
                       onClick={dismissToast}
                       aria-label="Tutup notifikasi"
-                      className="shrink-0 size-7 rounded-full flex items-center justify-center text-champagne/70 hover:text-champagne hover:bg-espresso/80 transition-colors cursor-pointer"
+                      className="shrink-0 size-9 rounded-full flex items-center justify-center text-champagne/70 hover:text-champagne hover:bg-espresso/80 transition-colors cursor-pointer"
                     >
                       <X className="size-3.5" aria-hidden="true" />
                     </button>
                   </div>
 
-                  {/* GPU scaleX countdown hairline */}
+                  {/* GPU scaleX countdown hairline with subtle base track */}
                   {!prefersReducedMotion && (
-                    <motion.span
-                      aria-hidden="true"
-                      initial={{ scaleX: 1 }}
-                      animate={{ scaleX: 0 }}
-                      transition={{ duration: TOAST_DURATION_MS / 1000, ease: 'linear' }}
-                      className="absolute inset-x-0 bottom-0 h-[2px] origin-left bg-champagne/75 will-change-transform"
-                    />
+                    <>
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-x-0 bottom-0 h-[2px] bg-champagne/15"
+                      />
+                      <motion.span
+                        aria-hidden="true"
+                        initial={{ scaleX: 1 }}
+                        animate={{ scaleX: 0 }}
+                        transition={{ duration: TOAST_DURATION_MS / 1000, ease: 'linear' }}
+                        className="absolute inset-x-0 bottom-0 h-[2px] origin-left bg-champagne/85 will-change-transform"
+                      />
+                    </>
                   )}
                 </motion.div>
               )}

@@ -1,9 +1,17 @@
 import React, { useEffect } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { MonogramMark } from '@/components/brand/Monogram';
+import { KineticLabel } from '@/components/motion/KineticLabel';
+import { useCanHoverFine } from '@/hooks/useMediaQuery';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
-import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
+import { EASE_LUXURY } from '@/utils/motion';
 
 interface SplashIntroProps {
   onEnter: () => void;
@@ -14,18 +22,18 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.18,
+      staggerChildren: 0.08,
+      delayChildren: 0.08,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 18 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: MOTION_DURATION, ease: EASE_LUXURY },
+    transition: { duration: 0.48, ease: EASE_LUXURY },
   },
 };
 
@@ -34,7 +42,7 @@ const ruleVariants = {
   visible: {
     opacity: 1,
     scaleX: 1,
-    transition: { duration: MOTION_DURATION, ease: EASE_LUXURY },
+    transition: { duration: 0.52, ease: EASE_LUXURY },
   },
 };
 
@@ -44,11 +52,23 @@ const FILM_GRAIN_DATA_URI =
 /**
  * Luxury editorial entry screen (magazine cover / dossier composition)
  * revealed once per session before the portfolio homepage.
- * Exits with a smooth upward curtain glide on click or Enter / Space.
+ * Features an ambient pointer spotlight, subtle editorial grain, architectural corner accents,
+ * kinetic CTA roll, and an editorial lift-and-dissolve exit on click or Enter / Space.
  */
 export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
   const prefersReducedMotion = useReducedMotion();
+  const canHoverFine = useCanHoverFine();
   const { pauseScroll, resumeScroll } = useSmoothScroll();
+
+  const pointerX = useMotionValue(
+    typeof window !== 'undefined' ? window.innerWidth / 2 : 640,
+  );
+  const pointerY = useMotionValue(
+    typeof window !== 'undefined' ? window.innerHeight / 2 : 360,
+  );
+  const smoothX = useSpring(pointerX, { stiffness: 120, damping: 24, mass: 0.6 });
+  const smoothY = useSpring(pointerY, { stiffness: 120, damping: 24, mass: 0.6 });
+  const spotlightBackground = useMotionTemplate`radial-gradient(620px circle at ${smoothX}px ${smoothY}px, rgba(216,195,165,0.08) 0%, rgba(138,109,75,0.035) 38%, transparent 72%)`;
 
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
@@ -70,24 +90,32 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
     };
   }, [onEnter, pauseScroll, resumeScroll]);
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!canHoverFine || prefersReducedMotion) return;
+    pointerX.set(e.clientX);
+    pointerY.set(e.clientY);
+  };
+
   return (
     <motion.div
       role="dialog"
       aria-modal="true"
       aria-label="Pembuka Portofolio AFLAN"
-      initial={{ y: '0%', opacity: 1 }}
+      onMouseMove={handleMouseMove}
+      initial={{ y: 0, opacity: 1, scale: 1 }}
       exit={
         prefersReducedMotion
-          ? { opacity: 0, transition: { duration: 0.3 } }
+          ? { opacity: 0, transition: { duration: 0.25 } }
           : {
-              y: '-100%',
-              opacity: 0.92,
-              transition: { duration: MOTION_DURATION, ease: EASE_LUXURY },
+              opacity: 0,
+              y: -32,
+              scale: 1.02,
+              transition: { duration: 0.62, ease: EASE_LUXURY },
             }
       }
-      className="fixed inset-0 h-dvh z-[9999] bg-[radial-gradient(circle_at_center,_#2C211B_0%,_#1A1412_50%,_#0A0807_100%)] text-ivory flex flex-col items-center justify-between px-8 py-10 sm:px-14 sm:py-14 md:px-16 md:py-16 overflow-hidden select-none"
+      className="fixed inset-0 h-dvh z-[9999] bg-[radial-gradient(circle_at_center,_#2C211B_0%,_#1A1412_50%,_#0A0807_100%)] text-ivory flex flex-col items-center justify-between px-6 py-7 sm:px-12 sm:py-12 md:px-16 md:py-14 overflow-hidden select-none"
     >
-      {/* Layered atmospheric depth: warm breathing glow, perimeter vignette, fine grain */}
+      {/* Layered atmospheric depth: warm breathing glow, interactive radial spotlight, vignette, fine grain */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         <motion.div
           initial={prefersReducedMotion ? false : { opacity: 0.65, scale: 0.96 }}
@@ -131,6 +159,13 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           }}
         />
 
+        {canHoverFine && !prefersReducedMotion && (
+          <motion.div
+            className="absolute inset-0 will-change-[background]"
+            style={{ background: spotlightBackground }}
+          />
+        )}
+
         <div
           className="absolute inset-0"
           style={{
@@ -140,29 +175,34 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         />
 
         <div
-          className="absolute inset-0 opacity-[0.05] mix-blend-overlay"
+          className="absolute inset-0 opacity-[0.035] mix-blend-overlay"
           style={{ backgroundImage: FILM_GRAIN_DATA_URI, backgroundSize: '200px 200px' }}
         />
       </div>
 
-      {/* Hairline dossier frame inside the viewport */}
+      {/* Hairline dossier frame with delicate architectural corner accents */}
       <motion.div
         aria-hidden="true"
         initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.985 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: MOTION_DURATION * 1.2, ease: EASE_LUXURY }}
-        className="pointer-events-none absolute inset-4 md:inset-8 z-[5] border border-champagne/15 rounded-2xl md:rounded-3xl"
-      />
+        transition={{ duration: 0.68, ease: EASE_LUXURY }}
+        className="pointer-events-none absolute inset-3 sm:inset-5 md:inset-8 z-[5] border border-champagne/18 rounded-2xl md:rounded-3xl"
+      >
+        <span className="absolute top-3 left-3 w-3.5 h-3.5 border-t border-l border-champagne/55 rounded-tl-md" />
+        <span className="absolute top-3 right-3 w-3.5 h-3.5 border-t border-r border-champagne/55 rounded-tr-md" />
+        <span className="absolute bottom-3 left-3 w-3.5 h-3.5 border-b border-l border-champagne/55 rounded-bl-md" />
+        <span className="absolute bottom-3 right-3 w-3.5 h-3.5 border-b border-r border-champagne/55 rounded-br-md" />
+      </motion.div>
 
       {/* Top minimal crest */}
       <motion.div
-        initial={prefersReducedMotion ? false : { opacity: 0, y: -12 }}
+        initial={prefersReducedMotion ? false : { opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: MOTION_DURATION, ease: EASE_LUXURY }}
-        className="relative z-10 w-full max-w-[1360px] flex items-center justify-between gap-4 px-2 sm:px-4 font-mono text-[10px] sm:text-[11px] tracking-[0.26em] uppercase text-champagne/80"
+        transition={{ duration: 0.45, delay: 0.16, ease: EASE_LUXURY }}
+        className="relative z-10 w-full max-w-[1360px] flex items-center justify-between gap-4 px-2 sm:px-4 font-mono text-[10px] sm:text-[11px] tracking-[0.24em] sm:tracking-[0.26em] uppercase text-champagne/80"
       >
         <span className="inline-flex items-center gap-2.5">
-          <MonogramMark size={24} className="text-champagne" />
+          <MonogramMark size={24} className="text-champagne shrink-0" />
           <span>AFLAN</span>
         </span>
         <span className="text-taupe whitespace-nowrap">PURWOKERTO · ID</span>
@@ -173,12 +213,12 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         variants={prefersReducedMotion ? undefined : containerVariants}
         initial={prefersReducedMotion ? false : 'hidden'}
         animate="visible"
-        className="relative z-10 w-full flex flex-col items-center text-center max-w-4xl mx-auto my-auto"
+        className="relative z-10 w-full flex flex-col items-center text-center max-w-4xl mx-auto my-auto px-2"
       >
         <motion.span
           aria-hidden="true"
           variants={prefersReducedMotion ? undefined : ruleVariants}
-          className="block w-12 h-px bg-champagne/40 mb-6 sm:mb-8 origin-center"
+          className="block w-12 h-px bg-champagne/45 mb-6 sm:mb-8 origin-center"
         />
 
         <motion.h1
@@ -188,13 +228,13 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         >
           <span
             aria-hidden="true"
-            className="block font-serif font-light uppercase text-5xl sm:text-6xl md:text-7xl tracking-[0.06em] leading-none text-ivory"
+            className="block font-serif font-light uppercase text-[2.65rem] sm:text-6xl md:text-7xl tracking-[0.06em] leading-none text-ivory"
           >
             PORTFOLIO
           </span>
           <span
             aria-hidden="true"
-            className="block font-serif italic font-medium uppercase tracking-[0.14em] text-engraved-champagne text-2xl sm:text-3xl md:text-4xl mt-2 md:mt-3 leading-none select-none"
+            className="block font-serif italic font-medium uppercase tracking-[0.14em] text-engraved-champagne text-xl sm:text-3xl md:text-4xl mt-2 md:mt-3 leading-none select-none"
           >
             BY AMDZ
           </span>
@@ -203,12 +243,12 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         <motion.span
           aria-hidden="true"
           variants={prefersReducedMotion ? undefined : ruleVariants}
-          className="block w-12 h-px bg-champagne/40 my-6 sm:my-8 origin-center"
+          className="block w-12 h-px bg-champagne/45 my-6 sm:my-8 origin-center"
         />
 
         <motion.p
           variants={prefersReducedMotion ? undefined : itemVariants}
-          className="font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-taupe"
+          className="font-mono text-[10px] md:text-xs tracking-[0.2em] sm:tracking-[0.22em] uppercase text-taupe leading-relaxed max-w-md sm:max-w-none"
         >
           WEB DEVELOPER · UI ENGINEER · SOFTWARE QA
         </motion.p>
@@ -221,11 +261,11 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
             type="button"
             onClick={onEnter}
             autoFocus
-            className="group inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-full border border-champagne/40 bg-obsidian/30 backdrop-blur-sm text-ivory font-mono text-xs uppercase tracking-[0.22em] hover:bg-champagne hover:border-champagne hover:text-obsidian active:scale-[0.97] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne"
+            className="group inline-flex items-center justify-center gap-3 min-h-[44px] px-7 py-3.5 rounded-full border border-champagne/40 bg-obsidian/35 backdrop-blur-sm text-ivory font-mono text-xs uppercase tracking-[0.22em] hover:bg-champagne hover:border-champagne hover:text-obsidian active:scale-[0.97] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne"
           >
-            <span>MASUK / ENTER</span>
+            <KineticLabel>MASUK / ENTER</KineticLabel>
             <ArrowUpRight
-              className="size-4 text-champagne transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-obsidian group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              className="size-4 text-champagne transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-obsidian group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
               aria-hidden="true"
             />
           </button>
@@ -234,10 +274,10 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
 
       {/* Bottom minimalist colophon */}
       <motion.div
-        initial={prefersReducedMotion ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: MOTION_DURATION, delay: 0.3, ease: EASE_LUXURY }}
-        className="relative z-10 w-full max-w-[1360px] flex items-center justify-between gap-4 px-2 sm:px-4 font-mono text-[10px] tracking-[0.22em] uppercase text-taupe"
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.16, ease: EASE_LUXURY }}
+        className="relative z-10 w-full max-w-[1360px] flex items-center justify-between gap-4 px-2 sm:px-4 font-mono text-[10px] tracking-[0.2em] sm:tracking-[0.22em] uppercase text-taupe"
       >
         <span>DOSSIER DIGITAL PERSONAL</span>
         <span className="hidden sm:inline text-champagne/70">TEKAN ENTER UNTUK MASUK</span>

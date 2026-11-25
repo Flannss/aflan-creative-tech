@@ -6,6 +6,8 @@ import { ArrowUpRight, CheckCircle2, ExternalLink, ShieldCheck, X } from 'lucide
 import type { ProjectEntry } from '@/data/projects';
 import { TypographicDossierPlate } from '@/components/projects/TypographicDossierPlate';
 import { KineticLabel } from '@/components/motion/KineticLabel';
+import { BookmarkButton } from '@/components/ui/BookmarkButton';
+import { CopyLinkButton } from '@/components/ui/CopyLinkButton';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import { EASE_LUXURY } from '@/utils/motion';
 
@@ -126,7 +128,7 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
                 type="button"
                 onClick={onClose}
                 aria-label="Tutup pratinjau proyek"
-                className="shrink-0 size-9 rounded-full border border-champagne/25 bg-espresso/80 flex items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian transition-colors cursor-pointer"
+                className="shrink-0 size-10 sm:size-9 rounded-full border border-champagne/25 bg-espresso/80 flex items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian transition-colors cursor-pointer"
               >
                 <X className="size-4" aria-hidden="true" />
               </button>
@@ -232,7 +234,7 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
                   skipFocusRestoreRef.current = true;
                   onClose();
                 }}
-                className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-[11px] tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
+                className="group inline-flex items-center gap-2 min-h-[44px] sm:min-h-0 px-5 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-[11px] tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all"
               >
                 <KineticLabel>Buka Case Study Penuh</KineticLabel>
                 <ArrowUpRight
@@ -242,12 +244,28 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
               </Link>
 
               <div className="flex flex-wrap items-center gap-2.5">
+                <CopyLinkButton
+                  url={
+                    typeof window !== 'undefined'
+                      ? `${window.location.origin}/projects/${project.slug}`
+                      : `https://aflandossier.vercel.app/projects/${project.slug}`
+                  }
+                  label="Copy Link"
+                  surface="dark"
+                  size="sm"
+                />
+                <BookmarkButton
+                  slug={project.slug}
+                  projectTitle={project.title}
+                  variant="icon"
+                  surface="dark"
+                />
                 {project.liveUrl && (
                   <a
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-champagne/25 text-champagne font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne hover:text-ivory transition-colors"
+                    className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-[38px] px-4 py-2 rounded-full border border-champagne/25 text-champagne font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne hover:text-ivory transition-colors"
                   >
                     <span>Live Site</span>
                     <ExternalLink className="size-3" aria-hidden="true" />
@@ -260,7 +278,7 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
                       skipFocusRestoreRef.current = true;
                       onClose();
                     }}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-champagne/25 text-champagne font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne hover:text-ivory transition-colors"
+                    className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-[38px] px-4 py-2 rounded-full border border-champagne/25 text-champagne font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne hover:text-ivory transition-colors"
                   >
                     <span>Creative Lab</span>
                     <ArrowUpRight className="size-3" aria-hidden="true" />
