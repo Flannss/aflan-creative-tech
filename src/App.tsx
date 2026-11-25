@@ -83,7 +83,7 @@ export const App: React.FC = () => {
         </AnimatePresence>
 
         <BrowserRouter>
-          <Layout>
+          <Layout splashActive={showSplash}>
             <ErrorBoundary>
               <AppRoutes />
             </ErrorBoundary>

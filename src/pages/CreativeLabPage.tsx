@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
+  Check,
   Compass,
+  Copy,
   Eye,
   Magnet,
   Pause,
@@ -15,6 +17,7 @@ import { TextReveal } from '@/components/motion/TextReveal';
 import { MonogramMark } from '@/components/brand/Monogram';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { useIsCoarsePointer } from '@/hooks/useMediaQuery';
+import { useToast } from '@/hooks/useToast';
 import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
 
 const PALETTE_SWATCHES = [
@@ -755,6 +758,398 @@ const ChiaroscuroCanvas: React.FC = () => {
   );
 };
 
+/* ============================================================================
+   MODULE D — MOTION & EASING WORKBENCH (PARALLEL CURVE COMPARISON)
+============================================================================ */
+const WORKBENCH_CURVES = [
+  {
+    id: 'aflan-luxury',
+    shortCode: 'LUXURY',
+    name: 'AFLAN Luxury Editorial',
+    badge: 'SIGNATURE · UTAMA',
+    isSignature: true,
+    css: 'cubic-bezier(0.22, 1, 0.36, 1)',
+    bezier: EASE_LUXURY,
+    svgPath: 'M 8 92 C 26.5 8, 38.2 8, 92 8',
+    handles: [
+      { x: 26.5, y: 8 },
+      { x: 38.2, y: 8 },
+    ],
+    summary: 'Akselerasi awal yang sigap lalu mendarat tenang tanpa hentakan mekanis.',
+  },
+  {
+    id: 'standard-linear',
+    shortCode: 'LINEAR',
+    name: 'Linear Standard',
+    badge: 'STANDAR · KONSTAN',
+    isSignature: false,
+    css: 'cubic-bezier(0, 0, 1, 1)',
+    bezier: [0, 0, 1, 1] as [number, number, number, number],
+    svgPath: 'M 8 92 L 92 8',
+    handles: [
+      { x: 8, y: 92 },
+      { x: 92, y: 8 },
+    ],
+    summary: 'Kecepatan konstan dari awal hingga akhir; terasa kaku untuk elemen editorial.',
+  },
+  {
+    id: 'standard-ease-in-out',
+    shortCode: 'EASE',
+    name: 'Ease-In-Out Standard',
+    badge: 'STANDAR · SIMETRIS',
+    isSignature: false,
+    css: 'cubic-bezier(0.42, 0, 0.58, 1)',
+    bezier: [0.42, 0, 0.58, 1] as [number, number, number, number],
+    svgPath: 'M 8 92 C 43.3 92, 56.7 8, 92 8',
+    handles: [
+      { x: 43.3, y: 92 },
+      { x: 56.7, y: 8 },
+    ],
+    summary: 'Simetris di awal dan akhir; lebih lambat merespons interaksi awal pengguna.',
+  },
+] as const;
+
+const WORKBENCH_DURATIONS = [
+  { value: '0.4', label: '0.4s' },
+  { value: '0.8', label: '0.8s' },
+  { value: '1.2', label: '1.2s' },
+] as const;
+
+type WorkbenchDurationValue = (typeof WORKBENCH_DURATIONS)[number]['value'];
+
+const WORKBENCH_TICKS = [
+  { pos: '0%', label: '0.00' },
+  { pos: '25%', label: '0.25' },
+  { pos: '50%', label: '0.50' },
+  { pos: '75%', label: '0.75' },
+  { pos: '100%', label: '1.00' },
+] as const;
+
+const MotionEasingWorkbench: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
+  const { showToast } = useToast();
+
+  const [durationStr, setDurationStr] = useState<WorkbenchDurationValue>('0.8');
+  const [runId, setRunId] = useState(0);
+  const [copiedCurveId, setCopiedCurveId] = useState<string | null>(null);
+  const [travelDistance, setTravelDistance] = useState(180);
+
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const copyTimerRef = useRef<number | null>(null);
+
+  const durationSec = Number(durationStr);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current !== null) {
+        window.clearTimeout(copyTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const trackEl = trackRef.current;
+    if (!trackEl) return;
+
+    const measure = () => {
+      const cardWidth = cardRef.current?.offsetWidth ?? 96;
+      const available = Math.max(0, trackEl.clientWidth - cardWidth - 24);
+      setTravelDistance(available);
+    };
+
+    measure();
+    if (typeof ResizeObserver !== 'undefined') {
+      const observer = new ResizeObserver(measure);
+      observer.observe(trackEl);
+      if (cardRef.current) observer.observe(cardRef.current);
+      return () => observer.disconnect();
+    }
+
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  const handleCopyBezier = async (curveId: string, cssValue: string) => {
+    try {
+      await navigator.clipboard.writeText(cssValue);
+      setCopiedCurveId(curveId);
+      showToast('Kurva Easing Tersalin', cssValue);
+      if (copyTimerRef.current !== null) {
+        window.clearTimeout(copyTimerRef.current);
+      }
+      copyTimerRef.current = window.setTimeout(() => setCopiedCurveId(null), 2400);
+    } catch {
+      showToast('Salin Manual', cssValue);
+    }
+  };
+
+  return (
+    <div className="rounded-2xl border border-champagne/20 bg-obsidian/70 p-4 sm:p-6 lg:p-8 space-y-6">
+      {/* Control Bar */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-champagne/15">
+        <div className="flex flex-wrap items-center gap-3 min-w-0">
+          <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne/80 shrink-0">
+            DURASI TRANSISI
+          </span>
+          <SegmentedControl
+            options={WORKBENCH_DURATIONS}
+            value={durationStr}
+            onChange={(next) => {
+              setDurationStr(next);
+              setRunId((r) => r + 1);
+            }}
+            layoutId="workbench-duration-pill"
+            ariaLabel="Pilih durasi perbandingan kurva easing"
+            surface="dark"
+            size="sm"
+            roleMode="group"
+            className="w-auto"
+          />
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            type="button"
+            onClick={() => handleCopyBezier('signature-bar', WORKBENCH_CURVES[0].css)}
+            aria-label="Salin nilai CSS cubic-bezier signature AFLAN"
+            className="inline-flex items-center gap-2 max-w-full px-3.5 py-2 rounded-full border border-champagne/25 bg-espresso/70 text-[10px] sm:text-[11px] font-mono text-champagne hover:border-champagne hover:text-ivory active:scale-[0.98] transition-all cursor-pointer"
+          >
+            {copiedCurveId === 'signature-bar' ? (
+              <Check className="size-3.5 shrink-0 text-champagne" aria-hidden="true" />
+            ) : (
+              <Copy className="size-3.5 shrink-0 text-champagne/80" aria-hidden="true" />
+            )}
+            <span className="truncate">{WORKBENCH_CURVES[0].css}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setRunId((r) => r + 1)}
+            disabled={Boolean(prefersReducedMotion)}
+            className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-champagne text-obsidian font-mono text-[10px] sm:text-[11px] tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all cursor-pointer disabled:opacity-45 disabled:cursor-not-allowed"
+          >
+            <RotateCcw className="size-3.5" aria-hidden="true" />
+            <span>Putar Perbandingan</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Reduced Motion Accessibility Notice */}
+      {prefersReducedMotion && (
+        <div className="rounded-xl border border-champagne/25 bg-espresso/60 px-4 py-3 text-xs sm:text-sm text-champagne/90 leading-relaxed">
+          Mode <span className="font-mono">prefers-reduced-motion</span> terdeteksi aktif.
+          Kartu pembanding ditampilkan tenang pada posisi akhir (<span className="font-mono">1.00</span>) demi kenyamanan visual, sementara grafik kurva SVG dan token CSS tetap dapat disalin.
+        </div>
+      )}
+
+      {/* Parallel Comparison Tracks */}
+      <div className="space-y-4">
+        {WORKBENCH_CURVES.map((curve, idx) => {
+          const isCopied = copiedCurveId === curve.id;
+          return (
+            <div
+              key={curve.id}
+              className={`rounded-xl border p-4 sm:p-5 space-y-3.5 transition-colors ${
+                curve.isSignature
+                  ? 'border-champagne/40 bg-espresso/75'
+                  : 'border-champagne/15 bg-obsidian/75'
+              }`}
+            >
+              {/* Lane Header */}
+              <div className="flex flex-wrap items-center justify-between gap-2.5">
+                <div className="flex flex-wrap items-baseline gap-2.5 min-w-0">
+                  <h3 className="font-serif text-lg sm:text-xl font-light text-ivory">
+                    {curve.name}
+                  </h3>
+                  <span
+                    className={`px-2 py-0.5 rounded-full border text-[10px] font-mono uppercase tracking-[0.15em] ${
+                      curve.isSignature
+                        ? 'border-champagne/50 bg-champagne/12 text-champagne'
+                        : 'border-champagne/20 text-taupe'
+                    }`}
+                  >
+                    {curve.badge}
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => handleCopyBezier(curve.id, curve.css)}
+                  aria-label={`Salin ${curve.css}`}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-champagne/20 bg-obsidian/60 font-mono text-[10px] text-champagne/85 hover:border-champagne/50 hover:text-ivory transition-colors cursor-pointer"
+                >
+                  <span>{curve.css}</span>
+                  {isCopied ? (
+                    <Check className="size-3 text-champagne" aria-hidden="true" />
+                  ) : (
+                    <Copy className="size-3 text-taupe" aria-hidden="true" />
+                  )}
+                </button>
+              </div>
+
+              {/* SVG Bezier Curve + Architectural Hairline Track */}
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3.5 sm:gap-4 min-w-0">
+                <div
+                  className="w-16 h-16 shrink-0 rounded-lg border border-champagne/20 bg-obsidian/90 p-1.5 flex items-center justify-center"
+                  title={`${curve.name}: ${curve.css}`}
+                >
+                  <svg
+                    viewBox="0 0 100 100"
+                    className="w-full h-full overflow-visible"
+                    aria-hidden="true"
+                  >
+                    {/* Minimal Coordinate Grid */}
+                    <line
+                      x1="8"
+                      y1="8"
+                      x2="8"
+                      y2="92"
+                      stroke="rgba(216,195,165,0.16)"
+                      strokeWidth="1"
+                    />
+                    <line
+                      x1="8"
+                      y1="92"
+                      x2="92"
+                      y2="92"
+                      stroke="rgba(216,195,165,0.16)"
+                      strokeWidth="1"
+                    />
+                    <line
+                      x1="8"
+                      y1="50"
+                      x2="92"
+                      y2="50"
+                      stroke="rgba(216,195,165,0.1)"
+                      strokeWidth="1"
+                    />
+                    <line
+                      x1="50"
+                      y1="8"
+                      x2="50"
+                      y2="92"
+                      stroke="rgba(216,195,165,0.1)"
+                      strokeWidth="1"
+                    />
+                    {/* Linear reference diagonal */}
+                    <line
+                      x1="8"
+                      y1="92"
+                      x2="92"
+                      y2="8"
+                      stroke="rgba(165,139,118,0.28)"
+                      strokeWidth="1"
+                      strokeDasharray="3 3"
+                    />
+                    {/* Bezier curve path */}
+                    <path
+                      d={curve.svgPath}
+                      fill="none"
+                      stroke={curve.isSignature ? '#D8C3A5' : 'rgba(165,139,118,0.8)'}
+                      strokeWidth={curve.isSignature ? '2.6' : '2'}
+                      strokeLinecap="round"
+                    />
+                    {/* Control handles */}
+                    <line
+                      x1="8"
+                      y1="92"
+                      x2={curve.handles[0].x}
+                      y2={curve.handles[0].y}
+                      stroke="rgba(138,109,75,0.55)"
+                      strokeWidth="1"
+                    />
+                    <line
+                      x1="92"
+                      y1="8"
+                      x2={curve.handles[1].x}
+                      y2={curve.handles[1].y}
+                      stroke="rgba(138,109,75,0.55)"
+                      strokeWidth="1"
+                    />
+                    <circle cx="8" cy="92" r="2.8" fill="#8A6D4B" />
+                    <circle cx="92" cy="8" r="2.8" fill="#D8C3A5" />
+                    <circle
+                      cx={curve.handles[0].x}
+                      cy={curve.handles[0].y}
+                      r="2.2"
+                      fill="#D8C3A5"
+                    />
+                    <circle
+                      cx={curve.handles[1].x}
+                      cy={curve.handles[1].y}
+                      r="2.2"
+                      fill="#D8C3A5"
+                    />
+                  </svg>
+                </div>
+
+                {/* Hairline Track */}
+                <div
+                  ref={idx === 0 ? trackRef : undefined}
+                  className="relative flex-1 min-w-0 h-16 sm:h-[72px] rounded-lg border border-champagne/15 bg-obsidian/85 px-3 flex items-center overflow-hidden"
+                >
+                  {/* Coordinate Markers */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-3 inset-y-0"
+                  >
+                    <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-px bg-champagne/15" />
+                    {WORKBENCH_TICKS.map((tick) => (
+                      <div
+                        key={tick.label}
+                        style={{ left: tick.pos }}
+                        className="absolute top-0 bottom-0 -translate-x-1/2 flex flex-col justify-between items-center py-1"
+                      >
+                        <span className="w-px h-1.5 bg-champagne/25" />
+                        <span className="font-mono text-[9px] text-taupe/65 leading-none">
+                          {tick.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Animated Mini-Card */}
+                  <motion.div
+                    key={`${curve.id}-${runId}-${durationStr}`}
+                    ref={idx === 0 ? cardRef : undefined}
+                    initial={prefersReducedMotion ? false : { x: 0 }}
+                    animate={{ x: travelDistance }}
+                    transition={
+                      prefersReducedMotion
+                        ? { duration: 0 }
+                        : { duration: durationSec, ease: curve.bezier }
+                    }
+                    className={`relative z-10 w-24 sm:w-28 px-2.5 py-2 rounded-md border flex items-center justify-between gap-1.5 shrink-0 will-change-transform ${
+                      curve.isSignature
+                        ? 'bg-espresso border-champagne/70 text-ivory shadow-[0_8px_24px_rgba(216,195,165,0.16)]'
+                        : 'bg-charcoal/95 border-champagne/25 text-ivory/85'
+                    }`}
+                  >
+                    <span className="font-mono text-[10px] tracking-[0.16em] uppercase">
+                      {curve.shortCode}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className={`size-2 rounded-xs ${
+                        curve.isSignature ? 'bg-champagne' : 'bg-[#8A6D4B]'
+                      }`}
+                    />
+                  </motion.div>
+                </div>
+              </div>
+
+              <p className="font-sans text-xs text-ivory/70 leading-relaxed">
+                {curve.summary}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 export const CreativeLabPage: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
 
@@ -853,6 +1248,7 @@ export const CreativeLabPage: React.FC = () => {
               { href: '#lab-chiaroscuro', label: '04 · Chiaroscuro Canvas' },
               { href: '#lab-easing', label: '05 · Koreografi Motion' },
               { href: '#lab-contrast', label: '06 · Matriks Kontras' },
+              { href: '#lab-workbench', label: '07 · Motion Workbench' },
             ].map((mod) => (
               <a
                 key={mod.href}
@@ -1250,6 +1646,33 @@ export const CreativeLabPage: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* LAB 07 — MOTION & EASING WORKBENCH */}
+      <section
+        id="lab-workbench"
+        className="relative bg-[#1A1412] text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-t border-champagne/15"
+      >
+        <div className="max-w-[1440px] mx-auto space-y-8">
+          <Reveal variant="up" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
+            <div className="lg:col-span-7">
+              <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne">
+                <Sliders className="size-3.5" aria-hidden="true" />
+                LAB 07 · MOTION &amp; CRAFT WORKBENCH
+              </span>
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light tracking-tight mt-2">
+                Motion &amp; Easing Workbench
+              </h2>
+            </div>
+            <p className="lg:col-span-5 font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
+              Perbandingan paralel kurva signature AFLAN Luxury Editorial melawan kurva standar{' '}
+              <span className="font-mono text-champagne/90">linear</span> dan{' '}
+              <span className="font-mono text-champagne/90">ease-in-out</span> secara serentak pada lintasan arsitektural.
+            </p>
+          </Reveal>
+
+          <MotionEasingWorkbench />
         </div>
       </section>
     </div>

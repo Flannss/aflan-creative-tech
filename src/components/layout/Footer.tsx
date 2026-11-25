@@ -1,12 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Check, Copy, Github } from 'lucide-react';
+import { ArrowUpRight, Check, Copy, Github, Search } from 'lucide-react';
 import { BrandSignature } from '@/components/brand/Monogram';
 import { navigationRoutes, personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
 import { useToast } from '@/hooks/useToast';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenCommandPalette?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
   const [copied, setCopied] = useState(false);
   const copyTimerRef = useRef<number | null>(null);
   const { showToast } = useToast();
@@ -108,6 +112,17 @@ export const Footer: React.FC = () => {
                 <span>GitHub · {contactData.githubHandle}</span>
                 <ArrowUpRight className="size-3" aria-hidden="true" />
               </a>
+              {onOpenCommandPalette && (
+                <button
+                  type="button"
+                  onClick={onOpenCommandPalette}
+                  aria-label="Buka indeks cepat Command Palette"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/25 bg-espresso/50 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne/90 hover:border-champagne hover:text-ivory active:scale-[0.97] transition-all cursor-pointer"
+                >
+                  <Search className="size-3.5" aria-hidden="true" />
+                  <span>⌘K · Cari Cepat</span>
+                </button>
+              )}
             </div>
           </div>
 

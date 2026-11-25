@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 import {
   AlertCircle,
   ArrowLeft,
@@ -8,44 +9,35 @@ import {
   CheckCircle2,
   ExternalLink,
 } from 'lucide-react';
-import { getProjectBySlug, projectsData } from '@/data/projects';
+import {
+  getProjectBySlug,
+  projectsData,
+  type ProjectEntry,
+} from '@/data/projects';
 import { TypographicDossierPlate } from '@/components/projects/TypographicDossierPlate';
 import { Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { ParallaxFrame } from '@/components/motion/ParallaxFrame';
 
-export const ProjectDetailPage: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const project = slug ? getProjectBySlug(slug) : undefined;
+interface ProjectCaseStudyContentProps {
+  project: ProjectEntry;
+}
 
-  useEffect(() => {
-    if (project) {
-      document.title =
-        project.slug === 'aflan-digital-identity'
-          ? 'Studi Kasus: Identitas Digital Personal · AFLAN (AMDZ)'
-          : `${project.title} · AFLAN (AMDZ)`;
-    }
-  }, [project]);
+const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
+  project,
+}) => {
+  const articleRef = useRef<HTMLDivElement | null>(null);
+  const prefersReducedMotion = useReducedMotion();
 
-  if (!project) {
-    return (
-      <section className="min-h-[80vh] bg-obsidian text-ivory flex flex-col items-center justify-center px-4 sm:px-6 pt-24 pb-16 text-center">
-        <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne mb-4">
-          ENTRI TIDAK DITEMUKAN
-        </p>
-        <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light tracking-tight mb-6 text-ivory/95">
-          Dossier proyek yang dicari tidak tersedia.
-        </h1>
-        <Link
-          to="/projects"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory transition-colors"
-        >
-          <ArrowLeft className="size-4" aria-hidden="true" />
-          Kembali ke Arsip Proyek
-        </Link>
-      </section>
-    );
-  }
+  const { scrollYProgress } = useScroll({
+    target: articleRef,
+    offset: ['start start', 'end end'],
+  });
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 200,
+    damping: 32,
+    restDelta: 0.001,
+  });
 
   const currentIdx = projectsData.findIndex((p) => p.slug === project.slug);
   const prevProject =
@@ -53,7 +45,18 @@ export const ProjectDetailPage: React.FC = () => {
   const nextProject = projectsData[(currentIdx + 1) % projectsData.length];
 
   return (
-    <div className="w-full overflow-x-clip">
+    <div ref={articleRef} className="w-full overflow-x-clip">
+      {!prefersReducedMotion && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none fixed top-0 inset-x-0 z-[58] h-[2px] bg-champagne/15"
+        >
+          <motion.div
+            style={{ scaleX: smoothProgress }}
+            className="h-full w-full origin-left bg-champagne will-change-transform"
+          />
+        </div>
+      )}
       <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-12 border-b border-champagne/15">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-champagne/15">
@@ -285,35 +288,98 @@ export const ProjectDetailPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-espresso text-ivory border-t border-champagne/15">
+      <nav
+        aria-label="Navigasi antar studi kasus proyek"
+        className="bg-espresso text-ivory border-t border-champagne/15"
+      >
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-champagne/15">
           <Link
             to={`/projects/${prevProject.slug}`}
-            className="group p-6 sm:p-9 lg:p-14 hover:bg-obsidian/40 transition-colors flex flex-col justify-between gap-4"
+            className="relative group p-6 sm:p-9 lg:p-14 hover:bg-obsidian/45 transition-colors duration-500 flex flex-col justify-between gap-4 min-w-0 overflow-hidden"
           >
-            <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-champagne">
-              <ArrowLeft className="size-3.5" aria-hidden="true" />
-              Entri Sebelumnya · {prevProject.index}
-            </span>
-            <span className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-ivory group-hover:text-champagne transition-colors">
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute top-0 inset-x-0 h-[1.5px] bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+            />
+            <div className="space-y-1.5">
+              <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-champagne">
+                <ArrowLeft
+                  className="size-3.5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-1.5 motion-reduce:transform-none"
+                  aria-hidden="true"
+                />
+                Proyek Sebelumnya
+              </span>
+              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-taupe">
+                ENTRI {prevProject.index} · {prevProject.category}
+              </p>
+            </div>
+            <span className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-ivory group-hover:text-champagne transition-colors duration-300 wrap-break-word">
               {prevProject.title}
             </span>
           </Link>
 
           <Link
             to={`/projects/${nextProject.slug}`}
-            className="group p-6 sm:p-9 lg:p-14 hover:bg-obsidian/40 transition-colors flex flex-col justify-between gap-4 md:items-end md:text-right"
+            className="relative group p-6 sm:p-9 lg:p-14 hover:bg-obsidian/45 transition-colors duration-500 flex flex-col justify-between gap-4 md:items-end md:text-right min-w-0 overflow-hidden"
           >
-            <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-champagne">
-              Entri Berikutnya · {nextProject.index}
-              <ArrowRight className="size-3.5" aria-hidden="true" />
-            </span>
-            <span className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-ivory group-hover:text-champagne transition-colors">
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute top-0 inset-x-0 h-[1.5px] bg-champagne origin-right scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+            />
+            <div className="space-y-1.5 md:flex md:flex-col md:items-end">
+              <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-champagne">
+                Proyek Berikutnya
+                <ArrowRight
+                  className="size-3.5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1.5 motion-reduce:transform-none"
+                  aria-hidden="true"
+                />
+              </span>
+              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-taupe">
+                ENTRI {nextProject.index} · {nextProject.category}
+              </p>
+            </div>
+            <span className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-ivory group-hover:text-champagne transition-colors duration-300 wrap-break-word">
               {nextProject.title}
             </span>
           </Link>
         </div>
-      </section>
+      </nav>
     </div>
   );
+};
+
+export const ProjectDetailPage: React.FC = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const project = slug ? getProjectBySlug(slug) : undefined;
+
+  useEffect(() => {
+    if (project) {
+      document.title =
+        project.slug === 'aflan-digital-identity'
+          ? 'Studi Kasus: Identitas Digital Personal · AFLAN (AMDZ)'
+          : `${project.title} · AFLAN (AMDZ)`;
+    }
+  }, [project]);
+
+  if (!project) {
+    return (
+      <section className="min-h-[80vh] bg-obsidian text-ivory flex flex-col items-center justify-center px-4 sm:px-6 pt-24 pb-16 text-center">
+        <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne mb-4">
+          ENTRI TIDAK DITEMUKAN
+        </p>
+        <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light tracking-tight mb-6 text-ivory/95">
+          Dossier proyek yang dicari tidak tersedia.
+        </h1>
+        <Link
+          to="/projects"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory transition-colors"
+        >
+          <ArrowLeft className="size-4" aria-hidden="true" />
+          Kembali ke Arsip Proyek
+        </Link>
+      </section>
+    );
+  }
+
+  return <ProjectCaseStudyContent key={project.slug} project={project} />;
 };

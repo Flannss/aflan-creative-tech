@@ -1,14 +1,18 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Menu, Search, X } from 'lucide-react';
 import { BrandSignature, MonogramMark } from '@/components/brand/Monogram';
 import { navigationRoutes, personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
 import { calculateExactAge } from '@/utils/age';
 import { EASE_LUXURY } from '@/utils/motion';
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  onOpenCommandPalette?: () => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   const location = useLocation();
   const [menuOpenPath, setMenuOpenPath] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -269,24 +273,41 @@ export const Navbar: React.FC = () => {
             className="fixed inset-0 z-65 bg-obsidian text-ivory overflow-y-auto"
           >
             <div className="studio-vignette min-h-dvh flex flex-col justify-between px-4 sm:px-6 lg:px-12 py-6">
-              <div className="max-w-[1440px] w-full mx-auto flex items-center justify-between gap-3 pb-5 sm:pb-6 border-b border-champagne/15">
+              <div className="max-w-[1440px] w-full mx-auto flex items-center justify-between gap-2.5 sm:gap-3 pb-5 sm:pb-6 border-b border-champagne/15">
                 <Link to="/" onClick={closeMenu} aria-label="Beranda AFLAN" className="shrink-0">
                   <BrandSignature tone="light" />
                 </Link>
-                <button
-                  type="button"
-                  onClick={() => {
-                    closeMenu();
-                    triggerRef.current?.focus();
-                  }}
-                  aria-label="Tutup menu navigasi"
-                  className="inline-flex items-center gap-2 min-h-[44px] lg:min-h-0 px-4 py-2.5 lg:py-2 rounded-full border border-champagne/40 text-champagne hover:bg-champagne hover:text-obsidian transition-colors shrink-0"
-                >
-                  <span className="font-mono text-[11px] tracking-[0.2em] uppercase">
-                    Tutup
-                  </span>
-                  <X className="size-4" aria-hidden="true" />
-                </button>
+                <div className="flex items-center gap-2 shrink-0">
+                  {onOpenCommandPalette && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        closeMenu();
+                        onOpenCommandPalette();
+                      }}
+                      aria-label="Buka indeks cepat Command Palette"
+                      className="inline-flex items-center gap-1.5 min-h-[44px] lg:min-h-0 px-3 sm:px-3.5 py-2.5 lg:py-2 rounded-full border border-champagne/25 bg-espresso/70 text-champagne hover:border-champagne hover:bg-espresso transition-colors shrink-0 cursor-pointer font-mono text-[10px] sm:text-[11px] tracking-[0.15em] uppercase"
+                    >
+                      <Search className="size-3.5" aria-hidden="true" />
+                      <span className="sm:hidden">⌘K</span>
+                      <span className="hidden sm:inline">⌘K · Cari Cepat</span>
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      closeMenu();
+                      triggerRef.current?.focus();
+                    }}
+                    aria-label="Tutup menu navigasi"
+                    className="inline-flex items-center gap-2 min-h-[44px] lg:min-h-0 px-3.5 sm:px-4 py-2.5 lg:py-2 rounded-full border border-champagne/40 text-champagne hover:bg-champagne hover:text-obsidian transition-colors shrink-0"
+                  >
+                    <span className="font-mono text-[11px] tracking-[0.2em] uppercase">
+                      Tutup
+                    </span>
+                    <X className="size-4" aria-hidden="true" />
+                  </button>
+                </div>
               </div>
 
               <div className="max-w-[1440px] w-full mx-auto py-6 sm:py-10 grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-center my-auto">

@@ -1,19 +1,22 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ScrollProgress } from '@/components/motion/ScrollProgress';
 import { CustomCursor } from '@/components/motion/CustomCursor';
+import { CommandPalette } from '@/components/ui/CommandPalette';
 import { navigationRoutes, personalData } from '@/data/personal';
 
 const CANONICAL_ORIGIN = personalData.siteUrl.replace(/\/$/, '');
 
 interface LayoutProps {
   children: React.ReactNode;
+  splashActive?: boolean;
 }
 
-export const Layout: React.FC<LayoutProps> = ({ children }) => {
+export const Layout: React.FC<LayoutProps> = ({ children, splashActive = false }) => {
   const { pathname } = useLocation();
+  const [commandOpen, setCommandOpen] = useState(false);
 
   useLayoutEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -61,13 +64,18 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       <ScrollProgress />
       <CustomCursor />
-      <Navbar />
+      <Navbar onOpenCommandPalette={() => setCommandOpen(true)} />
 
       <main id="main-content" className="flex-1 w-full">
         {children}
       </main>
 
-      <Footer />
+      <Footer onOpenCommandPalette={() => setCommandOpen(true)} />
+      <CommandPalette
+        open={commandOpen}
+        onOpenChange={setCommandOpen}
+        disabled={splashActive}
+      />
     </div>
   );
 };
