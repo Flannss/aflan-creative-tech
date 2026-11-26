@@ -456,7 +456,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                               if (item.prefetchPath) prefetchRoute(item.prefetchPath);
                             }}
                             onClick={() => item.onSelect()}
-                            className={`relative w-full text-left px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3 transition-colors cursor-pointer ${
+                            className={`relative isolate w-full text-left px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3 transition-colors cursor-pointer ${
                               isSelected ? 'text-ivory' : 'text-ivory/80 hover:text-ivory'
                             }`}
                           >
@@ -467,7 +467,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                                 transition={
                                   prefersReducedMotion ? { duration: 0 } : SPRING_SILK
                                 }
-                                className="pointer-events-none absolute inset-0 bg-[#2A1E18] border-l-2 border-champagne"
+                                className="pointer-events-none absolute inset-0 z-0 bg-[#2A1E18] border-l-2 border-champagne"
                               />
                             )}
                             <div className="relative z-10 flex items-baseline gap-3 min-w-0 flex-1">

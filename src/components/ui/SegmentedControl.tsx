@@ -39,8 +39,8 @@ export function SegmentedControl<T extends string>({
 
   const trackClass =
     surface === 'dark'
-      ? 'bg-[#211814]/90 border-champagne/22'
-      : 'bg-espresso/95 border-espresso/20 shadow-xs';
+      ? 'bg-[#231915] border-[#DFC8A6]/25'
+      : 'bg-[#211814] border-[#211814]/25 shadow-xs';
 
   const padClass =
     size === 'sm'
@@ -83,7 +83,7 @@ export function SegmentedControl<T extends string>({
         role={roleMode}
         aria-label={ariaLabel}
         onKeyDown={handleKeyDown}
-        className={`inline-flex flex-nowrap items-center gap-1 p-1 rounded-full border w-max whitespace-nowrap ${trackClass}`}
+        className={`relative isolate inline-flex flex-nowrap items-center gap-1 p-1 rounded-full border w-max whitespace-nowrap ${trackClass}`}
       >
         {options.map((option) => {
           const active = option.value === value;
@@ -102,10 +102,10 @@ export function SegmentedControl<T extends string>({
               type="button"
               onClick={() => onChange(option.value)}
               {...tabProps}
-              className={`relative shrink-0 inline-flex items-center gap-1.5 rounded-full font-mono uppercase whitespace-nowrap transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne ${padClass} ${
+              className={`relative isolate shrink-0 inline-flex items-center gap-1.5 rounded-full font-mono uppercase whitespace-nowrap transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne ${padClass} ${
                 active
-                  ? 'text-obsidian font-medium'
-                  : 'text-ivory/80 hover:text-champagne'
+                  ? 'text-[#211814] font-medium'
+                  : 'text-[#F6F1E9]/85 hover:text-[#DFC8A6]'
               }`}
             >
               {active && (
@@ -113,14 +113,14 @@ export function SegmentedControl<T extends string>({
                   layoutId={layoutId}
                   aria-hidden="true"
                   transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
-                  className="absolute inset-0 rounded-full bg-champagne shadow-[0_4px_16px_rgba(216,195,165,0.22)]"
+                  className="pointer-events-none absolute inset-0 z-0 rounded-full bg-[#DFC8A6] shadow-[0_4px_16px_rgba(223,200,166,0.22)]"
                 />
               )}
               <span className="relative z-10 whitespace-nowrap">{option.label}</span>
               {option.badge !== undefined && (
                 <span
                   className={`relative z-10 text-[10px] tabular-nums whitespace-nowrap ${
-                    active ? 'text-espresso/80' : 'text-champagne/80'
+                    active ? 'text-[#211814]/80' : 'text-[#DFC8A6]/85'
                   }`}
                 >
                   ({option.badge})

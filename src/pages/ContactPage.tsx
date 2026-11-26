@@ -307,7 +307,10 @@ export const ContactPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-obsidian text-ivory py-16 md:py-24 px-5 md:px-8 lg:px-12">
+      <section
+        data-nav-surface="dark"
+        className="bg-obsidian text-ivory py-16 md:py-24 px-5 md:px-8 lg:px-12"
+      >
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           {/* KOLOM KIRI: KANAL LANGSUNG, KETERSEDIAAN & KONTAK CEPAT */}
           <Reveal variant="up" className="lg:col-span-5 min-w-0 space-y-6">

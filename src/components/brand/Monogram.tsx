@@ -65,8 +65,8 @@ export const BrandSignature: React.FC<BrandSignatureProps> = ({
   compact = false,
   tone = 'light',
 }) => {
-  const textColor = tone === 'light' ? 'text-ivory' : 'text-espresso';
-  const accentColor = tone === 'light' ? 'text-champagne' : 'text-mocha';
+  const textColor = tone === 'light' ? 'text-[#F6F1E9]' : 'text-[#211814]';
+  const accentColor = tone === 'light' ? 'text-[#DFC8A6]' : 'text-[#6E4F3A]';
 
   return (
     <span className="inline-flex items-center gap-2.5 sm:gap-3 select-none">

@@ -145,6 +145,22 @@ const ContextMotifSvg: React.FC<{ motif: RouteContextSpec['motif'] }> = ({
   );
 };
 
+function isRoutePathActive(routePath: string, currentPath: string): boolean {
+  if (routePath === '/') {
+    return currentPath === '/';
+  }
+  if (routePath === '/projects') {
+    return currentPath === '/projects' || currentPath.startsWith('/projects/');
+  }
+  if (routePath === '/achievements') {
+    return currentPath === '/achievements' || currentPath === '/honors';
+  }
+  if (routePath === '/lab') {
+    return currentPath === '/lab' || currentPath === '/creative-lab';
+  }
+  return currentPath === routePath;
+}
+
 const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   const location = useLocation();
   const [menuOpenPath, setMenuOpenPath] = useState<string | null>(null);
@@ -240,11 +256,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
   const activePreviewRoute =
     navigationRoutes.find((r) => r.path === hoveredPath) ??
-    navigationRoutes.find(
-      (r) =>
-        r.path === location.pathname ||
-        (r.path === '/projects' && location.pathname.startsWith('/projects/')),
-    ) ??
+    navigationRoutes.find((r) => isRoutePathActive(r.path, location.pathname)) ??
     navigationRoutes[0];
 
   const activeRouteContext =
@@ -286,16 +298,17 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
           <nav
             aria-label="Primary navigation"
             onMouseLeave={() => setNavHoverPath(null)}
-            className={`hidden xl:flex items-center gap-0.5 2xl:gap-1 px-2 2xl:px-2.5 py-1.5 rounded-full border ${
+            className={`relative isolate hidden xl:flex items-center gap-0.5 2xl:gap-1 px-2 2xl:px-2.5 py-1.5 rounded-full border ${
               isLightHeaderRoute
-                ? 'bg-offwhite border-espresso/15'
-                : 'bg-[#231915]/[0.96] border-champagne/25 shadow-[0_6px_20px_rgba(20,14,11,0.28)]'
+                ? 'bg-[#F3ECE1] border-[#8E6B4B]/28'
+                : 'bg-[#231915] border-[#DFC8A6]/25 shadow-[0_6px_20px_rgba(20,14,11,0.28)]'
             }`}
           >
             {navigationRoutes.map((route) => {
-              const isProjectDetail =
-                route.path === '/projects' &&
-                location.pathname.startsWith('/projects/');
+              const isMatchedPath = isRoutePathActive(
+                route.path,
+                location.pathname,
+              );
               const isGhostHovered = navHoverPath === route.path;
 
               return (
@@ -313,23 +326,23 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                   }}
                   onTouchStart={() => prefetchRoute(route.path)}
                   className={({ isActive }) => {
-                    const active = isActive || isProjectDetail;
+                    const active = isActive || isMatchedPath;
                     if (isLightHeaderRoute) {
-                      return `group/nav relative px-2.5 2xl:px-3.5 py-1.5 rounded-full font-mono text-[10px] 2xl:text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300 ${
+                      return `group/nav relative isolate px-2.5 2xl:px-3.5 py-1.5 rounded-full font-mono text-[10px] 2xl:text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300 ${
                         active
-                          ? 'text-ivory font-medium'
-                          : 'text-espresso/80 hover:text-mocha'
+                          ? 'text-[#F6F1E9] font-medium'
+                          : 'text-[#5A4332] hover:text-[#211814]'
                       }`;
                     }
-                    return `group/nav relative px-2.5 2xl:px-3.5 py-1.5 rounded-full font-mono text-[10px] 2xl:text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300 ${
+                    return `group/nav relative isolate px-2.5 2xl:px-3.5 py-1.5 rounded-full font-mono text-[10px] 2xl:text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300 ${
                       active
-                        ? 'text-obsidian font-medium'
-                        : 'text-ivory/80 hover:text-champagne'
+                        ? 'text-[#211814] font-medium'
+                        : 'text-[#C2AA91] hover:text-[#F6F1E9]'
                     }`;
                   }}
                 >
                   {({ isActive }) => {
-                    const active = isActive || isProjectDetail;
+                    const active = isActive || isMatchedPath;
                     return (
                       <>
                         {!active && isGhostHovered && (
@@ -337,8 +350,8 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                             layoutId="nav-hover"
                             aria-hidden="true"
                             transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
-                            className={`absolute inset-0 rounded-full -z-20 ${
-                              isLightHeaderRoute ? 'bg-espresso/10' : 'bg-champagne/14'
+                            className={`pointer-events-none absolute inset-0 z-0 rounded-full ${
+                              isLightHeaderRoute ? 'bg-[#211814]/8' : 'bg-[#DFC8A6]/14'
                             }`}
                           />
                         )}
@@ -347,13 +360,13 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                             layoutId="aflan-nav-pill"
                             aria-hidden="true"
                             transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
-                            className={`absolute inset-0 rounded-full -z-10 shadow-xs ${
-                              isLightHeaderRoute ? 'bg-espresso' : 'bg-champagne'
+                            className={`pointer-events-none absolute inset-0 z-0 rounded-full shadow-xs ${
+                              isLightHeaderRoute ? 'bg-[#211814]' : 'bg-[#DFC8A6]'
                             }`}
                           >
                             <span
                               className={`absolute bottom-1 left-1/2 -translate-x-1/2 w-3 h-[1.5px] rounded-full ${
-                                isLightHeaderRoute ? 'bg-champagne/75' : 'bg-obsidian/45'
+                                isLightHeaderRoute ? 'bg-[#DFC8A6]' : 'bg-[#211814]/70'
                               }`}
                             />
                           </motion.span>
@@ -382,9 +395,10 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
               {['/about', '/projects', '/lab', '/contact'].map((path) => {
                 const route = navigationRoutes.find((r) => r.path === path);
                 if (!route) return null;
-                const isProjectDetail =
-                  route.path === '/projects' &&
-                  location.pathname.startsWith('/projects/');
+                const isMatchedPath = isRoutePathActive(
+                  route.path,
+                  location.pathname,
+                );
                 return (
                   <NavLink
                     key={route.path}
@@ -393,30 +407,30 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                     onFocus={() => prefetchRoute(route.path)}
                     onTouchStart={() => prefetchRoute(route.path)}
                     className={({ isActive }) => {
-                      const active = isActive || isProjectDetail;
-                      return `relative px-2.5 py-2 font-mono text-[11px] tracking-[0.15em] uppercase whitespace-nowrap transition-colors ${
+                      const active = isActive || isMatchedPath;
+                      return `relative isolate px-2.5 py-2 font-mono text-[11px] tracking-[0.15em] uppercase whitespace-nowrap transition-colors ${
                         isLightHeaderRoute
                           ? active
-                            ? 'text-mocha font-medium'
-                            : 'text-espresso/75 hover:text-mocha'
+                            ? 'text-[#211814] font-medium'
+                            : 'text-[#5A4332] hover:text-[#211814]'
                           : active
-                            ? 'text-champagne'
-                            : 'text-ivory/75 hover:text-champagne'
+                            ? 'text-[#DFC8A6] font-medium'
+                            : 'text-[#C2AA91] hover:text-[#F6F1E9]'
                       }`;
                     }}
                   >
                     {({ isActive }) => {
-                      const active = isActive || isProjectDetail;
+                      const active = isActive || isMatchedPath;
                       return (
                         <>
-                          {route.shortLabel}
+                          <span className="relative z-10">{route.shortLabel}</span>
                           {active && (
                             <motion.span
                               layoutId="aflan-tablet-nav-underline"
                               aria-hidden="true"
                               transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
-                              className={`absolute inset-x-2.5 bottom-1 h-[1.5px] ${
-                                isLightHeaderRoute ? 'bg-mocha' : 'bg-champagne'
+                              className={`pointer-events-none absolute inset-x-2.5 bottom-1 z-0 h-[1.5px] ${
+                                isLightHeaderRoute ? 'bg-[#211814]' : 'bg-[#DFC8A6]'
                               }`}
                             />
                           )}
@@ -438,8 +452,8 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
               data-cursor={menuOpen ? 'CLOSE' : 'MENU'}
               className={`group inline-flex items-center gap-2.5 min-h-[44px] px-4 sm:px-4.5 py-2 rounded-full border shrink-0 transition-all duration-300 cursor-pointer ${
                 isLightHeaderRoute
-                  ? 'border-espresso/30 bg-espresso text-ivory hover:bg-mocha hover:border-mocha'
-                  : 'border-champagne/35 bg-espresso/75 text-ivory hover:bg-champagne hover:text-obsidian'
+                  ? 'border-[#211814]/30 bg-[#211814] text-[#F6F1E9] hover:bg-[#33241C] hover:border-[#33241C]'
+                  : 'border-[#DFC8A6]/35 bg-[#2B1D17] text-[#F6F1E9] hover:bg-[#DFC8A6] hover:text-[#211814]'
               }`}
             >
               <span className="font-mono text-[11px] tracking-[0.2em] uppercase">
@@ -540,10 +554,10 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                   className="md:col-span-7 min-w-0 divide-y divide-champagne/12 border-y border-champagne/12"
                 >
                   {navigationRoutes.map((route, i) => {
-                    const isCurrent =
-                      location.pathname === route.path ||
-                      (route.path === '/projects' &&
-                        location.pathname.startsWith('/projects/'));
+                    const isCurrent = isRoutePathActive(
+                      route.path,
+                      location.pathname,
+                    );
                     const isHighlighted =
                       hoveredPath !== null ? hoveredPath === route.path : isCurrent;
                     const isDimmed = hoveredPath !== null && !isHighlighted;
@@ -568,14 +582,14 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                           }}
                           onTouchStart={() => prefetchRoute(route.path)}
                           onClick={closeMenu}
-                          className="relative group grid grid-cols-[minmax(0,1fr)_auto] sm:grid-cols-[minmax(195px,max-content)_minmax(0,1fr)_auto] md:grid-cols-[minmax(160px,max-content)_minmax(0,1fr)_auto] xl:grid-cols-[minmax(230px,max-content)_minmax(0,1fr)_auto] items-center gap-x-4 xl:gap-x-6 py-3 sm:py-3.5 px-3 sm:px-4 min-h-[56px] transition-colors"
+                          className="relative isolate group grid grid-cols-[minmax(0,1fr)_auto] sm:grid-cols-[minmax(195px,max-content)_minmax(0,1fr)_auto] md:grid-cols-[minmax(160px,max-content)_minmax(0,1fr)_auto] xl:grid-cols-[minmax(230px,max-content)_minmax(0,1fr)_auto] items-center gap-x-4 xl:gap-x-6 py-3 sm:py-3.5 px-3 sm:px-4 min-h-[56px] transition-colors"
                         >
                           {isHighlighted && (
                             <motion.span
                               layoutId="menu-row-highlight"
                               aria-hidden="true"
                               transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
-                              className="pointer-events-none absolute inset-0 -z-10 bg-espresso/75 border-l-2 border-champagne"
+                              className="pointer-events-none absolute inset-0 z-0 bg-espresso/75 border-l-2 border-champagne"
                             />
                           )}
 

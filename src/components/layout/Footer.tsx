@@ -64,7 +64,10 @@ const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
   };
 
   return (
-    <footer className="relative bg-obsidian text-ivory border-t border-champagne/20 overflow-hidden">
+    <footer
+      data-nav-surface="dark"
+      className="relative bg-obsidian text-ivory border-t border-champagne/20 overflow-hidden"
+    >
       <div
         className={`relative z-10 max-w-[1440px] mx-auto px-5 md:px-8 lg:px-12 pb-24 sm:pb-12 ${
           isHomeRoute ? 'pt-6 sm:pt-8' : 'pt-14 sm:pt-20 lg:pt-24'
