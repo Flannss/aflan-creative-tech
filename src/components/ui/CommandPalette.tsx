@@ -345,7 +345,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           exit={{ opacity: 0 }}
           transition={{ duration: prefersReducedMotion ? 0.12 : 0.24, ease: EASE_LUXURY }}
           onClick={() => closePalette(false)}
-          className="fixed inset-0 z-[85] flex items-start justify-center pt-[9vh] sm:pt-[13vh] px-3 sm:px-6 pb-6 bg-obsidian/75 backdrop-blur-md"
+          className="fixed inset-0 z-[85] flex items-start justify-center pt-[9vh] sm:pt-[13vh] px-3 sm:px-6 pb-6 bg-[#1B1310]/[0.90]"
         >
           <motion.div
             role="dialog"
@@ -473,7 +473,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                             <div className="relative z-10 flex items-baseline gap-3 min-w-0 flex-1">
                               {item.index && (
                                 <span
-                                  className={`shrink-0 font-mono text-[10px] tracking-[0.18em] uppercase ${
+                                  className={`shrink-0 font-mono text-[10px] tracking-[0.18em] uppercase tabular-nums ${
                                     isSelected ? 'text-champagne' : 'text-taupe'
                                   }`}
                                 >

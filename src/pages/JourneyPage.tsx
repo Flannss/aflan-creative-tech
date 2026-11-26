@@ -157,10 +157,6 @@ export const JourneyPage: React.FC = () => {
   return (
     <div className="w-full overflow-x-clip">
       <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-5 md:px-8 lg:px-12 border-b border-brass/20">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 studio-vignette opacity-80"
-        />
         <div className="relative z-10 max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
@@ -213,7 +209,7 @@ export const JourneyPage: React.FC = () => {
           {/* Pinned Editorial Category Heading & Chapter Controls */}
           <aside className="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
             <div className="space-y-3 pb-6 border-b border-espresso/15">
-              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-cognac">
+              <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-cognac tabular-nums">
                 TIMELINE · {String(filteredMilestones.length).padStart(2, '0')} ENTRIES
               </p>
               <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight leading-[1.08] text-espresso/90">
@@ -274,7 +270,7 @@ export const JourneyPage: React.FC = () => {
             </nav>
 
             <div className="pt-4 border-t border-espresso/15 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-espresso/65">
+              <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-espresso/65 tabular-nums">
                 {String(activeIndex + 1).padStart(2, '0')} /{' '}
                 {String(filteredMilestones.length).padStart(2, '0')}
               </span>
@@ -344,7 +340,7 @@ export const JourneyPage: React.FC = () => {
                   <article className="bg-obsidian text-ivory border border-champagne/25 p-6 sm:p-9 lg:p-10 shadow-[0_24px_70px_rgba(23,22,21,0.35)]">
                   <div className="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-champagne/15">
                     <div className="flex items-center gap-3.5">
-                      <span className="font-serif italic text-3xl sm:text-4xl text-champagne leading-none">
+                      <span className="font-serif italic text-3xl sm:text-4xl text-champagne leading-none tabular-nums">
                         {item.chapter}
                       </span>
                       <div>
@@ -400,7 +396,7 @@ export const JourneyPage: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="pt-5 border-t border-champagne/15 flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.22em] uppercase text-taupe">
+                  <div className="pt-5 border-t border-champagne/15 flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.22em] uppercase text-taupe tabular-nums">
                     <span>
                       {item.periodLabel} · {String(idx + 1).padStart(2, '0')} /{' '}
                       {String(filteredMilestones.length).padStart(2, '0')}

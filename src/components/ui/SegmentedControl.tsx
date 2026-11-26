@@ -119,7 +119,7 @@ export function SegmentedControl<T extends string>({
               <span className="relative z-10 whitespace-nowrap">{option.label}</span>
               {option.badge !== undefined && (
                 <span
-                  className={`relative z-10 text-[10px] whitespace-nowrap ${
+                  className={`relative z-10 text-[10px] tabular-nums whitespace-nowrap ${
                     active ? 'text-espresso/80' : 'text-champagne/80'
                   }`}
                 >

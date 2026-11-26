@@ -276,7 +276,7 @@ export const ContactPage: React.FC = () => {
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-cognac">
               GET IN TOUCH
             </span>
-            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-cognac">
+            <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-cognac tabular-nums">
               <Clock className="size-3.5" aria-hidden="true" />
               PURWOKERTO · {localTime} WIB
             </span>
@@ -321,7 +321,7 @@ export const ContactPage: React.FC = () => {
                   />
                   STATUS KETERSEDIAAN
                 </span>
-                <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-taupe">
+                <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-taupe tabular-nums">
                   {localTime} WIB
                 </span>
               </div>

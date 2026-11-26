@@ -39,7 +39,7 @@ const TONAL_FILTERS: Record<
   sepia: {
     label: 'Sepia',
     cssFilter: 'sepia(34%) contrast(1.06) brightness(0.98)',
-    note: 'Nuansa cetak hangat selaras dengan palet Espresso & Champagne.',
+    note: 'Nuansa cetak hangat mengikuti palet Espresso dan Champagne.',
   },
   monochrome: {
     label: 'Monokrom',
@@ -224,10 +224,6 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
           className="w-full h-full bg-chocolate text-ivory p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden"
           style={{ filter: TONAL_FILTERS[tonalMode].cssFilter || 'none' }}
         >
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 studio-warm-halo opacity-70"
-          />
           <div className="relative z-10 flex items-center justify-between font-mono text-[9px] tracking-[0.22em] uppercase text-champagne">
             <span>STUDI DISPLAY</span>
             <span>SERIF EDITORIAL</span>
@@ -374,7 +370,7 @@ export const GalleryPage: React.FC = () => {
             variant="up"
             className="flex flex-wrap items-center justify-between gap-4"
           >
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze tabular-nums">
               VISUAL ARCHIVE · {String(filteredItems.length).padStart(2, '0')} PLATES
             </span>
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
@@ -400,7 +396,7 @@ export const GalleryPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
               <p className="font-sans text-sm md:text-base text-espresso/80 leading-relaxed">
-                Kurasi potret studio, pelat abstrak tipografi, serta spektrum warna Sartorial dalam lightbox presisi.
+                Kurasi potret studio, studi tipografi, dan spektrum warna dalam penampil lightbox.
               </p>
             </Reveal>
           </div>
@@ -506,7 +502,7 @@ export const GalleryPage: React.FC = () => {
                         </button>
 
                         <div className="absolute top-3.5 left-3.5 right-3.5 z-30 flex items-center justify-between gap-2 pointer-events-none">
-                          <span className="px-3 py-1 bg-obsidian/85 backdrop-blur-xs border border-champagne/25 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne">
+                          <span className="px-3 py-1 bg-[#231915]/[0.94] border border-champagne/28 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne">
                             {item.badge}
                           </span>
                           <div className="flex items-center gap-1.5 pointer-events-auto">
@@ -539,7 +535,7 @@ export const GalleryPage: React.FC = () => {
                         </div>
 
                         <div
-                          className={`pointer-events-none absolute inset-0 z-20 bg-obsidian/84 backdrop-blur-[4px] p-5 sm:p-6 flex flex-col justify-end transition-all duration-300 ${
+                          className={`pointer-events-none absolute inset-0 z-20 bg-[#211814]/[0.93] p-5 sm:p-6 flex flex-col justify-end transition-all duration-300 ${
                             isDetailOpen
                               ? 'opacity-100 translate-y-0'
                               : 'opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0'
@@ -732,7 +728,7 @@ export const GalleryPage: React.FC = () => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: prefersReducedMotion ? 0.14 : 0.25, ease: EASE_LUXURY }}
                 onClick={() => setLightboxId(null)}
-                className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 md:p-10 bg-obsidian/92 backdrop-blur-lg overflow-hidden overscroll-none"
+                className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 md:p-10 bg-[#1B1310]/[0.95] overflow-hidden overscroll-none"
               >
                 <motion.div
                   initial={
@@ -755,7 +751,7 @@ export const GalleryPage: React.FC = () => {
                 >
                   {/* Top Toolbar */}
                   <div className="shrink-0 flex flex-wrap items-center justify-between gap-2.5 px-4 sm:px-6 py-3.5 border-b border-champagne/15">
-                    <span className="font-mono text-xs tracking-[0.22em] uppercase text-champagne">
+                    <span className="font-mono text-xs tracking-[0.22em] uppercase text-champagne tabular-nums">
                       {String(lightboxIndex + 1).padStart(2, '0')} /{' '}
                       {String(filteredItems.length).padStart(2, '0')} · {activeItem.plateNumber}
                     </span>

@@ -83,10 +83,10 @@ export const LenisSelectedWorks: React.FC<LenisSelectedWorksProps> = ({
               <div className="p-5 flex-1 flex flex-col justify-between gap-3.5">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-2 font-mono text-[10px] tracking-[0.18em] uppercase">
-                    <span className="text-cognac font-medium truncate">
+                    <span className="text-cognac font-medium truncate tabular-nums">
                       {project.index} · {project.category}
                     </span>
-                    <span className="text-bronze shrink-0">
+                    <span className="text-bronze shrink-0 tabular-nums">
                       {project.yearLabel}
                     </span>
                   </div>

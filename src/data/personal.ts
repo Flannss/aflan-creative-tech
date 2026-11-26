@@ -55,13 +55,13 @@ export const personalData = {
   },
   portraitPath: '/images/aflan.jpeg',
   headlineDescriptor:
-    'Mahasiswa S1 Teknologi Informasi (TI24A) Universitas Amikom Purwokerto & Alumni SMK Wiworotomo Purwokerto. Berfokus pada frontend React/TypeScript, Flutter SOMASII, dan evaluasi QA deterministik di PT Puskomedia Indonesia Kreatif.',
+    'Mahasiswa S1 Teknologi Informasi (TI24A) Universitas Amikom Purwokerto dan alumni SMK Wiworotomo Purwokerto. Fokus kerja saya meliputi frontend React/TypeScript, Flutter SOMASII, dan pengujian QA di PT Puskomedia Indonesia Kreatif.',
   shortBio:
-    'Lahir di Tangerang dan berbasis di Purwokerto, saya menempuh S1 Teknologi Informasi (TI24A) di Universitas Amikom Purwokerto setelah lulus dari SMK Wiworotomo Purwokerto. Selain membangun antarmuka web di SatuRuangCreative, aplikasi Flutter & Firebase SOMASII, serta pengalaman PKL teknis di GT Computer Purwokerto, saya tengah menjalani magang Programmer Intern di PT Puskomedia Indonesia Kreatif dengan fokus pengujian fungsional ASIS Builder.',
+    'Lahir di Tangerang dan tinggal di Purwokerto, saya menempuh S1 Teknologi Informasi (TI24A) di Universitas Amikom Purwokerto setelah lulus dari SMK Wiworotomo Purwokerto. Saya aktif membangun antarmuka web di SatuRuangCreative, mengembangkan aplikasi Flutter SOMASII, serta menjalani magang Programmer Intern di PT Puskomedia Indonesia Kreatif untuk menguji sistem ASIS Builder.',
   extendedStory: [
-    'Fondasi teknis saya berawal dari praktik perangkat keras dan dukungan teknis selama PKL 3 bulan di GT Computer Purwokerto saat kelas XI SMK Wiworotomo Purwokerto, lalu berkembang ke rekayasa perangkat lunak di Program Studi S1 Teknologi Informasi (TI24A) Universitas Amikom Purwokerto.',
-    'Dalam pengembangan web dan mobile, saya mengerjakan React.js, TypeScript, dan Tailwind CSS (termasuk AFLAN DOSSIER dan inisiatif studio SatuRuangCreative), serta pengembangan aplikasi mobile kampus SOMASII menggunakan Flutter, Dart, Cloud Firestore, dan Firebase Storage.',
-    'Sejak September 2026 hingga saat ini, saya menjalani peran Programmer Intern di PT Puskomedia Indonesia Kreatif dengan tanggung jawab Software Evaluation, Functional Testing, Bug Identification, dan System Requirement Analysis pada sistem internal ASIS Builder. Kebiasaan pengujian deterministik ini juga saya padukan dengan orkestrasi ekosistem AI (Gemini, ChatGPT, Muse.ai, Antigravity, dan Lunyzz) untuk menjaga kualitas produksi.',
+    'Saya mulai mengenal perbaikan sistem sejak PKL 3 bulan di GT Computer Purwokerto saat kelas XI SMK Wiworotomo Purwokerto, lalu memperdalam pengembangan perangkat lunak di Program Studi S1 Teknologi Informasi (TI24A) Universitas Amikom Purwokerto.',
+    'Di sisi web dan mobile, saya mengerjakan antarmuka dengan React.js, TypeScript, dan Tailwind CSS pada AFLAN DOSSIER serta SatuRuangCreative, dan membangun aplikasi mobile SOMASII menggunakan Flutter, Dart, Cloud Firestore, serta Firebase Storage.',
+    'Sejak September 2026 hingga sekarang, saya bekerja sebagai Programmer Intern di PT Puskomedia Indonesia Kreatif untuk menjalankan Software Evaluation, Functional Testing, pelacakan bug, dan System Requirement Analysis pada ASIS Builder. Dalam rutinitas kerja harian, saya memakai alat bantu AI seperti Gemini, ChatGPT, Muse.ai, Antigravity, dan Lunyzz untuk menguji alur produk dan menjaga kualitas rilis.',
   ],
   traits: [
     'Web Developer',
@@ -75,23 +75,23 @@ export const personalData = {
     {
       number: 'I',
       title: 'Pengujian Deterministik',
-      summary: 'Setiap fitur diverifikasi dengan skenario reproduktif sebelum dirilis.',
+      summary: 'Setiap fitur diuji dengan skenario reproduktif sebelum rilis.',
       detail:
-        'Pengalaman pengujian fungsional pada ASIS Builder di PT Puskomedia Indonesia Kreatif serta audit QC otomatis membentuk disiplin pelacakan edge-case, validasi responsivitas lintas viewport, dan dokumentasi bug yang terukur.',
+        'Pengalaman pengujian fungsional ASIS Builder di PT Puskomedia Indonesia Kreatif membiasakan saya mencatat kasus tepi, memeriksa layout di tiga ukuran layar, dan menyusun laporan bug yang mudah ditelusuri.',
     },
     {
       number: 'II',
-      title: 'Arsitektur Komponen Presisi',
-      summary: 'Struktur modular yang ringan, mudah diaudit, dan bebas bloat.',
+      title: 'Arsitektur Komponen Rapi',
+      summary: 'Struktur kode modular yang ringan, jelas, dan mudah dirawat.',
       detail:
-        'Diterapkan pada AFLAN DOSSIER, platform web SatuRuangCreative, dan alur real-time CRUD di SOMASII dengan pemisahan data TypeScript yang rapi, kontras warna terukur, dan transisi GPU-only.',
+        'Saya memisahkan data ke modul TypeScript, menjaga ukuran bundel tetap ringkas, dan memakai animasi berbasis GPU di AFLAN DOSSIER, SatuRuangCreative, maupun CRUD SOMASII.',
     },
     {
       number: 'III',
-      title: 'Atribusi & Fakta Terverifikasi',
-      summary: 'Kredibilitas dibangun dari ruang lingkup kerja yang transparan.',
+      title: 'Atribusi Fakta Terbuka',
+      summary: 'Setiap proyek dijelaskan sesuai ruang lingkup kerja nyata.',
       detail:
-        'Setiap proyek disajikan sesuai kontribusi aktual, termasuk kepatuhan NDA pada ASIS Builder, status Academic Final Project pada SOMASII, serta kredensial resmi CCNA Cisco (Jul 2026) dan publikasi JPMBA Garuda (Okt 2026).',
+        'Saya mencantumkan peran apa adanya, termasuk batasan NDA pada ASIS Builder, status Academic Final Project pada SOMASII, sertifikasi CCNA Cisco (Jul 2026), dan publikasi JPMBA Garuda (Okt 2026).',
     },
   ] satisfies PhilosophyPillar[],
   marqueeTerms: [

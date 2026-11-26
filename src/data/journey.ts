@@ -49,7 +49,7 @@ export const journeyMilestones: JourneyMilestone[] = [
     title: 'Co-Founder & Web Developer · SatuRuangCreative',
     location: 'Student-Built Creative & Digital Studio',
     summary:
-      'Membangun wadah studio kreatif & digital mahasiswa ("Satu Ruang, Banyak Ide, Satu Cerita") dengan tanggung jawab pada perancangan struktur UI/UX, Responsive Web Design, dan Frontend Implementation.',
+      'Ikut mendirikan studio kreatif dan digital mahasiswa ("Satu Ruang, Banyak Ide, Satu Cerita") dengan tanggung jawab pada desain UI/UX, tata letak responsif, dan implementasi frontend.',
     highlights: [
       'Peran: Co-Founder & Web Developer untuk kolaborasi desain dan implementasi web',
       'Karya utama: Platform web "RuangHijau Nusantara" (edukasi lingkungan & kalkulator dampak interaktif)',

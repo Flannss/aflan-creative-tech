@@ -262,11 +262,11 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
           isLightHeaderRoute
             ? scrolled
-              ? 'bg-ivory/95 backdrop-blur-md border-b border-espresso/15 py-3 shadow-[0_10px_34px_rgba(43,29,23,0.10)]'
-              : 'bg-ivory/90 backdrop-blur-md border-b border-espresso/10 py-4 sm:py-5'
+              ? 'bg-ivory border-b border-espresso/15 py-3 shadow-[0_10px_30px_rgba(33,24,20,0.08)]'
+              : 'bg-ivory/[0.97] border-b border-espresso/10 py-4 sm:py-5'
             : scrolled
-              ? 'bg-obsidian/92 backdrop-blur-md border-b border-champagne/15 py-3 shadow-[0_12px_40px_rgba(0,0,0,0.35)]'
-              : 'bg-obsidian/65 backdrop-blur-sm border-b border-champagne/10 py-4 sm:py-5'
+              ? 'bg-[#231915]/[0.97] border-b border-champagne/22 py-3 shadow-[0_12px_36px_rgba(20,14,11,0.38)]'
+              : 'bg-[#211814]/[0.94] border-b border-champagne/14 py-4 sm:py-5'
         }`}
       >
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between gap-3 sm:gap-4">
@@ -286,10 +286,10 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
           <nav
             aria-label="Primary navigation"
             onMouseLeave={() => setNavHoverPath(null)}
-            className={`hidden xl:flex items-center gap-0.5 2xl:gap-1 px-2 2xl:px-2.5 py-1.5 rounded-full backdrop-blur-md border ${
+            className={`hidden xl:flex items-center gap-0.5 2xl:gap-1 px-2 2xl:px-2.5 py-1.5 rounded-full border ${
               isLightHeaderRoute
-                ? 'bg-offwhite/90 border-espresso/15'
-                : 'bg-espresso/55 border-champagne/15'
+                ? 'bg-offwhite border-espresso/15'
+                : 'bg-[#231915]/[0.96] border-champagne/25 shadow-[0_6px_20px_rgba(20,14,11,0.28)]'
             }`}
           >
             {navigationRoutes.map((route) => {
@@ -581,7 +581,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
                           <div className="relative z-10 min-w-0 flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-4">
                             <div className="flex items-baseline gap-3 sm:gap-4 min-w-0">
-                              <span className="font-mono text-[11px] tracking-[0.22em] text-champagne/80 shrink-0">
+                              <span className="font-mono text-[11px] tracking-[0.22em] text-champagne/80 tabular-nums shrink-0">
                                 {route.index}
                               </span>
                               <motion.span

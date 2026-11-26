@@ -66,15 +66,6 @@ const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
   return (
     <footer className="relative bg-obsidian text-ivory border-t border-champagne/20 overflow-hidden">
       <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[440px] rounded-full opacity-45"
-        style={{
-          background:
-            'radial-gradient(ellipse at center, rgba(185,141,97,0.32) 0%, rgba(110,79,58,0.24) 48%, rgba(33,24,20,0) 75%)',
-        }}
-      />
-
-      <div
         className={`relative z-10 max-w-[1440px] mx-auto px-5 md:px-8 lg:px-12 pb-24 sm:pb-12 ${
           isHomeRoute ? 'pt-6 sm:pt-8' : 'pt-14 sm:pt-20 lg:pt-24'
         }`}
@@ -177,7 +168,7 @@ const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
                     onTouchStart={() => prefetchRoute(route.path)}
                     className="group inline-flex items-baseline gap-2.5 py-0.5 text-[15px] md:text-sm text-ivory/75 hover:text-champagne transition-colors"
                   >
-                    <span className="font-mono text-[10px] text-taupe group-hover:text-champagne transition-colors">
+                    <span className="font-mono text-[10px] text-taupe tabular-nums group-hover:text-champagne transition-colors">
                       {route.index}
                     </span>{' '}
                     <span className="relative">
@@ -252,7 +243,7 @@ const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
           <p>
             {`© ${currentYear} ${personalData.fullName} (${personalData.monogram}). Dirancang dengan presisi.`}
           </p>
-          <p className="inline-flex items-center gap-2 text-champagne/80">
+          <p className="inline-flex items-center gap-2 text-champagne/80 tabular-nums">
             <span
               aria-hidden="true"
               className="size-1.5 rounded-full bg-champagne animate-pulse motion-reduce:animate-none"

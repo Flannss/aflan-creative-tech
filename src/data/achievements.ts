@@ -49,7 +49,7 @@ export const achievementsData: AchievementEntry[] = [
     summary:
       'Publikasi artikel ilmiah pengabdian masyarakat yang diterbitkan pada Jurnal Pengabdian Masyarakat Bangsa (JPMBA) dan terindeks Garuda pada Oktober 2026.',
     details:
-      'Mendokumentasikan penerapan solusi teknologi dan kontribusi nyata di masyarakat melalui penulisan akademik terstruktur yang lolos publikasi jurnal nasional terindeks Garuda.',
+      'Artikel ini mendokumentasikan penerapan solusi teknologi di masyarakat lewat penulisan ilmiah yang terbit di jurnal nasional terindeks Garuda.',
   },
   {
     id: 'puskomedia-internship',
@@ -62,7 +62,7 @@ export const achievementsData: AchievementEntry[] = [
     summary:
       'Menjalani magang aktif sebagai Programmer Intern dengan fokus pada Software Evaluation, Functional Testing, Bug Identification, dan System Requirement Analysis.',
     details:
-      'Menerapkan disiplin pengujian QA dan evaluasi workflow sistem secara langsung, termasuk pengujian dan rekomendasi refinement pada ASIS Builder dalam batasan NDA perusahaan.',
+      'Menjalankan uji fungsional harian dan menulis saran perbaikan untuk sistem ASIS Builder sesuai aturan NDA perusahaan.',
   },
   {
     id: 'gt-computer-pkl',

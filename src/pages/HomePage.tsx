@@ -39,17 +39,17 @@ const DOSSIER_PILLARS = [
   {
     code: '01',
     label: 'Tujuan',
-    text: 'Profil profesional dan arsip studi kasus yang mudah ditinjau oleh tim rekayasa maupun kolaborator.',
+    text: 'Profil kerja dan arsip studi kasus agar mudah ditinjau oleh tim developer maupun mitra proyek.',
   },
   {
     code: '02',
     label: 'Fokus',
-    text: 'Frontend Architecture, sistem UI/UX presisi, performa 60fps, dan evaluasi Software QA.',
+    text: 'Arsitektur frontend, desain sistem UI, performa layar 60fps, dan pengujian Software QA.',
   },
   {
     code: '03',
     label: 'Cakupan',
-    text: 'Proyek nyata terverifikasi, 9 modul Creative Lab, galeri visual, serta linimasa akademik dan magang.',
+    text: 'Proyek nyata terverifikasi, 9 modul Creative Lab, galeri visual, serta catatan kuliah dan magang.',
   },
 ] as const;
 
@@ -57,21 +57,21 @@ const EDITORIAL_FOCUS_ITEMS = [
   {
     code: '01',
     title: 'Interactive Lab',
-    summary: 'Sembilan modul eksperimen motion, spotlight, dan token warna.',
+    summary: 'Sembilan modul eksperimen animasi, spotlight, dan token warna.',
     to: '/lab',
     tag: 'WORKBENCH',
   },
   {
     code: '02',
     title: 'Visual Archive',
-    summary: 'Kurasi potret studio dan pelat monograf dalam lightbox presisi.',
+    summary: 'Koleksi potret studio dan pelat tipografi dalam penampil lightbox.',
     to: '/gallery',
     tag: 'GALLERY',
   },
   {
     code: '03',
     title: 'Career Journey',
-    summary: 'Linimasa studi Amikom, PKL GT Computer, dan magang PT Puskomedia.',
+    summary: 'Catatan studi Amikom, PKL GT Computer, dan magang PT Puskomedia.',
     to: '/journey',
     tag: 'TIMELINE',
   },
@@ -195,7 +195,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
               </span>
 
               <p className="font-serif text-lg sm:text-xl lg:text-[1.35rem] italic text-linen leading-snug max-w-sm">
-                Merancang antarmuka web yang presisi, cepat, dan terstruktur, mulai dari sistem visual hingga evaluasi QA.
+                Merancang antarmuka web yang rapi dan cepat, dari sistem visual sampai pengujian QA.
               </p>
 
               <div className="pt-1">
@@ -312,7 +312,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                 ]}
               />
               <p className="font-sans text-sm sm:text-base text-obsidian/80 leading-relaxed max-w-xl">
-                Situs ini disusun sebagai dokumentasi hidup perjalanan rekayasa web, perancangan sistem antarmuka, dan pengujian kualitas perangkat lunak. Setiap halaman merangkum rekam jejak akademik di Universitas Amikom Purwokerto, kolaborasi studio, serta praktik industri secara transparan.
+                Situs ini memuat catatan kerja saya di bidang web frontend, desain antarmuka, dan pengujian perangkat lunak. Isinya mencakup proyek kuliah di Universitas Amikom Purwokerto, kolaborasi studio, serta pengalaman magang di industri.
               </p>
             </div>
 
@@ -324,7 +324,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                 >
                   <div className="flex items-center justify-between gap-2 font-mono text-[10px] tracking-[0.2em] uppercase">
                     <span className="text-cognac font-medium">{pillar.label}</span>
-                    <span className="text-bronze">{pillar.code}</span>
+                    <span className="text-bronze tabular-nums">{pillar.code}</span>
                   </div>
                   <p className="font-sans text-xs sm:text-[13px] text-obsidian/80 leading-relaxed">
                     {pillar.text}
@@ -390,7 +390,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                 className="group rounded-2xl border border-champagne/25 hover:border-champagne/60 bg-umber/85 hover:bg-espresso p-5 sm:p-6 flex flex-col justify-between gap-4 min-h-[124px] hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="flex items-center justify-between gap-3 font-mono text-[10px] tracking-[0.2em] uppercase">
-                  <span className="text-champagne">{item.code} · {item.tag}</span>
+                  <span className="text-champagne tabular-nums">{item.code} · {item.tag}</span>
                   <ArrowUpRight
                     className="size-4 text-brass transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-champagne"
                     aria-hidden="true"
@@ -427,10 +427,10 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                 as="h2"
                 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight leading-[1.1] text-obsidian"
                 lines={[
-                  <>Tersedia untuk pengembangan web frontend,</>,
+                  <>Terbuka untuk proyek web frontend,</>,
                   <>
                     <span className="italic text-bronze">
-                      sistem antarmuka, dan evaluasi Software QA.
+                      perancangan UI, dan pengujian Software QA.
                     </span>
                   </>,
                 ]}

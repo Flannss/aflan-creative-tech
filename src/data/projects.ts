@@ -62,21 +62,21 @@ export const projectsData: ProjectEntry[] = [
     verificationState: 'Live Studio Initiative',
     role: 'Co-Founder & Web Developer',
     contributionScope:
-      'Bertanggung jawab pada perancangan struktur UI/UX, Responsive Web Design, serta Frontend Implementation bersama tim kreatif dan teknis studio.',
+      'Merancang struktur UI/UX, tata letak responsif, serta implementasi kode frontend bersama tim kreatif dan teknis studio.',
     notableWork:
       'RuangHijau Nusantara: platform web edukasi lingkungan dan kalkulator dampak interaktif.',
     summary:
-      'Inisiatif studio kreatif & digital berbasis mahasiswa dengan slogan "Satu Ruang, Banyak Ide, Satu Cerita", tempat kolaborasi desain antarmuka, storytelling visual, dan implementasi frontend.',
+      'Studio kreatif dan digital mahasiswa dengan slogan "Satu Ruang, Banyak Ide, Satu Cerita" untuk mengerjakan desain antarmuka, visual, dan kode frontend.',
     overview: [
-      'SatuRuangCreative lahir sebagai wadah kolaboratif mahasiswa untuk mempertemukan ide kreatif dengan eksekusi digital yang rapi. Mengusung semangat "Satu Ruang, Banyak Ide, Satu Cerita", studio ini tumbuh lewat sinergi tim kecil yang fokus menjaga konsistensi estetika visual dan kejelasan struktur produk.',
-      'Sebagai Co-Founder & Web Developer, tanggung jawab saya berpusat pada perancangan struktur UI/UX, penyusunan Responsive Web Design lintas perangkat, serta Frontend Implementation agar setiap gagasan visual diterjemahkan secara presisi menjadi antarmuka web yang ringan dan mudah dinavigasi.',
-      'Salah satu karya utamanya adalah pengembangan platform web "RuangHijau Nusantara", sebuah landing page edukasi lingkungan lengkap dengan kalkulator dampak interaktif yang dirancang untuk menyampaikan isu keberlanjutan secara visual dan mudah dipahami.',
+      'SatuRuangCreative dibentuk bersama tim kecil mahasiswa untuk mengerjakan desain dan produk web secara kolaboratif. Studio ini berpegang pada slogan "Satu Ruang, Banyak Ide, Satu Cerita" dalam menjaga kejelasan struktur produk.',
+      'Sebagai Co-Founder & Web Developer, saya menyusun struktur UI/UX, tata letak responsif di desktop maupun ponsel, serta implementasi frontend agar rancangan visual berjalan ringan saat dibuka.',
+      'Salah satu proyek utamanya adalah platform web "RuangHijau Nusantara", situs edukasi lingkungan berisi kalkulator dampak interaktif yang disusun ringkas agar mudah dipahami pembaca.',
     ],
     stack: ['UI/UX Architecture', 'Responsive Web Design', 'Frontend Implementation', 'Framer', 'Component-Based UI'],
     outcomes: [
-      'Membangun identitas dan kehadiran digital studio secara live di saturuangcreative.framer.website.',
-      'Mengembangkan platform web "RuangHijau Nusantara" mencakup halaman edukasi lingkungan dan fitur kalkulator dampak interaktif.',
-      'Menyelaraskan kolaborasi desain dan engineering dalam skala tim mahasiswa dengan standar eksekusi visual yang konsisten.',
+      'Merilis profil resmi dan halaman karya studio secara live di saturuangcreative.framer.website.',
+      'Membangun platform web "RuangHijau Nusantara" berisi materi edukasi lingkungan dan kalkulator dampak interaktif.',
+      'Menjaga alur kerja desain ke kode frontend di tim mahasiswa dengan standar visual yang konsisten.',
     ],
     previewImage: '/images/satu-ruang-creative.png',
     previewImageFit: 'contain',
@@ -105,7 +105,7 @@ export const projectsData: ProjectEntry[] = [
       'Aplikasi mobile Lost & Found kampus dengan real-time CRUD pelaporan melalui Cloud Firestore, integrasi kontak langsung WhatsApp, dan verifikasi klaim kepemilikan oleh admin.',
     overview: [
       'SOMASII (System Online Mahasiswa Sharing Items Information) merupakan aplikasi mobile yang dirancang untuk menjawab permasalahan pelaporan barang hilang dan temuan yang kerap tersebar di lingkungan kampus. Dibangun menggunakan Flutter dan Dart, antarmukanya difokuskan pada alur pelaporan yang ringkas agar mahasiswa dapat mencatat serta menelusuri informasi barang secara terstruktur.',
-      'Pada sisi arsitektur backend, aplikasi ini memanfaatkan ekosistem Firebase yang mencakup Authentication untuk manajemen akses, Cloud Firestore untuk real-time CRUD pelaporan, serta Firebase Storage untuk penyimpanan media barang. Alur koordinasi dilengkapi integrasi kontak langsung via WhatsApp serta mekanisme verifikasi klaim kepemilikan oleh admin untuk menjaga akurasi penyerahan barang.',
+      'Di sisi backend, SOMASII memakai Firebase Authentication untuk akses akun, Cloud Firestore untuk CRUD pelaporan secara real-time, dan Firebase Storage untuk foto barang. Koordinasi pelapor dan pemilik terhubung langsung ke WhatsApp disertai verifikasi klaim oleh admin agar serah terima barang tepat sasaran.',
     ],
     stack: ['Flutter', 'Dart', 'Firebase Authentication', 'Cloud Firestore', 'Firebase Storage', 'WhatsApp Integration'],
     outcomes: [
@@ -135,10 +135,10 @@ export const projectsData: ProjectEntry[] = [
     contributionScope:
       'Menjalankan Functional Testing pada modul Website Template Page Generator, menganalisis workflow pembuatan halaman, mengidentifikasi bug dan hambatan usability, serta menyusun rekomendasi penyempurnaan berbasis bukti pengujian.',
     summary:
-      'Evaluasi kualitas dan analisis workflow secara sistematis pada generator template halaman berbasis Laravel, disajikan secara tipografis untuk menjaga kerahasiaan sistem internal perusahaan.',
+      'Evaluasi fungsional dan analisis alur kerja pada generator template halaman berbasis Laravel, disajikan dengan pelat tipografis demi kerahasiaan NDA internal.',
     overview: [
-      'ASIS Builder adalah sistem Website Template Page Generator internal berbasis Laravel, PHP, Tailwind CSS, dan Alpine.js. Peran saya di sini berfokus penuh pada Software Quality Assurance, pengujian fungsional, dan evaluasi alur kerja sistem.',
-      'Saya menguji alur pembuatan template secara menyeluruh, memetakan defect serta skenario edge-case, mengevaluasi kesesuaian fitur terhadap System Requirements, lalu mendokumentasikan rekomendasi perbaikan yang terukur bagi tim developer inti.',
+      'ASIS Builder adalah generator template halaman internal perusahaan berbasis Laravel, PHP, Tailwind CSS, dan Alpine.js. Di proyek ini, tugas saya berpusat pada Software Quality Assurance, pengujian fungsional, dan evaluasi alur kerja.',
+      'Saya memeriksa langkah pembuatan template, mencatat celah bug maupun skenario tepi, membandingkan fitur dengan System Requirements, lalu menulis catatan perbaikan untuk tim developer inti.',
     ],
     stack: ['Laravel', 'PHP', 'Tailwind CSS', 'Alpine.js', 'Functional Testing', 'Workflow Analysis'],
     outcomes: [
@@ -171,14 +171,14 @@ export const projectsData: ProjectEntry[] = [
     summary:
       'Pengalaman web personal sembilan halaman di aflandossier.vercel.app yang memadukan desain editorial dossier, pengujian QA ketat, dan arsitektur frontend React/TypeScript.',
     overview: [
-      'AFLAN DOSSIER dirancang sebagai publikasi digital sembilan rute dengan sistem warna Espresso, Obsidian, Champagne, dan Ivory yang terukur di seluruh perangkat desktop, tablet, dan mobile.',
-      'Seluruh konten dipisahkan ke modul data TypeScript yang terstruktur, dilengkapi pengiriman pesan langsung ke inbox, Creative Lab interaktif, serta audit kualitas lintas viewport.',
+      'AFLAN DOSSIER disusun sebagai web personal sembilan rute memakai sistem warna Espresso, Champagne, dan Ivory yang diuji di layar desktop, tablet, dan mobile.',
+      'Seluruh konten disimpan di modul data TypeScript terpisah, terhubung ke form pesan langsung ke inbox email, Creative Lab interaktif, serta pengecekan responsif.',
     ],
     stack: ['React.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Vite', 'HTML & CSS'],
     outcomes: [
-      'Sembilan halaman terhubung dengan arsitektur data terpusat dan transisi rute non-blocking.',
-      'Pemetaan keahlian dan rekam jejak terverifikasi termasuk pengalaman QA, PKL, dan orkestrasi AI.',
-      'Responsif lintas 3 breakpoint utama dengan adaptasi reduced-motion dan kontrol sentuh aman.',
+      'Sembilan rute aktif terhubung ke data TypeScript terpusat dengan perpindahan halaman tanpa reload.',
+      'Catatan keahlian dan pengalaman ditulis apa adanya, mencakup pengujian QA, PKL SMK, dan pemakaian ekosistem AI.',
+      'Tampilan responsif di tiga ukuran layar utama dengan dukungan reduced-motion dan tombol ramah sentuh.',
     ],
     previewImage: '/images/aflan.jpeg',
     previewImageFit: 'cover',

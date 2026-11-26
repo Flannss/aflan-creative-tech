@@ -1353,7 +1353,7 @@ const DesignTokenSpecimen: React.FC = () => {
               TECHNICAL MICRO-LABEL
             </span>
             <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-taupe">
-              Space Grotesk Mono
+              IBM Plex Mono
             </span>
           </div>
           <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.15em] text-champagne leading-relaxed wrap-break-word">
@@ -1415,10 +1415,6 @@ export const CreativeLabPage: React.FC = () => {
   return (
     <div className="w-full overflow-x-clip">
       <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-5 md:px-8 lg:px-12 border-b border-brass/20">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 studio-warm-halo opacity-60"
-        />
         <div className="relative z-10 max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
@@ -1450,7 +1446,7 @@ export const CreativeLabPage: React.FC = () => {
             </div>
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
               <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                Playground interaktif untuk menguji Spotlight Masking, Magnetic UI, kurva motion editorial, dan token Sartorial Warmth.
+                Area uji coba untuk memeriksa Spotlight Masking, Magnetic UI, kurva animasi, dan sistem warna Lab.
               </p>
             </Reveal>
           </div>
@@ -1471,7 +1467,7 @@ export const CreativeLabPage: React.FC = () => {
               <a
                 key={mod.href}
                 href={mod.href}
-                className="px-3.5 py-2 rounded-full bg-espresso/60 border border-champagne/20 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne hover:bg-champagne hover:text-obsidian transition-colors"
+                className="px-3.5 py-2 rounded-full bg-espresso/60 border border-champagne/20 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne hover:bg-champagne hover:text-obsidian tabular-nums transition-colors"
               >
                 {mod.label}
               </a>
@@ -1497,8 +1493,7 @@ export const CreativeLabPage: React.FC = () => {
               </h2>
             </div>
             <p className="lg:col-span-5 font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-              Kursor berfungsi sebagai senter optik yang menembus lapisan gelap untuk mengungkap
-              manifesto tipografi dan cetak biru koordinat di baliknya secara real-time.
+              Gerakkan kursor untuk menyorot lapisan gelap dan membuka teks serta garis koordinat di baliknya secara langsung.
             </p>
           </Reveal>
 
@@ -1601,7 +1596,7 @@ export const CreativeLabPage: React.FC = () => {
                   className="flex justify-between font-mono text-[10px] tracking-[0.2em] uppercase text-taupe mb-1.5"
                 >
                   <span>Skala Display</span>
-                  <span className="text-champagne">{fontSize}px</span>
+                  <span className="text-champagne tabular-nums">{fontSize}px</span>
                 </label>
                 <input
                   id="lab-size-range"
@@ -1620,7 +1615,7 @@ export const CreativeLabPage: React.FC = () => {
                   className="flex justify-between font-mono text-[10px] tracking-[0.2em] uppercase text-taupe mb-1.5"
                 >
                   <span>Letter Tracking</span>
-                  <span className="text-champagne">{tracking.toFixed(2)}em</span>
+                  <span className="text-champagne tabular-nums">{tracking.toFixed(2)}em</span>
                 </label>
                 <input
                   id="lab-tracking-range"
@@ -1727,7 +1722,7 @@ export const CreativeLabPage: React.FC = () => {
           <div className="bg-offwhite border border-espresso/15 p-5 sm:p-6 space-y-5">
             <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-mocha">
               <span>{selectedPreset.css}</span>
-              <span>DURASI: {selectedPreset.duration}s</span>
+              <span className="tabular-nums">DURASI: {selectedPreset.duration}s</span>
             </div>
 
             <div
@@ -1844,7 +1839,7 @@ export const CreativeLabPage: React.FC = () => {
             >
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-current/20 pb-4 font-mono text-[11px] tracking-[0.2em] uppercase">
                 <span>SPESIMEN EDITORIAL LIVE</span>
-                <span>RASIO KONTRAS {contrastRatio.toFixed(2)} : 1</span>
+                <span className="tabular-nums">RASIO KONTRAS {contrastRatio.toFixed(2)} : 1</span>
               </div>
 
               <div className="py-8 space-y-4">
@@ -1853,8 +1848,7 @@ export const CreativeLabPage: React.FC = () => {
                   <span className="italic">keterbacaan presisi</span>.
                 </p>
                 <p className="font-sans text-sm md:text-base opacity-90 max-w-xl leading-relaxed">
-                  Menjaga rasio luminansi secara presisi memastikan karakter editorial tetap
-                  nyaman dibaca pada permukaan gelap maupun terang.
+                  Menjaga rasio luminansi supaya teks tetap nyaman dibaca di permukaan gelap maupun terang.
                 </p>
               </div>
 
@@ -1913,8 +1907,7 @@ export const CreativeLabPage: React.FC = () => {
               </h2>
             </div>
             <p className="lg:col-span-5 font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-              Referensi langsung empat token warna inti Espresso, Champagne, dan Ivory beserta tiga
-              hirarki tipografi utama. Klik swatch mana saja untuk menyalin kode hex ke clipboard.
+              Referensi langsung empat warna inti Espresso, Champagne, dan Ivory beserta tiga gaya huruf utama. Klik kartu mana saja untuk menyalin kode hex ke clipboard.
             </p>
           </Reveal>
 
@@ -1940,9 +1933,8 @@ export const CreativeLabPage: React.FC = () => {
               </h2>
             </div>
             <p className="lg:col-span-5 font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-              Enam modul interaksi harian, mulai dari saklar spring, checklist strikethrough,
-              stepper odometer, panel akordeon, copy morph hingga apresiasi Champagne. Seluruhnya
-              menghormati kurva editorial dan mode reduced-motion.
+              Enam modul kontrol antarmuka: saklar spring, checklist strikethrough,
+              stepper angka, panel akordeon, tombol copy morph, dan tombol apresiasi. Semua komponen mengikuti mode reduced-motion sistem.
             </p>
           </Reveal>
 

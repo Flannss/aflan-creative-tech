@@ -79,7 +79,7 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
           exit={{ opacity: 0 }}
           transition={{ duration: prefersReducedMotion ? 0.14 : 0.25, ease: EASE_LUXURY }}
           onClick={onClose}
-          className="fixed inset-0 z-[95] flex items-center justify-center p-3 sm:p-6 md:p-8 bg-obsidian/80 backdrop-blur-md overflow-hidden overscroll-none"
+          className="fixed inset-0 z-[95] flex items-center justify-center p-3 sm:p-6 md:p-8 bg-[#1B1310]/[0.92] overflow-hidden overscroll-none"
         >
           <motion.div
             key={project.slug}
@@ -112,7 +112,7 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
             {/* Pinned Header Bar */}
             <div className="shrink-0 flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-b border-champagne/20 bg-[#211814]/95">
               <div className="flex flex-wrap items-center gap-2.5 min-w-0">
-                <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne truncate">
+                <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne tabular-nums truncate">
                   DOSSIER {project.index} · {project.category}
                 </span>
                 <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full border border-champagne/20 font-mono text-[10px] uppercase tracking-[0.14em] text-taupe">

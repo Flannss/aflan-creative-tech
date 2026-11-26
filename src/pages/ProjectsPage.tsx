@@ -63,10 +63,6 @@ export const ProjectsPage: React.FC = () => {
   return (
     <div className="w-full overflow-x-clip">
       <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-5 md:px-8 lg:px-12 border-b border-brass/20">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 studio-vignette opacity-75"
-        />
         <div className="relative z-10 max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
@@ -75,7 +71,7 @@ export const ProjectsPage: React.FC = () => {
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
               SELECTED WORKS
             </span>
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe tabular-nums">
               {filteredProjects.length} ENTRI DITAMPILKAN
             </span>
           </Reveal>
@@ -98,7 +94,7 @@ export const ProjectsPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5 space-y-4">
               <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                Studi kasus pilihan dari SatuRuangCreative, SOMASII, ASIS Builder (NDA), hingga AFLAN DOSSIER dengan atribusi peran transparan.
+                Daftar studi kasus dari SatuRuangCreative, SOMASII, ASIS Builder (NDA), dan AFLAN DOSSIER lengkap dengan peran masing-masing.
               </p>
               <div className="flex items-start gap-2.5 p-4 bg-umber/90 border border-brass/30 text-sm lg:text-xs text-champagne leading-relaxed">
                 <ShieldCheck className="size-4 text-brass shrink-0 mt-0.5" aria-hidden="true" />

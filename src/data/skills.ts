@@ -183,9 +183,9 @@ export const skillDomains: SkillDomain[] = [
     id: 'ai-agent-orchestration',
     index: '05',
     title: 'AI-Assisted Engineering & Agent Orchestration',
-    subtitle: 'Orkestrasi ekosistem AI untuk arsitektur, QA & agen otonom produksi',
+    subtitle: 'Orkestrasi AI untuk alur pengembangan, QA, dan pengecekan kualitas',
     description:
-      'Mengoptimalkan ekosistem AI secara terstruktur: penalaran arsitektur & spesifikasi teknis, QA menyeluruh, hingga orkestrasi autonomous coding & QC agents melalui prompt presisi tingkat produksi.',
+      'Memakai ekosistem AI sebagai alat bantu kerja harian: dari perancangan spesifikasi, pengecekan kualitas UI/UX, sampai orkestrasi agen coding dan QC dengan prompt teknis.',
     items: [
       {
         name: 'Gemini & ChatGPT',

@@ -106,7 +106,7 @@ export const SkillsPage: React.FC = () => {
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
               CORE CAPABILITIES
             </span>
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-taupe tabular-nums">
               TECHNICAL STACK · {totalDomainsLabel} CORE DOMAINS
             </span>
           </Reveal>
@@ -235,13 +235,13 @@ export const SkillsPage: React.FC = () => {
                   <Reveal variant="up" className="lg:col-span-4 lg:sticky lg:top-24 space-y-5">
                     <div className="flex items-baseline gap-4">
                       <span
-                        className={`font-serif italic text-5xl sm:text-6xl leading-none ${isLight ? 'text-bronze/40' : 'text-champagne/30'
+                        className={`font-serif italic text-5xl sm:text-6xl leading-none tabular-nums ${isLight ? 'text-bronze/40' : 'text-champagne/30'
                           }`}
                       >
                         {domain.index}
                       </span>
                       <span
-                        className={`font-mono text-[10px] tracking-[0.26em] uppercase ${isLight ? 'text-bronze' : 'text-champagne'
+                        className={`font-mono text-[10px] tracking-[0.26em] uppercase tabular-nums ${isLight ? 'text-bronze' : 'text-champagne'
                           }`}
                       >
                         DOMAIN {domain.index} · {totalDomainsLabel}

@@ -80,16 +80,16 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
       content: (
         <>
           <p>
-            <strong className="font-medium text-espresso">Platform:</strong>{' '}
+            <span className="font-medium text-espresso">Platform:</span>{' '}
             {project.platform} ({project.yearLabel}).
           </p>
           <p>
-            <strong className="font-medium text-espresso">Komponen Stack:</strong>{' '}
+            <span className="font-medium text-espresso">Komponen Stack:</span>{' '}
             {project.stack.join(' · ')}.
           </p>
           {project.notableWork && (
             <p>
-              <strong className="font-medium text-espresso">Sorotan Implementasi:</strong>{' '}
+              <span className="font-medium text-espresso">Sorotan Implementasi:</span>{' '}
               {project.notableWork}
             </p>
           )}
@@ -149,7 +149,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
               />
               <KineticLabel>Kembali ke Arsip Proyek</KineticLabel>
             </Link>
-            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
+            <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe tabular-nums">
               CASE STUDY · ENTRI {project.index} · {project.category}
             </span>
           </div>

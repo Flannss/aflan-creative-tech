@@ -127,7 +127,7 @@ export const galleryItems: GalleryItem[] = [
       palette: 'Espresso · Mocha · Amber Hangat',
     },
     caption:
-      'Eksplorasi nada sepia pekat yang menggemakan kualitas cetak monograf klasik, menyatukan warna kulit hangat dengan latar gelap bernuansa kopi.',
+      'Eksplorasi nada sepia pekat bergaya cetak arsip klasik yang menyatukan rona kulit hangat dengan latar gelap bernuansa kopi.',
     technicalNote: 'Studi Sepia · Nuansa Arsip',
   },
   {
@@ -146,7 +146,7 @@ export const galleryItems: GalleryItem[] = [
       palette: '#211814 · #33241C · #8E6B4B · #DFC8A6 · #F6F1E9',
     },
     caption:
-      'Pemetaan lima nada inti identitas AFLAN berdampingan dengan spesimen huruf Cormorant Garamond untuk merayakan kontras gelap-hangat.',
+      'Pemetaan lima warna inti AFLAN berdampingan dengan contoh huruf Cormorant Garamond untuk menguji keterbacaan pada latar gelap-hangat.',
     technicalNote: 'Palet Identitas · Gelap-Hangat',
   },
   {
@@ -168,7 +168,7 @@ export const galleryItems: GalleryItem[] = [
       palette: 'Obsidian · Warm Umber · Champagne',
     },
     caption:
-      'Pendekatan low-key berpadu pergeseran rona tipis yang menenggelamkan tepi bingkai ke obsidian pekat sambil mempertahankan sorot cahaya lembut di tengah.',
+      'Pendekatan low-key dengan pergeseran rona tipis yang menggelapkan tepi bingkai ke Warm Espresso sambil menjaga fokus cahaya lembut di tengah.',
     technicalNote: 'Studi Low-Key · Kontras 132%',
   },
   {
@@ -183,11 +183,11 @@ export const galleryItems: GalleryItem[] = [
     meta: {
       medium: 'Poster Tipografi Editorial',
       treatment: 'Cormorant Garamond · Solid & Outline',
-      composition: 'Komposisi Lanskap 16:10',
+      composition: 'Format Horizontal 16:10',
       palette: 'Espresso · Champagne · Ivory',
     },
     caption:
-      'Komposisi grafis murni berbasis ritme huruf serif italic, garis outline tipis, dan ruang negatif lapang yang menjadi ciri utama portofolio AFLAN.',
+      'Komposisi grafis murni memakai ritme huruf serif italic, garis outline tipis, dan ruang kosong yang menjadi gaya dasar portofolio AFLAN.',
     technicalNote: 'Cormorant Garamond · Skala Display',
   },
 ];

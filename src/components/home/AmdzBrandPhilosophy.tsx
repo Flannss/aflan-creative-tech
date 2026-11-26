@@ -30,7 +30,7 @@ const BRAND_PILLARS: readonly BrandPillar[] = [
     tag: 'SYSTEM STRUCTURE',
     diagramLabel: 'ORTHOGONAL STRUCTURAL GRID',
     description:
-      'Struktur kode yang bersih, terukur, dan skalabel dari fondasi hingga antarmuka. Menjaga modularitas React, TypeScript, dan skema komponen agar tetap ringan dirawat.',
+      'Struktur kode yang rapi dan mudah dikembangkan dari komponen dasar hingga antarmuka. Menjaga modularitas React, TypeScript, dan susunan komponen tetap ringan dirawat.',
   },
   {
     id: 'M',
@@ -39,7 +39,7 @@ const BRAND_PILLARS: readonly BrandPillar[] = [
     tag: 'EDITORIAL KINEMATICS',
     diagramLabel: 'HARMONIC ORBITAL CURVES',
     description:
-      'Kehalusan detail visual, ritme tipografi serif dan mono, serta interaksi GPU 60fps yang terasa alami dan nyaman dibaca.',
+      'Detail visual yang halus, ritme huruf serif dan mono yang tenang, serta animasi 60fps yang nyaman dibaca.',
   },
   {
     id: 'DZ',
@@ -48,7 +48,7 @@ const BRAND_PILLARS: readonly BrandPillar[] = [
     tag: 'DETERMINISTIC QA',
     diagramLabel: 'CALIBRATION & ZERO-DEFECT FRAME',
     description:
-      'Ketelitian Software QA, verifikasi edge-case lintas viewport, kepatuhan aksesibilitas, dan konsistensi eksekusi di setiap produk yang dirilis.',
+      'Ketelitian Software QA di setiap alur penting, pengecekan kasus tepi di tiga ukuran layar, serta konsistensi kontrol aksesibilitas.',
   },
 ] as const;
 
@@ -215,9 +215,10 @@ export const AmdzBrandPhilosophy: React.FC = () => {
               ]}
             />
             <p className="font-sans text-sm sm:text-base text-ivory/80 leading-relaxed max-w-2xl">
-              Lahir dari inisial <strong className="font-medium text-ivory">Aflan Mu&apos;afa Dzulfiqar</strong>,
-              monogram <span className="font-mono text-xs tracking-widest uppercase text-champagne">AMDZ</span>{' '}
-              merangkum standar kerja rekayasa perangkat lunak, kehalusan visual, dan disiplin kualitas yang terukur.
+              Diambil dari inisial nama{' '}
+              <span className="font-medium text-ivory">Aflan Mu&apos;afa Dzulfiqar</span>, monogram{' '}
+              <span className="font-mono text-xs tracking-widest uppercase text-champagne">AMDZ</span>{' '}
+              merangkum cara kerja saya dalam membangun web, merapikan visual, dan menguji kualitas rilis.
             </p>
           </div>
 

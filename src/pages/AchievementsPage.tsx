@@ -83,7 +83,7 @@ export const AchievementsPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5">
               <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                Sertifikasi Cisco CCNA, publikasi ilmiah Garuda JPMBA, dan rekam jejak industri terverifikasi.
+                Catatan sertifikasi Cisco CCNA, publikasi jurnal Garuda JPMBA, serta pengalaman magang dan pendidikan.
               </p>
             </Reveal>
           </div>

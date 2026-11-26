@@ -149,7 +149,7 @@ export const AboutPage: React.FC = () => {
                   <GraduationCap className="size-3.5" aria-hidden="true" />
                   Amikom Purwokerto
                 </span>
-                <span className="inline-flex items-center gap-1.5">
+                <span className="inline-flex items-center gap-1.5 tabular-nums">
                   <Calendar className="size-3.5" aria-hidden="true" />
                   Usia {ageInfo.age}
                 </span>
@@ -178,7 +178,7 @@ export const AboutPage: React.FC = () => {
                     <p className="font-serif text-base leading-none">
                       {personalData.fullName}
                     </p>
-                    <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-champagne/80 mt-1">
+                    <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-champagne/80 mt-1 tabular-nums">
                       TANGERANG · PURWOKERTO · USIA {ageInfo.age}
                     </p>
                   </div>
@@ -260,7 +260,7 @@ export const AboutPage: React.FC = () => {
                       <span className="font-serif text-lg sm:text-xl text-espresso group-hover:text-mocha transition-colors">
                         {trait}
                       </span>
-                      <span className="font-mono text-[10px] tracking-[0.2em] text-bronze">
+                      <span className="font-mono text-[10px] tracking-[0.2em] text-bronze tabular-nums">
                         0{index + 1}
                       </span>
                     </StaggerItem>
@@ -295,8 +295,8 @@ export const AboutPage: React.FC = () => {
             </div>
             <Reveal variant="up" delay={0.08} className="lg:col-span-5">
               <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                Memadukan ketelitian Software QA dengan kepekaan antarmuka menjaga setiap
-                implementasi tetap bersih, teruji, dan transparan terhadap ruang lingkupnya.
+                Memadukan ketelitian Software QA dan kepekaan antarmuka menjaga setiap
+                implementasi tetap rapi, teruji, dan jelas ruang lingkupnya.
               </p>
             </Reveal>
           </div>

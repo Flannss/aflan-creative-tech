@@ -42,8 +42,8 @@ export const BookmarkButton: React.FC<BookmarkButtonProps> = ({
   const stateClass =
     surface === 'dark'
       ? saved
-        ? 'border-champagne bg-champagne text-obsidian shadow-[0_8px_24px_rgba(216,195,165,0.22)]'
-        : 'border-champagne/30 bg-obsidian/80 text-champagne/85 hover:border-champagne hover:text-ivory hover:bg-espresso/85'
+        ? 'border-champagne bg-champagne text-obsidian shadow-[0_8px_24px_rgba(223,200,166,0.22)]'
+        : 'border-champagne/30 bg-[#231915]/[0.95] text-champagne/90 hover:border-champagne hover:text-ivory hover:bg-espresso'
       : saved
         ? 'border-espresso bg-espresso text-champagne shadow-xs'
         : 'border-espresso/25 bg-offwhite text-espresso hover:border-bronze hover:text-cognac';
@@ -90,7 +90,7 @@ export const BookmarkButton: React.FC<BookmarkButtonProps> = ({
           : `Simpan ${projectTitle} ke shortlist`
       }
       whileTap={prefersReducedMotion ? undefined : { scale: 0.9 }}
-      className={`size-11 rounded-full border backdrop-blur-sm flex items-center justify-center transition-colors duration-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne ${stateClass} ${className}`}
+      className={`size-11 rounded-full border flex items-center justify-center transition-colors duration-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne ${stateClass} ${className}`}
     >
       <motion.span
         key={saved ? 'saved-icon' : 'unsaved-icon'}
