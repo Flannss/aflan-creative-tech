@@ -266,13 +266,13 @@ const DynamicSpotlightStage: React.FC = () => {
               dan ruang tipografi yang tenang.
             </p>
             <div className="flex flex-wrap gap-2.5 pt-2 font-mono text-[10px] tracking-[0.2em] uppercase">
-              <span className="px-3 py-1 bg-obsidian/80 border border-champagne/40 text-champagne">
+              <span className="glass-liquid-badge px-3 py-1 rounded-full text-champagne">
                 WEB DEVELOPER
               </span>
-              <span className="px-3 py-1 bg-obsidian/80 border border-champagne/40 text-ivory">
+              <span className="glass-liquid-badge px-3 py-1 rounded-full text-ivory">
                 UI ENGINEER
               </span>
-              <span className="px-3 py-1 bg-obsidian/80 border border-champagne/40 text-champagne">
+              <span className="glass-liquid-badge px-3 py-1 rounded-full text-champagne">
                 PURWOKERTO · INDONESIA
               </span>
             </div>
@@ -745,7 +745,7 @@ const ChiaroscuroCanvas: React.FC = () => {
           aria-label="Kanvas interaktif chiaroscuro hangat. Gerakkan pointer atau geser jari untuk mengarahkan cahaya dan ketuk untuk memicu riak."
           className="block w-full h-[300px] sm:h-[360px] touch-none cursor-crosshair"
         />
-        <div className="pointer-events-none absolute top-4 left-4 font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/80 bg-obsidian/70 px-2.5 py-1 border border-champagne/20">
+        <div className="glass-liquid-badge pointer-events-none absolute top-4 left-4 rounded-full font-mono text-[10px] tracking-[0.22em] uppercase text-champagne/90 px-3 py-1">
           GERAKKAN POINTER · KLIK UNTUK RIAK CAHAYA
         </div>
       </div>

@@ -345,7 +345,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           exit={{ opacity: 0 }}
           transition={{ duration: prefersReducedMotion ? 0.12 : 0.24, ease: EASE_LUXURY }}
           onClick={() => closePalette(false)}
-          className="fixed inset-0 z-[85] flex items-start justify-center pt-[9vh] sm:pt-[13vh] px-3 sm:px-6 pb-6 bg-[#1B1310]/[0.90]"
+          className="fixed inset-0 z-[85] flex items-start justify-center pt-[9vh] sm:pt-[13vh] px-3 sm:px-6 pb-6 bg-[#1B1310]/[0.78]"
         >
           <motion.div
             role="dialog"
@@ -367,12 +367,12 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               ease: EASE_LUXURY,
             }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-xl rounded-2xl border border-champagne/28 bg-[#211814] text-ivory shadow-[0_32px_90px_rgba(0,0,0,0.78)] overflow-hidden flex flex-col max-h-[78dvh]"
+            className="glass-figma w-full max-w-xl rounded-2xl text-ivory overflow-hidden flex flex-col max-h-[78dvh]"
           >
             {/* Search Input Header */}
-            <div className="flex items-center gap-3 px-4 sm:px-5 py-3.5 border-b border-champagne/15 focus-within:border-champagne/40 transition-colors shrink-0">
+            <div className="glass-liquid flex items-center gap-3 px-4 sm:px-5 py-3.5 border-b border-champagne/18 focus-within:border-champagne/40 transition-colors shrink-0">
               <Search
-                className="size-4 shrink-0 text-champagne/75"
+                className="relative z-10 size-4 shrink-0 text-champagne/75"
                 aria-hidden="true"
               />
               <input
@@ -393,7 +393,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   setQuery(e.target.value);
                   setActiveIndex(0);
                 }}
-                className="flex-1 min-w-0 bg-transparent text-ivory placeholder:text-taupe/70 font-sans text-base sm:text-sm outline-none focus:outline-none focus-visible:outline-none"
+                className="relative z-10 flex-1 min-w-0 bg-transparent text-ivory placeholder:text-taupe/70 font-sans text-base sm:text-sm outline-none focus:outline-none focus-visible:outline-none"
               />
               {query.length > 0 && (
                 <button
@@ -404,7 +404,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     inputRef.current?.focus();
                   }}
                   aria-label="Hapus kata kunci pencarian"
-                  className="shrink-0 px-2 py-1 rounded-md text-[10px] font-mono uppercase tracking-[0.15em] text-taupe hover:text-champagne transition-colors cursor-pointer"
+                  className="relative z-10 shrink-0 px-2 py-1 rounded-md text-[10px] font-mono uppercase tracking-[0.15em] text-taupe hover:text-champagne transition-colors cursor-pointer"
                 >
                   Hapus
                 </button>
@@ -413,7 +413,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                 type="button"
                 onClick={() => closePalette(false)}
                 aria-label="Tutup indeks cepat"
-                className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-champagne/20 bg-espresso/60 text-champagne/80 hover:text-ivory hover:border-champagne/45 font-mono text-[10px] tracking-[0.15em] uppercase transition-colors cursor-pointer"
+                className="relative z-10 shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-champagne/20 bg-espresso/60 text-champagne/80 hover:text-ivory hover:border-champagne/45 font-mono text-[10px] tracking-[0.15em] uppercase transition-colors cursor-pointer"
               >
                 <span className="hidden sm:inline">ESC</span>
                 <X className="size-3.5" aria-hidden="true" />
@@ -537,7 +537,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     No results for &ldquo;{query.trim()}&rdquo;
                   </p>
                   <p className="font-sans text-xs text-taupe">
-                    Try Home, Projects, SOMASII, ASIS Builder, Lab, or Email.
+                    Try Home, Projects, Kompresor Media, SOMASII, ASIS Builder, Lab, or Email.
                   </p>
                   <button
                     type="button"

@@ -6,7 +6,7 @@ import {
   useMotionValue,
   useReducedMotion,
 } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, ExternalLink } from 'lucide-react';
 import type { ProjectEntry } from '@/data/projects';
 import { ApertureFrame } from '@/components/motion/ApertureFrame';
 import { KineticLabel } from '@/components/motion/KineticLabel';
@@ -23,7 +23,8 @@ interface ProjectVisualGridCardProps {
 /**
  * Editorial Visual Grid card for Flexible Portfolio view mode.
  * Features a subtle pointer radial spotlight (desktop hover), Bookmark shortlist button
- * as a clean sibling outside the interactive link, and quick preview trigger.
+ * as a clean sibling outside the interactive link, optional warm espresso tonal glaze on
+ * media screenshots, and a clean sibling footer for quick dossier preview + optional Live App link.
  */
 export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
   project,
@@ -36,6 +37,10 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
   const mouseY = useMotionValue(0);
 
   const spotlightBg = useMotionTemplate`radial-gradient(380px circle at ${mouseX}px ${mouseY}px, rgba(216,195,165,0.09) 0%, rgba(138,109,75,0.03) 45%, transparent 72%)`;
+
+  const hasWarmGlaze =
+    project.slug === 'kompresor-media' ||
+    project.slug === 'somasii-lost-and-found';
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!canHoverFine || prefersReducedMotion) return;
@@ -88,7 +93,7 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
           <ApertureFrame className="w-full h-full">
             {project.previewImage ? (
               <div
-                className="w-full h-full"
+                className="relative w-full h-full"
                 style={{ backgroundColor: project.previewBg ?? '#33241C' }}
               >
                 <img
@@ -105,6 +110,12 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
                       : 'object-cover'
                   }`}
                 />
+                {hasWarmGlaze && (
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 bg-[#33241C]/26 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500"
+                  />
+                )}
               </div>
             ) : (
               <TypographicDossierPlate
@@ -116,13 +127,13 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
           </ApertureFrame>
         </div>
 
-        <div className="flex-1 p-5 sm:p-6 flex flex-col justify-between gap-5">
+        <div className="flex-1 p-5 sm:p-6 pb-4 flex flex-col justify-between gap-4">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] tracking-[0.18em] uppercase">
-              <span className="text-champagne">
+              <span className="text-champagne tabular-nums">
                 {project.index} · {project.category}
               </span>
-              <span className="text-taupe">{project.yearLabel}</span>
+              <span className="text-taupe tabular-nums">{project.yearLabel}</span>
             </div>
 
             <h3 className="font-serif text-2xl font-light text-ivory leading-snug group-hover:text-champagne transition-colors duration-300">
@@ -144,21 +155,38 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
               ))}
             </div>
           </div>
-
-          <div className="pt-4 border-t border-champagne/15 flex items-center justify-between gap-3">
-            <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-taupe truncate">
-              {project.role}
-            </span>
-            <span className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne shrink-0">
-              <KineticLabel>Preview Dossier</KineticLabel>
-              <ArrowUpRight
-                className="size-3.5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
-                aria-hidden="true"
-              />
-            </span>
-          </div>
         </div>
       </Link>
+
+      <div className="relative z-10 mx-5 sm:mx-6 mb-5 pt-4 border-t border-champagne/15 flex flex-wrap items-center justify-between gap-2.5">
+        {project.liveUrl ? (
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 min-h-[44px] px-3.5 py-2 rounded-full border border-champagne/30 text-champagne hover:bg-champagne hover:text-obsidian font-mono text-[10px] tracking-[0.15em] uppercase transition-colors shrink-0"
+          >
+            <span>{project.liveUrlLabel ?? 'Live App'}</span>
+            <ExternalLink className="size-3 shrink-0" aria-hidden="true" />
+          </a>
+        ) : (
+          <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-taupe truncate min-w-0 flex-1">
+            {project.role}
+          </span>
+        )}
+
+        <button
+          type="button"
+          onClick={() => onOpenPreview(project)}
+          className="inline-flex items-center gap-1.5 min-h-[44px] px-1.5 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne hover:text-ivory transition-colors cursor-pointer shrink-0"
+        >
+          <KineticLabel>Preview Dossier</KineticLabel>
+          <ArrowUpRight
+            className="size-3.5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
+            aria-hidden="true"
+          />
+        </button>
+      </div>
     </article>
   );
 };

@@ -69,7 +69,7 @@ export const BackToTop: React.FC = () => {
             duration: prefersReducedMotion ? 0.14 : 0.28,
             ease: EASE_LUXURY,
           }}
-          className="group fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 size-12 rounded-full bg-[#231915]/[0.96] border border-champagne/28 text-champagne shadow-[0_12px_32px_rgba(20,14,11,0.48)] flex items-center justify-center hover:bg-espresso hover:text-ivory transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-brass"
+          className="glass-liquid group fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 size-12 rounded-full text-champagne flex items-center justify-center hover:text-ivory transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-brass"
         >
           <svg
             aria-hidden="true"

@@ -45,7 +45,7 @@ export const FloatingProjectPreview: React.FC<FloatingProjectPreviewProps> = ({
                 ? { duration: 0.14 }
                 : { duration: 0.24, ease: EASE_LUXURY }
             }
-            className="overflow-hidden border border-champagne/25 bg-obsidian shadow-[0_24px_60px_rgba(0,0,0,0.55)]"
+            className="glass-figma overflow-hidden rounded-xl"
           >
             {project.previewImage ? (
               <div

@@ -190,7 +190,7 @@ const AppRoutes: React.FC<{ introReady: boolean }> = ({ introReady }) => {
       <RouteSweepIndicator
         transitionId={navTrack.count}
         direction={navTrack.dir}
-        visible={routeKind === 'editorial'}
+        visible={true}
       />
       <AnimatePresence
         mode="wait"

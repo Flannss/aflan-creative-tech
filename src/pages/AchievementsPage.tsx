@@ -1,12 +1,13 @@
 import React, { useMemo, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { Award, CheckCircle2 } from 'lucide-react';
+import { Award, CheckCircle2, ExternalLink, FileText } from 'lucide-react';
 import {
   achievementCategories,
   achievementsData,
   type AchievementCategory,
   type AchievementEntry,
 } from '@/data/achievements';
+import { CertificatePreviewModal } from '@/components/achievements/CertificatePreviewModal';
 import { HairlineRule, Reveal } from '@/components/motion/Reveal';
 import { TextReveal } from '@/components/motion/TextReveal';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
@@ -18,6 +19,7 @@ export const AchievementsPage: React.FC = () => {
     'Semua',
   );
   const [activeId, setActiveId] = useState<string>(achievementsData[0]?.id ?? '');
+  const [previewCertEntry, setPreviewCertEntry] = useState<AchievementEntry | null>(null);
 
   const categoryOptions = useMemo(
     () =>
@@ -115,11 +117,9 @@ export const AchievementsPage: React.FC = () => {
               const isOrphanOnTablet =
                 filteredEntries.length % 2 === 1 && idx === filteredEntries.length - 1;
               return (
-                <button
+                <div
                   key={entry.id}
-                  type="button"
-                  onClick={() => setActiveId(entry.id)}
-                  className={`w-full min-h-[44px] text-left py-6 px-4 sm:px-6 md:border md:border-espresso/15 lg:border-0 active:scale-[0.99] transition-all duration-300 cursor-pointer ${
+                  className={`md:border md:border-espresso/15 lg:border-0 transition-colors duration-300 ${
                     isOrphanOnTablet ? 'md:col-span-2' : ''
                   } ${
                     isSelected
@@ -127,48 +127,76 @@ export const AchievementsPage: React.FC = () => {
                       : 'hover:bg-offwhite text-espresso md:bg-offwhite/70 lg:bg-transparent'
                   }`}
                 >
-                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                    <span
-                      className={`text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium ${
-                        isSelected ? 'text-champagne' : 'text-cognac'
-                      }`}
-                    >
-                      {entry.code} · {entry.category}
-                    </span>
-                    <span
-                      className={`inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-[0.15em] whitespace-nowrap px-2.5 py-0.5 border ${
-                        isSelected
-                          ? 'border-champagne/40 text-champagne'
-                          : 'border-bronze/40 text-cognac bg-offwhite'
-                      }`}
-                    >
-                      <CheckCircle2 className="size-3" aria-hidden="true" />
-                      {entry.status}
-                    </span>
-                  </div>
-
-                  <span className="block font-serif text-xl sm:text-2xl font-light leading-snug">
-                    {entry.title}
-                  </span>
-
-                  <div
-                    className={`mt-2 flex flex-wrap items-center justify-between gap-2 text-xs ${
-                      isSelected ? 'text-ivory/75' : 'text-espresso/70'
-                    }`}
+                  <button
+                    type="button"
+                    onClick={() => setActiveId(entry.id)}
+                    aria-expanded={isSelected}
+                    className="w-full min-h-[44px] text-left py-6 px-4 sm:px-6 active:scale-[0.99] transition-transform duration-300 cursor-pointer"
                   >
-                    <span>{entry.issuer}</span>
-                    <span className="font-mono text-[10px] tracking-[0.15em] uppercase whitespace-nowrap">
-                      {entry.dateLabel}
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                      <span
+                        className={`text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium ${
+                          isSelected ? 'text-champagne' : 'text-cognac'
+                        }`}
+                      >
+                        {entry.code} · {entry.category}
+                      </span>
+                      <span
+                        className={`inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-[0.15em] whitespace-nowrap px-2.5 py-0.5 border ${
+                          isSelected
+                            ? 'border-champagne/40 text-champagne'
+                            : 'border-bronze/40 text-cognac bg-offwhite'
+                        }`}
+                      >
+                        <CheckCircle2 className="size-3" aria-hidden="true" />
+                        {entry.status}
+                      </span>
+                    </div>
+
+                    <span className="block font-serif text-xl sm:text-2xl font-light leading-snug">
+                      {entry.title}
                     </span>
-                  </div>
+
+                    <div
+                      className={`mt-2 flex flex-wrap items-center justify-between gap-2 text-xs ${
+                        isSelected ? 'text-ivory/75' : 'text-espresso/70'
+                      }`}
+                    >
+                      <span>{entry.issuer}</span>
+                      <span className="font-mono text-[10px] tracking-[0.15em] uppercase whitespace-nowrap">
+                        {entry.dateLabel}
+                      </span>
+                    </div>
+                  </button>
 
                   {isSelected && (
-                    <div className="md:hidden mt-4 pt-4 border-t border-champagne/20 space-y-2.5 text-sm text-ivory/85 leading-relaxed">
+                    <div className="md:hidden px-4 sm:px-6 pb-6 pt-4 border-t border-champagne/20 space-y-3 text-sm text-ivory/85 leading-relaxed">
                       <p>{entry.summary}</p>
                       <p className="text-champagne/90">{entry.details}</p>
+                      {entry.certificateUrl && (
+                        <div className="pt-2 flex flex-wrap items-center gap-2.5">
+                          <button
+                            type="button"
+                            onClick={() => setPreviewCertEntry(entry)}
+                            className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-[11px] tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all cursor-pointer"
+                          >
+                            <FileText className="size-3.5 shrink-0" aria-hidden="true" />
+                            <span>Lihat Sertifikat</span>
+                          </button>
+                          <a
+                            href={entry.certificateUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2.5 rounded-full border border-champagne/35 text-champagne hover:border-champagne hover:text-ivory font-mono text-[11px] tracking-[0.16em] uppercase transition-colors"
+                          >
+                            <span>Unduh / Buka PDF</span>
+                            <ExternalLink className="size-3.5 shrink-0" aria-hidden="true" />
+                          </a>
+                        </div>
+                      )}
                     </div>
                   )}
-                </button>
+                </div>
               );
             })}
           </div>
@@ -216,12 +244,39 @@ export const AchievementsPage: React.FC = () => {
                     <p>{activeEntry.summary}</p>
                     <p>{activeEntry.details}</p>
                   </div>
+
+                  {activeEntry.certificateUrl && (
+                    <div className="pt-4 border-t border-champagne/15 flex flex-wrap items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setPreviewCertEntry(activeEntry)}
+                        className="inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-full bg-champagne text-obsidian font-mono text-[11px] tracking-[0.16em] uppercase font-medium hover:bg-ivory active:scale-[0.97] transition-all cursor-pointer"
+                      >
+                        <FileText className="size-3.5 shrink-0" aria-hidden="true" />
+                        <span>Lihat Sertifikat</span>
+                      </button>
+                      <a
+                        href={activeEntry.certificateUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-full border border-champagne/35 text-champagne hover:border-champagne hover:text-ivory font-mono text-[11px] tracking-[0.16em] uppercase transition-colors"
+                      >
+                        <span>Unduh / Buka PDF</span>
+                        <ExternalLink className="size-3.5 shrink-0" aria-hidden="true" />
+                      </a>
+                    </div>
+                  )}
                 </motion.div>
               </AnimatePresence>
             </aside>
           )}
         </div>
       </section>
+
+      <CertificatePreviewModal
+        entry={previewCertEntry}
+        onClose={() => setPreviewCertEntry(null)}
+      />
     </div>
   );
 };

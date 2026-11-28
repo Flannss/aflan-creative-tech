@@ -239,6 +239,13 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                                 : 'object-cover'
                             }`}
                           />
+                          {(project.slug === 'kompresor-media' ||
+                            project.slug === 'somasii-lost-and-found') && (
+                            <div
+                              aria-hidden="true"
+                              className="pointer-events-none absolute inset-0 bg-[#33241C]/26 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500"
+                            />
+                          )}
                         </div>
                       ) : (
                         <TypographicDossierPlate

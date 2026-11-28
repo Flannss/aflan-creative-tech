@@ -94,7 +94,7 @@ export const ProjectsPage: React.FC = () => {
 
             <Reveal variant="up" delay={0.14} className="lg:col-span-5 space-y-4">
               <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
-                Daftar studi kasus dari SatuRuangCreative, SOMASII, ASIS Builder (NDA), dan AFLAN DOSSIER lengkap dengan peran masing-masing.
+                Daftar studi kasus dari Kompresor Media, SatuRuangCreative, SOMASII, ASIS Builder (NDA), dan AFLAN DOSSIER lengkap dengan peran masing-masing.
               </p>
               <div className="flex items-start gap-2.5 p-4 bg-umber/90 border border-brass/30 text-sm lg:text-xs text-champagne leading-relaxed">
                 <ShieldCheck className="size-4 text-brass shrink-0 mt-0.5" aria-hidden="true" />

@@ -52,8 +52,53 @@ export const projectCategories: Array<'All' | ProjectCategory> = [
 
 export const projectsData: ProjectEntry[] = [
   {
-    slug: 'satu-ruang-creative',
+    slug: 'kompresor-media',
     index: '01',
+    title: 'Kompresor Media · BY AMDZ',
+    subtitle:
+      'Studio kompresi dan peningkatan kualitas foto 2K hingga 8K serta video 1080p HD berbasis browser lokal',
+    platform: 'Web Application · Media Engineering',
+    category: 'Web Development',
+    yearLabel: 'Live Production',
+    verificationState: 'Verified Live Work',
+    role: 'Creator & Frontend Engineer',
+    contributionScope:
+      'Merancang antarmuka dual mode foto dan video, membangun alur kompresi serta peningkatan kualitas 100% lokal di browser dengan akselerasi perangkat keras, dan menghadirkan pratinjau Before/After interaktif tanpa unggahan server.',
+    notableWork:
+      'Mode RealPhoto 2K hingga 8K dengan 9 alat perbaikan piksel dan 12 filter warna, serta studio Video 1080p HD BT.709 / Vlog HD 8,5 Mbps untuk berkas 4K 60fps berdurasi 30+ menit langsung di perangkat.',
+    summary:
+      'Aplikasi web kompresi dan peningkatan kualitas media berbasis browser dengan mode Foto (RealPhoto 2K hingga 8K) dan Video (1080p HD BT.709) yang diproses 100% lokal tanpa unggah server maupun watermark.',
+    overview: [
+      'Kompresor Media · BY AMDZ (kompresor-media.vercel.app) adalah aplikasi web studio media dual mode yang menggabungkan alur kompresi ukuran berkas dan peningkatan kualitas gambar maupun video langsung di browser.',
+      'Pada mode Foto, pengguna dapat mengolah hingga 9 berkas (JPG, PNG, WebP, AVIF) menggunakan preset RealPhoto 2K hingga 8K, 9 alat perbaikan piksel, 12 filter warna, serta komparasi langsung Before/After sebelum menyimpan hasil.',
+      'Pada mode Video, pipeline lokal mendukung hingga 5 berkas (MP4, MOV, WebM, MKV) termasuk sumber 4K 60fps dan durasi lebih dari 30 menit ke keluaran 1080p HD BT.709 atau Vlog HD 8,5 Mbps, lengkap dengan 4 model penajaman, color grading, trim, audio, serta subtitle. Seluruh pemrosesan memakai akselerasi perangkat keras browser secara lokal tanpa unggahan server dan tanpa watermark.',
+    ],
+    stack: [
+      'Client-Side Media Processing',
+      'Browser Hardware Acceleration',
+      'Before/After Studio UI',
+      'Color Grading & Filters',
+      'Video BT.709 & Audio Pipeline',
+      'Vercel',
+    ],
+    outcomes: [
+      'Mode Foto RealPhoto 2K hingga 8K dengan 9 alat perbaikan piksel, 12 filter warna, pratinjau Before/After, dan batch hingga 9 berkas (JPG, PNG, WebP, AVIF).',
+      'Mode Video 1080p HD BT.709 dan Vlog HD 8,5 Mbps untuk sumber 4K 60fps berdurasi 30+ menit dengan 4 model penajaman, color grading, trim, audio, subtitle, hingga 5 berkas (MP4, MOV, WebM, MKV).',
+      'Berjalan 100% lokal dengan akselerasi perangkat keras browser di kompresor-media.vercel.app tanpa unggahan ke server dan tanpa watermark.',
+    ],
+    previewImage: '/images/kompresor-media.png',
+    previewImageFit: 'cover',
+    previewObjectPosition: 'center top',
+    previewBg: '#211814',
+    previewCaption:
+      'Kompresor Media · BY AMDZ · Antarmuka studio kompresi dan peningkatan kualitas foto serta video lokal.',
+    featuredOnHome: true,
+    liveUrl: 'https://kompresor-media.vercel.app/',
+    liveUrlLabel: 'Live App',
+  },
+  {
+    slug: 'satu-ruang-creative',
+    index: '02',
     title: 'SatuRuangCreative',
     subtitle: 'Student-Built Creative & Digital Studio · "Satu Ruang, Banyak Ide, Satu Cerita"',
     platform: 'Web & Creative Studio',
@@ -85,11 +130,11 @@ export const projectsData: ProjectEntry[] = [
     previewCaption: 'SatuRuangCreative · Emblem visual resmi studio digital mahasiswa.',
     featuredOnHome: true,
     liveUrl: 'https://saturuangcreative.framer.website/',
-    liveUrlLabel: 'Kunjungi Situs Live',
+    liveUrlLabel: 'Live App',
   },
   {
     slug: 'somasii-lost-and-found',
-    index: '02',
+    index: '03',
     title: 'SOMASII (System Online Mahasiswa Sharing Items Information)',
     subtitle: 'Mobile Application Lost & Found berbasis Flutter & Firebase untuk lingkungan kampus',
     platform: 'Mobile Application',
@@ -122,7 +167,7 @@ export const projectsData: ProjectEntry[] = [
   },
   {
     slug: 'asis-builder-page-generator',
-    index: '03',
+    index: '04',
     title: 'ASIS Builder (Website Template Page Generator)',
     subtitle: 'Software QA, Workflow Evaluation & rekomendasi perbaikan berbasis pengujian',
     platform: 'Internal Web System · NDA',
@@ -158,7 +203,7 @@ export const projectsData: ProjectEntry[] = [
   },
   {
     slug: 'aflan-digital-identity',
-    index: '04',
+    index: '05',
     title: 'AFLAN DOSSIER · Personal Digital Identity',
     subtitle: 'Portofolio editorial 9 halaman, sistem motion presisi & Creative Lab interaktif',
     platform: 'Web Application',

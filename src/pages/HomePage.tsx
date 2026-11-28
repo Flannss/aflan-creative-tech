@@ -30,6 +30,7 @@ interface HomePageProps {
 }
 
 const FLAGSHIP_SLUGS = [
+  'kompresor-media',
   'satu-ruang-creative',
   'somasii-lost-and-found',
   'asis-builder-page-generator',
@@ -339,7 +340,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
               <div className="space-y-1.5">
                 <p className="font-mono text-[10px] sm:text-xs tracking-[0.22em] uppercase font-medium text-cognac">
-                  CURATED WORKS · 03 FEATURED
+                  CURATED WORKS · 04 FEATURED
                 </p>
                 <h2 className="font-serif text-3xl sm:text-4xl font-light tracking-tight leading-[1.08] text-obsidian">
                   Selected <span className="italic text-bronze">Works</span>

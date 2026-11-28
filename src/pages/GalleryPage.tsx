@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion, type PanInfo } from 'framer-motion';
 import {
   ChevronLeft,
   ChevronRight,
@@ -23,7 +23,7 @@ import { HairlineRule, Reveal, StaggerGroup, StaggerItem } from '@/components/mo
 import { TextReveal } from '@/components/motion/TextReveal';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
-import { EASE_LUXURY } from '@/utils/motion';
+import { EASE_LUXURY, SPRING_TACTILE } from '@/utils/motion';
 
 type TonalTreatment = 'original' | 'sepia' | 'monochrome';
 
@@ -93,8 +93,9 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
           alt={item.title}
           loading="eager"
           decoding="async"
+          draggable={false}
           style={{ filter: combinedFilter }}
-          className="block max-h-[60vh] sm:max-h-[68vh] max-w-full w-auto h-auto object-contain select-none"
+          className="block max-h-[60vh] sm:max-h-[68vh] max-w-full w-auto h-auto object-contain select-none pointer-events-none"
         />
         {filmGrain && (
           <div
@@ -263,9 +264,15 @@ export const GalleryPage: React.FC = () => {
   const [filmGrainEnabled, setFilmGrainEnabled] = useState<boolean>(true);
   const [revealedCardId, setRevealedCardId] = useState<string | null>(null);
   const [lightboxId, setLightboxId] = useState<string | null>(null);
+  const [lightboxDir, setLightboxDir] = useState<1 | -1>(1);
   const [showCaptions, setShowCaptions] = useState(true);
   const prefersReducedMotion = useReducedMotion();
   const { pauseScroll, resumeScroll } = useSmoothScroll();
+
+  const openLightbox = useCallback((id: string) => {
+    setLightboxDir(1);
+    setLightboxId(id);
+  }, []);
 
   const filteredItems = useMemo(() => {
     if (selectedCategory === 'Semua') return galleryItems;
@@ -313,6 +320,17 @@ export const GalleryPage: React.FC = () => {
     lightboxIndex !== null ? filteredItems[lightboxIndex] ?? null : null;
   const hasMultiplePlates = filteredItems.length > 1;
 
+  const stepLightbox = useCallback(
+    (delta: number) => {
+      if (lightboxIndex === null || filteredItems.length === 0) return;
+      setLightboxDir(delta >= 0 ? 1 : -1);
+      const nextIdx =
+        (lightboxIndex + delta + filteredItems.length) % filteredItems.length;
+      setLightboxId(filteredItems[nextIdx]?.id ?? null);
+    },
+    [filteredItems, lightboxIndex],
+  );
+
   useEffect(() => {
     if (lightboxIndex === null) return;
     const prevHeaderTheme = document.documentElement.dataset.headerTheme;
@@ -325,12 +343,9 @@ export const GalleryPage: React.FC = () => {
       if (e.key === 'Escape') {
         setLightboxId(null);
       } else if (hasMultiplePlates && e.key === 'ArrowRight') {
-        const nextIdx = (lightboxIndex + 1) % filteredItems.length;
-        setLightboxId(filteredItems[nextIdx]?.id ?? null);
+        stepLightbox(1);
       } else if (hasMultiplePlates && e.key === 'ArrowLeft') {
-        const prevIdx =
-          (lightboxIndex - 1 + filteredItems.length) % filteredItems.length;
-        setLightboxId(filteredItems[prevIdx]?.id ?? null);
+        stepLightbox(-1);
       }
     };
 
@@ -345,13 +360,27 @@ export const GalleryPage: React.FC = () => {
       window.dispatchEvent(new Event('aflan-nav-theme-sync'));
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [lightboxIndex, hasMultiplePlates, filteredItems, pauseScroll, resumeScroll]);
+  }, [lightboxIndex, hasMultiplePlates, pauseScroll, resumeScroll, stepLightbox]);
 
-  const stepLightbox = (delta: number) => {
-    if (lightboxIndex === null || filteredItems.length === 0) return;
-    const nextIdx =
-      (lightboxIndex + delta + filteredItems.length) % filteredItems.length;
-    setLightboxId(filteredItems[nextIdx]?.id ?? null);
+  const handleLightboxDragEnd = (
+    _event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo,
+  ) => {
+    if (prefersReducedMotion) return;
+    const absX = Math.abs(info.offset.x);
+    const absY = Math.abs(info.offset.y);
+
+    if (absY > absX && (info.offset.y > 110 || info.velocity.y > 600)) {
+      setLightboxId(null);
+      return;
+    }
+
+    if (!hasMultiplePlates) return;
+    if (info.offset.x < -75 || info.velocity.x < -500) {
+      stepLightbox(1);
+    } else if (info.offset.x > 75 || info.velocity.x > 500) {
+      stepLightbox(-1);
+    }
   };
 
   return (
@@ -487,7 +516,7 @@ export const GalleryPage: React.FC = () => {
                       <div className={`relative ${item.aspectClass} w-full overflow-hidden bg-obsidian`}>
                         <button
                           type="button"
-                          onClick={() => setLightboxId(item.id)}
+                          onClick={() => openLightbox(item.id)}
                           data-cursor-label="VIEW"
                           aria-label={`Buka ${item.title} pada lightbox layar penuh`}
                           className="block w-full h-full text-left focus-visible:outline-2 focus-visible:outline-champagne"
@@ -502,7 +531,7 @@ export const GalleryPage: React.FC = () => {
                         </button>
 
                         <div className="absolute top-3.5 left-3.5 right-3.5 z-30 flex items-center justify-between gap-2 pointer-events-none">
-                          <span className="px-3 py-1 bg-[#231915]/[0.94] border border-champagne/28 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne">
+                          <span className="glass-liquid-badge px-3 py-1 rounded-full font-mono text-[10px] tracking-[0.18em] uppercase text-champagne">
                             {item.badge}
                           </span>
                           <div className="flex items-center gap-1.5 pointer-events-auto">
@@ -515,21 +544,21 @@ export const GalleryPage: React.FC = () => {
                               }
                               aria-pressed={isDetailOpen}
                               aria-label={`Tampilkan detail teknis ${item.title}`}
-                              className={`size-8 rounded-full border flex items-center justify-center active:scale-95 transition-colors ${
+                              className={`size-9 rounded-full border flex items-center justify-center active:scale-95 transition-colors cursor-pointer ${
                                 isDetailOpen
                                   ? 'bg-champagne text-obsidian border-champagne'
-                                  : 'bg-obsidian/80 text-champagne border-champagne/30 hover:bg-champagne hover:text-obsidian'
+                                  : 'glass-liquid-badge text-champagne hover:border-champagne hover:text-ivory'
                               }`}
                             >
-                              <Info className="size-3.5" aria-hidden="true" />
+                              <Info className="size-3.5 relative z-10" aria-hidden="true" />
                             </button>
                             <button
                               type="button"
-                              onClick={() => setLightboxId(item.id)}
+                              onClick={() => openLightbox(item.id)}
                               aria-label={`Perbesar ${item.title}`}
-                              className="size-8 rounded-full bg-obsidian/80 border border-champagne/30 flex items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-colors"
+                              className="glass-liquid-badge size-9 rounded-full flex items-center justify-center text-champagne hover:border-champagne hover:text-ivory active:scale-95 transition-colors cursor-pointer"
                             >
-                              <Maximize2 className="size-3.5" aria-hidden="true" />
+                              <Maximize2 className="size-3.5 relative z-10" aria-hidden="true" />
                             </button>
                           </div>
                         </div>
@@ -627,7 +656,7 @@ export const GalleryPage: React.FC = () => {
                       >
                         <button
                           type="button"
-                          onClick={() => setLightboxId(item.id)}
+                          onClick={() => openLightbox(item.id)}
                           data-cursor-label="VIEW"
                           aria-label={`Buka ${item.title} pada lightbox layar penuh`}
                           className="group relative block w-full text-left border border-champagne/20 bg-espresso/60 p-3 sm:p-5 shadow-[0_32px_90px_rgba(0,0,0,0.65)] active:scale-[0.99] transition-transform focus-visible:outline-2 focus-visible:outline-champagne"
@@ -640,8 +669,8 @@ export const GalleryPage: React.FC = () => {
                                 filmGrain={filmGrainEnabled}
                               />
                             </ApertureFrame>
-                            <span className="absolute top-4 right-4 size-10 rounded-full bg-obsidian/80 border border-champagne/35 flex items-center justify-center text-champagne group-hover:bg-champagne group-hover:text-obsidian transition-colors">
-                              <Maximize2 className="size-4" aria-hidden="true" />
+                            <span className="glass-liquid-badge absolute top-4 right-4 size-10 rounded-full flex items-center justify-center text-champagne group-hover:border-champagne group-hover:text-ivory transition-colors">
+                              <Maximize2 className="size-4 relative z-10" aria-hidden="true" />
                             </span>
                           </div>
 
@@ -747,40 +776,40 @@ export const GalleryPage: React.FC = () => {
                     ease: EASE_LUXURY,
                   }}
                   onClick={(e) => e.stopPropagation()}
-                  className="relative w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden rounded-2xl border border-champagne/28 bg-[#211814]/96 text-ivory shadow-[0_32px_100px_rgba(0,0,0,0.9)]"
+                  className="glass-figma relative w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden rounded-2xl text-ivory"
                 >
                   {/* Top Toolbar */}
-                  <div className="shrink-0 flex flex-wrap items-center justify-between gap-2.5 px-4 sm:px-6 py-3.5 border-b border-champagne/15">
-                    <span className="font-mono text-xs tracking-[0.22em] uppercase text-champagne tabular-nums">
+                  <div className="glass-liquid shrink-0 flex flex-wrap items-center justify-between gap-2.5 px-4 sm:px-6 py-3.5 border-b border-champagne/18">
+                    <span className="relative z-10 font-mono text-xs tracking-[0.22em] uppercase text-champagne tabular-nums">
                       {String(lightboxIndex + 1).padStart(2, '0')} /{' '}
                       {String(filteredItems.length).padStart(2, '0')} · {activeItem.plateNumber}
                     </span>
 
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+                    <div className="relative z-10 flex flex-wrap items-center gap-2 sm:gap-2.5">
                       <button
                         type="button"
                         onClick={() => setFilmGrainEnabled((prev) => !prev)}
-                        className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-full border border-champagne/25 text-champagne font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne active:scale-95 transition-all cursor-pointer"
+                        className="glass-liquid-badge inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-[36px] px-3 sm:px-3.5 py-2 rounded-full text-champagne font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne active:scale-95 transition-all cursor-pointer"
                       >
-                        <Sparkles className="size-3.5" aria-hidden="true" />
-                        Grain: {filmGrainEnabled ? 'ON' : 'OFF'}
+                        <Sparkles className="relative z-10 size-3.5" aria-hidden="true" />
+                        <span className="relative z-10">Grain: {filmGrainEnabled ? 'ON' : 'OFF'}</span>
                       </button>
                       <button
                         type="button"
                         onClick={() => setShowCaptions((prev) => !prev)}
-                        className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-full border border-champagne/25 text-ivory font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne active:scale-95 transition-all cursor-pointer"
+                        className="glass-liquid-badge inline-flex items-center gap-2 min-h-[44px] sm:min-h-[36px] px-3 sm:px-3.5 py-2 rounded-full text-ivory font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne active:scale-95 transition-all cursor-pointer"
                       >
                         {showCaptions ? (
                           <>
-                            <EyeOff className="size-3.5" aria-hidden="true" />
-                            <span className="hidden sm:inline">Sembunyikan Teks</span>
-                            <span className="sm:hidden">Teks</span>
+                            <EyeOff className="relative z-10 size-3.5" aria-hidden="true" />
+                            <span className="relative z-10 hidden sm:inline">Sembunyikan Teks</span>
+                            <span className="relative z-10 sm:hidden">Teks</span>
                           </>
                         ) : (
                           <>
-                            <Eye className="size-3.5" aria-hidden="true" />
-                            <span className="hidden sm:inline">Tampilkan Teks</span>
-                            <span className="sm:hidden">Teks</span>
+                            <Eye className="relative z-10 size-3.5" aria-hidden="true" />
+                            <span className="relative z-10 hidden sm:inline">Tampilkan Teks</span>
+                            <span className="relative z-10 sm:hidden">Teks</span>
                           </>
                         )}
                       </button>
@@ -788,7 +817,7 @@ export const GalleryPage: React.FC = () => {
                         type="button"
                         onClick={() => setLightboxId(null)}
                         aria-label="Tutup lightbox"
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-champagne text-obsidian font-mono text-[10px] tracking-[0.2em] uppercase font-medium hover:bg-ivory active:scale-95 transition-all cursor-pointer"
+                        className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-[36px] px-4 py-2 rounded-full bg-champagne text-obsidian font-mono text-[10px] tracking-[0.2em] uppercase font-medium hover:bg-ivory active:scale-95 transition-all cursor-pointer"
                       >
                         Tutup
                         <X className="size-4" aria-hidden="true" />
@@ -796,42 +825,74 @@ export const GalleryPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Center Media Viewport — Strictly Contained Inside Frame Border */}
+                  {/* Center Media Viewport — Tactile Swipe & Drag-Down Dismiss */}
                   <div className="flex-1 min-h-0 flex items-center justify-center gap-3 sm:gap-5 overflow-hidden p-3 sm:p-5">
                     {hasMultiplePlates && (
                       <button
                         type="button"
                         onClick={() => stepLightbox(-1)}
                         aria-label="Pelat sebelumnya"
-                        className="hidden sm:flex shrink-0 size-11 rounded-full border border-champagne/30 bg-espresso/75 items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-all cursor-pointer"
+                        className="glass-liquid-badge hidden sm:flex shrink-0 size-11 rounded-full items-center justify-center text-champagne hover:border-champagne hover:text-ivory active:scale-95 transition-all cursor-pointer"
                       >
-                        <ChevronLeft className="size-5" aria-hidden="true" />
+                        <ChevronLeft className="relative z-10 size-5" aria-hidden="true" />
                       </button>
                     )}
 
-                    <motion.div
-                      key={activeItem.id}
-                      initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.97 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.28, ease: EASE_LUXURY }}
-                      className="flex-1 min-w-0 min-h-0 h-full flex items-center justify-center overflow-hidden"
-                    >
-                      <PlateVisual
-                        item={activeItem}
-                        tonalMode={tonalMode}
-                        filmGrain={filmGrainEnabled}
-                        inLightbox
-                      />
-                    </motion.div>
+                    <div className="flex-1 min-w-0 min-h-0 h-full flex items-center justify-center overflow-hidden">
+                      <AnimatePresence mode="wait" custom={lightboxDir}>
+                        <motion.div
+                          key={activeItem.id}
+                          custom={lightboxDir}
+                          initial={
+                            prefersReducedMotion
+                              ? { opacity: 0 }
+                              : { opacity: 0, x: lightboxDir * 44, scale: 0.985 }
+                          }
+                          animate={{ opacity: 1, x: 0, scale: 1 }}
+                          exit={
+                            prefersReducedMotion
+                              ? { opacity: 0 }
+                              : {
+                                  opacity: 0,
+                                  x: lightboxDir * -44,
+                                  scale: 0.985,
+                                  transition: { duration: 0.2, ease: EASE_LUXURY },
+                                }
+                          }
+                          transition={
+                            prefersReducedMotion
+                              ? { duration: 0.14 }
+                              : { duration: 0.28, ease: EASE_LUXURY }
+                          }
+                          drag={!prefersReducedMotion}
+                          dragSnapToOrigin
+                          dragElastic={{ left: 0.34, right: 0.34, top: 0.08, bottom: 0.45 }}
+                          dragTransition={{
+                            bounceStiffness: SPRING_TACTILE.stiffness,
+                            bounceDamping: SPRING_TACTILE.damping,
+                          }}
+                          whileDrag={prefersReducedMotion ? undefined : { scale: 0.975 }}
+                          onDragEnd={handleLightboxDragEnd}
+                          className="w-full h-full flex items-center justify-center select-none touch-none cursor-grab active:cursor-grabbing will-change-transform"
+                        >
+                          <PlateVisual
+                            item={activeItem}
+                            tonalMode={tonalMode}
+                            filmGrain={filmGrainEnabled}
+                            inLightbox
+                          />
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
 
                     {hasMultiplePlates && (
                       <button
                         type="button"
                         onClick={() => stepLightbox(1)}
                         aria-label="Pelat berikutnya"
-                        className="hidden sm:flex shrink-0 size-11 rounded-full border border-champagne/30 bg-espresso/75 items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian active:scale-95 transition-all cursor-pointer"
+                        className="glass-liquid-badge hidden sm:flex shrink-0 size-11 rounded-full items-center justify-center text-champagne hover:border-champagne hover:text-ivory active:scale-95 transition-all cursor-pointer"
                       >
-                        <ChevronRight className="size-5" aria-hidden="true" />
+                        <ChevronRight className="relative z-10 size-5" aria-hidden="true" />
                       </button>
                     )}
                   </div>
@@ -845,21 +906,27 @@ export const GalleryPage: React.FC = () => {
                             type="button"
                             onClick={() => stepLightbox(-1)}
                             aria-label="Pelat sebelumnya"
-                            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-champagne/30 bg-espresso/75 text-champagne font-mono text-[10px] tracking-[0.18em] uppercase active:scale-95 transition-all"
+                            className="glass-liquid-badge inline-flex items-center gap-1.5 min-h-[44px] px-4 py-2 rounded-full text-champagne font-mono text-[10px] tracking-[0.18em] uppercase active:scale-95 transition-all"
                           >
-                            <ChevronLeft className="size-4" aria-hidden="true" />
-                            Sebelumnya
+                            <ChevronLeft className="relative z-10 size-4" aria-hidden="true" />
+                            <span className="relative z-10">Sebelumnya</span>
                           </button>
                           <button
                             type="button"
                             onClick={() => stepLightbox(1)}
                             aria-label="Pelat berikutnya"
-                            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-champagne/30 bg-espresso/75 text-champagne font-mono text-[10px] tracking-[0.18em] uppercase active:scale-95 transition-all"
+                            className="glass-liquid-badge inline-flex items-center gap-1.5 min-h-[44px] px-4 py-2 rounded-full text-champagne font-mono text-[10px] tracking-[0.18em] uppercase active:scale-95 transition-all"
                           >
-                            Berikutnya
-                            <ChevronRight className="size-4" aria-hidden="true" />
+                            <span className="relative z-10">Berikutnya</span>
+                            <ChevronRight className="relative z-10 size-4" aria-hidden="true" />
                           </button>
                         </div>
+                      )}
+
+                      {!prefersReducedMotion && (
+                        <p className="sm:hidden font-mono text-[9px] tracking-[0.16em] uppercase text-taupe/80">
+                          Geser kiri/kanan · Tarik bawah untuk tutup
+                        </p>
                       )}
 
                       {showCaptions && (

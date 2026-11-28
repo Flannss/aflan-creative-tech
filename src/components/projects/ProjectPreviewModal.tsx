@@ -107,11 +107,11 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
               ease: EASE_LUXURY,
             }}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden rounded-2xl border border-champagne/28 bg-[#211814]/98 text-ivory shadow-[0_32px_100px_rgba(0,0,0,0.85)] will-change-[transform,opacity]"
+            className="glass-figma relative w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden rounded-2xl text-ivory will-change-[transform,opacity]"
           >
             {/* Pinned Header Bar */}
-            <div className="shrink-0 flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-b border-champagne/20 bg-[#211814]/95">
-              <div className="flex flex-wrap items-center gap-2.5 min-w-0">
+            <div className="glass-liquid shrink-0 flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-b border-champagne/20">
+              <div className="relative z-10 flex flex-wrap items-center gap-2.5 min-w-0">
                 <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne tabular-nums truncate">
                   DOSSIER {project.index} · {project.category}
                 </span>
@@ -125,7 +125,7 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
                 type="button"
                 onClick={onClose}
                 aria-label="Tutup pratinjau proyek"
-                className="shrink-0 size-10 sm:size-9 rounded-full border border-champagne/25 bg-espresso/80 flex items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian transition-colors cursor-pointer"
+                className="relative z-10 shrink-0 size-10 sm:size-9 rounded-full border border-champagne/25 bg-espresso/80 flex items-center justify-center text-champagne hover:bg-champagne hover:text-obsidian transition-colors cursor-pointer"
               >
                 <X className="size-4" aria-hidden="true" />
               </button>
@@ -264,7 +264,7 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-[38px] px-4 py-2 rounded-full border border-champagne/25 text-champagne font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne hover:text-ivory transition-colors"
                   >
-                    <span>Live Site</span>
+                    <span>{project.liveUrlLabel ?? 'Live App'}</span>
                     <ExternalLink className="size-3" aria-hidden="true" />
                   </a>
                 )}

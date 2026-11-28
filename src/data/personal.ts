@@ -138,7 +138,7 @@ export const navigationRoutes: NavRoute[] = [
     label: 'Projects',
     shortLabel: 'PROJECTS',
     path: '/projects',
-    subtitle: 'SatuRuangCreative, SOMASII & ASIS',
+    subtitle: 'Kompresor Media, SatuRuang, SOMASII & ASIS',
   },
   {
     index: '06',

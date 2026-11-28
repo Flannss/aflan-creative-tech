@@ -6,6 +6,11 @@ import type { Transition, Variants } from 'framer-motion';
 export const EASE_LUXURY: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 /**
+ * Crisp deceleration exit easing curve: cubic-bezier(0.32, 0.72, 0, 1).
+ */
+export const EASE_EXIT: [number, number, number, number] = [0.32, 0.72, 0, 1];
+
+/**
  * Silk spring physics without bouncy overshoot for gliding pills and navigation underlines.
  */
 export const SPRING_SILK = {
@@ -13,6 +18,16 @@ export const SPRING_SILK = {
   stiffness: 320,
   damping: 32,
   mass: 0.85,
+};
+
+/**
+ * Damped tactile spring for lightbox swipe snapback and draggable frames.
+ */
+export const SPRING_TACTILE = {
+  type: 'spring' as const,
+  stiffness: 360,
+  damping: 34,
+  mass: 0.75,
 };
 
 /**
@@ -38,9 +53,9 @@ export const biDirectionalPageVariants: Variants = {
     const kind = custom?.kind ?? 'editorial';
     return {
       opacity: 0,
-      x: direction * 24,
-      y: kind === 'showcase' ? 10 : 0,
-      scale: 0.99,
+      x: direction * 28,
+      y: kind === 'showcase' ? 12 : 4,
+      scale: 0.985,
     };
   },
   animate: {
@@ -49,7 +64,7 @@ export const biDirectionalPageVariants: Variants = {
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.34,
+      duration: 0.42,
       ease: EASE_LUXURY,
     },
   },
@@ -58,12 +73,12 @@ export const biDirectionalPageVariants: Variants = {
     const kind = custom?.kind ?? 'editorial';
     return {
       opacity: 0,
-      x: direction * -22,
+      x: direction * -32,
       y: kind === 'showcase' ? -6 : 0,
-      scale: 0.988,
+      scale: 0.98,
       transition: {
-        duration: 0.2,
-        ease: EASE_LUXURY,
+        duration: 0.24,
+        ease: EASE_EXIT,
       },
     };
   },

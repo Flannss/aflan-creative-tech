@@ -14,6 +14,8 @@ export interface AchievementEntry {
   status: 'Kredensial Terverifikasi' | 'Publikasi Terindeks' | 'Milestone Terverifikasi';
   summary: string;
   details: string;
+  certificateUrl?: string;
+  certificateFileName?: string;
 }
 
 export const achievementCategories: Array<'Semua' | AchievementCategory> = [
@@ -37,6 +39,8 @@ export const achievementsData: AchievementEntry[] = [
       'Menyelesaikan sertifikasi kompetensi jaringan komputer dasar melalui Cisco Networking Academy pada Juli 2026.',
     details:
       'Mencakup pemahaman arsitektur jaringan, protokol komunikasi TCP/IP, pengalamatan IPv4/IPv6, konfigurasi perangkat jaringan dasar, serta prinsip keamanan dan konektivitas infrastruktur.',
+    certificateUrl: '/certificates/cisco-ccna-aflan.pdf',
+    certificateFileName: "cisco_Aflan Mu'afa Dzulfiqar.pdf",
   },
   {
     id: 'publikasi-pengabdian-garuda',

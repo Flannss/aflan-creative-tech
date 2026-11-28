@@ -54,8 +54,8 @@ const ROUTE_CONTEXT_MAP: Record<string, RouteContextSpec> = {
   '/projects': {
     tag: 'SELECTED ARCHIVE',
     summary:
-      'Arsip karya pilihan termasuk SatuRuangCreative, aplikasi kampus SOMASII, dan evaluasi fungsional ASIS Builder (NDA).',
-    highlights: ['SatuRuangCreative', 'SOMASII App', 'ASIS Builder NDA'],
+      'Arsip karya pilihan termasuk Kompresor Media · BY AMDZ, SatuRuangCreative, aplikasi kampus SOMASII, dan evaluasi fungsional ASIS Builder (NDA).',
+    highlights: ['Kompresor Media', 'SatuRuangCreative', 'SOMASII · ASIS'],
     motif: 'layers',
   },
   '/lab': {
@@ -298,10 +298,8 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
           <nav
             aria-label="Primary navigation"
             onMouseLeave={() => setNavHoverPath(null)}
-            className={`relative isolate hidden xl:flex items-center gap-0.5 2xl:gap-1 px-2 2xl:px-2.5 py-1.5 rounded-full border ${
-              isLightHeaderRoute
-                ? 'bg-[#F3ECE1] border-[#8E6B4B]/28'
-                : 'bg-[#231915] border-[#DFC8A6]/25 shadow-[0_6px_20px_rgba(20,14,11,0.28)]'
+            className={`relative isolate hidden xl:flex items-center gap-0.5 2xl:gap-1 px-2 2xl:px-2.5 py-1.5 rounded-full ${
+              isLightHeaderRoute ? 'glass-liquid-light' : 'glass-liquid'
             }`}
           >
             {navigationRoutes.map((route) => {
@@ -328,13 +326,13 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                   className={({ isActive }) => {
                     const active = isActive || isMatchedPath;
                     if (isLightHeaderRoute) {
-                      return `group/nav relative isolate px-2.5 2xl:px-3.5 py-1.5 rounded-full font-mono text-[10px] 2xl:text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300 ${
+                      return `group/nav relative z-10 isolate px-2.5 2xl:px-3.5 py-1.5 rounded-full font-mono text-[10px] 2xl:text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300 ${
                         active
                           ? 'text-[#F6F1E9] font-medium'
-                          : 'text-[#5A4332] hover:text-[#211814]'
+                          : 'text-[#3E2D20] hover:text-[#211814]'
                       }`;
                     }
-                    return `group/nav relative isolate px-2.5 2xl:px-3.5 py-1.5 rounded-full font-mono text-[10px] 2xl:text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300 ${
+                    return `group/nav relative z-10 isolate px-2.5 2xl:px-3.5 py-1.5 rounded-full font-mono text-[10px] 2xl:text-[11px] tracking-[0.14em] uppercase whitespace-nowrap transition-colors duration-300 ${
                       active
                         ? 'text-[#211814] font-medium'
                         : 'text-[#C2AA91] hover:text-[#F6F1E9]'
@@ -450,18 +448,18 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
               aria-controls="aflan-editorial-menu"
               aria-label={menuOpen ? 'Close full navigation' : 'Open full navigation'}
               data-cursor={menuOpen ? 'CLOSE' : 'MENU'}
-              className={`group inline-flex items-center gap-2.5 min-h-[44px] px-4 sm:px-4.5 py-2 rounded-full border shrink-0 transition-all duration-300 cursor-pointer ${
+              className={`group relative isolate inline-flex items-center gap-2.5 min-h-[44px] px-4 sm:px-4.5 py-2 rounded-full shrink-0 transition-all duration-300 cursor-pointer ${
                 isLightHeaderRoute
-                  ? 'border-[#211814]/30 bg-[#211814] text-[#F6F1E9] hover:bg-[#33241C] hover:border-[#33241C]'
-                  : 'border-[#DFC8A6]/35 bg-[#2B1D17] text-[#F6F1E9] hover:bg-[#DFC8A6] hover:text-[#211814]'
+                  ? 'border border-[#211814]/35 bg-[#211814]/90 backdrop-blur-[12px] text-[#F6F1E9] shadow-[inset_0_1px_0_rgba(246,241,233,0.16),0_10px_24px_rgba(33,24,20,0.18)] hover:bg-[#33241C]'
+                  : 'glass-liquid text-[#F6F1E9] hover:border-champagne/60'
               }`}
             >
-              <span className="font-mono text-[11px] tracking-[0.2em] uppercase">
+              <span className="relative z-10 font-mono text-[11px] tracking-[0.2em] uppercase">
                 {menuOpen ? 'Close' : 'Menu'}
               </span>
               <span
                 aria-hidden="true"
-                className="relative w-4 h-3.5 flex flex-col justify-center items-end"
+                className="relative z-10 w-4 h-3.5 flex flex-col justify-center items-end"
               >
                 <span
                   className={`block h-[1.5px] bg-current rounded-full transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -522,11 +520,11 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                         onOpenCommandPalette();
                       }}
                       aria-label="Open Quick Index Command Palette"
-                      className="inline-flex items-center gap-1.5 min-h-[44px] px-3 sm:px-3.5 py-2 rounded-full border border-champagne/20 bg-espresso/70 text-champagne hover:border-champagne hover:bg-espresso transition-colors shrink-0 cursor-pointer font-mono text-[10px] sm:text-[11px] tracking-[0.15em] uppercase"
+                      className="glass-liquid-badge inline-flex items-center gap-1.5 min-h-[44px] px-3 sm:px-3.5 py-2 rounded-full text-champagne hover:border-champagne hover:text-ivory transition-colors shrink-0 cursor-pointer font-mono text-[10px] sm:text-[11px] tracking-[0.15em] uppercase"
                     >
-                      <Search className="size-3.5" aria-hidden="true" />
-                      <span className="sm:hidden">⌘K</span>
-                      <span className="hidden sm:inline">⌘K · Quick Index</span>
+                      <Search className="relative z-10 size-3.5" aria-hidden="true" />
+                      <span className="relative z-10 sm:hidden">⌘K</span>
+                      <span className="relative z-10 hidden sm:inline">⌘K · Quick Index</span>
                     </button>
                   )}
                   <button
@@ -536,12 +534,12 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                       triggerRef.current?.focus();
                     }}
                     aria-label="Close navigation menu"
-                    className="inline-flex items-center gap-2 min-h-[44px] px-3.5 sm:px-4 py-2 rounded-full border border-champagne/40 text-champagne hover:bg-champagne hover:text-obsidian transition-colors shrink-0 cursor-pointer"
+                    className="glass-liquid-badge inline-flex items-center gap-2 min-h-[44px] px-3.5 sm:px-4 py-2 rounded-full text-champagne hover:border-champagne hover:text-ivory transition-colors shrink-0 cursor-pointer"
                   >
-                    <span className="font-mono text-[11px] tracking-[0.2em] uppercase">
+                    <span className="relative z-10 font-mono text-[11px] tracking-[0.2em] uppercase">
                       Close
                     </span>
-                    <X className="size-4" aria-hidden="true" />
+                    <X className="relative z-10 size-4" aria-hidden="true" />
                   </button>
                 </div>
               </div>

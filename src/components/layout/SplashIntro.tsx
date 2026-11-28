@@ -5,10 +5,7 @@ import {
   useReducedMotion,
   useSpring,
 } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
 import { MonogramMark } from '@/components/brand/Monogram';
-import { KineticLabel } from '@/components/motion/KineticLabel';
-import { MagneticButton } from '@/components/motion/MagneticButton';
 import { personalData } from '@/data/personal';
 import { useCanHoverFine } from '@/hooks/useMediaQuery';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
@@ -36,12 +33,18 @@ function getPurwokertoWibTime(): string {
 }
 
 /**
- * Warm Atelier Collector-Edition Intro Gate:
- * - Layered 10-step Lab tonal gradient canvas (`#211814` Warm Espresso blending Velvet Mocha
- *   `#2B1D17`, Warm Chestnut `#432F24`, Warm Cognac `#6E4F3A`, Caramel Bronze & Champagne glows).
- * - Curved architectural double hairline border (`rounded-[28px] sm:rounded-[38px] md:rounded-[48px]`).
- * - Bold sculptural `PORTFOLIO` typography (`font-bold`, interactive per-letter hover physics),
- *   engraved `BY AMDZ` subtitle, and Magnetic `ENTER` aperture release.
+ * Auto-Enter Cinematic Warm Atelier Intro Gate:
+ * - Zero manual `ENTER` button or `PRESS ENTER` prompt.
+ * - Preserves Warm Lab tonal depth, curved double hairline border (`28px / 38px / 48px`),
+ *   top `AMDZ` + `PURWOKERTO · WIB` bar, bold `PORTFOLIO`, and engraved `BY AMDZ`.
+ * - Executes a calibrated 3-phase auto-entry sequence (~2.2s total; ~0.5s reduced-motion):
+ *   1. Arrival (0.0s - 0.75s): curved frame reveal, masked PORTFOLIO letter rise with subtle
+ *      tracking settle, and engraved BY AMDZ rise.
+ *   2. Breathing Beat & Progress (0.75s - 1.65s): ~140px x 1.5px Champagne-to-Caramel progress
+ *      hairline (with silent click/tap/Esc/Enter quick-skip).
+ *   3. Fluid Split-Arch Aperture Reveal (1.65s - 2.25s): immediate pointer-events-none + single-shot
+ *      Lenis resume, gentle centerpiece upward dissolve, expanding curved frame, and asymmetric warm
+ *      dual curtains parting with a Champagne seam sheen.
  */
 export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -51,6 +54,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
   const [isExiting, setIsExiting] = useState(false);
   const [wibTime, setWibTime] = useState<string>(() => getPurwokertoWibTime());
   const exitingRef = useRef(false);
+  const scrollReleasedRef = useRef(false);
 
   const pointerRotRaw = useMotionValue(0);
   const compassRawX = useMotionValue(0);
@@ -65,12 +69,19 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
   const subtitleX = useSpring(subtitleRawX, springCfg);
   const subtitleY = useSpring(subtitleRawY, springCfg);
 
+  const releaseScrollOnce = useCallback(() => {
+    if (scrollReleasedRef.current) return;
+    scrollReleasedRef.current = true;
+    resumeScroll();
+  }, [resumeScroll]);
+
   const triggerEnter = useCallback(() => {
     if (exitingRef.current) return;
     exitingRef.current = true;
     setIsExiting(true);
+    releaseScrollOnce();
     onEnter();
-  }, [onEnter]);
+  }, [onEnter, releaseScrollOnce]);
 
   useEffect(() => {
     pauseScroll();
@@ -79,8 +90,11 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
       setWibTime(getPurwokertoWibTime());
     }, 15000);
 
+    const autoEnterDelayMs = prefersReducedMotion ? 320 : 1650;
+    const autoTimerId = window.setTimeout(triggerEnter, autoEnterDelayMs);
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
         e.preventDefault();
         triggerEnter();
       }
@@ -88,11 +102,12 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => {
+      window.clearTimeout(autoTimerId);
       window.clearInterval(clockId);
-      resumeScroll();
+      releaseScrollOnce();
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [pauseScroll, resumeScroll, triggerEnter]);
+  }, [pauseScroll, prefersReducedMotion, releaseScrollOnce, triggerEnter]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!enableCursorFx) return;
@@ -119,19 +134,20 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
       role="dialog"
       aria-modal="true"
       aria-label="Pembuka Portofolio AFLAN"
+      onClick={triggerEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       initial={{ opacity: 1 }}
       exit={
         prefersReducedMotion
-          ? { opacity: 0, transition: { duration: 0.2 } }
-          : { transition: { duration: 0.72 } }
+          ? { opacity: 0, transition: { duration: 0.18 } }
+          : { transition: { duration: 0.6 } }
       }
-      className={`fixed inset-0 h-dvh z-[9990] bg-transparent text-ivory overflow-hidden select-none ${
+      className={`fixed inset-0 h-dvh z-[9990] bg-transparent text-ivory overflow-hidden select-none cursor-pointer ${
         isExiting ? 'pointer-events-none' : ''
       }`}
     >
-      {/* Layered Warm Lab Dual-Panel Silk Aperture Split Panels */}
+      {/* Asymmetric Warm Lab Dual-Curtain Aperture Split Panels */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -140,33 +156,33 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           initial={{ y: '0%' }}
           exit={
             prefersReducedMotion
-              ? { opacity: 0, transition: { duration: 0.2 } }
+              ? { opacity: 0, transition: { duration: 0.18 } }
               : {
-                  y: '-102%',
-                  transition: { duration: 0.68, ease: EASE_LUXURY },
+                  y: '-104%',
+                  transition: { duration: 0.58, ease: EASE_LUXURY },
                 }
           }
           style={{
             background:
-              'radial-gradient(ellipse 85% 95% at 50% 100%, rgba(110,79,58,0.28) 0%, rgba(43,29,23,0.92) 55%, #211814 100%)',
+              'radial-gradient(ellipse 85% 95% at 50% 100%, rgba(110,79,58,0.3) 0%, rgba(43,29,23,0.92) 55%, #211814 100%)',
           }}
-          className="absolute top-0 inset-x-0 h-1/2 bg-[#211814] will-change-transform"
+          className="absolute top-0 inset-x-0 h-[52%] bg-[#211814] will-change-transform"
         />
         <motion.div
           initial={{ y: '0%' }}
           exit={
             prefersReducedMotion
-              ? { opacity: 0, transition: { duration: 0.2 } }
+              ? { opacity: 0, transition: { duration: 0.18 } }
               : {
-                  y: '102%',
-                  transition: { duration: 0.68, ease: EASE_LUXURY },
+                  y: '104%',
+                  transition: { duration: 0.58, ease: EASE_LUXURY },
                 }
           }
           style={{
             background:
-              'radial-gradient(ellipse 85% 95% at 50% 0%, rgba(67,47,36,0.45) 0%, rgba(43,29,23,0.94) 55%, #211814 100%)',
+              'radial-gradient(ellipse 85% 95% at 50% 0%, rgba(67,47,36,0.46) 0%, rgba(43,29,23,0.94) 55%, #211814 100%)',
           }}
-          className="absolute bottom-0 inset-x-0 h-1/2 bg-[#211814] will-change-transform"
+          className="absolute bottom-0 inset-x-0 h-[50%] bg-[#211814] will-change-transform"
         />
         <motion.div
           initial={{ scaleX: 0, opacity: 0 }}
@@ -175,11 +191,11 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
               ? { opacity: 0 }
               : {
                   scaleX: [0, 1, 1],
-                  opacity: [0, 0.9, 0],
-                  transition: { duration: 0.52, ease: EASE_LUXURY },
+                  opacity: [0, 0.95, 0],
+                  transition: { duration: 0.46, ease: EASE_LUXURY },
                 }
           }
-          className="absolute top-1/2 inset-x-0 -translate-y-1/2 h-px bg-champagne/45 origin-center will-change-[transform,opacity]"
+          className="absolute top-[51%] inset-x-0 -translate-y-1/2 h-px bg-linear-to-r from-transparent via-champagne/80 to-transparent origin-center will-change-[transform,opacity]"
         />
       </div>
 
@@ -191,9 +207,9 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
             ? { opacity: 0, transition: { duration: 0.16 } }
             : {
                 opacity: 0,
-                scale: 0.96,
-                y: -10,
-                transition: { duration: 0.24, ease: EASE_LUXURY },
+                scale: 1.03,
+                y: -18,
+                transition: { duration: 0.28, ease: EASE_LUXURY },
               }
         }
         className="relative z-10 h-full w-full flex flex-col items-center justify-between px-7 sm:px-11 md:px-16 py-9 sm:py-12 md:py-14 will-change-[transform,opacity]"
@@ -234,14 +250,26 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
         </div>
 
         {/* Curved Architectural Double Hairline Frame */}
-        <div
+        <motion.div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-3 sm:inset-5 md:inset-7 rounded-[28px] sm:rounded-[38px] md:rounded-[48px] border border-champagne/30 overflow-hidden"
+          initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.985 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={
+            prefersReducedMotion
+              ? { opacity: 0 }
+              : {
+                  opacity: 0,
+                  scale: 1.05,
+                  transition: { duration: 0.38, ease: EASE_LUXURY },
+                }
+          }
+          transition={{ duration: 0.55, ease: EASE_LUXURY }}
+          className="pointer-events-none absolute inset-3 sm:inset-5 md:inset-7 rounded-[28px] sm:rounded-[38px] md:rounded-[48px] border border-champagne/30 overflow-hidden will-change-[transform,opacity]"
         >
           <span className="absolute top-0 inset-x-10 h-px bg-linear-to-r from-[#8E6B4B]/20 via-[#DFC8A6]/70 to-[#B98D61]/40" />
           <span className="absolute bottom-0 inset-x-10 h-px bg-linear-to-r from-[#B98D61]/40 via-[#DFC8A6]/60 to-[#8E6B4B]/20" />
           <div className="absolute inset-[6px] rounded-[23px] sm:rounded-[33px] md:rounded-[43px] border border-champagne/12" />
-        </div>
+        </motion.div>
 
         {/* Fine Architectural Meridian Crosshairs */}
         <div
@@ -272,7 +300,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
           </span>
         </motion.div>
 
-        {/* Centered Focal Seal + Counter-Rotating Compass Rings */}
+        {/* Centered Focal Seal + Counter-Rotating Compass Rings + Auto Progress */}
         <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto px-1 max-w-full">
           <motion.div
             aria-hidden="true"
@@ -339,53 +367,64 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
             aria-label="Portfolio by AMDZ"
             className="relative z-10 flex flex-col items-center max-w-full"
           >
-            <span
+            <motion.span
               aria-hidden="true"
+              initial={
+                prefersReducedMotion
+                  ? false
+                  : { letterSpacing: '0.24em' }
+              }
+              animate={{ letterSpacing: '0.16em' }}
+              transition={{ duration: 0.65, ease: EASE_LUXURY }}
               className="inline-flex items-baseline justify-center py-2 px-1 -my-2 max-w-full"
             >
               {PORTFOLIO_LETTERS.map((char, idx) => (
-                <motion.span
+                <span
                   key={`${char}-${idx}`}
-                  initial={
-                    prefersReducedMotion ? false : { opacity: 0, y: 14 }
-                  }
-                  animate={{ opacity: 1, y: 0 }}
-                  whileHover={
-                    enableCursorFx
-                      ? {
-                          y: -6,
-                          rotate: idx % 2 === 0 ? -2.5 : 2.5,
-                          scale: 1.04,
-                          transition: {
-                            type: 'spring',
-                            stiffness: 280,
-                            damping: 20,
-                            mass: 0.48,
-                          },
-                        }
-                      : undefined
-                  }
-                  transition={{
-                    duration: 0.46,
-                    delay: 0.06 + idx * 0.024,
-                    ease: EASE_LUXURY,
-                  }}
-                  className={`inline-block font-serif font-bold uppercase text-[clamp(2.5rem,6.4vw,5.4rem)] tracking-[0.14em] sm:tracking-[0.18em] leading-[1.12] px-[0.02em] aflan-title-shimmer cursor-default will-change-transform ${
-                    enableCursorFx
-                      ? 'transition-[filter] duration-300 hover:brightness-125 hover:drop-shadow-[0_6px_16px_rgba(246,241,233,0.34)]'
-                      : ''
-                  }`}
+                  className="inline-block overflow-hidden py-1 -my-1"
                 >
-                  {char}
-                </motion.span>
+                  <motion.span
+                    initial={
+                      prefersReducedMotion ? false : { opacity: 0, y: '115%' }
+                    }
+                    animate={{ opacity: 1, y: '0%' }}
+                    whileHover={
+                      enableCursorFx
+                        ? {
+                            y: -6,
+                            rotate: idx % 2 === 0 ? -2.5 : 2.5,
+                            scale: 1.04,
+                            transition: {
+                              type: 'spring',
+                              stiffness: 280,
+                              damping: 20,
+                              mass: 0.48,
+                            },
+                          }
+                        : undefined
+                    }
+                    transition={{
+                      duration: 0.52,
+                      delay: 0.06 + idx * 0.028,
+                      ease: EASE_LUXURY,
+                    }}
+                    className={`inline-block font-serif font-bold uppercase text-[clamp(2.5rem,6.4vw,5.4rem)] leading-[1.12] px-[0.02em] aflan-title-shimmer cursor-default will-change-transform ${
+                      enableCursorFx
+                        ? 'transition-[filter] duration-300 hover:brightness-125 hover:drop-shadow-[0_6px_16px_rgba(246,241,233,0.34)]'
+                        : ''
+                    }`}
+                  >
+                    {char}
+                  </motion.span>
+                </span>
               ))}
-            </span>
+            </motion.span>
 
             <motion.span
               aria-hidden="true"
               initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.48, delay: 0.16, ease: EASE_LUXURY }}
+              transition={{ duration: 0.44, delay: 0.34, ease: EASE_LUXURY }}
               style={
                 enableCursorFx ? { x: subtitleX, y: subtitleY } : undefined
               }
@@ -416,52 +455,32 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
             </motion.span>
           </h1>
 
-          <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.44, delay: 0.22, ease: EASE_LUXURY }}
-            className="relative z-10 mt-9 sm:mt-11"
+          {/* Phase 2 Precision Progress Hairline */}
+          <div
+            aria-hidden="true"
+            className="relative z-10 mt-8 sm:mt-9 w-[140px] h-[1.5px] rounded-full bg-champagne/18 overflow-hidden"
           >
-            <MagneticButton maxPull={6}>
-              <div className="relative inline-flex items-center justify-center">
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -inset-1.5 rounded-full border border-champagne/32 aflan-breath-halo"
-                />
-                <button
-                  type="button"
-                  onClick={triggerEnter}
-                  autoFocus
-                  data-cursor-label="ENTER"
-                  className="group relative overflow-hidden inline-flex items-center justify-center gap-3 min-h-[48px] px-9 py-3.5 rounded-full border border-champagne/55 bg-[#2A1E18]/85 text-ivory font-mono text-xs uppercase tracking-[0.24em] hover:bg-champagne hover:border-champagne hover:text-obsidian active:scale-[0.96] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 aflan-enter-shimmer bg-gradient-to-r from-transparent via-champagne/28 to-transparent"
-                  />
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] bg-gradient-to-r from-transparent via-ivory/25 to-transparent motion-reduce:hidden"
-                  />
-                  <KineticLabel className="relative z-10">ENTER</KineticLabel>
-                  <ArrowUpRight
-                    className="relative z-10 size-4 text-champagne transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-obsidian group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
-                    aria-hidden="true"
-                  />
-                </button>
-              </div>
-            </MagneticButton>
-          </motion.div>
+            <motion.span
+              initial={prefersReducedMotion ? { scaleX: 1 } : { scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{
+                duration: prefersReducedMotion ? 0.25 : 1.42,
+                delay: prefersReducedMotion ? 0 : 0.22,
+                ease: EASE_LUXURY,
+              }}
+              className="block h-full w-full origin-left bg-linear-to-r from-brass via-champagne to-ivory will-change-transform"
+            />
+          </div>
         </div>
 
-        {/* Minimalist Bottom Cue */}
+        {/* Calm Atelier Micro-Signature (Replaces manual button & prompt) */}
         <motion.div
           initial={prefersReducedMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.44, delay: 0.26, ease: EASE_LUXURY }}
+          transition={{ duration: 0.44, delay: 0.28, ease: EASE_LUXURY }}
           className="relative z-10 font-mono text-[10px] tracking-[0.28em] uppercase text-taupe/85"
         >
-          PRESS ENTER
+          AFLAN · DOSSIER
         </motion.div>
       </motion.div>
     </motion.div>
