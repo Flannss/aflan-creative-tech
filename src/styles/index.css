@@ -180,24 +180,25 @@
 }
 
 @layer components {
-  /* Tier A: High-Refraction Sculpted Bezel (Dark Mode — Frosted Warm Calibration) */
+  /* Tier A: High-Refraction Sculpted Bezel (Dark Mode — Frosted Warm Satin Calibration) */
   .glass-liquid-lens {
     position: relative;
     background: linear-gradient(
       155deg,
-      rgba(62, 46, 36, 0.64) 0%,
-      rgba(36, 26, 20, 0.6) 48%,
-      rgba(28, 20, 16, 0.68) 100%
+      rgba(66, 49, 38, 0.62) 0%,
+      rgba(36, 26, 20, 0.58) 48%,
+      rgba(28, 20, 16, 0.66) 100%
     );
-    -webkit-backdrop-filter: blur(26px) saturate(175%) brightness(1.08);
-    backdrop-filter: blur(26px) saturate(175%) brightness(1.08);
+    -webkit-backdrop-filter: blur(26px) saturate(170%) brightness(1.08);
+    backdrop-filter: blur(26px) saturate(170%) brightness(1.08);
     box-shadow:
-      inset 0 2px 3px rgba(255, 250, 242, 0.34),
-      inset 1px 0 1.5px rgba(246, 241, 233, 0.2),
-      inset 0 -3px 8px rgba(185, 141, 97, 0.22),
+      inset 0 1.5px 2px rgba(255, 250, 242, 0.34),
+      inset 0 0 24px rgba(246, 241, 233, 0.05),
+      inset 1px 0 1.5px rgba(246, 241, 233, 0.18),
+      inset 0 -2px 6px rgba(185, 141, 97, 0.22),
       inset -1px 0 2px rgba(223, 200, 166, 0.14),
       0 14px 36px rgba(10, 7, 5, 0.42),
-      0 1px 2px rgba(255, 250, 242, 0.12);
+      0 1px 2px rgba(255, 250, 242, 0.1);
   }
 
   .glass-liquid-lens::before {
@@ -208,10 +209,10 @@
     padding: 1.25px;
     background: linear-gradient(
       135deg,
-      rgba(255, 250, 242, 0.62) 0%,
+      rgba(255, 250, 242, 0.58) 0%,
       rgba(223, 200, 166, 0.14) 38%,
       rgba(185, 141, 97, 0.08) 62%,
-      rgba(246, 241, 233, 0.42) 100%
+      rgba(246, 241, 233, 0.38) 100%
     );
     -webkit-mask:
       linear-gradient(#fff 0 0) content-box,
@@ -231,13 +232,14 @@
     background: linear-gradient(
       155deg,
       rgba(252, 248, 241, 0.84) 0%,
-      rgba(240, 232, 218, 0.72) 52%,
+      rgba(241, 233, 219, 0.74) 52%,
       rgba(247, 241, 232, 0.82) 100%
     );
     -webkit-backdrop-filter: blur(26px) saturate(160%) brightness(1.03);
     backdrop-filter: blur(26px) saturate(160%) brightness(1.03);
     box-shadow:
       inset 0 2px 3px rgba(255, 255, 255, 0.9),
+      inset 0 0 22px rgba(255, 253, 249, 0.2),
       inset 1px 0 1.5px rgba(255, 253, 249, 0.72),
       inset 0 -3px 8px rgba(142, 107, 75, 0.2),
       inset -1px 0 2px rgba(142, 107, 75, 0.14),
@@ -273,17 +275,13 @@
   /* Compact Floating Pill Badge (Tier A Micro Variant, non-blurred parents only) */
   .glass-liquid-badge {
     position: relative;
-    background: linear-gradient(
-      155deg,
-      rgba(56, 42, 33, 0.68) 0%,
-      rgba(38, 28, 22, 0.66) 52%,
-      rgba(28, 20, 16, 0.72) 100%
-    );
+    background: rgba(38, 28, 22, 0.66);
     -webkit-backdrop-filter: blur(16px) saturate(165%) brightness(1.06);
     backdrop-filter: blur(16px) saturate(165%) brightness(1.06);
-    border: 1px solid rgba(255, 250, 242, 0.3);
+    border: 1px solid rgba(255, 250, 242, 0.28);
     box-shadow:
       inset 0 1px 1.5px rgba(255, 250, 242, 0.28),
+      inset 0 0 12px rgba(246, 241, 233, 0.04),
       inset 0 -1.5px 3px rgba(185, 141, 97, 0.2),
       0 8px 22px rgba(12, 8, 6, 0.36);
   }
@@ -291,17 +289,13 @@
   /* Tier B: Frosted Specular Editorial Surface (Dark Mode) */
   .glass-prism-card {
     position: relative;
-    background: linear-gradient(
-      150deg,
-      rgba(56, 41, 31, 0.66) 0%,
-      rgba(40, 29, 22, 0.64) 55%,
-      rgba(30, 22, 17, 0.7) 100%
-    );
+    background: rgba(40, 29, 22, 0.64);
     -webkit-backdrop-filter: blur(20px) saturate(155%) brightness(1.05);
     backdrop-filter: blur(20px) saturate(155%) brightness(1.05);
     border: 1px solid rgba(223, 200, 166, 0.22);
     box-shadow:
       inset 0 1px 0 rgba(255, 249, 240, 0.3),
+      inset 0 0 18px rgba(246, 241, 233, 0.04),
       inset 0 -1px 0 rgba(185, 141, 97, 0.16),
       0 16px 40px rgba(12, 8, 6, 0.32);
   }
@@ -331,17 +325,13 @@
   /* Tier B: Frosted Specular Editorial Surface (Light Mode) */
   .glass-prism-card-light {
     position: relative;
-    background: linear-gradient(
-      150deg,
-      rgba(253, 250, 245, 0.84) 0%,
-      rgba(248, 243, 235, 0.78) 55%,
-      rgba(242, 235, 223, 0.82) 100%
-    );
-    -webkit-backdrop-filter: blur(20px) saturate(150%) brightness(1.02);
-    backdrop-filter: blur(20px) saturate(150%) brightness(1.02);
+    background: rgba(248, 243, 235, 0.78);
+    -webkit-backdrop-filter: blur(20px) saturate(155%) brightness(1.02);
+    backdrop-filter: blur(20px) saturate(155%) brightness(1.02);
     border: 1px solid rgba(142, 107, 75, 0.24);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.85),
+      inset 0 0 16px rgba(255, 253, 249, 0.16),
       inset 0 -1px 0 rgba(142, 107, 75, 0.14),
       0 14px 34px rgba(33, 24, 20, 0.09);
   }
@@ -379,12 +369,7 @@
   /* Tier C: Deep Smoked Refraction Glass (Modals, Dialogs & Lightbox Chrome) */
   .glass-atelier-sheet {
     position: relative;
-    background: linear-gradient(
-      160deg,
-      rgba(36, 26, 20, 0.86) 0%,
-      rgba(26, 19, 15, 0.84) 60%,
-      rgba(21, 15, 12, 0.88) 100%
-    );
+    background: rgba(26, 19, 15, 0.84);
     -webkit-backdrop-filter: blur(28px) saturate(160%) brightness(1.03);
     backdrop-filter: blur(28px) saturate(160%) brightness(1.03);
     border: 1px solid rgba(223, 200, 166, 0.24);
@@ -409,11 +394,19 @@
   }
 
   @media (max-width: 767px) {
-    .glass-liquid-lens,
-    .glass-liquid-lens-light,
+    .glass-liquid-lens {
+      -webkit-backdrop-filter: blur(14px) saturate(155%) brightness(1.06);
+      backdrop-filter: blur(14px) saturate(155%) brightness(1.06);
+    }
+
+    .glass-liquid-lens-light {
+      -webkit-backdrop-filter: blur(14px) saturate(145%) brightness(1.02);
+      backdrop-filter: blur(14px) saturate(145%) brightness(1.02);
+    }
+
     .glass-atelier-sheet {
-      -webkit-backdrop-filter: blur(14px) saturate(150%);
-      backdrop-filter: blur(14px) saturate(150%);
+      -webkit-backdrop-filter: blur(16px) saturate(155%) brightness(1.02);
+      backdrop-filter: blur(16px) saturate(155%) brightness(1.02);
     }
 
     .glass-prism-card,
@@ -423,8 +416,8 @@
     }
 
     .glass-liquid-badge {
-      -webkit-backdrop-filter: blur(10px) saturate(145%);
-      backdrop-filter: blur(10px) saturate(145%);
+      -webkit-backdrop-filter: blur(10px) saturate(150%);
+      backdrop-filter: blur(10px) saturate(150%);
     }
   }
 
