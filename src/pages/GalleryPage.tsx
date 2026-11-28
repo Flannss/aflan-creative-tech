@@ -776,10 +776,10 @@ export const GalleryPage: React.FC = () => {
                     ease: EASE_LUXURY,
                   }}
                   onClick={(e) => e.stopPropagation()}
-                  className="glass-figma relative w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden rounded-2xl text-ivory"
+                  className="glass-atelier-sheet relative w-full max-w-5xl max-h-[90vh] flex flex-col overflow-hidden rounded-2xl text-ivory"
                 >
-                  {/* Top Toolbar */}
-                  <div className="glass-liquid shrink-0 flex flex-wrap items-center justify-between gap-2.5 px-4 sm:px-6 py-3.5 border-b border-champagne/18">
+                  {/* Top Toolbar (Zero-Blur Child Rim Inside Tier C Modal) */}
+                  <div className="glass-inner-rim border-x-0 border-t-0 shrink-0 flex flex-wrap items-center justify-between gap-2.5 px-4 sm:px-6 py-3.5 border-b border-champagne/18">
                     <span className="relative z-10 font-mono text-xs tracking-[0.22em] uppercase text-champagne tabular-nums">
                       {String(lightboxIndex + 1).padStart(2, '0')} /{' '}
                       {String(filteredItems.length).padStart(2, '0')} · {activeItem.plateNumber}
@@ -789,7 +789,7 @@ export const GalleryPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setFilmGrainEnabled((prev) => !prev)}
-                        className="glass-liquid-badge inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-[36px] px-3 sm:px-3.5 py-2 rounded-full text-champagne font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne active:scale-95 transition-all cursor-pointer"
+                        className="glass-inner-rim inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-[36px] px-3 sm:px-3.5 py-2 rounded-full text-champagne font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne active:scale-95 transition-all cursor-pointer"
                       >
                         <Sparkles className="relative z-10 size-3.5" aria-hidden="true" />
                         <span className="relative z-10">Grain: {filmGrainEnabled ? 'ON' : 'OFF'}</span>
@@ -797,7 +797,7 @@ export const GalleryPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setShowCaptions((prev) => !prev)}
-                        className="glass-liquid-badge inline-flex items-center gap-2 min-h-[44px] sm:min-h-[36px] px-3 sm:px-3.5 py-2 rounded-full text-ivory font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne active:scale-95 transition-all cursor-pointer"
+                        className="glass-inner-rim inline-flex items-center gap-2 min-h-[44px] sm:min-h-[36px] px-3 sm:px-3.5 py-2 rounded-full text-ivory font-mono text-[10px] tracking-[0.16em] uppercase hover:border-champagne active:scale-95 transition-all cursor-pointer"
                       >
                         {showCaptions ? (
                           <>
@@ -832,7 +832,7 @@ export const GalleryPage: React.FC = () => {
                         type="button"
                         onClick={() => stepLightbox(-1)}
                         aria-label="Pelat sebelumnya"
-                        className="glass-liquid-badge hidden sm:flex shrink-0 size-11 rounded-full items-center justify-center text-champagne hover:border-champagne hover:text-ivory active:scale-95 transition-all cursor-pointer"
+                        className="glass-inner-rim hidden sm:flex shrink-0 size-11 rounded-full items-center justify-center text-champagne hover:border-champagne hover:text-ivory active:scale-95 transition-all cursor-pointer"
                       >
                         <ChevronLeft className="relative z-10 size-5" aria-hidden="true" />
                       </button>
@@ -890,7 +890,7 @@ export const GalleryPage: React.FC = () => {
                         type="button"
                         onClick={() => stepLightbox(1)}
                         aria-label="Pelat berikutnya"
-                        className="glass-liquid-badge hidden sm:flex shrink-0 size-11 rounded-full items-center justify-center text-champagne hover:border-champagne hover:text-ivory active:scale-95 transition-all cursor-pointer"
+                        className="glass-inner-rim hidden sm:flex shrink-0 size-11 rounded-full items-center justify-center text-champagne hover:border-champagne hover:text-ivory active:scale-95 transition-all cursor-pointer"
                       >
                         <ChevronRight className="relative z-10 size-5" aria-hidden="true" />
                       </button>
@@ -906,7 +906,7 @@ export const GalleryPage: React.FC = () => {
                             type="button"
                             onClick={() => stepLightbox(-1)}
                             aria-label="Pelat sebelumnya"
-                            className="glass-liquid-badge inline-flex items-center gap-1.5 min-h-[44px] px-4 py-2 rounded-full text-champagne font-mono text-[10px] tracking-[0.18em] uppercase active:scale-95 transition-all"
+                            className="glass-inner-rim inline-flex items-center gap-1.5 min-h-[44px] px-4 py-2 rounded-full text-champagne font-mono text-[10px] tracking-[0.18em] uppercase active:scale-95 transition-all"
                           >
                             <ChevronLeft className="relative z-10 size-4" aria-hidden="true" />
                             <span className="relative z-10">Sebelumnya</span>
@@ -915,7 +915,7 @@ export const GalleryPage: React.FC = () => {
                             type="button"
                             onClick={() => stepLightbox(1)}
                             aria-label="Pelat berikutnya"
-                            className="glass-liquid-badge inline-flex items-center gap-1.5 min-h-[44px] px-4 py-2 rounded-full text-champagne font-mono text-[10px] tracking-[0.18em] uppercase active:scale-95 transition-all"
+                            className="glass-inner-rim inline-flex items-center gap-1.5 min-h-[44px] px-4 py-2 rounded-full text-champagne font-mono text-[10px] tracking-[0.18em] uppercase active:scale-95 transition-all"
                           >
                             <span className="relative z-10">Berikutnya</span>
                             <ChevronRight className="relative z-10 size-4" aria-hidden="true" />

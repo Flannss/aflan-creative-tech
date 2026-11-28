@@ -21,9 +21,9 @@ interface SegmentedControlProps<T extends string> {
 }
 
 /**
- * Horizontal-scrollable luxury segmented control with scroll-snap ergonomics on mobile,
- * `>= 44px` comfortable touch targets on primary bars, and a beveled champagne active pill.
- * Zero negative z-indexes: uses `relative isolate`, `z-0` pill, and `relative z-10` label.
+ * Horizontal-scrollable luxury segmented control backed by Tier A `.glass-liquid-lens`
+ * (`.glass-liquid-lens-light` on light sections), scroll-snap ergonomics on mobile,
+ * `>= 44px` touch targets, and strict `relative isolate` + `z-0` pill + `relative z-10` label.
  */
 export function SegmentedControl<T extends string>({
   options,
@@ -37,11 +37,7 @@ export function SegmentedControl<T extends string>({
   className = '',
 }: SegmentedControlProps<T>) {
   const prefersReducedMotion = useReducedMotion();
-
-  const trackClass =
-    surface === 'dark'
-      ? 'bg-[#231915]/90 border-[#DFC8A6]/25'
-      : 'bg-[#211814] border-[#211814]/25 shadow-xs';
+  const isLight = surface === 'light';
 
   const padClass =
     size === 'sm'
@@ -86,7 +82,9 @@ export function SegmentedControl<T extends string>({
         role={roleMode}
         aria-label={ariaLabel}
         onKeyDown={handleKeyDown}
-        className={`relative isolate inline-flex flex-nowrap items-center gap-1.5 p-1.5 rounded-full border w-max whitespace-nowrap ${trackClass}`}
+        className={`relative isolate inline-flex flex-nowrap items-center gap-1.5 p-1.5 rounded-full w-max whitespace-nowrap ${
+          isLight ? 'glass-liquid-lens-light' : 'glass-liquid-lens'
+        }`}
       >
         {options.map((option) => {
           const active = option.value === value;
@@ -105,10 +103,14 @@ export function SegmentedControl<T extends string>({
               type="button"
               onClick={() => onChange(option.value)}
               {...tabProps}
-              className={`relative isolate snap-start shrink-0 inline-flex items-center gap-1.5 rounded-full font-mono uppercase whitespace-nowrap transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne ${padClass} ${
-                active
-                  ? 'text-[#211814] font-medium'
-                  : 'text-[#F6F1E9]/85 hover:text-[#DFC8A6]'
+              className={`relative z-10 isolate snap-start shrink-0 inline-flex items-center gap-1.5 rounded-full font-mono uppercase whitespace-nowrap transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne ${padClass} ${
+                isLight
+                  ? active
+                    ? 'text-[#F6F1E9] font-medium'
+                    : 'text-[#3E2D20] hover:text-[#211814]'
+                  : active
+                    ? 'text-[#211814] font-medium'
+                    : 'text-[#F6F1E9]/90 hover:text-[#DFC8A6]'
               }`}
             >
               {active && (
@@ -116,14 +118,24 @@ export function SegmentedControl<T extends string>({
                   layoutId={layoutId}
                   aria-hidden="true"
                   transition={prefersReducedMotion ? { duration: 0 } : SPRING_NAV_PILL}
-                  className="pointer-events-none absolute inset-0 z-0 rounded-full bg-[#DFC8A6] shadow-[inset_0_1px_0_rgba(255,255,255,0.42),0_4px_14px_rgba(12,8,6,0.26)]"
+                  className={`pointer-events-none absolute inset-0 z-0 rounded-full ${
+                    isLight
+                      ? 'bg-[#211814] shadow-[inset_0_1px_0_rgba(223,200,166,0.28),0_4px_14px_rgba(33,24,20,0.22)]'
+                      : 'bg-[#DFC8A6] shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_4px_14px_rgba(12,8,6,0.26)]'
+                  }`}
                 />
               )}
               <span className="relative z-10 whitespace-nowrap">{option.label}</span>
               {option.badge !== undefined && (
                 <span
                   className={`relative z-10 text-[10px] tabular-nums whitespace-nowrap ${
-                    active ? 'text-[#211814]/80' : 'text-[#DFC8A6]/85'
+                    isLight
+                      ? active
+                        ? 'text-[#DFC8A6]/90'
+                        : 'text-[#6E4F3A]'
+                      : active
+                        ? 'text-[#211814]/80'
+                        : 'text-[#DFC8A6]/90'
                   }`}
                 >
                   ({option.badge})

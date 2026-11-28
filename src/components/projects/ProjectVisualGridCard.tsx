@@ -41,6 +41,13 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
   const hasWarmGlaze =
     project.slug === 'kompresor-media' ||
     project.slug === 'somasii-lost-and-found';
+  const statusChip = project.liveUrl
+    ? 'LIVE APP'
+    : project.verificationState.includes('NDA')
+      ? 'NDA SPEC'
+      : project.verificationState.includes('Academic')
+        ? 'ACADEMIC'
+        : 'LIVE WORK';
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!canHoverFine || prefersReducedMotion) return;
@@ -90,6 +97,9 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
           data-project-preview
           className="relative aspect-[16/10] overflow-hidden border-b border-champagne/15"
         >
+          <span className="glass-liquid-badge pointer-events-none absolute top-3.5 left-3.5 z-20 px-2.5 py-1 rounded-full font-mono text-[9px] tracking-[0.16em] uppercase text-ivory">
+            {statusChip}
+          </span>
           <ApertureFrame className="w-full h-full">
             {project.previewImage ? (
               <div

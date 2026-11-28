@@ -186,9 +186,10 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   const navY = useMotionValue(0);
   const menuX = useMotionValue(0);
   const menuY = useMotionValue(0);
-  const navDarkSheen = useMotionTemplate`radial-gradient(150px circle at ${navX}px ${navY}px, rgba(246,241,233,0.14) 0%, rgba(223,200,166,0.06) 44%, transparent 72%)`;
-  const navLightSheen = useMotionTemplate`radial-gradient(150px circle at ${navX}px ${navY}px, rgba(255,255,255,0.52) 0%, rgba(223,200,166,0.14) 44%, transparent 72%)`;
-  const menuDarkSheen = useMotionTemplate`radial-gradient(90px circle at ${menuX}px ${menuY}px, rgba(246,241,233,0.16) 0%, rgba(223,200,166,0.07) 48%, transparent 74%)`;
+  const navDarkSheen = useMotionTemplate`radial-gradient(170px circle at ${navX}px ${navY}px, rgba(255,250,242,0.24) 0%, rgba(223,200,166,0.12) 44%, transparent 72%)`;
+  const navLightSheen = useMotionTemplate`radial-gradient(170px circle at ${navX}px ${navY}px, rgba(255,255,255,0.68) 0%, rgba(223,200,166,0.20) 44%, transparent 72%)`;
+  const menuDarkSheen = useMotionTemplate`radial-gradient(95px circle at ${menuX}px ${menuY}px, rgba(255,250,242,0.24) 0%, rgba(223,200,166,0.12) 46%, transparent 74%)`;
+  const menuLightSheen = useMotionTemplate`radial-gradient(95px circle at ${menuX}px ${menuY}px, rgba(255,255,255,0.68) 0%, rgba(223,200,166,0.20) 46%, transparent 74%)`;
 
   const menuOpen = menuOpenPath === location.pathname;
   const openMenu = () => {
@@ -291,11 +292,11 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
           isLightHeaderRoute
             ? scrolled
-              ? 'bg-ivory/[0.86] border-b border-espresso/15 py-3 shadow-[0_10px_30px_rgba(33,24,20,0.08)]'
-              : 'bg-ivory/[0.80] border-b border-espresso/10 py-4 sm:py-5'
+              ? 'bg-ivory/[0.78] border-b border-espresso/12 py-3 shadow-[0_10px_30px_rgba(33,24,20,0.07)]'
+              : 'bg-ivory/[0.70] border-b border-espresso/8 py-4 sm:py-5'
             : scrolled
-              ? 'bg-[#231915]/[0.82] border-b border-champagne/20 py-3 shadow-[0_12px_36px_rgba(20,14,11,0.34)]'
-              : 'bg-[#211814]/[0.72] border-b border-champagne/12 py-4 sm:py-5'
+              ? 'bg-[#231915]/[0.74] border-b border-champagne/18 py-3 shadow-[0_12px_36px_rgba(20,14,11,0.30)]'
+              : 'bg-[#211814]/[0.58] border-b border-champagne/10 py-4 sm:py-5'
         }`}
       >
         <div className="max-w-[1440px] mx-auto px-5 sm:px-7 md:px-10 lg:px-12 flex items-center justify-between gap-3 sm:gap-4">
@@ -326,9 +327,15 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
             }}
             onMouseLeave={() => setNavHoverPath(null)}
             className={`group/pill relative isolate overflow-hidden hidden xl:flex items-center gap-0.5 2xl:gap-1 px-2 2xl:px-2.5 py-1.5 rounded-full ${
-              isLightHeaderRoute ? 'glass-dynamic-pill-light' : 'glass-dynamic-pill'
+              isLightHeaderRoute ? 'glass-liquid-lens-light' : 'glass-liquid-lens'
             }`}
           >
+            {!prefersReducedMotion && (
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-y-0 left-0 z-0 w-24 rounded-full bg-linear-to-r from-transparent via-ivory/25 to-transparent aflan-lens-glint"
+              />
+            )}
             {enableSheenFx && (
               <motion.span
                 aria-hidden="true"
@@ -502,14 +509,20 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
               data-cursor={menuOpen ? 'CLOSE' : 'MENU'}
               className={`group group/menu relative isolate overflow-hidden inline-flex items-center gap-2.5 min-h-[44px] px-4.5 sm:px-5 py-2 rounded-full shrink-0 transition-all duration-300 cursor-pointer ${
                 isLightHeaderRoute
-                  ? 'border border-[#211814]/30 bg-[#211814]/88 backdrop-blur-[14px] text-[#F6F1E9] shadow-[inset_0_1.5px_1px_rgba(246,241,233,0.28),inset_0_-1.5px_2px_rgba(185,141,97,0.22),0_10px_24px_rgba(33,24,20,0.18)] hover:bg-[#33241C]'
-                  : 'glass-dynamic-pill text-[#F6F1E9] hover:border-champagne/55'
+                  ? 'glass-liquid-lens-light text-[#211814] font-medium hover:text-[#3E2D20]'
+                  : 'glass-liquid-lens text-[#F6F1E9] hover:text-champagne'
               }`}
             >
+              {!prefersReducedMotion && (
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-y-0 left-0 z-0 w-16 rounded-full bg-linear-to-r from-transparent via-ivory/28 to-transparent aflan-lens-glint"
+                />
+              )}
               {enableSheenFx && (
                 <motion.span
                   aria-hidden="true"
-                  style={{ background: menuDarkSheen }}
+                  style={{ background: isLightHeaderRoute ? menuLightSheen : menuDarkSheen }}
                   className="pointer-events-none absolute inset-0 z-0 rounded-full opacity-0 group-hover/menu:opacity-100 transition-opacity duration-300"
                 />
               )}

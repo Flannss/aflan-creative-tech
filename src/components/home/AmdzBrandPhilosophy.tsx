@@ -99,7 +99,7 @@ export const AmdzBrandPhilosophy: React.FC = () => {
             onMouseEnter={() => setPlateHovered(true)}
             onMouseLeave={() => setPlateHovered(false)}
             aria-label="Ganti diagram filosofi monogram AMDZ"
-            className="group relative w-full text-left text-ivory rounded-2xl border border-champagne/30 hover:border-champagne/65 bg-linear-to-br from-[#33241C] via-[#432F24] to-[#211814] p-6 sm:p-8 transition-colors duration-500 overflow-hidden cursor-pointer shadow-[0_24px_60px_rgba(0,0,0,0.28)] focus-visible:outline-2 focus-visible:outline-champagne"
+            className="glass-prism-card group relative w-full text-left text-ivory rounded-2xl hover:border-champagne/60 p-6 sm:p-8 transition-colors duration-500 overflow-hidden cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne"
           >
             {enableSpotlight && (
               <motion.div

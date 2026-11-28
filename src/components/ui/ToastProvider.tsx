@@ -78,7 +78,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
                       : { opacity: 0, y: -14, scale: 0.97 }
                   }
                   transition={{ duration: 0.38, ease: EASE_LUXURY }}
-                  className="glass-liquid pointer-events-auto relative overflow-hidden max-w-md w-full sm:w-auto min-w-[240px] rounded-2xl text-ivory px-4 sm:px-5 py-3.5"
+                  className="glass-liquid-lens pointer-events-auto relative overflow-hidden max-w-md w-full sm:w-auto min-w-[240px] rounded-2xl text-ivory px-4 sm:px-5 py-3.5"
                 >
                   <div className="relative z-10 flex items-center gap-3">
                     <span

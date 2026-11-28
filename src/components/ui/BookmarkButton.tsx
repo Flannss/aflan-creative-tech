@@ -10,19 +10,22 @@ interface BookmarkButtonProps {
   projectTitle: string;
   variant?: 'icon' | 'pill';
   surface?: 'dark' | 'light';
+  /** Set true when mounted inside a glass overlay container so no nested backdrop-filter is stacked. */
+  noBlur?: boolean;
   className?: string;
 }
 
 /**
  * Tactile dossier bookmark button persisted to localStorage.
- * Uses selective optical liquid-glass badge chrome on dark unsaved state while preserving
- * solid Champagne contrast when saved.
+ * Uses Tier A `.glass-liquid-badge` when floating over sharp cards, or `.glass-inner-rim`
+ * when placed inside an already-blurred overlay container (anti-nested-blur).
  */
 export const BookmarkButton: React.FC<BookmarkButtonProps> = ({
   slug,
   projectTitle,
   variant = 'icon',
   surface = 'dark',
+  noBlur = false,
   className = '',
 }) => {
   const { isBookmarked, toggleBookmark } = useBookmarkedProjects();
@@ -44,7 +47,9 @@ export const BookmarkButton: React.FC<BookmarkButtonProps> = ({
     surface === 'dark'
       ? saved
         ? 'border-champagne bg-champagne text-obsidian shadow-[0_8px_24px_rgba(223,200,166,0.22)]'
-        : 'glass-liquid-badge text-champagne/90 hover:border-champagne hover:text-ivory'
+        : noBlur
+          ? 'glass-inner-rim text-champagne/90 hover:border-champagne hover:text-ivory'
+          : 'glass-liquid-badge text-champagne/90 hover:border-champagne hover:text-ivory'
       : saved
         ? 'border-espresso bg-espresso text-champagne shadow-xs'
         : 'border-espresso/25 bg-offwhite text-espresso hover:border-bronze hover:text-cognac';

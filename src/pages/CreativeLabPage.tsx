@@ -1467,9 +1467,9 @@ export const CreativeLabPage: React.FC = () => {
               <a
                 key={mod.href}
                 href={mod.href}
-                className="shrink-0 snap-start inline-flex items-center min-h-[44px] sm:min-h-[38px] px-4 py-2 rounded-full bg-espresso/60 border border-champagne/20 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne hover:bg-champagne hover:text-obsidian tabular-nums whitespace-nowrap transition-colors"
+                className="glass-liquid-lens shrink-0 snap-start inline-flex items-center min-h-[44px] sm:min-h-[38px] px-4 py-2 rounded-full font-mono text-[10px] tracking-[0.18em] uppercase text-champagne hover:text-ivory tabular-nums whitespace-nowrap transition-colors"
               >
-                {mod.label}
+                <span className="relative z-10">{mod.label}</span>
               </a>
             ))}
           </div>

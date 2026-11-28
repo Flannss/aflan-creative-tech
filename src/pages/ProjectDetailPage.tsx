@@ -286,8 +286,8 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14 items-start">
             <Reveal variant="up" className="md:col-span-5 lg:col-span-4 space-y-6">
-              <div className="bg-offwhite border border-espresso/15 p-6 sm:p-7 space-y-6">
-                <div>
+              <div className="glass-prism-card-light rounded-2xl p-6 sm:p-7 space-y-6">
+                <div className="relative z-10">
                   <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
                     PLATFORM
                   </p>
@@ -296,7 +296,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                   </p>
                 </div>
 
-                <div className="pt-5 border-t border-espresso/15">
+                <div className="relative z-10 pt-5 border-t border-espresso/15">
                   <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
                     PERAN &amp; TANGGUNG JAWAB
                   </p>
@@ -305,7 +305,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                   </p>
                 </div>
 
-                <div className="pt-5 border-t border-espresso/15">
+                <div className="relative z-10 pt-5 border-t border-espresso/15">
                   <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
                     ATRIBUSI KONTRIBUSI
                   </p>
@@ -315,7 +315,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                 </div>
 
                 {project.notableWork && (
-                  <div className="pt-5 border-t border-espresso/15">
+                  <div className="relative z-10 pt-5 border-t border-espresso/15">
                     <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-mocha">
                       NOTABLE WORK
                     </p>
@@ -325,7 +325,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                   </div>
                 )}
 
-                <div className="pt-5 border-t border-espresso/15">
+                <div className="relative z-10 pt-5 border-t border-espresso/15">
                   <p className="font-mono text-[10px] tracking-[0.24em] uppercase text-mocha mb-3">
                     STACK &amp; METHODOLOGY
                   </p>
@@ -342,7 +342,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                 </div>
 
                 {project.liveUrl && (
-                  <div className="pt-5 border-t border-espresso/15">
+                  <div className="relative z-10 pt-5 border-t border-espresso/15">
                     <a
                       href={project.liveUrl}
                       target="_blank"
@@ -411,20 +411,20 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
         aria-label="Navigasi antar studi kasus proyek"
         className="bg-espresso text-ivory border-t border-champagne/15"
       >
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-champagne/15">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 p-5 sm:p-7 md:p-8 lg:p-10">
           <Link
             to={`/projects/${prevProject.slug}`}
             state={{ navDirection: -1 }}
             onMouseEnter={() => prefetchRoute(`/projects/${prevProject.slug}`)}
             onFocus={() => prefetchRoute(`/projects/${prevProject.slug}`)}
             onTouchStart={() => prefetchRoute(`/projects/${prevProject.slug}`)}
-            className="relative group p-6 sm:p-8 md:p-10 lg:p-14 hover:bg-obsidian/45 transition-colors duration-500 flex flex-col justify-between gap-5 min-w-0 overflow-hidden"
+            className="glass-prism-card relative group rounded-2xl p-6 sm:p-8 md:p-9 lg:p-11 hover:border-champagne/55 transition-colors duration-500 flex flex-col justify-between gap-5 min-w-0 overflow-hidden"
           >
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute top-0 inset-x-0 h-[1.5px] bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+              className="pointer-events-none absolute top-0 inset-x-0 z-10 h-[1.5px] bg-champagne origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
             />
-            <div className="space-y-1.5">
+            <div className="relative z-10 space-y-1.5">
               <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-champagne">
                 <ArrowLeft
                   className="size-3.5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-1.5 motion-reduce:transform-none"
@@ -436,7 +436,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                 ENTRI {prevProject.index} · {prevProject.category}
               </p>
             </div>
-            <span className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-ivory group-hover:text-champagne transition-colors duration-300 wrap-break-word">
+            <span className="relative z-10 font-serif text-2xl sm:text-3xl md:text-4xl font-light text-ivory group-hover:text-champagne transition-colors duration-300 wrap-break-word">
               {prevProject.title}
             </span>
           </Link>
@@ -447,13 +447,13 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
             onMouseEnter={() => prefetchRoute(`/projects/${nextProject.slug}`)}
             onFocus={() => prefetchRoute(`/projects/${nextProject.slug}`)}
             onTouchStart={() => prefetchRoute(`/projects/${nextProject.slug}`)}
-            className="relative group p-6 sm:p-8 md:p-10 lg:p-14 hover:bg-obsidian/45 transition-colors duration-500 flex flex-col justify-between gap-5 md:items-end md:text-right min-w-0 overflow-hidden"
+            className="glass-prism-card relative group rounded-2xl p-6 sm:p-8 md:p-9 lg:p-11 hover:border-champagne/55 transition-colors duration-500 flex flex-col justify-between gap-5 md:items-end md:text-right min-w-0 overflow-hidden"
           >
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute top-0 inset-x-0 h-[1.5px] bg-champagne origin-right scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+              className="pointer-events-none absolute top-0 inset-x-0 z-10 h-[1.5px] bg-champagne origin-right scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
             />
-            <div className="space-y-1.5 md:flex md:flex-col md:items-end">
+            <div className="relative z-10 space-y-1.5 md:flex md:flex-col md:items-end">
               <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-champagne">
                 Next Case Study
                 <ArrowRight
@@ -465,7 +465,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                 ENTRI {nextProject.index} · {nextProject.category}
               </p>
             </div>
-            <span className="font-serif text-2xl sm:text-3xl md:text-4xl font-light text-ivory group-hover:text-champagne transition-colors duration-300 wrap-break-word">
+            <span className="relative z-10 font-serif text-2xl sm:text-3xl md:text-4xl font-light text-ivory group-hover:text-champagne transition-colors duration-300 wrap-break-word">
               {nextProject.title}
             </span>
           </Link>

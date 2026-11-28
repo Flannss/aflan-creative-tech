@@ -96,10 +96,10 @@ export const CertificatePreviewModal: React.FC<CertificatePreviewModalProps> = (
               ease: EASE_LUXURY,
             }}
             onClick={(e) => e.stopPropagation()}
-            className="glass-figma relative w-full max-w-4xl max-h-[90dvh] flex flex-col overflow-hidden rounded-2xl text-ivory will-change-[transform,opacity]"
+            className="glass-atelier-sheet relative w-full max-w-4xl max-h-[90dvh] flex flex-col overflow-hidden rounded-2xl text-ivory will-change-[transform,opacity]"
           >
-            {/* Pinned Liquid-Glass Header */}
-            <div className="glass-liquid shrink-0 flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-b border-champagne/20">
+            {/* Pinned Zero-Blur Specular Header */}
+            <div className="glass-inner-rim border-x-0 border-t-0 shrink-0 flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-b border-champagne/20">
               <div className="relative z-10 min-w-0 flex-1 space-y-0.5">
                 <p className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.16em] text-champagne truncate tabular-nums">
                   {entry.code} · {entry.issuer}

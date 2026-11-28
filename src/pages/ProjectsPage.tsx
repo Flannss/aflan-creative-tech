@@ -105,7 +105,7 @@ export const ProjectsPage: React.FC = () => {
             </Reveal>
           </div>
 
-          <div className="mt-8 sm:mt-10 lg:mt-12 p-4 sm:p-5 rounded-2xl border border-brass/25 bg-umber/70 flex flex-col lg:flex-row lg:items-center justify-between gap-4 min-w-0">
+          <div className="mt-8 sm:mt-10 lg:mt-12 p-4 sm:p-5 rounded-2xl border border-champagne/22 bg-umber/78 shadow-[inset_0_1px_0_rgba(255,249,240,0.14)] flex flex-col lg:flex-row lg:items-center justify-between gap-4 min-w-0">
             <div className="min-w-0 flex-1 space-y-2 lg:space-y-0">
               <span className="block lg:hidden font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
                 KATEGORI &amp; SHORTLIST

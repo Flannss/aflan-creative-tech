@@ -107,10 +107,10 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
               ease: EASE_LUXURY,
             }}
             onClick={(e) => e.stopPropagation()}
-            className="glass-figma relative w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden rounded-2xl text-ivory will-change-[transform,opacity]"
+            className="glass-atelier-sheet relative w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden rounded-2xl text-ivory will-change-[transform,opacity]"
           >
             {/* Pinned Header Bar */}
-            <div className="glass-liquid shrink-0 flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-b border-champagne/20">
+            <div className="glass-inner-rim border-x-0 border-t-0 shrink-0 flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-b border-champagne/20">
               <div className="relative z-10 flex flex-wrap items-center gap-2.5 min-w-0">
                 <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne tabular-nums truncate">
                   DOSSIER {project.index} · {project.category}
@@ -256,6 +256,7 @@ export const ProjectPreviewModal: React.FC<ProjectPreviewModalProps> = ({
                   projectTitle={project.title}
                   variant="icon"
                   surface="dark"
+                  noBlur
                 />
                 {project.liveUrl && (
                   <a

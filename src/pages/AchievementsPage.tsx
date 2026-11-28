@@ -114,24 +114,33 @@ export const AchievementsPage: React.FC = () => {
             </h2>
             {filteredEntries.map((entry, idx) => {
               const isSelected = activeEntry?.id === entry.id;
+              const isHighlightGlass =
+                entry.id === 'cisco-ccna-intro-networks' ||
+                entry.id === 'publikasi-pengabdian-garuda';
               const isOrphanOnTablet =
                 filteredEntries.length % 2 === 1 && idx === filteredEntries.length - 1;
               return (
                 <div
                   key={entry.id}
-                  className={`md:border md:border-espresso/15 lg:border-0 transition-colors duration-300 ${
+                  className={`transition-colors duration-300 ${
                     isOrphanOnTablet ? 'md:col-span-2' : ''
                   } ${
-                    isSelected
-                      ? 'bg-obsidian text-ivory md:border-brass/35'
-                      : 'hover:bg-offwhite text-espresso md:bg-offwhite/70 lg:bg-transparent'
+                    isHighlightGlass
+                      ? isSelected
+                        ? 'glass-atelier-sheet rounded-2xl text-ivory my-2'
+                        : 'glass-prism-card-light rounded-2xl text-espresso my-2'
+                      : `md:border md:border-espresso/15 lg:border-0 ${
+                          isSelected
+                            ? 'bg-obsidian text-ivory md:border-brass/35'
+                            : 'hover:bg-offwhite text-espresso md:bg-offwhite/70 lg:bg-transparent'
+                        }`
                   }`}
                 >
                   <button
                     type="button"
                     onClick={() => setActiveId(entry.id)}
                     aria-expanded={isSelected}
-                    className="w-full min-h-[44px] text-left py-6 px-4 sm:px-6 active:scale-[0.99] transition-transform duration-300 cursor-pointer"
+                    className="relative z-10 w-full min-h-[44px] text-left py-6 px-4 sm:px-6 active:scale-[0.99] transition-transform duration-300 cursor-pointer"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                       <span
@@ -170,7 +179,7 @@ export const AchievementsPage: React.FC = () => {
                   </button>
 
                   {isSelected && (
-                    <div className="md:hidden px-4 sm:px-6 pb-6 pt-4 border-t border-champagne/20 space-y-3 text-sm text-ivory/85 leading-relaxed">
+                    <div className="relative z-10 md:hidden px-4 sm:px-6 pb-6 pt-4 border-t border-champagne/20 space-y-3 text-sm text-ivory/85 leading-relaxed">
                       <p>{entry.summary}</p>
                       <p className="text-champagne/90">{entry.details}</p>
                       {entry.certificateUrl && (
@@ -202,7 +211,7 @@ export const AchievementsPage: React.FC = () => {
           </div>
 
           {activeEntry && (
-            <aside className="hidden md:block lg:col-span-5 lg:sticky lg:top-24 bg-obsidian text-ivory border border-brass/25 p-7 sm:p-9 shadow-2xl">
+            <aside className="hidden md:block lg:col-span-5 lg:sticky lg:top-24 glass-atelier-sheet rounded-2xl text-ivory p-7 sm:p-9">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeEntry.id}

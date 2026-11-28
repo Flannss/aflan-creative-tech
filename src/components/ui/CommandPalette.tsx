@@ -367,10 +367,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               ease: EASE_LUXURY,
             }}
             onClick={(e) => e.stopPropagation()}
-            className="glass-figma w-full max-w-xl rounded-2xl text-ivory overflow-hidden flex flex-col max-h-[78dvh]"
+            className="glass-atelier-sheet w-full max-w-xl rounded-2xl text-ivory overflow-hidden flex flex-col max-h-[78dvh]"
           >
             {/* Search Input Header */}
-            <div className="glass-liquid flex items-center gap-3 px-4 sm:px-5 py-3.5 border-b border-champagne/18 focus-within:border-champagne/40 transition-colors shrink-0">
+            <div className="glass-inner-rim border-x-0 border-t-0 flex items-center gap-3 px-4 sm:px-5 py-3.5 border-b border-champagne/18 focus-within:border-champagne/40 transition-colors shrink-0">
               <Search
                 className="relative z-10 size-4 shrink-0 text-champagne/75"
                 aria-hidden="true"

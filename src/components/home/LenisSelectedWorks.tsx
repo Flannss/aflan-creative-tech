@@ -28,6 +28,13 @@ export const LenisSelectedWorks: React.FC<LenisSelectedWorksProps> = ({
         const hasWarmGlaze =
           project.slug === 'kompresor-media' ||
           project.slug === 'somasii-lost-and-found';
+        const statusChip = project.liveUrl
+          ? 'LIVE APP'
+          : project.verificationState.includes('NDA')
+            ? 'NDA SPEC'
+            : project.verificationState.includes('Academic')
+              ? 'ACADEMIC'
+              : 'LIVE WORK';
 
         return (
           <article
@@ -49,6 +56,9 @@ export const LenisSelectedWorks: React.FC<LenisSelectedWorksProps> = ({
               className="flex-1 flex flex-col min-w-0 focus-visible:outline-2 focus-visible:outline-cognac"
             >
               <ApertureFrame className="aspect-[16/10] border-b border-bronze/20 relative">
+                <span className="glass-liquid-badge pointer-events-none absolute top-3 left-3 z-20 px-2.5 py-1 rounded-full font-mono text-[9px] tracking-[0.16em] uppercase text-ivory">
+                  {statusChip}
+                </span>
                 {project.previewImage ? (
                   <div
                     className="relative w-full h-full"

@@ -246,11 +246,11 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                 onMouseEnter={() => prefetchRoute('/about')}
                 onFocus={() => prefetchRoute('/about')}
                 onTouchStart={() => prefetchRoute('/about')}
-                className="group inline-flex items-center gap-2 min-h-[48px] px-6 py-3 rounded-full border border-champagne/45 bg-umber/80 text-ivory font-mono text-xs tracking-[0.16em] uppercase hover:border-champagne hover:bg-espresso active:scale-[0.97] transition-all duration-300"
+                className="glass-liquid-lens group inline-flex items-center gap-2 min-h-[48px] px-6 py-3 rounded-full text-ivory font-mono text-xs tracking-[0.16em] uppercase hover:text-champagne active:scale-[0.97] transition-all duration-300"
               >
-                <span>Read Dossier</span>
+                <span className="relative z-10">Read Dossier</span>
                 <ArrowRight
-                  className="size-4 text-champagne transition-transform duration-300 group-hover:translate-x-0.5"
+                  className="relative z-10 size-4 text-champagne transition-transform duration-300 group-hover:translate-x-0.5"
                   aria-hidden="true"
                 />
               </Link>
@@ -317,15 +317,15 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
               {DOSSIER_PILLARS.map((pillar, idx) => (
                 <div
                   key={pillar.code}
-                  className={`rounded-2xl border border-bronze/22 bg-ivory/85 p-5 flex flex-col justify-between gap-2.5 shadow-[0_8px_24px_rgba(33,24,20,0.05)] ${
+                  className={`glass-prism-card-light rounded-2xl p-5 flex flex-col justify-between gap-2.5 ${
                     idx === 2 ? 'sm:col-span-2 lg:col-span-1' : ''
                   }`}
                 >
-                  <div className="flex items-center justify-between gap-2 font-mono text-[10px] tracking-[0.2em] uppercase">
+                  <div className="relative z-10 flex items-center justify-between gap-2 font-mono text-[10px] tracking-[0.2em] uppercase">
                     <span className="text-cognac font-medium">{pillar.label}</span>
                     <span className="text-bronze tabular-nums">{pillar.code}</span>
                   </div>
-                  <p className="font-sans text-xs sm:text-[13px] text-obsidian/80 leading-relaxed">
+                  <p className="relative z-10 font-sans text-xs sm:text-[13px] text-obsidian/80 leading-relaxed">
                     {pillar.text}
                   </p>
                 </div>
@@ -386,11 +386,11 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                 onMouseEnter={() => prefetchRoute(item.to)}
                 onFocus={() => prefetchRoute(item.to)}
                 onTouchStart={() => prefetchRoute(item.to)}
-                className={`group rounded-2xl border border-champagne/25 hover:border-champagne/60 bg-umber/85 hover:bg-espresso p-6 flex flex-col justify-between gap-4 min-h-[132px] hover:-translate-y-1 transition-all duration-300 ${
+                className={`glass-prism-card group rounded-2xl hover:border-champagne/60 p-6 flex flex-col justify-between gap-4 min-h-[132px] hover:-translate-y-1 transition-all duration-300 ${
                   idx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
                 }`}
               >
-                <div className="flex items-center justify-between gap-3 font-mono text-[10px] tracking-[0.2em] uppercase">
+                <div className="relative z-10 flex items-center justify-between gap-3 font-mono text-[10px] tracking-[0.2em] uppercase">
                   <span className="text-champagne tabular-nums">{item.code} · {item.tag}</span>
                   <ArrowUpRight
                     className="size-4 text-brass transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-champagne"
@@ -398,7 +398,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
                   />
                 </div>
 
-                <div className="space-y-1">
+                <div className="relative z-10 space-y-1">
                   <h3 className="font-serif text-2xl font-light text-ivory group-hover:text-champagne transition-colors">
                     {item.title}
                   </h3>

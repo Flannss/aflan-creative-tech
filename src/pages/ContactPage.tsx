@@ -315,8 +315,8 @@ export const ContactPage: React.FC = () => {
           {/* KOLOM KIRI: KANAL LANGSUNG, KETERSEDIAAN & KONTAK CEPAT */}
           <Reveal variant="up" className="lg:col-span-5 min-w-0 space-y-6">
             {/* Availability & Location Header Card */}
-            <div className="w-full max-w-full min-w-0 overflow-hidden p-5 sm:p-6 bg-umber/90 border border-brass/25 space-y-4">
-              <div className="flex items-center justify-between gap-3 pb-3 border-b border-champagne/15">
+            <div className="glass-prism-card w-full max-w-full min-w-0 overflow-hidden rounded-2xl p-5 sm:p-6 space-y-4">
+              <div className="relative z-10 flex items-center justify-between gap-3 pb-3 border-b border-champagne/15">
                 <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne">
                   <span
                     aria-hidden="true"
@@ -329,11 +329,11 @@ export const ContactPage: React.FC = () => {
                 </span>
               </div>
 
-              <h2 className="font-serif text-2xl sm:text-3xl font-light tracking-tight text-ivory/95 leading-snug">
+              <h2 className="relative z-10 font-serif text-2xl sm:text-3xl font-light tracking-tight text-ivory/95 leading-snug">
                 {contactData.availabilityStatus}
               </h2>
 
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-mono uppercase tracking-[0.14em] text-champagne/85">
+              <div className="relative z-10 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-mono uppercase tracking-[0.14em] text-champagne/85">
                 <span className="inline-flex items-center gap-1.5">
                   <MapPin className="size-3.5 text-champagne" aria-hidden="true" />
                   Purwokerto, Jawa Tengah
@@ -355,8 +355,8 @@ export const ContactPage: React.FC = () => {
               </div>
 
               {/* Primary Email Copy Card */}
-              <div className="w-full max-w-full min-w-0 overflow-hidden p-5 sm:p-6 bg-espresso/55 border border-champagne/20 space-y-4">
-                <div className="flex items-start justify-between gap-3">
+              <div className="glass-prism-card w-full max-w-full min-w-0 overflow-hidden rounded-2xl p-5 sm:p-6 space-y-4">
+                <div className="relative z-10 flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <span className="block text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne">
                       EMAIL RESMI
@@ -373,7 +373,7 @@ export const ContactPage: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="pt-3 border-t border-champagne/15 flex flex-wrap items-center justify-between gap-3">
+                <div className="relative z-10 pt-3 border-t border-champagne/15 flex flex-wrap items-center justify-between gap-3">
                   <span className="font-sans text-xs text-ivory/70">
                     Respons utama untuk proyek, magang &amp; kolaborasi
                   </span>
@@ -427,9 +427,9 @@ export const ContactPage: React.FC = () => {
                   href={contactData.whatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group p-5 bg-espresso/45 border border-champagne/15 hover:border-champagne/55 transition-colors flex items-center justify-between gap-4"
+                  className="glass-prism-card group rounded-xl p-5 hover:border-champagne/55 transition-colors flex items-center justify-between gap-4"
                 >
-                  <div className="flex items-center gap-3.5 min-w-0">
+                  <div className="relative z-10 flex items-center gap-3.5 min-w-0">
                     <span className="shrink-0 size-10 rounded-full border border-champagne/25 bg-obsidian/60 flex items-center justify-center text-champagne">
                       <MessageCircle className="size-4" aria-hidden="true" />
                     </span>
@@ -443,7 +443,7 @@ export const ContactPage: React.FC = () => {
                     </div>
                   </div>
                   <ArrowUpRight
-                    className="size-4 shrink-0 text-champagne/75 group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                    className="relative z-10 size-4 shrink-0 text-champagne/75 group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
                     aria-hidden="true"
                   />
                 </a>
@@ -452,9 +452,9 @@ export const ContactPage: React.FC = () => {
                   href={contactData.instagramHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group p-5 bg-espresso/45 border border-champagne/15 hover:border-champagne/55 transition-colors flex items-center justify-between gap-4"
+                  className="glass-prism-card group rounded-xl p-5 hover:border-champagne/55 transition-colors flex items-center justify-between gap-4"
                 >
-                  <div className="flex items-center gap-3.5 min-w-0">
+                  <div className="relative z-10 flex items-center gap-3.5 min-w-0">
                     <span className="shrink-0 size-10 rounded-full border border-champagne/25 bg-obsidian/60 flex items-center justify-center text-champagne">
                       <Instagram className="size-4" aria-hidden="true" />
                     </span>
@@ -468,7 +468,7 @@ export const ContactPage: React.FC = () => {
                     </div>
                   </div>
                   <ArrowUpRight
-                    className="size-4 shrink-0 text-champagne/75 group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                    className="relative z-10 size-4 shrink-0 text-champagne/75 group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
                     aria-hidden="true"
                   />
                 </a>
@@ -477,9 +477,9 @@ export const ContactPage: React.FC = () => {
                   href={contactData.githubHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group sm:col-span-2 lg:col-span-1 p-5 bg-espresso/45 border border-champagne/15 hover:border-champagne/55 transition-colors flex items-center justify-between gap-4"
+                  className="glass-prism-card group sm:col-span-2 lg:col-span-1 rounded-xl p-5 hover:border-champagne/55 transition-colors flex items-center justify-between gap-4"
                 >
-                  <div className="flex items-center gap-3.5 min-w-0">
+                  <div className="relative z-10 flex items-center gap-3.5 min-w-0">
                     <span className="shrink-0 size-10 rounded-full border border-champagne/25 bg-obsidian/60 flex items-center justify-center text-champagne">
                       <Github className="size-4" aria-hidden="true" />
                     </span>
@@ -493,15 +493,15 @@ export const ContactPage: React.FC = () => {
                     </div>
                   </div>
                   <ArrowUpRight
-                    className="size-4 shrink-0 text-champagne/75 group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                    className="relative z-10 size-4 shrink-0 text-champagne/75 group-hover:text-champagne group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
                     aria-hidden="true"
                   />
                 </a>
               </div>
 
               {/* Portfolio Link Quick Copy */}
-              <div className="w-full max-w-full min-w-0 overflow-hidden p-4 sm:p-5 bg-chocolate/55 border border-champagne/15 flex flex-wrap items-center justify-between gap-3">
-                <div className="min-w-0">
+              <div className="glass-prism-card w-full max-w-full min-w-0 overflow-hidden rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3">
+                <div className="relative z-10 min-w-0">
                   <span className="block text-[10px] font-mono uppercase tracking-[0.15em] text-champagne">
                     TAUTAN RESMI DOSSIER
                   </span>
@@ -520,7 +520,7 @@ export const ContactPage: React.FC = () => {
                     )
                   }
                   aria-label="Salin tautan portofolio"
-                  className="inline-flex items-center justify-center gap-1.5 min-h-[44px] px-4 py-2 rounded-full border border-champagne/30 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne hover:border-champagne hover:text-ivory active:scale-[0.97] transition-all cursor-pointer"
+                  className="relative z-10 inline-flex items-center justify-center gap-1.5 min-h-[44px] px-4 py-2 rounded-full border border-champagne/30 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne hover:border-champagne hover:text-ivory active:scale-[0.97] transition-all cursor-pointer"
                 >
                   <AnimatePresence mode="wait" initial={false}>
                     {copiedId === 'site-link' ? (
