@@ -109,7 +109,7 @@ export const AboutPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-ivory text-espresso pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-24 px-5 md:px-8 lg:px-12 border-b border-espresso/15">
+      <section className="relative bg-ivory text-espresso pt-24 sm:pt-28 md:pt-32 pb-14 sm:pb-16 md:pb-20 lg:pb-24 px-5 sm:px-7 md:px-10 lg:px-12 border-b border-espresso/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4">
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-bronze">
@@ -157,7 +157,7 @@ export const AboutPage: React.FC = () => {
             </Reveal>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14 mt-14 sm:mt-20 lg:mt-24 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14 mt-12 sm:mt-16 lg:mt-20 items-start">
             <Reveal variant="clip" className="md:col-span-5">
               <figure className="group relative bg-obsidian p-4 sm:p-5 border border-espresso/20 shadow-2xl">
                 <ParallaxFrame className="aspect-3/4 bg-obsidian" offset={18}>
@@ -274,7 +274,7 @@ export const AboutPage: React.FC = () => {
 
       <section
         data-nav-surface="dark"
-        className="relative bg-umber text-ivory py-16 md:py-24 px-5 md:px-8 lg:px-12"
+        className="relative bg-umber text-ivory py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12"
       >
         <div className="max-w-[1440px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 pb-10 sm:pb-14 lg:pb-16 border-b border-champagne/15 items-end">
@@ -333,7 +333,7 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-linen text-espresso py-16 md:py-24 px-5 md:px-8 lg:px-12">
+      <section className="relative bg-linen text-espresso py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 items-start">
           <Reveal variant="up" className="lg:col-span-7">
             <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-bronze font-medium mb-3">
@@ -378,7 +378,7 @@ export const AboutPage: React.FC = () => {
           </Reveal>
 
           <Reveal variant="up" delay={0.12} className="lg:col-span-5 space-y-6">
-            <aside className="bg-obsidian text-ivory border border-espresso/20 p-7 sm:p-10 space-y-8 shadow-xl">
+            <aside className="bg-obsidian text-ivory border border-espresso/20 p-6 sm:p-8 lg:p-10 space-y-7 sm:space-y-8 shadow-xl">
               <div className="flex items-center justify-between border-b border-champagne/15 pb-5">
                 <span className="font-mono text-[10px] tracking-[0.26em] uppercase text-champagne">
                   SOROTAN TERVERIFIKASI · 2026
@@ -428,7 +428,7 @@ export const AboutPage: React.FC = () => {
             <div className="flex flex-wrap gap-3 pt-2">
               <Link
                 to="/journey"
-                className="group inline-flex items-center gap-2 px-5 py-3 rounded-full bg-espresso text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:bg-mocha active:scale-[0.97] transition-all"
+                className="group inline-flex items-center gap-2 min-h-[44px] px-5 py-3 rounded-full bg-espresso text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:bg-mocha active:scale-[0.97] transition-all"
               >
                 <KineticLabel>Jelajahi Perjalanan</KineticLabel>
                 <ArrowRight
@@ -438,7 +438,7 @@ export const AboutPage: React.FC = () => {
               </Link>
               <Link
                 to="/achievements"
-                className="group inline-flex items-center gap-2 px-5 py-3 rounded-full border border-espresso/30 text-espresso font-mono text-xs tracking-[0.18em] uppercase hover:border-espresso hover:bg-ivory active:scale-[0.97] transition-all"
+                className="group inline-flex items-center gap-2 min-h-[44px] px-5 py-3 rounded-full border border-espresso/30 text-espresso font-mono text-xs tracking-[0.18em] uppercase hover:border-espresso hover:bg-ivory active:scale-[0.97] transition-all"
               >
                 <KineticLabel>Pencapaian &amp; Sertifikasi</KineticLabel>
                 <ArrowUpRight

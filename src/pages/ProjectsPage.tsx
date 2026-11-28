@@ -62,7 +62,7 @@ export const ProjectsPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-5 md:px-8 lg:px-12 border-b border-brass/20">
+      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 md:pt-32 pb-14 sm:pb-18 md:pb-20 px-5 sm:px-7 md:px-10 lg:px-12 border-b border-brass/20">
         <div className="relative z-10 max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
@@ -96,7 +96,7 @@ export const ProjectsPage: React.FC = () => {
               <p className="font-sans text-sm md:text-base text-ivory/80 leading-relaxed">
                 Daftar studi kasus dari Kompresor Media, SatuRuangCreative, SOMASII, ASIS Builder (NDA), dan AFLAN DOSSIER lengkap dengan peran masing-masing.
               </p>
-              <div className="flex items-start gap-2.5 p-4 bg-umber/90 border border-brass/30 text-sm lg:text-xs text-champagne leading-relaxed">
+              <div className="flex items-start gap-3 p-4 sm:p-5 rounded-xl bg-umber/90 border border-brass/30 text-sm lg:text-xs text-champagne leading-relaxed">
                 <ShieldCheck className="size-4 text-brass shrink-0 mt-0.5" aria-hidden="true" />
                 <span>
                   ASIS Builder disajikan secara tipografis sesuai NDA; SOMASII merupakan Academic Final Project kampus.
@@ -105,36 +105,46 @@ export const ProjectsPage: React.FC = () => {
             </Reveal>
           </div>
 
-          <div className="mt-8 lg:mt-12 p-3 sm:p-4 border border-brass/25 bg-umber/65 flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4 min-w-0">
-            <SegmentedControl
-              options={categoryOptions}
-              value={selectedCategory}
-              onChange={setSelectedCategory}
-              layoutId="projects-category-pill"
-              ariaLabel="Filter proyek berdasarkan kategori"
-              surface="dark"
-              className="lg:w-auto"
-            />
+          <div className="mt-8 sm:mt-10 lg:mt-12 p-4 sm:p-5 rounded-2xl border border-brass/25 bg-umber/70 flex flex-col lg:flex-row lg:items-center justify-between gap-4 min-w-0">
+            <div className="min-w-0 flex-1 space-y-2 lg:space-y-0">
+              <span className="block lg:hidden font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
+                KATEGORI &amp; SHORTLIST
+              </span>
+              <SegmentedControl
+                options={categoryOptions}
+                value={selectedCategory}
+                onChange={setSelectedCategory}
+                layoutId="projects-category-pill"
+                ariaLabel="Filter proyek berdasarkan kategori"
+                surface="dark"
+                className="lg:w-auto"
+              />
+            </div>
 
-            <SegmentedControl
-              options={viewOptions}
-              value={viewMode}
-              onChange={setUserViewMode}
-              layoutId="projects-view-pill"
-              ariaLabel="Mode tampilan arsip proyek"
-              surface="dark"
-              roleMode="group"
-              size="sm"
-              className="lg:w-auto"
-            />
+            <div className="pt-3.5 border-t border-champagne/12 lg:pt-0 lg:border-t-0 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 lg:justify-end min-w-0 shrink-0">
+              <span className="lg:hidden font-mono text-[10px] tracking-[0.2em] uppercase text-taupe shrink-0">
+                TAMPILAN ARSIP
+              </span>
+              <SegmentedControl
+                options={viewOptions}
+                value={viewMode}
+                onChange={setUserViewMode}
+                layoutId="projects-view-pill"
+                ariaLabel="Mode tampilan arsip proyek"
+                surface="dark"
+                roleMode="group"
+                size="sm"
+                className="w-full sm:w-auto"
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-umber text-ivory py-16 md:py-24 px-5 md:px-8 lg:px-12 min-h-[55vh]">
+      <section className="bg-umber text-ivory py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12 min-h-[55vh]">
         <div className="max-w-[1440px] mx-auto">
           {filteredProjects.length === 0 ? (
-            <div className="max-w-xl mx-auto my-8 p-8 sm:p-10 bg-obsidian/70 border border-champagne/20 text-center space-y-5">
+            <div className="max-w-xl mx-auto my-8 p-8 sm:p-10 rounded-2xl bg-obsidian/70 border border-champagne/20 text-center space-y-5">
               <span className="mx-auto size-12 rounded-full border border-champagne/30 bg-espresso/80 flex items-center justify-center text-champagne">
                 <Bookmark className="size-5" aria-hidden="true" />
               </span>
@@ -161,7 +171,7 @@ export const ProjectsPage: React.FC = () => {
           ) : viewMode === 'index' ? (
             <ProjectPreviewList projects={filteredProjects} />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 items-stretch">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 items-stretch">
               {filteredProjects.map((project) => (
                 <ProjectVisualGridCard
                   key={`${selectedCategory}-${project.slug}`}

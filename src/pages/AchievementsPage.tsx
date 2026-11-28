@@ -55,7 +55,7 @@ export const AchievementsPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="bg-umber text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-5 md:px-8 lg:px-12 border-b border-brass/20">
+      <section className="bg-umber text-ivory pt-24 sm:pt-28 md:pt-32 pb-14 sm:pb-18 md:pb-20 px-5 sm:px-7 md:px-10 lg:px-12 border-b border-brass/20">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4">
             <span className="inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
@@ -105,10 +105,10 @@ export const AchievementsPage: React.FC = () => {
 
       <section
         aria-labelledby="achievements-list-heading"
-        className="bg-ivory text-espresso py-16 md:py-24 px-5 md:px-8 lg:px-12"
+        className="bg-ivory text-espresso py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12"
       >
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 lg:block gap-0 md:gap-4 lg:gap-0 divide-y md:divide-y-0 lg:divide-y divide-espresso/15 border-y md:border-y-0 lg:border-y border-espresso/15">
+          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 lg:block gap-0 md:gap-5 lg:gap-0 divide-y md:divide-y-0 lg:divide-y divide-espresso/15 border-y md:border-y-0 lg:border-y border-espresso/15">
             <h2 id="achievements-list-heading" className="sr-only">
               Daftar Kredensial, Publikasi &amp; Pengalaman Terverifikasi
             </h2>
@@ -174,7 +174,7 @@ export const AchievementsPage: React.FC = () => {
                       <p>{entry.summary}</p>
                       <p className="text-champagne/90">{entry.details}</p>
                       {entry.certificateUrl && (
-                        <div className="pt-2 flex flex-wrap items-center gap-2.5">
+                        <div className="pt-2 flex flex-wrap items-center gap-3">
                           <button
                             type="button"
                             onClick={() => setPreviewCertEntry(entry)}

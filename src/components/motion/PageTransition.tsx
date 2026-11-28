@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
-  EASE_LUXURY,
+  EASE_PAGE_ENTER,
   biDirectionalPageVariants,
   reducedPageVariants,
   type PageTransitionCustom,
@@ -18,9 +18,9 @@ interface PageTransitionProps {
 
 /**
  * Bi-Directional Depth Parallax Route Transition:
- * - Forward (`direction = 1`) and Backward (`direction = -1`) glide along clean directional axes
- *   with calibrated entrance (`0.42s`, `[0.22, 1, 0.36, 1]`) and crisp exit (`0.24s`, `[0.32, 0.72, 0, 1]`).
- * - Pair-syncs with RouteSweepIndicator warm Silk Editorial Veil and Lenis top reset in `onExitComplete`.
+ * - Calibrated fluid rhythm: exit (`0.20s`, `±24px`, `scale: 0.99`, `[0.4, 0, 0.2, 1]`)
+ *   flows seamlessly into entrance (`0.40s`, `∓28px -> 0`, `y: 8/6px -> 0`, `scale: 0.99 -> 1`, `[0.16, 1, 0.3, 1]`).
+ * - Syncs with RouteSweepIndicator warm Champagne-Caramel veil and Lenis top reset in `onExitComplete`.
  */
 export const PageTransition: React.FC<PageTransitionProps> = ({
   children,
@@ -57,9 +57,9 @@ interface RouteSweepIndicatorProps {
 }
 
 /**
- * Layered Warm Silk Editorial Veil + Leading Champagne Hairline Sweep:
- * Sweeps GPU-only layers smoothly along the navigation direction (`0.42s`),
- * adding tactile visual continuity without blocking pointer events or text legibility.
+ * Layered Warm Silk Editorial Veil + Crisp Champagne-Caramel Hairline Sweep:
+ * Sweeps GPU-only layers along the navigation direction (`0.44s`, `[0.16, 1, 0.3, 1]`),
+ * delivering fast initial acceleration, smooth deceleration, and zero leftover artifact.
  */
 export const RouteSweepIndicator: React.FC<RouteSweepIndicatorProps> = ({
   transitionId,
@@ -83,19 +83,19 @@ export const RouteSweepIndicator: React.FC<RouteSweepIndicatorProps> = ({
           initial={{ x: direction === 1 ? '-45%' : '125%', opacity: 0 }}
           animate={{
             x: direction === 1 ? '125%' : '-45%',
-            opacity: [0, 0.85, 0],
+            opacity: [0, 1, 0],
           }}
-          transition={{ duration: 0.42, ease: EASE_LUXURY }}
-          className="relative h-full w-[42vw] min-w-[220px] will-change-[transform,opacity]"
+          transition={{ duration: 0.44, ease: EASE_PAGE_ENTER }}
+          className="relative h-full w-[38vw] min-w-[200px] will-change-[transform,opacity]"
           style={{
             background:
               direction === 1
-                ? 'linear-gradient(90deg, transparent 0%, rgba(110, 79, 58, 0.14) 52%, rgba(223, 200, 166, 0.12) 94%, transparent 100%)'
-                : 'linear-gradient(270deg, transparent 0%, rgba(110, 79, 58, 0.14) 52%, rgba(223, 200, 166, 0.12) 94%, transparent 100%)',
+                ? 'linear-gradient(90deg, transparent 0%, rgba(110, 79, 58, 0.08) 48%, rgba(223, 200, 166, 0.14) 94%, transparent 100%)'
+                : 'linear-gradient(270deg, transparent 0%, rgba(110, 79, 58, 0.08) 48%, rgba(223, 200, 166, 0.14) 94%, transparent 100%)',
           }}
         >
           <span
-            className={`absolute inset-y-0 w-px bg-linear-to-b from-transparent via-champagne/40 to-transparent ${
+            className={`absolute inset-y-0 w-[1.5px] bg-linear-to-b from-transparent via-champagne/45 to-transparent ${
               direction === 1 ? 'right-0' : 'left-0'
             }`}
           />
@@ -104,7 +104,7 @@ export const RouteSweepIndicator: React.FC<RouteSweepIndicatorProps> = ({
 
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed top-0 inset-x-0 z-[75] h-[2px] overflow-hidden"
+        className="pointer-events-none fixed top-0 inset-x-0 z-[75] h-[1.5px] overflow-hidden"
       >
         <motion.span
           key={`hairline-${transitionId}`}
@@ -113,7 +113,7 @@ export const RouteSweepIndicator: React.FC<RouteSweepIndicatorProps> = ({
             x: direction === 1 ? '100%' : '-100%',
             opacity: [0, 0.95, 0],
           }}
-          transition={{ duration: 0.42, ease: EASE_LUXURY }}
+          transition={{ duration: 0.44, ease: EASE_PAGE_ENTER }}
           className="block h-full w-3/5 bg-linear-to-r from-transparent via-champagne to-brass will-change-transform"
         />
       </div>

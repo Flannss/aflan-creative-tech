@@ -1,14 +1,21 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import {
+  AnimatePresence,
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+} from 'framer-motion';
 import { ArrowUpRight, Github, Search, X } from 'lucide-react';
 import { BrandSignature, MonogramMark } from '@/components/brand/Monogram';
 import { CopyLinkButton } from '@/components/ui/CopyLinkButton';
 import { navigationRoutes, personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
 import { calculateExactAge } from '@/utils/age';
+import { useCanHoverFine } from '@/hooks/useMediaQuery';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
-import { EASE_LUXURY, SPRING_SILK } from '@/utils/motion';
+import { EASE_LUXURY, SPRING_NAV_PILL } from '@/utils/motion';
 import { prefetchRoute } from '@/utils/routePrefetch';
 
 interface NavbarProps {
@@ -170,8 +177,18 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   const [navHoverPath, setNavHoverPath] = useState<string | null>(null);
   const [wibTime, setWibTime] = useState<string>(getPurwokertoWibTime);
   const prefersReducedMotion = useReducedMotion();
+  const canHoverFine = useCanHoverFine();
+  const enableSheenFx = canHoverFine && !prefersReducedMotion;
   const { pauseScroll, resumeScroll } = useSmoothScroll();
   const triggerRef = useRef<HTMLButtonElement | null>(null);
+
+  const navX = useMotionValue(0);
+  const navY = useMotionValue(0);
+  const menuX = useMotionValue(0);
+  const menuY = useMotionValue(0);
+  const navDarkSheen = useMotionTemplate`radial-gradient(150px circle at ${navX}px ${navY}px, rgba(246,241,233,0.14) 0%, rgba(223,200,166,0.06) 44%, transparent 72%)`;
+  const navLightSheen = useMotionTemplate`radial-gradient(150px circle at ${navX}px ${navY}px, rgba(255,255,255,0.52) 0%, rgba(223,200,166,0.14) 44%, transparent 72%)`;
+  const menuDarkSheen = useMotionTemplate`radial-gradient(90px circle at ${menuX}px ${menuY}px, rgba(246,241,233,0.16) 0%, rgba(223,200,166,0.07) 48%, transparent 74%)`;
 
   const menuOpen = menuOpenPath === location.pathname;
   const openMenu = () => {
@@ -274,14 +291,14 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
           isLightHeaderRoute
             ? scrolled
-              ? 'bg-ivory border-b border-espresso/15 py-3 shadow-[0_10px_30px_rgba(33,24,20,0.08)]'
-              : 'bg-ivory/[0.97] border-b border-espresso/10 py-4 sm:py-5'
+              ? 'bg-ivory/[0.86] border-b border-espresso/15 py-3 shadow-[0_10px_30px_rgba(33,24,20,0.08)]'
+              : 'bg-ivory/[0.80] border-b border-espresso/10 py-4 sm:py-5'
             : scrolled
-              ? 'bg-[#231915]/[0.97] border-b border-champagne/22 py-3 shadow-[0_12px_36px_rgba(20,14,11,0.38)]'
-              : 'bg-[#211814]/[0.94] border-b border-champagne/14 py-4 sm:py-5'
+              ? 'bg-[#231915]/[0.82] border-b border-champagne/20 py-3 shadow-[0_12px_36px_rgba(20,14,11,0.34)]'
+              : 'bg-[#211814]/[0.72] border-b border-champagne/12 py-4 sm:py-5'
         }`}
       >
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between gap-3 sm:gap-4">
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-7 md:px-10 lg:px-12 flex items-center justify-between gap-3 sm:gap-4">
           <Link
             to="/"
             aria-label="AFLAN Home"
@@ -297,11 +314,28 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
           <nav
             aria-label="Primary navigation"
+            onMouseMove={(e) => {
+              if (!enableSheenFx) return;
+              const rect = e.currentTarget.getBoundingClientRect();
+              const x = e.clientX - rect.left;
+              const y = e.clientY - rect.top;
+              navX.set(x);
+              navY.set(y);
+              e.currentTarget.style.setProperty('--gx', `${x}px`);
+              e.currentTarget.style.setProperty('--gy', `${y}px`);
+            }}
             onMouseLeave={() => setNavHoverPath(null)}
-            className={`relative isolate hidden xl:flex items-center gap-0.5 2xl:gap-1 px-2 2xl:px-2.5 py-1.5 rounded-full ${
-              isLightHeaderRoute ? 'glass-liquid-light' : 'glass-liquid'
+            className={`group/pill relative isolate overflow-hidden hidden xl:flex items-center gap-0.5 2xl:gap-1 px-2 2xl:px-2.5 py-1.5 rounded-full ${
+              isLightHeaderRoute ? 'glass-dynamic-pill-light' : 'glass-dynamic-pill'
             }`}
           >
+            {enableSheenFx && (
+              <motion.span
+                aria-hidden="true"
+                style={{ background: isLightHeaderRoute ? navLightSheen : navDarkSheen }}
+                className="pointer-events-none absolute inset-0 z-0 rounded-full opacity-0 group-hover/pill:opacity-100 transition-opacity duration-300"
+              />
+            )}
             {navigationRoutes.map((route) => {
               const isMatchedPath = isRoutePathActive(
                 route.path,
@@ -347,7 +381,9 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                           <motion.span
                             layoutId="nav-hover"
                             aria-hidden="true"
-                            transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
+                            transition={
+                              prefersReducedMotion ? { duration: 0 } : SPRING_NAV_PILL
+                            }
                             className={`pointer-events-none absolute inset-0 z-0 rounded-full ${
                               isLightHeaderRoute ? 'bg-[#211814]/8' : 'bg-[#DFC8A6]/14'
                             }`}
@@ -357,9 +393,13 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                           <motion.span
                             layoutId="aflan-nav-pill"
                             aria-hidden="true"
-                            transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
-                            className={`pointer-events-none absolute inset-0 z-0 rounded-full shadow-xs ${
-                              isLightHeaderRoute ? 'bg-[#211814]' : 'bg-[#DFC8A6]'
+                            transition={
+                              prefersReducedMotion ? { duration: 0 } : SPRING_NAV_PILL
+                            }
+                            className={`pointer-events-none absolute inset-0 z-0 rounded-full ${
+                              isLightHeaderRoute
+                                ? 'bg-[#211814] shadow-[inset_0_1px_0_rgba(223,200,166,0.28),0_4px_14px_rgba(33,24,20,0.22)]'
+                                : 'bg-[#DFC8A6] shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_4px_14px_rgba(12,8,6,0.28)]'
                             }`}
                           >
                             <span
@@ -426,7 +466,9 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                             <motion.span
                               layoutId="aflan-tablet-nav-underline"
                               aria-hidden="true"
-                              transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
+                              transition={
+                                prefersReducedMotion ? { duration: 0 } : SPRING_NAV_PILL
+                              }
                               className={`pointer-events-none absolute inset-x-2.5 bottom-1 z-0 h-[1.5px] ${
                                 isLightHeaderRoute ? 'bg-[#211814]' : 'bg-[#DFC8A6]'
                               }`}
@@ -444,16 +486,33 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
               ref={triggerRef}
               type="button"
               onClick={() => (menuOpen ? closeMenu() : openMenu())}
+              onMouseMove={(e) => {
+                if (!enableSheenFx) return;
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                menuX.set(x);
+                menuY.set(y);
+                e.currentTarget.style.setProperty('--gx', `${x}px`);
+                e.currentTarget.style.setProperty('--gy', `${y}px`);
+              }}
               aria-expanded={menuOpen}
               aria-controls="aflan-editorial-menu"
               aria-label={menuOpen ? 'Close full navigation' : 'Open full navigation'}
               data-cursor={menuOpen ? 'CLOSE' : 'MENU'}
-              className={`group relative isolate inline-flex items-center gap-2.5 min-h-[44px] px-4 sm:px-4.5 py-2 rounded-full shrink-0 transition-all duration-300 cursor-pointer ${
+              className={`group group/menu relative isolate overflow-hidden inline-flex items-center gap-2.5 min-h-[44px] px-4.5 sm:px-5 py-2 rounded-full shrink-0 transition-all duration-300 cursor-pointer ${
                 isLightHeaderRoute
-                  ? 'border border-[#211814]/35 bg-[#211814]/90 backdrop-blur-[12px] text-[#F6F1E9] shadow-[inset_0_1px_0_rgba(246,241,233,0.16),0_10px_24px_rgba(33,24,20,0.18)] hover:bg-[#33241C]'
-                  : 'glass-liquid text-[#F6F1E9] hover:border-champagne/60'
+                  ? 'border border-[#211814]/30 bg-[#211814]/88 backdrop-blur-[14px] text-[#F6F1E9] shadow-[inset_0_1.5px_1px_rgba(246,241,233,0.28),inset_0_-1.5px_2px_rgba(185,141,97,0.22),0_10px_24px_rgba(33,24,20,0.18)] hover:bg-[#33241C]'
+                  : 'glass-dynamic-pill text-[#F6F1E9] hover:border-champagne/55'
               }`}
             >
+              {enableSheenFx && (
+                <motion.span
+                  aria-hidden="true"
+                  style={{ background: menuDarkSheen }}
+                  className="pointer-events-none absolute inset-0 z-0 rounded-full opacity-0 group-hover/menu:opacity-100 transition-opacity duration-300"
+                />
+              )}
               <span className="relative z-10 font-mono text-[11px] tracking-[0.2em] uppercase">
                 {menuOpen ? 'Close' : 'Menu'}
               </span>
@@ -505,7 +564,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
             data-lenis-prevent
             className="fixed inset-0 z-65 bg-obsidian text-ivory overflow-y-auto overscroll-contain will-change-[transform,opacity]"
           >
-            <div className="studio-vignette min-h-dvh flex flex-col justify-between px-4 sm:px-6 lg:px-12 py-5 sm:py-6">
+            <div className="studio-vignette min-h-dvh flex flex-col justify-between px-5 sm:px-7 md:px-10 lg:px-12 py-6 sm:py-7">
               {/* Top Overlay Header */}
               <div className="max-w-[1440px] w-full mx-auto flex items-center justify-between gap-2.5 sm:gap-3 pb-4 sm:pb-5 border-b border-champagne/15">
                 <Link to="/" onClick={closeMenu} aria-label="AFLAN Home" className="shrink-0">
@@ -580,13 +639,13 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                           }}
                           onTouchStart={() => prefetchRoute(route.path)}
                           onClick={closeMenu}
-                          className="relative isolate group grid grid-cols-[minmax(0,1fr)_auto] sm:grid-cols-[minmax(195px,max-content)_minmax(0,1fr)_auto] md:grid-cols-[minmax(160px,max-content)_minmax(0,1fr)_auto] xl:grid-cols-[minmax(230px,max-content)_minmax(0,1fr)_auto] items-center gap-x-4 xl:gap-x-6 py-3 sm:py-3.5 px-3 sm:px-4 min-h-[56px] transition-colors"
+                          className="relative isolate group grid grid-cols-[minmax(0,1fr)_auto] sm:grid-cols-[minmax(195px,max-content)_minmax(0,1fr)_auto] md:grid-cols-[minmax(160px,max-content)_minmax(0,1fr)_auto] xl:grid-cols-[minmax(230px,max-content)_minmax(0,1fr)_auto] items-center gap-x-4 xl:gap-x-6 py-3.5 sm:py-4 px-3.5 sm:px-4 min-h-[56px] transition-colors"
                         >
                           {isHighlighted && (
                             <motion.span
                               layoutId="menu-row-highlight"
                               aria-hidden="true"
-                              transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
+                              transition={prefersReducedMotion ? { duration: 0 } : SPRING_NAV_PILL}
                               className="pointer-events-none absolute inset-0 z-0 bg-espresso/75 border-l-2 border-champagne"
                             />
                           )}
@@ -723,7 +782,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
               </div>
 
               {/* Quick Utility Dock (Desktop, Tablet & Mobile) */}
-              <div className="max-w-[1440px] w-full mx-auto pt-4 sm:pt-5 border-t border-champagne/15 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="max-w-[1440px] w-full mx-auto pt-5 border-t border-champagne/15 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase text-taupe">
                   <span className="inline-flex items-center gap-2 text-champagne tabular-nums">
                     <span
@@ -740,7 +799,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                   </span>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+                <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
                   {onOpenCommandPalette && (
                     <button
                       type="button"

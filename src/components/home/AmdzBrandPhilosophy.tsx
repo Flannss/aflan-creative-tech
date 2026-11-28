@@ -84,7 +84,7 @@ export const AmdzBrandPhilosophy: React.FC = () => {
   return (
     <section
       aria-label="Filosofi Logo Brand AMDZ"
-      className="bg-warm-walnut-wash relative text-ivory py-16 sm:py-24 lg:py-28 px-5 md:px-8 lg:px-12 border-y border-champagne/15 overflow-x-clip"
+      className="bg-warm-walnut-wash relative text-ivory py-14 sm:py-18 md:py-22 lg:py-28 px-5 sm:px-7 md:px-10 lg:px-12 border-y border-champagne/15 overflow-x-clip"
     >
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
         {/* Interactive `AMDZ` Monogram Atelier Stage */}
@@ -294,7 +294,7 @@ export const AmdzBrandPhilosophy: React.FC = () => {
                         }}
                         className="overflow-hidden"
                       >
-                        <p className="pb-5 pt-0.5 pl-11 sm:pl-14 pr-5 font-sans text-sm sm:text-base text-ivory/80 leading-relaxed max-w-2xl">
+                        <p className="pb-5 pt-0.5 pl-4 sm:pl-12 lg:pl-14 pr-5 font-sans text-sm sm:text-base text-ivory/80 leading-relaxed max-w-2xl">
                           {pillar.description}
                         </p>
                       </motion.div>

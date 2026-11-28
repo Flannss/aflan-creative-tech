@@ -267,7 +267,7 @@ export const ContactPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="bg-ivory text-espresso pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-24 px-5 md:px-8 lg:px-12 border-b border-espresso/15">
+      <section className="bg-ivory text-espresso pt-24 sm:pt-28 md:pt-32 pb-14 sm:pb-16 md:pb-20 px-5 sm:px-7 md:px-10 lg:px-12 border-b border-espresso/15">
         <div className="max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
@@ -309,7 +309,7 @@ export const ContactPage: React.FC = () => {
 
       <section
         data-nav-surface="dark"
-        className="bg-obsidian text-ivory py-16 md:py-24 px-5 md:px-8 lg:px-12"
+        className="bg-obsidian text-ivory py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12"
       >
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           {/* KOLOM KIRI: KANAL LANGSUNG, KETERSEDIAAN & KONTAK CEPAT */}
@@ -556,7 +556,7 @@ export const ContactPage: React.FC = () => {
 
           {/* KOLOM KANAN: FORM PESAN LANGSUNG KE INBOX */}
           <Reveal variant="up" delay={0.1} className="lg:col-span-7 min-w-0">
-            <div className="w-full max-w-full min-w-0 overflow-hidden bg-ivory text-espresso border border-champagne/25 p-5 sm:p-10 lg:p-12 shadow-2xl">
+            <div className="w-full max-w-full min-w-0 overflow-hidden bg-ivory text-espresso border border-champagne/25 p-6 sm:p-8 md:p-10 lg:p-12 shadow-2xl">
               <div className="pb-6 mb-8 border-b border-espresso/15 space-y-2">
                 <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] whitespace-nowrap font-medium text-cognac">
                   DIRECT INBOX DISPATCH
@@ -672,7 +672,7 @@ export const ContactPage: React.FC = () => {
                   >
                     SUBJEK / TOPIK *
                   </label>
-                  <div className="w-full max-w-full min-w-0 flex flex-nowrap overflow-x-auto scrollbar-hide gap-2 pb-1">
+                  <div className="w-full max-w-full min-w-0 flex flex-nowrap overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-2.5 pb-1">
                     {SUBJECT_PRESETS.map((preset) => {
                       const active = values.subject === preset;
                       return (
@@ -686,7 +686,7 @@ export const ContactPage: React.FC = () => {
                             }
                           }}
                           aria-pressed={active}
-                          className={`shrink-0 px-3.5 py-2 rounded-full text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap border transition-colors cursor-pointer ${
+                          className={`shrink-0 snap-start min-h-[44px] sm:min-h-[38px] px-3.5 py-2 rounded-full text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap border transition-colors cursor-pointer ${
                             active
                               ? 'bg-espresso text-ivory border-espresso font-medium'
                               : 'bg-offwhite text-espresso/80 border-espresso/20 hover:border-bronze'

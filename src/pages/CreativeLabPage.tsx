@@ -1414,7 +1414,7 @@ export const CreativeLabPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-5 md:px-8 lg:px-12 border-b border-brass/20">
+      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 md:pt-32 pb-14 sm:pb-18 md:pb-20 px-5 sm:px-7 md:px-10 lg:px-12 border-b border-brass/20">
         <div className="relative z-10 max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
@@ -1452,7 +1452,7 @@ export const CreativeLabPage: React.FC = () => {
           </div>
 
           {/* Quick-Jump Module Index Bar */}
-          <div className="mt-10 pt-6 border-t border-champagne/15 flex flex-wrap gap-2">
+          <div className="mt-10 pt-6 border-t border-champagne/15 flex flex-nowrap sm:flex-wrap overflow-x-auto sm:overflow-visible scrollbar-hide snap-x snap-mandatory gap-2.5 pb-1">
             {[
               { href: '#lab-spotlight', label: '01 · Dynamic Spotlight' },
               { href: '#lab-magnetic', label: '02 · Magnetic Cursor UI' },
@@ -1467,7 +1467,7 @@ export const CreativeLabPage: React.FC = () => {
               <a
                 key={mod.href}
                 href={mod.href}
-                className="px-3.5 py-2 rounded-full bg-espresso/60 border border-champagne/20 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne hover:bg-champagne hover:text-obsidian tabular-nums transition-colors"
+                className="shrink-0 snap-start inline-flex items-center min-h-[44px] sm:min-h-[38px] px-4 py-2 rounded-full bg-espresso/60 border border-champagne/20 font-mono text-[10px] tracking-[0.18em] uppercase text-champagne hover:bg-champagne hover:text-obsidian tabular-nums whitespace-nowrap transition-colors"
               >
                 {mod.label}
               </a>
@@ -1479,7 +1479,7 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 01 — DYNAMIC SPOTLIGHT MASKING */}
       <section
         id="lab-spotlight"
-        className="bg-espresso text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b border-champagne/15"
+        className="bg-espresso text-ivory py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12 border-b border-champagne/15"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
@@ -1504,7 +1504,7 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 02 — MAGNETIC CURSOR UI PLAYGROUND */}
       <section
         id="lab-magnetic"
-        className="bg-ivory text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b border-espresso/15"
+        className="bg-ivory text-espresso py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12 border-b border-espresso/15"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
@@ -1530,7 +1530,7 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 03 — TYPOGRAPHY COMPOSITOR */}
       <section
         id="lab-typography"
-        className="bg-espresso text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b border-champagne/15"
+        className="bg-espresso text-ivory py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12 border-b border-champagne/15"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up" className="flex flex-wrap items-end justify-between gap-4">
@@ -1548,8 +1548,8 @@ export const CreativeLabPage: React.FC = () => {
             </span>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-            <div className="md:col-span-7 lg:col-span-8 min-h-[240px] sm:min-h-[320px] bg-obsidian border border-champagne/25 p-6 sm:p-8 flex items-center justify-center text-center overflow-hidden relative">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+            <div className="lg:col-span-8 min-h-[240px] sm:min-h-[320px] bg-obsidian border border-champagne/25 p-6 sm:p-8 flex items-center justify-center text-center overflow-hidden relative">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 opacity-15"
@@ -1572,7 +1572,7 @@ export const CreativeLabPage: React.FC = () => {
               </p>
             </div>
 
-            <div className="md:col-span-5 lg:col-span-4 bg-obsidian/70 border border-champagne/20 p-6 space-y-5">
+            <div className="lg:col-span-4 bg-obsidian/70 border border-champagne/20 p-6 space-y-5">
               <div>
                 <label
                   htmlFor="lab-specimen-input"
@@ -1663,7 +1663,7 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 04 — CHIAROSCURO CANVAS */}
       <section
         id="lab-chiaroscuro"
-        className="bg-obsidian text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b border-champagne/15"
+        className="bg-obsidian text-ivory py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12 border-b border-champagne/15"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up" className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
@@ -1688,7 +1688,7 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 05 — EASING CHOREOGRAPHY */}
       <section
         id="lab-easing"
-        className="bg-ivory text-espresso py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-b border-espresso/15"
+        className="bg-ivory text-espresso py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12 border-b border-espresso/15"
       >
         <div className="max-w-[1440px] mx-auto space-y-6">
           <div>
@@ -1762,7 +1762,7 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 06 — CONTRAST MATRIX */}
       <section
         id="lab-contrast"
-        className="bg-chocolate text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12"
+        className="bg-chocolate text-ivory py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <Reveal variant="up">
@@ -1774,19 +1774,19 @@ export const CreativeLabPage: React.FC = () => {
             </h2>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-            <div className="md:col-span-5 space-y-6 bg-obsidian/70 border border-champagne/20 p-5 sm:p-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+            <div className="lg:col-span-5 space-y-6 bg-obsidian/70 border border-champagne/20 p-5 sm:p-6">
               <div>
                 <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-champagne mb-3">
                   WARNA LATAR ({bgHex})
                 </p>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-3 gap-2.5">
                   {PALETTE_SWATCHES.map((sw) => (
                     <button
                       key={`bg-${sw.hex}`}
                       type="button"
                       onClick={() => setBgHex(sw.hex)}
-                      className={`p-2 text-left border transition-all ${
+                      className={`min-h-[44px] p-2 text-left border transition-all ${
                         bgHex === sw.hex
                           ? 'border-champagne ring-1 ring-champagne'
                           : 'border-champagne/15 hover:border-champagne/50'
@@ -1808,13 +1808,13 @@ export const CreativeLabPage: React.FC = () => {
                 <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-champagne mb-3">
                   WARNA TEKS ({fgHex})
                 </p>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-3 gap-2.5">
                   {PALETTE_SWATCHES.map((sw) => (
                     <button
                       key={`fg-${sw.hex}`}
                       type="button"
                       onClick={() => setFgHex(sw.hex)}
-                      className={`p-2 text-left border transition-all ${
+                      className={`min-h-[44px] p-2 text-left border transition-all ${
                         fgHex === sw.hex
                           ? 'border-champagne ring-1 ring-champagne'
                           : 'border-champagne/15 hover:border-champagne/50'
@@ -1834,7 +1834,7 @@ export const CreativeLabPage: React.FC = () => {
             </div>
 
             <div
-              className="md:col-span-7 p-6 sm:p-10 lg:p-12 border border-champagne/25 flex flex-col justify-between transition-colors duration-300 min-h-[300px] lg:min-h-[320px]"
+              className="lg:col-span-7 p-6 sm:p-10 lg:p-12 border border-champagne/25 flex flex-col justify-between transition-colors duration-300 min-h-[300px] lg:min-h-[320px]"
               style={{ backgroundColor: bgHex, color: fgHex }}
             >
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-current/20 pb-4 font-mono text-[11px] tracking-[0.2em] uppercase">
@@ -1864,7 +1864,7 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 07 — MOTION & EASING WORKBENCH */}
       <section
         id="lab-workbench"
-        className="relative bg-umber text-ivory py-14 sm:py-20 lg:py-24 px-5 md:px-8 lg:px-12 border-t border-brass/20"
+        className="relative bg-umber text-ivory py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12 border-t border-brass/20"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <HairlineRule tone="champagne" className="mb-2" />
@@ -1892,7 +1892,7 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 08 — DESIGN SYSTEM & TOKEN SPECIMEN */}
       <section
         id="lab-tokens"
-        className="relative bg-obsidian text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-t border-champagne/15"
+        className="relative bg-obsidian text-ivory py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12 border-t border-champagne/15"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <HairlineRule tone="champagne" className="mb-2" />
@@ -1918,7 +1918,7 @@ export const CreativeLabPage: React.FC = () => {
       {/* LAB 09 — TACTILE MICRO-INTERACTIONS DECK */}
       <section
         id="lab-micro"
-        className="relative bg-espresso text-ivory py-14 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 border-t border-champagne/15"
+        className="relative bg-espresso text-ivory py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12 border-t border-champagne/15"
       >
         <div className="max-w-[1440px] mx-auto space-y-8">
           <HairlineRule tone="champagne" className="mb-2" />

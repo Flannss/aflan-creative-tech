@@ -10,7 +10,7 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { personalData } from '@/data/personal';
 import { contactData } from '@/data/contact';
 import { projectsData } from '@/data/projects';
-import { EASE_LUXURY, MOTION_DURATION } from '@/utils/motion';
+import { EASE_PAGE_ENTER, MOTION_DURATION } from '@/utils/motion';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { AmdzBrandPhilosophy } from '@/components/home/AmdzBrandPhilosophy';
 import { HeroPortrait } from '@/components/home/HeroPortrait';
@@ -127,7 +127,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
       ====================================================================== */}
       <section
         ref={heroRef}
-        className="bg-warm-atelier relative min-h-[calc(100svh-1rem)] text-ivory flex flex-col justify-between pt-24 sm:pt-28 pb-8 sm:pb-10 px-5 md:px-8 lg:px-12 overflow-hidden"
+        className="bg-warm-atelier relative min-h-[calc(100svh-1rem)] text-ivory flex flex-col justify-between pt-24 sm:pt-28 md:pt-32 pb-8 sm:pb-10 px-5 sm:px-7 md:px-10 lg:px-12 overflow-hidden"
       >
         <div
           aria-hidden="true"
@@ -143,13 +143,9 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
 
         {/* Cover Stage: Monumental Centered Masthead + Academic Identity + 3-Column Flanking */}
         <motion.div
-          initial={disableMotion ? false : { scale: 1.03, opacity: 0.94 }}
-          animate={
-            introReady
-              ? { scale: 1, opacity: 1 }
-              : { scale: 1.03, opacity: 0.94 }
-          }
-          transition={{ duration: disableMotion ? 0 : 0.7, ease: EASE_LUXURY }}
+          initial={disableMotion ? false : { scale: 1.02 }}
+          animate={introReady ? { scale: 1 } : { scale: 1.02 }}
+          transition={{ duration: disableMotion ? 0 : 0.65, ease: EASE_PAGE_ENTER }}
           className="relative z-10 max-w-[1440px] w-full mx-auto my-auto py-7 sm:py-9 lg:py-10 will-change-transform"
         >
           {/* Monumental Centered Playfair Display Masthead + Clean Academic Subtitle */}
@@ -168,7 +164,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
           </motion.div>
 
           {/* 3-Column Center-Stage Grid: Left Action | Center Sculpted Portrait | Right Dossier */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(360px,420px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(385px,440px)_minmax(0,1fr)] gap-7 sm:gap-8 lg:gap-7 xl:gap-10 items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(360px,420px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(385px,440px)_minmax(0,1fr)] gap-8 sm:gap-10 lg:gap-8 xl:gap-10 items-center">
             {/* CENTER ANCHOR: Sculpted Atelier Double-Contour Portrait */}
             <div className="col-span-1 sm:col-span-2 lg:col-span-1 order-1 lg:order-2 flex justify-center">
               <HeroPortrait
@@ -186,7 +182,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
               transition={{
                 duration: disableMotion ? 0 : MOTION_DURATION,
                 delay: disableMotion ? 0 : 0.14,
-                ease: EASE_LUXURY,
+                ease: EASE_PAGE_ENTER,
               }}
               className="col-span-1 lg:col-span-1 order-2 lg:order-1 flex flex-col items-center sm:items-start text-center sm:text-left gap-4 sm:gap-5 will-change-transform"
             >
@@ -226,7 +222,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
               transition={{
                 duration: disableMotion ? 0 : MOTION_DURATION,
                 delay: disableMotion ? 0 : 0.2,
-                ease: EASE_LUXURY,
+                ease: EASE_PAGE_ENTER,
               }}
               className="col-span-1 lg:col-span-1 order-3 lg:order-3 flex flex-col items-center sm:items-end text-center sm:text-right gap-5 will-change-transform"
             >
@@ -294,7 +290,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
       {/* =====================================================================
           SECTION 4 — LUMINOUS ALMOND CREAM: ABOUT THIS DOSSIER + COMPACT WORKS
       ====================================================================== */}
-      <section className="bg-warm-almond relative text-obsidian py-16 sm:py-20 lg:py-24 px-5 md:px-8 lg:px-12 border-t border-bronze/20 overflow-x-clip">
+      <section className="bg-warm-almond relative text-obsidian py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12 border-t border-bronze/20 overflow-x-clip">
         <div className="relative z-10 max-w-[1440px] mx-auto">
           {/* Part A: About This Dossier (Informative Editorial Introduction) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pb-12 sm:pb-14 border-b border-bronze/22 items-start">
@@ -317,11 +313,13 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
               </p>
             </div>
 
-            <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-              {DOSSIER_PILLARS.map((pillar) => (
+            <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+              {DOSSIER_PILLARS.map((pillar, idx) => (
                 <div
                   key={pillar.code}
-                  className="rounded-2xl border border-bronze/22 bg-ivory/85 p-4 sm:p-5 flex flex-col justify-between gap-2.5 shadow-[0_8px_24px_rgba(33,24,20,0.05)]"
+                  className={`rounded-2xl border border-bronze/22 bg-ivory/85 p-5 flex flex-col justify-between gap-2.5 shadow-[0_8px_24px_rgba(33,24,20,0.05)] ${
+                    idx === 2 ? 'sm:col-span-2 lg:col-span-1' : ''
+                  }`}
                 >
                   <div className="flex items-center justify-between gap-2 font-mono text-[10px] tracking-[0.2em] uppercase">
                     <span className="text-cognac font-medium">{pillar.label}</span>
@@ -373,22 +371,24 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
       {/* =====================================================================
           SECTION 5 — COMPACT EDITORIAL FOCUS STRIP (WARM WALNUT WASH)
       ====================================================================== */}
-      <section className="bg-warm-walnut-wash relative text-ivory py-14 sm:py-16 px-5 md:px-8 lg:px-12 border-t border-champagne/20 overflow-x-clip">
+      <section className="bg-warm-walnut-wash relative text-ivory py-14 sm:py-16 md:py-20 px-5 sm:px-7 md:px-10 lg:px-12 border-t border-champagne/20 overflow-x-clip">
         <div className="max-w-[1440px] mx-auto space-y-6">
           <div className="flex items-center justify-between gap-4 font-mono text-[10px] tracking-[0.22em] uppercase">
             <span className="text-champagne">EXPLORE FURTHER</span>
             <span className="text-taupe">CURATED ROUTES</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5">
-            {EDITORIAL_FOCUS_ITEMS.map((item) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {EDITORIAL_FOCUS_ITEMS.map((item, idx) => (
               <Link
                 key={item.to}
                 to={item.to}
                 onMouseEnter={() => prefetchRoute(item.to)}
                 onFocus={() => prefetchRoute(item.to)}
                 onTouchStart={() => prefetchRoute(item.to)}
-                className="group rounded-2xl border border-champagne/25 hover:border-champagne/60 bg-umber/85 hover:bg-espresso p-5 sm:p-6 flex flex-col justify-between gap-4 min-h-[124px] hover:-translate-y-1 transition-all duration-300"
+                className={`group rounded-2xl border border-champagne/25 hover:border-champagne/60 bg-umber/85 hover:bg-espresso p-6 flex flex-col justify-between gap-4 min-h-[132px] hover:-translate-y-1 transition-all duration-300 ${
+                  idx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
+                }`}
               >
                 <div className="flex items-center justify-between gap-3 font-mono text-[10px] tracking-[0.2em] uppercase">
                   <span className="text-champagne tabular-nums">{item.code} · {item.tag}</span>
@@ -415,7 +415,7 @@ export const HomePage: React.FC<HomePageProps> = ({ introReady = true }) => {
       {/* =====================================================================
           SECTION 6 — LUMINOUS WARM CLOSING SPREAD (ZERO CTA DUPLICATION)
       ====================================================================== */}
-      <section className="bg-warm-closing relative text-obsidian py-16 sm:py-20 lg:py-24 px-5 md:px-8 lg:px-12 border-t border-bronze/20 overflow-x-clip">
+      <section className="bg-warm-closing relative text-obsidian py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12 border-t border-bronze/20 overflow-x-clip">
         <div className="max-w-[1440px] mx-auto space-y-10 sm:space-y-12">
           <HairlineRule tone="espresso" />
 

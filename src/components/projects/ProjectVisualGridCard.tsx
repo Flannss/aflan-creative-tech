@@ -52,7 +52,7 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
   return (
     <article
       onMouseMove={handleMouseMove}
-      className={`group relative flex flex-col bg-obsidian border transition-colors duration-300 overflow-hidden shadow-[0_20px_56px_rgba(0,0,0,0.45)] ${
+      className={`group relative flex flex-col rounded-2xl bg-obsidian border transition-colors duration-300 overflow-hidden shadow-[0_20px_56px_rgba(0,0,0,0.45)] ${
         isSelected
           ? 'border-champagne/75'
           : 'border-champagne/20 hover:border-champagne/55'
@@ -71,7 +71,7 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
         projectTitle={project.title}
         variant="icon"
         surface="dark"
-        className="absolute top-3 right-3 z-20"
+        className="absolute top-3.5 right-3.5 z-20"
       />
 
       <Link
@@ -88,7 +88,7 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
       >
         <div
           data-project-preview
-          className="relative aspect-video overflow-hidden border-b border-champagne/15"
+          className="relative aspect-[16/10] overflow-hidden border-b border-champagne/15"
         >
           <ApertureFrame className="w-full h-full">
             {project.previewImage ? (
@@ -128,7 +128,7 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
         </div>
 
         <div className="flex-1 p-5 sm:p-6 pb-4 flex flex-col justify-between gap-4">
-          <div className="space-y-3">
+          <div className="space-y-3.5">
             <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[10px] tracking-[0.18em] uppercase">
               <span className="text-champagne tabular-nums">
                 {project.index} · {project.category}
@@ -140,15 +140,15 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
               {project.title}
             </h3>
 
-            <p className="font-sans text-sm text-ivory/80 leading-relaxed line-clamp-3">
+            <p className="font-sans text-sm text-ivory/80 leading-relaxed line-clamp-2 sm:line-clamp-3">
               {project.summary}
             </p>
 
-            <div className="flex flex-wrap gap-1.5 pt-1">
+            <div className="flex flex-wrap gap-2 pt-1">
               {project.stack.slice(0, 3).map((tech) => (
                 <span
                   key={tech}
-                  className="px-2 py-0.5 border border-champagne/20 bg-espresso/50 font-mono text-[9px] tracking-[0.14em] uppercase text-champagne/85"
+                  className="px-2.5 py-1 border border-champagne/20 bg-espresso/50 font-mono text-[9px] tracking-[0.14em] uppercase text-champagne/85"
                 >
                   {tech}
                 </span>
@@ -158,7 +158,7 @@ export const ProjectVisualGridCard: React.FC<ProjectVisualGridCardProps> = ({
         </div>
       </Link>
 
-      <div className="relative z-10 mx-5 sm:mx-6 mb-5 pt-4 border-t border-champagne/15 flex flex-wrap items-center justify-between gap-2.5">
+      <div className="relative z-10 mx-5 sm:mx-6 mb-5 pt-4 border-t border-champagne/15 flex flex-wrap items-center justify-between gap-3">
         {project.liveUrl ? (
           <a
             href={project.liveUrl}

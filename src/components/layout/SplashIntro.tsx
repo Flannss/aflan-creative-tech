@@ -9,7 +9,7 @@ import { MonogramMark } from '@/components/brand/Monogram';
 import { personalData } from '@/data/personal';
 import { useCanHoverFine } from '@/hooks/useMediaQuery';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
-import { EASE_LUXURY } from '@/utils/motion';
+import { EASE_LUXURY, EASE_PAGE_ENTER } from '@/utils/motion';
 
 interface SplashIntroProps {
   onEnter: (targetPath?: string) => void;
@@ -90,7 +90,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
       setWibTime(getPurwokertoWibTime());
     }, 15000);
 
-    const autoEnterDelayMs = prefersReducedMotion ? 320 : 1650;
+    const autoEnterDelayMs = prefersReducedMotion ? 300 : 1620;
     const autoTimerId = window.setTimeout(triggerEnter, autoEnterDelayMs);
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -159,7 +159,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
               ? { opacity: 0, transition: { duration: 0.18 } }
               : {
                   y: '-104%',
-                  transition: { duration: 0.58, ease: EASE_LUXURY },
+                  transition: { duration: 0.56, ease: EASE_PAGE_ENTER },
                 }
           }
           style={{
@@ -175,7 +175,7 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
               ? { opacity: 0, transition: { duration: 0.18 } }
               : {
                   y: '104%',
-                  transition: { duration: 0.58, ease: EASE_LUXURY },
+                  transition: { duration: 0.56, ease: EASE_PAGE_ENTER },
                 }
           }
           style={{
@@ -464,8 +464,8 @@ export const SplashIntro: React.FC<SplashIntroProps> = ({ onEnter }) => {
               initial={prefersReducedMotion ? { scaleX: 1 } : { scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{
-                duration: prefersReducedMotion ? 0.25 : 1.42,
-                delay: prefersReducedMotion ? 0 : 0.22,
+                duration: prefersReducedMotion ? 0.24 : 1.42,
+                delay: prefersReducedMotion ? 0 : 0.18,
                 ease: EASE_LUXURY,
               }}
               className="block h-full w-full origin-left bg-linear-to-r from-brass via-champagne to-ivory will-change-transform"

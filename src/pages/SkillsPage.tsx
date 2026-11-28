@@ -100,7 +100,7 @@ export const SkillsPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-umber text-ivory pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-24 px-5 md:px-8 lg:px-12 border-b border-brass/20">
+      <section className="relative bg-umber text-ivory pt-24 sm:pt-28 md:pt-32 pb-14 sm:pb-16 md:pb-20 lg:pb-24 px-5 sm:px-7 md:px-10 lg:px-12 border-b border-brass/20">
         <div className="max-w-[1440px] mx-auto">
           <Reveal variant="up" className="flex flex-wrap items-center justify-between gap-4">
             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap font-medium text-champagne">
@@ -137,7 +137,7 @@ export const SkillsPage: React.FC = () => {
           <Reveal
             variant="up"
             delay={0.18}
-            className="mt-10 lg:mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 border-y border-brass/20 py-6"
+            className="mt-10 lg:mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 border-y border-brass/20 py-6"
           >
             <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-obsidian/90 border border-brass/25">
               <div>
@@ -163,7 +163,7 @@ export const SkillsPage: React.FC = () => {
               <span className="shrink-0 size-2.5 rounded-full bg-taupe" aria-hidden="true" />
             </div>
 
-            <div className="flex items-baseline justify-between gap-4 px-5 py-4 bg-obsidian/55 border border-dashed border-brass/30">
+            <div className="md:col-span-2 lg:col-span-1 flex items-baseline justify-between gap-4 px-5 py-4 bg-obsidian/55 border border-dashed border-brass/30">
               <div>
                 <p className="font-serif italic text-lg sm:text-xl font-light editorial-outline-strong leading-none">
                   Currently Learning
@@ -205,7 +205,7 @@ export const SkillsPage: React.FC = () => {
 
       <div>
         {visibleDomains.length === 0 ? (
-          <section className="bg-ivory text-espresso py-20 px-4 sm:px-8 text-center">
+          <section className="bg-ivory text-espresso py-20 px-5 sm:px-7 md:px-10 text-center">
             <p className="font-serif text-xl md:text-2xl font-light mb-4">
               Tidak ada item keahlian yang cocok dengan kombinasi filter ini.
             </p>
@@ -226,7 +226,7 @@ export const SkillsPage: React.FC = () => {
             return (
               <section
                 key={domain.id}
-                className={`py-16 md:py-24 px-5 md:px-8 lg:px-12 border-b ${isLight
+                className={`py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12 border-b ${isLight
                   ? 'bg-ivory text-espresso border-espresso/15'
                   : 'bg-obsidian text-ivory border-champagne/15'
                   }`}
@@ -294,9 +294,9 @@ export const SkillsPage: React.FC = () => {
                           key={item.name}
                           variant="up"
                           delay={itemIdx * 0.04}
-                          className={`py-6 sm:py-7 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-6 items-baseline ${style.rowOpacity}`}
+                          className={`py-6 sm:py-7 grid grid-cols-1 lg:grid-cols-12 gap-3.5 lg:gap-6 items-baseline ${style.rowOpacity}`}
                         >
-                          <div className="md:col-span-5 flex items-center gap-3">
+                          <div className="lg:col-span-5 flex items-center gap-3">
                             <span
                               aria-hidden="true"
                               className={`shrink-0 size-2 rounded-full ${style.dotClass}`}
@@ -308,7 +308,7 @@ export const SkillsPage: React.FC = () => {
                             </h3>
                           </div>
 
-                          <div className="md:col-span-3">
+                          <div className="lg:col-span-3">
                             <span
                               className={`inline-block font-mono text-[10px] tracking-[0.16em] uppercase px-2.5 py-1 border ${style.badgeClass}`}
                             >
@@ -316,7 +316,7 @@ export const SkillsPage: React.FC = () => {
                             </span>
                           </div>
 
-                          <div className="md:col-span-4">
+                          <div className="lg:col-span-4">
                             <p
                               className={`font-sans text-[15px] sm:text-base lg:text-sm leading-relaxed ${isLight ? 'text-charcoal/80' : 'text-ivory/75'
                                 }`}
@@ -335,7 +335,7 @@ export const SkillsPage: React.FC = () => {
         )}
       </div>
 
-      <section className="bg-chocolate text-ivory py-16 md:py-24 px-5 md:px-8 lg:px-12">
+      <section className="bg-chocolate text-ivory py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           <Reveal variant="up" className="lg:col-span-6 space-y-5">
             <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.26em] uppercase text-champagne">
@@ -356,14 +356,14 @@ export const SkillsPage: React.FC = () => {
               <Link
                 to="/projects"
                 data-cursor="PROYEK"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory transition-colors"
+                className="inline-flex items-center gap-2 min-h-[44px] px-6 py-3 rounded-full bg-champagne text-obsidian font-mono text-xs tracking-[0.18em] uppercase font-medium hover:bg-ivory transition-colors"
               >
                 Lihat Proyek &amp; Evaluasi QA
                 <ArrowUpRight className="size-4" aria-hidden="true" />
               </Link>
               <Link
                 to="/lab"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-champagne/35 text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:border-champagne transition-colors"
+                className="inline-flex items-center gap-2 min-h-[44px] px-6 py-3 rounded-full border border-champagne/35 text-ivory font-mono text-xs tracking-[0.18em] uppercase hover:border-champagne transition-colors"
               >
                 Buka Creative Lab
               </Link>

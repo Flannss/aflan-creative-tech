@@ -156,7 +156,7 @@ export const JourneyPage: React.FC = () => {
 
   return (
     <div className="w-full overflow-x-clip">
-      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-5 md:px-8 lg:px-12 border-b border-brass/20">
+      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 md:pt-32 pb-14 sm:pb-18 md:pb-20 px-5 sm:px-7 md:px-10 lg:px-12 border-b border-brass/20">
         <div className="relative z-10 max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
@@ -204,7 +204,7 @@ export const JourneyPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative bg-ivory text-espresso py-16 md:py-24 px-5 md:px-8 lg:px-12">
+      <section className="relative bg-ivory text-espresso py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           {/* Pinned Editorial Category Heading & Chapter Controls */}
           <aside className="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
@@ -274,14 +274,14 @@ export const JourneyPage: React.FC = () => {
                 {String(activeIndex + 1).padStart(2, '0')} /{' '}
                 {String(filteredMilestones.length).padStart(2, '0')}
               </span>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <button
                   type="button"
                   onClick={() => stepMilestone(-1)}
                   disabled={isFirst}
                   aria-disabled={isFirst}
                   aria-label="Milestone sebelumnya"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-espresso/30 text-espresso font-mono text-[10px] tracking-[0.16em] uppercase hover:bg-espresso hover:text-ivory transition-colors disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-espresso"
+                  className="inline-flex items-center gap-1.5 min-h-[44px] px-4 py-2 rounded-full border border-espresso/30 text-espresso font-mono text-[10px] tracking-[0.16em] uppercase hover:bg-espresso hover:text-ivory transition-colors disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-espresso"
                 >
                   <ArrowLeft className="size-3.5" aria-hidden="true" />
                   Sebelumnya
@@ -292,7 +292,7 @@ export const JourneyPage: React.FC = () => {
                   disabled={isLast}
                   aria-disabled={isLast}
                   aria-label="Milestone berikutnya"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-espresso text-ivory font-mono text-[10px] tracking-[0.16em] uppercase font-medium hover:bg-mocha transition-colors disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-espresso"
+                  className="inline-flex items-center gap-1.5 min-h-[44px] px-4 py-2 rounded-full bg-espresso text-ivory font-mono text-[10px] tracking-[0.16em] uppercase font-medium hover:bg-mocha transition-colors disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-espresso"
                 >
                   Berikutnya
                   <ArrowRight className="size-3.5" aria-hidden="true" />

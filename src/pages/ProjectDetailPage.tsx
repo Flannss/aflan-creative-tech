@@ -132,7 +132,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
           />
         </div>
       )}
-      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-20 px-5 md:px-8 lg:px-12 border-b border-brass/20">
+      <section className="relative bg-obsidian text-ivory pt-24 sm:pt-28 md:pt-32 pb-14 sm:pb-18 md:pb-20 px-5 sm:px-7 md:px-10 lg:px-12 border-b border-brass/20">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <Link
@@ -141,7 +141,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
               onMouseEnter={() => prefetchRoute('/projects')}
               onFocus={() => prefetchRoute('/projects')}
               onTouchStart={() => prefetchRoute('/projects')}
-              className="group inline-flex items-center gap-2 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne hover:text-ivory transition-colors"
+              className="group inline-flex items-center gap-2 min-h-[44px] text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-champagne hover:text-ivory transition-colors"
             >
               <ArrowLeft
                 className="size-3.5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-1 motion-reduce:transform-none"
@@ -153,7 +153,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
               CASE STUDY · ENTRI {project.index} · {project.category}
             </span>
           </div>
-          <HairlineRule tone="champagne" immediate className="mt-6" />
+          <HairlineRule tone="champagne" immediate className="mt-5" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pt-10 lg:pt-12 items-end">
             <div className="lg:col-span-8 space-y-5">
@@ -171,13 +171,13 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
               </p>
             </div>
 
-            <Reveal variant="up" delay={0.1} className="lg:col-span-4 min-w-0 lg:text-right space-y-3">
+            <Reveal variant="up" delay={0.1} className="lg:col-span-4 min-w-0 lg:text-right space-y-4">
               <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] font-medium text-taupe">
                 LINIMASA / STATUS
               </p>
               <p className="font-serif text-xl text-champagne/90">{project.yearLabel}</p>
 
-              <div className="pt-2 flex flex-wrap lg:justify-end gap-2.5">
+              <div className="pt-1 flex flex-wrap lg:justify-end gap-3">
                 <BookmarkButton
                   slug={project.slug}
                   projectTitle={project.title}
@@ -246,7 +246,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
         </div>
       </section>
 
-      <section className="bg-ivory text-espresso py-16 md:py-24 px-5 md:px-8 lg:px-12">
+      <section className="bg-ivory text-espresso py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12">
         <div className="max-w-[1440px] mx-auto space-y-12 sm:space-y-16">
           <figure className="border border-espresso/20 bg-obsidian overflow-hidden shadow-2xl">
             <ApertureFrame>
@@ -329,7 +329,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
                   <p className="font-mono text-[10px] tracking-[0.24em] uppercase text-mocha mb-3">
                     STACK &amp; METHODOLOGY
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2.5">
                     {project.stack.map((tech) => (
                       <span
                         key={tech}
@@ -418,7 +418,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
             onMouseEnter={() => prefetchRoute(`/projects/${prevProject.slug}`)}
             onFocus={() => prefetchRoute(`/projects/${prevProject.slug}`)}
             onTouchStart={() => prefetchRoute(`/projects/${prevProject.slug}`)}
-            className="relative group p-6 sm:p-9 lg:p-14 hover:bg-obsidian/45 transition-colors duration-500 flex flex-col justify-between gap-4 min-w-0 overflow-hidden"
+            className="relative group p-6 sm:p-8 md:p-10 lg:p-14 hover:bg-obsidian/45 transition-colors duration-500 flex flex-col justify-between gap-5 min-w-0 overflow-hidden"
           >
             <span
               aria-hidden="true"
@@ -447,7 +447,7 @@ const ProjectCaseStudyContent: React.FC<ProjectCaseStudyContentProps> = ({
             onMouseEnter={() => prefetchRoute(`/projects/${nextProject.slug}`)}
             onFocus={() => prefetchRoute(`/projects/${nextProject.slug}`)}
             onTouchStart={() => prefetchRoute(`/projects/${nextProject.slug}`)}
-            className="relative group p-6 sm:p-9 lg:p-14 hover:bg-obsidian/45 transition-colors duration-500 flex flex-col justify-between gap-4 md:items-end md:text-right min-w-0 overflow-hidden"
+            className="relative group p-6 sm:p-8 md:p-10 lg:p-14 hover:bg-obsidian/45 transition-colors duration-500 flex flex-col justify-between gap-5 md:items-end md:text-right min-w-0 overflow-hidden"
           >
             <span
               aria-hidden="true"

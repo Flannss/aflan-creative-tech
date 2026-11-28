@@ -22,7 +22,7 @@ export const LenisSelectedWorks: React.FC<LenisSelectedWorksProps> = ({
   projects,
 }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
       {projects.map((project) => {
         const targetSlug = `/projects/${project.slug}`;
         const hasWarmGlaze =
@@ -84,7 +84,7 @@ export const LenisSelectedWorks: React.FC<LenisSelectedWorksProps> = ({
                 )}
               </ApertureFrame>
 
-              <div className="p-5 flex-1 flex flex-col justify-between gap-3">
+              <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between gap-3">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-2 font-mono text-[10px] tracking-[0.18em] uppercase">
                     <span className="text-cognac font-medium truncate tabular-nums">
@@ -106,7 +106,7 @@ export const LenisSelectedWorks: React.FC<LenisSelectedWorksProps> = ({
               </div>
             </Link>
 
-            <div className="px-5 pb-4 pt-3 border-t border-bronze/18 flex flex-wrap items-center justify-between gap-2.5">
+            <div className="px-5 sm:px-6 pb-5 pt-3.5 border-t border-bronze/18 flex flex-wrap items-center justify-between gap-3">
               <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-cognac/80 truncate min-w-0 flex-1">
                 {project.platform}
               </span>

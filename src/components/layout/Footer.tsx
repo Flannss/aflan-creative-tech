@@ -69,8 +69,8 @@ const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
       className="relative bg-obsidian text-ivory border-t border-champagne/20 overflow-hidden"
     >
       <div
-        className={`relative z-10 max-w-[1440px] mx-auto px-5 md:px-8 lg:px-12 pb-24 sm:pb-12 ${
-          isHomeRoute ? 'pt-6 sm:pt-8' : 'pt-14 sm:pt-20 lg:pt-24'
+        className={`relative z-10 max-w-[1440px] mx-auto px-5 sm:px-7 md:px-10 lg:px-12 pb-24 sm:pb-12 ${
+          isHomeRoute ? 'pt-8 sm:pt-10' : 'pt-14 sm:pt-20 lg:pt-24'
         }`}
       >
         {!isHomeRoute && (
@@ -131,13 +131,13 @@ const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
             <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-taupe">
               {`${personalData.currentLocation} · ${personalData.coordinates}`}
             </p>
-            <div className="flex flex-wrap items-center gap-2.5 pt-1">
+            <div className="flex flex-wrap items-center gap-3 pt-1">
               <a
                 href={contactData.githubHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`GitHub ${contactData.githubHandle}`}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/20 bg-espresso/50 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-ivory/90 hover:border-champagne hover:text-champagne active:scale-[0.97] transition-all"
+                className="inline-flex items-center gap-2 min-h-[44px] sm:min-h-[38px] px-3.5 py-2 rounded-full border border-champagne/20 bg-espresso/50 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-ivory/90 hover:border-champagne hover:text-champagne active:scale-[0.97] transition-all"
               >
                 <Github className="size-3.5" aria-hidden="true" />
                 <span>GitHub · {contactData.githubHandle}</span>
@@ -148,7 +148,7 @@ const FooterComponent: React.FC<FooterProps> = ({ onOpenCommandPalette }) => {
                   type="button"
                   onClick={onOpenCommandPalette}
                   aria-label="Buka indeks cepat Command Palette"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-champagne/20 bg-espresso/50 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne/90 hover:border-champagne hover:text-ivory active:scale-[0.97] transition-all cursor-pointer"
+                  className="inline-flex items-center gap-2 min-h-[44px] sm:min-h-[38px] px-3.5 py-2 rounded-full border border-champagne/20 bg-espresso/50 text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] whitespace-nowrap text-champagne/90 hover:border-champagne hover:text-ivory active:scale-[0.97] transition-all cursor-pointer"
                 >
                   <Search className="size-3.5" aria-hidden="true" />
                   <span>⌘K · Quick Index</span>

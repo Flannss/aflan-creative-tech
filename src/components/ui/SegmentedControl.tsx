@@ -1,6 +1,6 @@
 import type React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { SPRING_SILK } from '@/utils/motion';
+import { SPRING_NAV_PILL } from '@/utils/motion';
 
 export interface SegmentedOption<T extends string> {
   value: T;
@@ -21,8 +21,9 @@ interface SegmentedControlProps<T extends string> {
 }
 
 /**
- * Horizontal-scrollable iOS/macOS-style luxury segmented control with a gliding champagne pill.
- * Strictly single-row (flex-nowrap whitespace-nowrap) so long labels never wrap or distort pill borders.
+ * Horizontal-scrollable luxury segmented control with scroll-snap ergonomics on mobile,
+ * `>= 44px` comfortable touch targets on primary bars, and a beveled champagne active pill.
+ * Zero negative z-indexes: uses `relative isolate`, `z-0` pill, and `relative z-10` label.
  */
 export function SegmentedControl<T extends string>({
   options,
@@ -39,13 +40,13 @@ export function SegmentedControl<T extends string>({
 
   const trackClass =
     surface === 'dark'
-      ? 'bg-[#231915] border-[#DFC8A6]/25'
+      ? 'bg-[#231915]/90 border-[#DFC8A6]/25'
       : 'bg-[#211814] border-[#211814]/25 shadow-xs';
 
   const padClass =
     size === 'sm'
-      ? 'px-3.5 py-1.5 text-[10px] tracking-[0.14em]'
-      : 'px-4 py-2 text-[10px] sm:text-[11px] tracking-[0.15em]';
+      ? 'min-h-[40px] sm:min-h-[38px] px-3.5 sm:px-4 py-1.5 text-[10px] tracking-[0.14em]'
+      : 'min-h-[44px] sm:min-h-[40px] px-4 sm:px-4.5 py-2 text-[10px] sm:text-[11px] tracking-[0.15em]';
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (options.length <= 1) return;
@@ -78,12 +79,14 @@ export function SegmentedControl<T extends string>({
   };
 
   return (
-    <div className={`w-full max-w-full min-w-0 overflow-x-auto scrollbar-hide ${className}`}>
+    <div
+      className={`w-full max-w-full min-w-0 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-px-2 py-0.5 ${className}`}
+    >
       <div
         role={roleMode}
         aria-label={ariaLabel}
         onKeyDown={handleKeyDown}
-        className={`relative isolate inline-flex flex-nowrap items-center gap-1 p-1 rounded-full border w-max whitespace-nowrap ${trackClass}`}
+        className={`relative isolate inline-flex flex-nowrap items-center gap-1.5 p-1.5 rounded-full border w-max whitespace-nowrap ${trackClass}`}
       >
         {options.map((option) => {
           const active = option.value === value;
@@ -102,7 +105,7 @@ export function SegmentedControl<T extends string>({
               type="button"
               onClick={() => onChange(option.value)}
               {...tabProps}
-              className={`relative isolate shrink-0 inline-flex items-center gap-1.5 rounded-full font-mono uppercase whitespace-nowrap transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne ${padClass} ${
+              className={`relative isolate snap-start shrink-0 inline-flex items-center gap-1.5 rounded-full font-mono uppercase whitespace-nowrap transition-colors duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-champagne ${padClass} ${
                 active
                   ? 'text-[#211814] font-medium'
                   : 'text-[#F6F1E9]/85 hover:text-[#DFC8A6]'
@@ -112,8 +115,8 @@ export function SegmentedControl<T extends string>({
                 <motion.span
                   layoutId={layoutId}
                   aria-hidden="true"
-                  transition={prefersReducedMotion ? { duration: 0 } : SPRING_SILK}
-                  className="pointer-events-none absolute inset-0 z-0 rounded-full bg-[#DFC8A6] shadow-[0_4px_16px_rgba(223,200,166,0.22)]"
+                  transition={prefersReducedMotion ? { duration: 0 } : SPRING_NAV_PILL}
+                  className="pointer-events-none absolute inset-0 z-0 rounded-full bg-[#DFC8A6] shadow-[inset_0_1px_0_rgba(255,255,255,0.42),0_4px_14px_rgba(12,8,6,0.26)]"
                 />
               )}
               <span className="relative z-10 whitespace-nowrap">{option.label}</span>

@@ -153,7 +153,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                 projectTitle={project.title}
                 variant="icon"
                 surface="dark"
-                className="absolute top-6 right-2 sm:right-4 md:top-9 md:right-9 lg:top-1/2 lg:-translate-y-1/2 lg:right-5 z-20"
+                className="absolute top-6 right-3 sm:right-5 md:top-8 md:right-8 lg:top-1/2 lg:-translate-y-1/2 lg:right-5 z-20"
               />
               <Link
                 to={`/projects/${project.slug}`}
@@ -162,7 +162,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                 onMouseEnter={(e) => handleRowEnter(e, project)}
                 onFocus={(e) => handleRowFocus(e, project)}
                 onBlur={handleRowBlur}
-                className={`relative group block md:flex md:flex-col md:h-full lg:block lg:h-auto py-8 sm:py-10 md:p-6 lg:py-10 lg:pl-5 lg:pr-20 px-2 sm:px-4 md:mx-0 md:border md:border-champagne/20 md:bg-obsidian/45 md:hover:border-champagne/55 md:active:border-champagne lg:border-0 lg:bg-transparent transition-all duration-300 hover:bg-espresso/45 active:bg-espresso/60 active:scale-[0.99] lg:active:scale-100 ${
+                className={`relative group block md:flex md:flex-col md:h-full lg:block lg:h-auto py-8 sm:py-10 md:p-6 md:rounded-2xl lg:rounded-none lg:py-10 lg:pl-5 lg:pr-20 px-3 sm:px-5 md:mx-0 md:border md:border-champagne/20 md:bg-obsidian/45 md:hover:border-champagne/55 md:active:border-champagne lg:border-0 lg:bg-transparent transition-all duration-300 hover:bg-espresso/45 active:bg-espresso/60 active:scale-[0.99] lg:active:scale-100 ${
                   isSelected ? 'bg-espresso/65' : ''
                 }`}
               >
@@ -171,7 +171,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                   className="hidden lg:block pointer-events-none absolute inset-x-5 bottom-0 h-px bg-champagne/65 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:hidden"
                 />
                 <div className="grid grid-cols-1 md:flex md:flex-col md:flex-1 lg:grid lg:grid-cols-12 gap-5 lg:gap-8 items-center md:items-stretch lg:items-center">
-                  <div className="lg:col-span-2 flex items-center lg:flex-col lg:items-start justify-between gap-2 pr-14 md:pr-0">
+                  <div className="lg:col-span-2 flex flex-wrap items-center lg:flex-col lg:items-start justify-between gap-2.5 pr-14 md:pr-0">
                     <span className="font-mono text-xs tracking-[0.26em] text-champagne">
                       {project.index}
                     </span>
@@ -180,7 +180,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                     </span>
                   </div>
 
-                  <div className="lg:col-span-6 space-y-2.5">
+                  <div className="lg:col-span-6 space-y-3">
                     <div className="flex flex-wrap items-center gap-2.5">
                       <span className="font-mono text-[10px] tracking-[0.2em] uppercase px-2.5 py-0.5 border border-champagne/25 text-champagne/90">
                         {project.category}
@@ -197,8 +197,8 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                     </p>
                   </div>
 
-                  <div className="lg:col-span-4 md:mt-auto md:pt-4 md:border-t md:border-champagne/15 lg:mt-0 lg:pt-0 lg:border-t-0 flex items-center justify-between lg:justify-end gap-5">
-                    <div className="lg:text-right">
+                  <div className="lg:col-span-4 md:mt-auto md:pt-4 md:border-t md:border-champagne/15 lg:mt-0 lg:pt-0 lg:border-t-0 flex items-center justify-between lg:justify-end gap-4 sm:gap-5">
+                    <div className="lg:text-right min-w-0">
                       <span className="block font-mono text-[10px] tracking-[0.2em] uppercase text-taupe">
                         Ruang Lingkup
                       </span>
@@ -221,7 +221,7 @@ export const ProjectPreviewList: React.FC<ProjectPreviewListProps> = ({ projects
                       isSelected ? 'scale-[1.03]' : ''
                     }`}
                   >
-                    <ApertureFrame className="aspect-video border border-champagne/20">
+                    <ApertureFrame className="aspect-[16/10] border border-champagne/20 rounded-xl md:rounded-lg overflow-hidden">
                       {project.previewImage ? (
                         <div
                           className="relative w-full h-full overflow-hidden"

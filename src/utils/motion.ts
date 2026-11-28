@@ -1,17 +1,29 @@
 import type { Transition, Variants } from 'framer-motion';
 
 /**
- * Curated luxury editorial easing curve: cubic-bezier(0.22, 1, 0.36, 1).
+ * Curated luxury editorial easing curve for arrivals: cubic-bezier(0.16, 1, 0.3, 1).
  */
 export const EASE_LUXURY: [number, number, number, number] = [0.22, 1, 0.36, 1];
+export const EASE_PAGE_ENTER: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 /**
- * Crisp deceleration exit easing curve: cubic-bezier(0.32, 0.72, 0, 1).
+ * Crisp deceleration exit easing curve: cubic-bezier(0.4, 0, 0.2, 1).
  */
-export const EASE_EXIT: [number, number, number, number] = [0.32, 0.72, 0, 1];
+export const EASE_PAGE_EXIT: [number, number, number, number] = [0.4, 0, 0.2, 1];
+export const EASE_EXIT = EASE_PAGE_EXIT;
 
 /**
- * Silk spring physics without bouncy overshoot for gliding pills and navigation underlines.
+ * Responsive zero-overshoot navigation capsule spring synchronized with page transitions.
+ */
+export const SPRING_NAV_PILL = {
+  type: 'spring' as const,
+  stiffness: 380,
+  damping: 34,
+  mass: 0.85,
+};
+
+/**
+ * Silk spring physics without bouncy overshoot for gliding pills and highlights.
  */
 export const SPRING_SILK = {
   type: 'spring' as const,
@@ -54,8 +66,8 @@ export const biDirectionalPageVariants: Variants = {
     return {
       opacity: 0,
       x: direction * 28,
-      y: kind === 'showcase' ? 12 : 4,
-      scale: 0.985,
+      y: kind === 'showcase' ? 8 : 6,
+      scale: 0.99,
     };
   },
   animate: {
@@ -64,21 +76,20 @@ export const biDirectionalPageVariants: Variants = {
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.42,
-      ease: EASE_LUXURY,
+      duration: 0.4,
+      ease: EASE_PAGE_ENTER,
     },
   },
   exit: (custom?: PageTransitionCustom) => {
     const direction = custom?.direction ?? 1;
-    const kind = custom?.kind ?? 'editorial';
     return {
       opacity: 0,
-      x: direction * -32,
-      y: kind === 'showcase' ? -6 : 0,
-      scale: 0.98,
+      x: direction * -24,
+      y: 0,
+      scale: 0.99,
       transition: {
-        duration: 0.24,
-        ease: EASE_EXIT,
+        duration: 0.2,
+        ease: EASE_PAGE_EXIT,
       },
     };
   },
@@ -101,7 +112,7 @@ export const pageContentVariants: Variants = {
     opacity: 0,
     transition: {
       duration: 0.09,
-      ease: EASE_LUXURY,
+      ease: EASE_PAGE_EXIT,
     },
   },
 };

@@ -393,7 +393,7 @@ export const GalleryPage: React.FC = () => {
         />
       )}
 
-      <section className="bg-offwhite text-espresso pt-24 sm:pt-28 lg:pt-32 pb-16 md:pb-20 px-5 md:px-8 lg:px-12 border-b border-espresso/10">
+      <section className="bg-offwhite text-espresso pt-24 sm:pt-28 md:pt-32 pb-14 sm:pb-16 md:pb-20 px-5 sm:px-7 md:px-10 lg:px-12 border-b border-espresso/10">
         <div className="max-w-[1440px] mx-auto">
           <Reveal
             variant="up"
@@ -448,7 +448,7 @@ export const GalleryPage: React.FC = () => {
                   onClick={() => setFilmGrainEnabled((prev) => !prev)}
                   aria-pressed={filmGrainEnabled}
                   data-cursor="GRAIN"
-                  className={`self-start sm:self-auto shrink-0 inline-flex items-center gap-2 px-4 py-2.5 lg:py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border active:scale-[0.97] transition-all cursor-pointer ${
+                  className={`self-start sm:self-auto shrink-0 inline-flex items-center gap-2 min-h-[44px] sm:min-h-[40px] px-4 py-2 rounded-full font-mono text-[11px] tracking-[0.16em] uppercase border active:scale-[0.97] transition-all cursor-pointer ${
                     filmGrainEnabled
                       ? 'bg-mocha text-ivory border-mocha shadow-sm'
                       : 'bg-ivory text-espresso/80 border-espresso/25 hover:border-espresso'
@@ -500,13 +500,13 @@ export const GalleryPage: React.FC = () => {
 
       <section
         data-nav-surface="dark"
-        className="bg-obsidian text-ivory py-16 md:py-24 px-5 md:px-8 lg:px-12"
+        className="bg-obsidian text-ivory py-14 sm:py-16 md:py-20 lg:py-24 px-5 sm:px-7 md:px-10 lg:px-12"
       >
         <div className="max-w-[1440px] mx-auto">
           {layoutMode === 'masonry' ? (
             <StaggerGroup
               key={selectedCategory}
-              className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8"
+              className="columns-1 md:columns-2 lg:columns-3 gap-6 lg:gap-8 space-y-6 lg:space-y-8"
             >
               {filteredItems.map((item) => {
                 const isDetailOpen = revealedCardId === item.id;
