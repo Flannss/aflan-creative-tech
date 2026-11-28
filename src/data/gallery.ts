@@ -182,12 +182,12 @@ export const galleryItems: GalleryItem[] = [
     aspectClass: 'aspect-16/10',
     meta: {
       medium: 'Poster Tipografi Editorial',
-      treatment: 'Cormorant Garamond · Solid & Outline',
+      treatment: 'Playfair Display & Cormorant Garamond · Solid & Outline',
       composition: 'Format Horizontal 16:10',
       palette: 'Espresso · Champagne · Ivory',
     },
     caption:
-      'Komposisi grafis murni memakai ritme huruf serif italic, garis outline tipis, dan ruang kosong yang menjadi gaya dasar portofolio AFLAN.',
-    technicalNote: 'Cormorant Garamond · Skala Display',
+      'Komposisi grafis yang memadukan masthead Playfair Display dengan ritme serif italic Cormorant Garamond, garis outline tipis, dan ruang kosong khas portofolio AFLAN.',
+    technicalNote: 'Playfair Display · Cormorant Garamond',
   },
 ];

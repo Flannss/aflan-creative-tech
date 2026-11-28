@@ -41,8 +41,8 @@ export function SegmentedControl<T extends string>({
 
   const padClass =
     size === 'sm'
-      ? 'min-h-[40px] sm:min-h-[38px] px-3.5 sm:px-4 py-1.5 text-[10px] tracking-[0.14em]'
-      : 'min-h-[44px] sm:min-h-[40px] px-4 sm:px-4.5 py-2 text-[10px] sm:text-[11px] tracking-[0.15em]';
+      ? 'min-h-[40px] sm:min-h-[38px] px-3.5 sm:px-4 py-2 text-[10px] tracking-[0.14em]'
+      : 'min-h-[44px] px-4 sm:px-4.5 py-2 text-[10px] sm:text-[11px] tracking-[0.14em]';
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (options.length <= 1) return;
@@ -76,7 +76,7 @@ export function SegmentedControl<T extends string>({
 
   return (
     <div
-      className={`w-full max-w-full min-w-0 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-px-2 py-0.5 ${className}`}
+      className={`w-full max-w-full min-w-0 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-px-4 py-6 -my-6 px-3 -mx-3 sm:px-3.5 sm:-mx-3.5 ${className}`}
     >
       <div
         role={roleMode}

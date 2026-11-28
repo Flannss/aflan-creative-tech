@@ -1,4 +1,4 @@
-import type { Transition, Variants } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 
 /**
  * Curated luxury editorial easing curve for arrivals: cubic-bezier(0.16, 1, 0.3, 1).
@@ -10,7 +10,6 @@ export const EASE_PAGE_ENTER: [number, number, number, number] = [0.16, 1, 0.3, 
  * Crisp deceleration exit easing curve: cubic-bezier(0.4, 0, 0.2, 1).
  */
 export const EASE_PAGE_EXIT: [number, number, number, number] = [0.4, 0, 0.2, 1];
-export const EASE_EXIT = EASE_PAGE_EXIT;
 
 /**
  * Responsive zero-overshoot navigation capsule spring synchronized with page transitions.
@@ -46,11 +45,6 @@ export const SPRING_TACTILE = {
  * Calibrated editorial reveal duration matching Lenis cadence without "PPT pop".
  */
 export const MOTION_DURATION = 0.45;
-
-export const LUXURY_TRANSITION: Transition = {
-  duration: MOTION_DURATION,
-  ease: EASE_LUXURY,
-};
 
 export type RouteTransitionKind = 'editorial' | 'showcase';
 
@@ -92,28 +86,6 @@ export const biDirectionalPageVariants: Variants = {
         ease: EASE_PAGE_EXIT,
       },
     };
-  },
-};
-
-export const pageContentVariants: Variants = {
-  initial: {
-    opacity: 0,
-    y: 8,
-  },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.24,
-      ease: EASE_LUXURY,
-    },
-  },
-  exit: {
-    opacity: 0,
-    transition: {
-      duration: 0.09,
-      ease: EASE_PAGE_EXIT,
-    },
   },
 };
 

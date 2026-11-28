@@ -920,7 +920,7 @@ const MotionEasingWorkbench: React.FC = () => {
     <div className="rounded-2xl border border-champagne/20 bg-obsidian/70 p-4 sm:p-6 lg:p-8 space-y-6">
       {/* Control Bar */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-champagne/15">
-        <div className="flex flex-wrap items-center gap-3 min-w-0">
+        <div className="flex flex-wrap items-center gap-4 sm:gap-5 min-w-0">
           <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-champagne/80 shrink-0">
             DURASI TRANSISI
           </span>
@@ -1307,26 +1307,31 @@ const DesignTokenSpecimen: React.FC = () => {
       </div>
 
       {/* Live Typography Specimen */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="rounded-2xl border border-champagne/20 bg-obsidian/80 p-5 sm:p-6 flex flex-col justify-between gap-6">
-          <div className="flex items-center justify-between gap-2 pb-3 border-b border-champagne/15">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div className="glass-prism-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between gap-5">
+          <div className="relative z-10 flex items-center justify-between gap-2 pb-3 border-b border-champagne/15">
             <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-champagne">
               MASTHEAD DISPLAY
             </span>
             <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-taupe">
-              Bodoni Moda
+              Playfair Display
             </span>
           </div>
-          <p className="font-display text-3xl sm:text-4xl uppercase tracking-[0.22em] text-ivory leading-none select-none">
-            AFLAN
-          </p>
-          <p className="font-sans text-xs text-ivory/70 leading-relaxed">
-            Didone kontras tinggi khusus untuk masthead utama halaman depan.
+          <div className="relative z-10 rounded-xl border border-champagne/18 bg-obsidian/55 px-5 py-6 flex flex-col items-center justify-center text-center gap-2.5">
+            <p className="font-masthead font-semibold uppercase tracking-[0.04em] sm:tracking-[0.06em] text-4xl sm:text-5xl leading-[0.95] bg-linear-to-b from-[#F4EEE4] via-[#DFC9A8] to-[#B0875E] bg-clip-text text-transparent select-none">
+              AFLAN
+            </p>
+            <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-champagne/80">
+              SEMIBOLD 600 · TRACKING 0.06EM · METALLIC
+            </span>
+          </div>
+          <p className="relative z-10 font-sans text-xs sm:text-[13px] tracking-[0.01em] text-ivory/80 leading-relaxed">
+            Serif editorial berkontras tinggi berbobot semibold yang digunakan khusus pada masthead utama AFLAN di halaman depan.
           </p>
         </div>
 
-        <div className="rounded-2xl border border-champagne/20 bg-obsidian/80 p-5 sm:p-6 flex flex-col justify-between gap-6">
-          <div className="flex items-center justify-between gap-2 pb-3 border-b border-champagne/15">
+        <div className="glass-prism-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between gap-5">
+          <div className="relative z-10 flex items-center justify-between gap-2 pb-3 border-b border-champagne/15">
             <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-champagne">
               EDITORIAL SERIF &amp; ENGRAVED
             </span>
@@ -1334,21 +1339,26 @@ const DesignTokenSpecimen: React.FC = () => {
               Cormorant Garamond
             </span>
           </div>
-          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <span className="font-serif italic text-3xl font-light text-ivory leading-none">
-              Editorial Craft
-            </span>
-            <span className="font-serif italic font-medium uppercase tracking-[0.14em] text-xl text-engraved-champagne leading-none select-none">
-              BY AMDZ
+          <div className="relative z-10 rounded-xl border border-champagne/18 bg-obsidian/55 px-5 py-6 flex flex-col items-center justify-center text-center gap-2.5">
+            <div className="flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1">
+              <span className="font-serif italic text-3xl sm:text-[2.1rem] font-light text-ivory leading-none">
+                Editorial Craft
+              </span>
+              <span className="font-serif italic font-medium uppercase tracking-[0.12em] text-lg sm:text-xl text-engraved-champagne leading-none select-none">
+                BY AMDZ
+              </span>
+            </div>
+            <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-champagne/80">
+              LIGHT 300 &amp; ITALIC · ENGRAVED OUTLINE
             </span>
           </div>
-          <p className="font-sans text-xs text-ivory/70 leading-relaxed">
-            Dipakai pada judul section, italic emphasis, dan ukiran `.text-engraved-*`.
+          <p className="relative z-10 font-sans text-xs sm:text-[13px] tracking-[0.01em] text-ivory/80 leading-relaxed">
+            Dipakai pada judul utama setiap section, penekanan gaya miring, dan efek ukiran garis outline.
           </p>
         </div>
 
-        <div className="rounded-2xl border border-champagne/20 bg-obsidian/80 p-5 sm:p-6 flex flex-col justify-between gap-6">
-          <div className="flex items-center justify-between gap-2 pb-3 border-b border-champagne/15">
+        <div className="glass-prism-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between gap-5">
+          <div className="relative z-10 flex items-center justify-between gap-2 pb-3 border-b border-champagne/15">
             <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-champagne">
               TECHNICAL MICRO-LABEL
             </span>
@@ -1356,11 +1366,16 @@ const DesignTokenSpecimen: React.FC = () => {
               IBM Plex Mono
             </span>
           </div>
-          <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.15em] text-champagne leading-relaxed wrap-break-word">
-            MONO LABEL · 10PX–12PX · TRACKING 0.15EM
-          </p>
-          <p className="font-sans text-xs text-ivory/70 leading-relaxed">
-            Metadata terverifikasi, label navigasi, dan penanda aksi antarmuka.
+          <div className="relative z-10 rounded-xl border border-champagne/18 bg-obsidian/55 px-5 py-6 flex flex-col items-center justify-center text-center gap-2.5">
+            <p className="font-mono text-xs sm:text-[13px] uppercase tracking-[0.15em] text-champagne leading-relaxed wrap-break-word">
+              MONO LABEL · 10PX–12PX
+            </p>
+            <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-taupe">
+              TRACKING 0.15EM · TABULAR NUMS
+            </span>
+          </div>
+          <p className="relative z-10 font-sans text-xs sm:text-[13px] tracking-[0.01em] text-ivory/80 leading-relaxed">
+            Metadata terverifikasi, indikator jam WIB, label navigasi, dan penanda aksi antarmuka.
           </p>
         </div>
       </div>
@@ -1452,7 +1467,7 @@ export const CreativeLabPage: React.FC = () => {
           </div>
 
           {/* Quick-Jump Module Index Bar */}
-          <div className="mt-10 pt-6 border-t border-champagne/15 flex flex-nowrap sm:flex-wrap overflow-x-auto sm:overflow-visible scrollbar-hide snap-x snap-mandatory gap-2.5 pb-1">
+          <div className="mt-10 pt-6 border-t border-champagne/15 flex flex-nowrap sm:flex-wrap overflow-x-auto sm:overflow-visible scrollbar-hide snap-x snap-mandatory gap-2.5 pb-5 -mb-4 px-2 -mx-2 sm:pb-0 sm:mb-0 sm:px-0 sm:mx-0">
             {[
               { href: '#lab-spotlight', label: '01 · Dynamic Spotlight' },
               { href: '#lab-magnetic', label: '02 · Magnetic Cursor UI' },

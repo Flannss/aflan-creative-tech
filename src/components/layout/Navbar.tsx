@@ -33,8 +33,8 @@ const ROUTE_CONTEXT_MAP: Record<string, RouteContextSpec> = {
   '/': {
     tag: 'EDITORIAL COVER',
     summary:
-      'Halaman utama Warm Luxury Espresso: masthead Cinzel, Dual-Track Marquee, filosofi monogram AMDZ, dan Selected Works Lenis.',
-    highlights: ['Cinzel Masthead', 'AMDZ Philosophy', 'Dual-Track Marquee'],
+      'Halaman utama Warm Luxury Espresso: masthead Playfair Display, Dual-Track Marquee, filosofi monogram AMDZ, dan Selected Works.',
+    highlights: ['Playfair Masthead', 'AMDZ Philosophy', 'Dual-Track Marquee'],
     motif: 'compass',
   },
   '/about': {
@@ -102,7 +102,9 @@ function getPurwokertoWibTime(): string {
       hour: '2-digit',
       minute: '2-digit',
       hour12: false,
-    }).format(new Date());
+    })
+      .format(new Date())
+      .replace('.', ':');
   } catch {
     return '--:--';
   }

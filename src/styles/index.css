@@ -17,7 +17,6 @@
   --color-charcoal: #352820;
 
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
-  --font-display: "Bodoni Moda", Georgia, "Times New Roman", serif;
   --font-masthead: "Playfair Display", "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -44,6 +43,7 @@
     min-height: 100vh;
     background-color: #211814;
     color: #F6F1E9;
+    letter-spacing: 0.01em;
     overflow-x: clip;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -103,10 +103,6 @@
   .text-engraved-ivory {
     -webkit-text-stroke: 1.15px #F4EFE6;
   }
-}
-
-.font-display {
-  font-family: var(--font-display);
 }
 
 .font-masthead {
@@ -197,7 +193,7 @@
       inset 1px 0 1.5px rgba(246, 241, 233, 0.18),
       inset 0 -2px 6px rgba(185, 141, 97, 0.22),
       inset -1px 0 2px rgba(223, 200, 166, 0.14),
-      0 14px 36px rgba(10, 7, 5, 0.42),
+      0 12px 26px rgba(10, 7, 5, 0.4),
       0 1px 2px rgba(255, 250, 242, 0.1);
   }
 
@@ -226,25 +222,25 @@
     z-index: 0;
   }
 
-  /* Tier A: High-Refraction Sculpted Bezel (Light Mode — Frosted Warm Cream) */
+  /* Tier A: High-Refraction Sculpted Bezel (Light Mode — Warm Almond Cream Satin) */
   .glass-liquid-lens-light {
     position: relative;
     background: linear-gradient(
       155deg,
-      rgba(252, 248, 241, 0.84) 0%,
-      rgba(241, 233, 219, 0.74) 52%,
-      rgba(247, 241, 232, 0.82) 100%
+      rgba(238, 227, 211, 0.76) 0%,
+      rgba(225, 211, 191, 0.66) 52%,
+      rgba(234, 222, 204, 0.74) 100%
     );
-    -webkit-backdrop-filter: blur(26px) saturate(160%) brightness(1.03);
-    backdrop-filter: blur(26px) saturate(160%) brightness(1.03);
+    -webkit-backdrop-filter: blur(24px) saturate(150%) brightness(1.01);
+    backdrop-filter: blur(24px) saturate(150%) brightness(1.01);
     box-shadow:
-      inset 0 2px 3px rgba(255, 255, 255, 0.9),
-      inset 0 0 22px rgba(255, 253, 249, 0.2),
-      inset 1px 0 1.5px rgba(255, 253, 249, 0.72),
-      inset 0 -3px 8px rgba(142, 107, 75, 0.2),
+      inset 0 1.5px 2px rgba(252, 248, 240, 0.72),
+      inset 0 0 20px rgba(246, 241, 233, 0.14),
+      inset 1px 0 1.5px rgba(252, 248, 240, 0.56),
+      inset 0 -2px 6px rgba(142, 107, 75, 0.2),
       inset -1px 0 2px rgba(142, 107, 75, 0.14),
-      0 14px 32px rgba(33, 24, 20, 0.14),
-      0 1px 2px rgba(255, 255, 255, 0.7);
+      0 10px 24px rgba(33, 24, 20, 0.12),
+      0 1px 2px rgba(252, 248, 240, 0.55);
   }
 
   .glass-liquid-lens-light::before {
@@ -255,10 +251,10 @@
     padding: 1.25px;
     background: linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.92) 0%,
-      rgba(142, 107, 75, 0.24) 40%,
-      rgba(142, 107, 75, 0.12) 64%,
-      rgba(255, 252, 246, 0.72) 100%
+      rgba(252, 248, 240, 0.78) 0%,
+      rgba(142, 107, 75, 0.26) 40%,
+      rgba(142, 107, 75, 0.14) 64%,
+      rgba(246, 239, 229, 0.58) 100%
     );
     -webkit-mask:
       linear-gradient(#fff 0 0) content-box,

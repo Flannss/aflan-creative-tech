@@ -154,7 +154,7 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
             <div className="size-32 sm:size-36 rounded-full border border-dashed border-champagne/40 bg-obsidian/70 flex items-center justify-center transition-transform duration-700 group-hover:scale-105">
               <MonogramMark size={78} className="text-champagne" />
             </div>
-            <span className="mt-4 font-serif text-xl tracking-[0.28em] uppercase text-ivory/90">
+            <span className="mt-4 font-masthead font-semibold text-xl tracking-[0.06em] uppercase bg-linear-to-b from-[#F4EEE4] via-[#DFC9A8] to-[#B0875E] bg-clip-text text-transparent">
               AFLAN
             </span>
           </div>
@@ -227,10 +227,10 @@ const PlateVisual: React.FC<PlateVisualProps> = ({
         >
           <div className="relative z-10 flex items-center justify-between font-mono text-[9px] tracking-[0.22em] uppercase text-champagne">
             <span>STUDI DISPLAY</span>
-            <span>SERIF EDITORIAL</span>
+            <span>PLAYFAIR &amp; CORMORANT</span>
           </div>
-          <div className="relative z-10 my-auto py-4 space-y-1 text-center">
-            <p className="font-serif text-4xl sm:text-5xl font-light tracking-[0.12em] uppercase text-ivory leading-[0.9] transition-transform duration-700 group-hover:scale-[1.03]">
+          <div className="relative z-10 my-auto py-4 space-y-1.5 text-center">
+            <p className="font-masthead font-semibold text-4xl sm:text-5xl tracking-[0.05em] uppercase bg-linear-to-b from-[#F4EEE4] via-[#DFC9A8] to-[#B0875E] bg-clip-text text-transparent leading-[0.95] transition-transform duration-700 group-hover:scale-[1.03]">
               AFLAN
             </p>
             <p className="font-serif italic text-2xl sm:text-3xl font-light tracking-[0.06em] uppercase editorial-outline-strong leading-none">
@@ -473,7 +473,7 @@ export const GalleryPage: React.FC = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4 border-t border-espresso/10 min-w-0">
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 min-w-0">
                 <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-mocha shrink-0">
                   TONAL:
                 </span>
@@ -544,21 +544,21 @@ export const GalleryPage: React.FC = () => {
                               }
                               aria-pressed={isDetailOpen}
                               aria-label={`Tampilkan detail teknis ${item.title}`}
-                              className={`size-9 rounded-full border flex items-center justify-center active:scale-95 transition-colors cursor-pointer ${
+                              className={`size-11 sm:size-9 rounded-full border flex items-center justify-center active:scale-95 transition-colors cursor-pointer ${
                                 isDetailOpen
                                   ? 'bg-champagne text-obsidian border-champagne'
                                   : 'glass-liquid-badge text-champagne hover:border-champagne hover:text-ivory'
                               }`}
                             >
-                              <Info className="size-3.5 relative z-10" aria-hidden="true" />
+                              <Info className="size-4 sm:size-3.5 relative z-10" aria-hidden="true" />
                             </button>
                             <button
                               type="button"
                               onClick={() => openLightbox(item.id)}
                               aria-label={`Perbesar ${item.title}`}
-                              className="glass-liquid-badge size-9 rounded-full flex items-center justify-center text-champagne hover:border-champagne hover:text-ivory active:scale-95 transition-colors cursor-pointer"
+                              className="glass-liquid-badge size-11 sm:size-9 rounded-full flex items-center justify-center text-champagne hover:border-champagne hover:text-ivory active:scale-95 transition-colors cursor-pointer"
                             >
-                              <Maximize2 className="size-3.5 relative z-10" aria-hidden="true" />
+                              <Maximize2 className="size-4 sm:size-3.5 relative z-10" aria-hidden="true" />
                             </button>
                           </div>
                         </div>
